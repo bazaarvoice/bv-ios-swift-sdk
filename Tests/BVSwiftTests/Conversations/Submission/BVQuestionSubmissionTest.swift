@@ -1,0 +1,224 @@
+//
+//
+//  BVQuestionSubmissionTest.swift
+//  BVSwiftTests
+//
+//  Copyright © 2018 Bazaarvoice. All rights reserved.
+// 
+
+import Foundation
+
+import XCTest
+@testable import BVSwift
+
+class BVQuestionSubmissionTest: XCTestCase {
+  
+  private static var config: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    return BVConversationsConfiguration.all(
+      clientKey: "2cpdrhohmgmwfz8vqyo48f52g",
+      configType: .staging(clientId: "apitestcustomer"))
+  }()
+  
+  private static var privateSession:URLSession = {
+    return URLSession(configuration: .default)
+  }()
+  
+  override func setUp() {
+    super.setUp()
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "conciergeapidocumentation"))
+    
+    BVManager.sharedManager.addConfiguration(analyticsConfig)
+    
+    BVPixel.skipAllPixelEvents = true
+  }
+  
+  override func tearDown() {
+    super.tearDown()
+  }
+  
+  func testSubmitQuestionWithPhoto() {
+    let expectation =
+      self.expectation(description: "testSubmitQuestionWithPhoto")
+    
+    guard let questionSubmission = fillOutQuestion(.submit) else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    questionSubmission
+      .handler { result in
+        if case let .failure(errors) = result {
+          errors.forEach { print($0) }
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(meta, _) = result else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        if let formFields = meta.formFields {
+          XCTAssertEqual(formFields.count, 0)
+        } else {
+          XCTAssertNil(meta.formFields)
+        }
+        
+        expectation.fulfill()
+    }
+    
+    questionSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testPreviewQuestionWithPhoto() {
+    let expectation =
+      self.expectation(description: "testPreviewQuestionWithPhoto")
+    
+    guard let questionSubmission = fillOutQuestion(.preview) else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    questionSubmission
+      .handler { result in
+        if case let .failure(errors) = result {
+          errors.forEach { print($0) }
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(meta, _) = result else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        if let formFields = meta.formFields {
+          XCTAssertEqual(formFields.count, 33)
+        } else {
+          XCTAssertNil(meta.formFields)
+        }
+        
+        expectation.fulfill()
+    }
+    
+    questionSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSubmitQuestionFailure() {
+    let expectation = self.expectation(description: "testSubmitQuestionFailure")
+    
+    let question: BVQuestion =
+      BVQuestion(
+        isUserAnonymous: false,
+        productId: "1000001",
+        questionDetails: "",
+        questionSummary: "")
+    
+    guard let questionSubmission = BVQuestionSubmission(question) else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    questionSubmission
+      .configure(BVQuestionSubmissionTest.config)
+      .add(.preview)
+      .add(.identifier("craiggiddl"))
+      .add(.nickname("cgil"))
+      .handler { (result: BVConversationsSubmissionResponse<BVQuestion>) in
+        
+        guard let errors = result.errors else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        var formRequiredCount = 0
+        var formDuplicateCount = 0
+        
+        errors.forEach { (error: Error) in
+          guard let bverror: BVError = error as? BVError,
+            let conversationsError =
+            BVConversationsError(bverror.code, message: bverror.message) else {
+              return
+          }
+          
+          switch conversationsError {
+          case .required:
+            formRequiredCount += 1
+          case .duplicate:
+            formDuplicateCount += 1
+          default:
+            break
+          }
+        }
+        
+        XCTAssertEqual(formRequiredCount, 1)
+        XCTAssertEqual(formDuplicateCount, 1)
+        expectation.fulfill()
+    }
+    
+    questionSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func fillOutQuestion(
+    _ action : BVConversationsSubmissionAction) -> BVQuestionSubmission? {
+    
+    let questionDetails: String =
+      "Question body Question body Question body Question body Question body " +
+    "Question body Question body"
+    
+    let question: BVQuestion =
+      BVQuestion(
+        isUserAnonymous: false,
+        productId: "1000001",
+        questionDetails: questionDetails,
+        questionSummary: "Question title question title?")
+    
+    guard let questionSubmission = BVQuestionSubmission(question),
+      let png = BVPhotoSubmissionTest.createPNG() else {
+        return nil
+    }
+    
+    let randomId = String(arc4random())
+    let photo: BVPhoto = BVPhoto(png, "Very photogenic")
+    
+    return questionSubmission
+      .configure(BVQuestionSubmissionTest.config)
+      .add(action)
+      .add(.campaignId("BV_REVIEW_DISPLAY"))
+      .add(.locale("en_US"))
+      .add(.sendEmailWhenCommented(true))
+      .add(.sendEmailWhenPublished(true))
+      .add(.nickname("UserNickname\(randomId)"))
+      .add(.email("developer@bazaarvoice.com"))
+      .add(.identifier("UserId\(randomId)"))
+      .add(.agree(true))
+      .add(.photos([photo]))
+  }
+}
