@@ -15,9 +15,15 @@ class BVAnswerSubmissionTests: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
     return BVConversationsConfiguration.all(
       clientKey: "2cpdrhohmgmwfz8vqyo48f52g",
-      configType: .staging(clientId: "apitestcustomer"))
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -27,17 +33,13 @@ class BVAnswerSubmissionTests: XCTestCase {
   override func setUp() {
     super.setUp()
     
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "apitestcustomer"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
-    
     BVPixel.skipAllPixelEvents = true
   }
   
   override func tearDown() {
     super.tearDown()
+    
+    BVPixel.skipAllPixelEvents = false
   }
   
   func testSubmitAnswerWithPhoto() {
