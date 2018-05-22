@@ -15,9 +15,15 @@ class BVQueryTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
     return BVConversationsConfiguration.display(
       clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
-      configType: .staging(clientId: "apitestcustomer"))
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -26,12 +32,6 @@ class BVQueryTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "apitestcustomer"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
     
     BVPixel.skipAllPixelEvents = true
   }
@@ -44,7 +44,8 @@ class BVQueryTest: XCTestCase {
   
   func testProductQueryDisplay() {
     
-    let expectation = self.expectation(description: "testProductQueryDisplay")
+    let expectation =
+      self.expectation(description: "testProductQueryDisplay")
     
     let productQuery = BVProductQuery(productId: "test1")
       .include(.reviews, limit: 10)
@@ -79,7 +80,11 @@ class BVQueryTest: XCTestCase {
         XCTAssertEqual(brand.name, "mysh")
         XCTAssertEqual(
           product.productDescription,
-          "Our pinpoint oxford is crafted from only the finest 80\'s two-ply cotton fibers.Single-needle stitching on all seams for a smooth flat appearance. Tailored with our Traditional\n                straight collar and button cuffs. Machine wash. Imported.")
+          "Our pinpoint oxford is crafted from only the finest 80\'s " +
+            "two-ply cotton fibers.Single-needle stitching on all seams for " +
+            "a smooth flat appearance. Tailored with our Traditional\n" +
+            "                straight collar and button cuffs. " +
+          "Machine wash. Imported.")
         XCTAssertEqual(product.brandExternalId, "cskg0snv1x3chrqlde0zklodb")
         XCTAssertEqual(
           product.imageUrl?.absoluteString,
@@ -147,7 +152,16 @@ class BVQueryTest: XCTestCase {
         XCTAssertEqual(
           review.title, "Morbi nibh risus, mattis id placerat a massa nunc.")
         XCTAssertEqual(
-          review.reviewText, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rhoncus scelerisque semper. Morbi in sapien sit amet justo eleifend pellentesque! Cras sollicitudin, quam in ullamcorper faucibus, augue metus blandit justo, vitae ullamcorper tellus quam non purus. Fusce gravida rhoncus placerat. Integer tempus nunc sed elit mollis ut venenatis felis volutpat. Sed a velit et lacus lobortis aliquet? Donec dolor quam, pharetra vitae commodo et, mattis quis nibh? Quisque ultrices neque et lacus volutpat.")
+          review.reviewText,
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed " +
+            "rhoncus scelerisque semper. Morbi in sapien sit amet justo " +
+            "eleifend pellentesque! Cras sollicitudin, quam in ullamcorper " +
+            "faucibus, augue metus blandit justo, vitae ullamcorper tellus " +
+            "quam non purus. Fusce gravida rhoncus placerat. Integer tempus " +
+            "nunc sed elit mollis ut venenatis felis volutpat. Sed a velit " +
+            "et lacus lobortis aliquet? Donec dolor quam, pharetra vitae " +
+            "commodo et, mattis quis nibh? Quisque ultrices neque et lacus " +
+          "volutpat.")
         XCTAssertEqual(review.moderationStatus, "APPROVED")
         XCTAssertEqual(review.reviewId, "191975")
         XCTAssertNotNil(review.productId)
@@ -183,16 +197,21 @@ class BVQueryTest: XCTestCase {
         
         XCTAssertEqual(
           firstPhoto.caption,
-          "Etiam malesuada ultricies urna in scelerisque. Sed viverra blandit nibh non egestas. Sed rhoncus, ipsum in vehicula imperdiet, purus lectus sodales erat, eget ornare lacus lectus ac leo. Suspendisse tristique sollicitudin ultricies. Aliquam erat volutpat.")
+          "Etiam malesuada ultricies urna in scelerisque. Sed viverra " +
+            "blandit nibh non egestas. Sed rhoncus, ipsum in vehicula " +
+            "imperdiet, purus lectus sodales erat, eget ornare lacus " +
+            "lectus ac leo. Suspendisse tristique sollicitudin ultricies. " +
+          "Aliquam erat volutpat.")
         XCTAssertEqual(firstPhoto.photoId, "72586")
         XCTAssertNotNil(firstPhoto.photoSizes)
         
-        let regexPhotoList = firstPhoto.photoSizes?.filter { (size: BVPhotoSize) -> Bool in
-          guard let url = size.url else {
-            return false
-          }
-          return (url.absoluteString
-            .lowercased().contains("jpg?client=apireadonlysandbox"))
+        let regexPhotoList =
+          firstPhoto.photoSizes?.filter { (size: BVPhotoSize) -> Bool in
+            guard let url = size.url else {
+              return false
+            }
+            return (url.absoluteString
+              .lowercased().contains("jpg?client=apireadonlysandbox"))
         }
         
         XCTAssertNotNil(regexPhotoList)
@@ -278,9 +297,10 @@ class BVQueryTest: XCTestCase {
               return answerIds.contains(answerId)
           }
           
-          guard let firstQuestionAnswer: BVAnswer = questionAnswers.first else {
-            XCTFail()
-            return
+          guard let firstQuestionAnswer: BVAnswer =
+            questionAnswers.first else {
+              XCTFail()
+              return
           }
           
           XCTAssertEqual(questionAnswers.count, 1)

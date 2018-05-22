@@ -13,10 +13,18 @@ import XCTest
 
 class BVPixelTest: XCTestCase {
   
-  private static var config: BVConfiguration = { () -> BVConfiguration in
+  private static var config: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .configuration(
+        locale: Locale.autoupdatingCurrent,
+        configType: .staging(clientId: "conciergeapidocumentation"))
+    
     return BVConversationsConfiguration.display(
       clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
-      configType: .staging(clientId: "conciergeapidocumentation"))
+      configType: .staging(clientId: "conciergeapidocumentation"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession: URLSession = {
@@ -25,13 +33,7 @@ class BVPixelTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .configuration(
-        locale: Locale.autoupdatingCurrent,
-        configType: .staging(clientId: "conciergeapidocumentation"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
+    BVManager.sharedManager.addConfiguration(BVPixelTest.config)
   }
   
   override func tearDown() {
