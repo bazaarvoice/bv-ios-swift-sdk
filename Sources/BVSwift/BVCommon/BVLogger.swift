@@ -64,6 +64,7 @@ public class BVLogger {
   }()
   
   private var internalLogLevel: BVLogLevel = .error
+
   private init() {}
   
   private func enqueue(_ msg: String, logLevel: BVLogLevel) {
