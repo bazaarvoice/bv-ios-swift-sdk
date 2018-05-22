@@ -48,8 +48,11 @@ public class BVLogger {
     }
   }
   
-  private var logger =
-    OSLog(subsystem: "com.bvswift.BVLogger", category: "Module")
+  @available(iOS 10.0, *)
+  lazy private var logger = {
+    return OSLog(subsystem: "com.bvswift.BVLogger", category: "Module")
+  }()
+  
   private var logLevel: BVLogLevel = .error
   private init() {}
   
@@ -64,14 +67,19 @@ public class BVLogger {
       case (_, _) where self.logLevel.rawValue <= logLevel.rawValue:
         break
       default:
-        break
+        return
       }
       
-      #if DEBUG
+      if #available(iOS 10.0, *) {
+        
+        #if DEBUG
+          print(msg)
+        #endif
+        
+        os_log("%{public}@", log: self.logger, msg)
+      } else {
         print(msg)
-      #endif
-      
-      os_log("%{public}@", log: self.logger, msg)
+      }
     }
   }
 }
