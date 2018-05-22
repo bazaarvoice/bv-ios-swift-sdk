@@ -48,12 +48,12 @@ public class BVManager {
   /// Public
   public static let sharedManager = BVManager()
   
-  public var logLevel: Int {
+  public var logLevel: BVLogger.BVLogLevel {
     get {
-      return 0
+      return BVLogger.sharedLogger.logLevel
     }
     set(newValue) {
-      /// Set
+      BVLogger.sharedLogger.logLevel = newValue
     }
   }
   
@@ -64,8 +64,8 @@ public class BVManager {
     var configs = configurations ?? [BVConfiguration]()
     
     if !configs.contains(where: { (config: BVConfiguration) -> Bool in
-        config.isSameAs(configuration)
-      }) {
+      config.isSameAs(configuration)
+    }) {
       configs.append(configuration)
     }
     configurations = configs
@@ -77,12 +77,25 @@ public class BVManager {
 internal extension BVManager {
   func getConfiguration<T: BVConfiguration>() -> T? {
     
-    if let configList = configurations {
-      for config in configList {
-        if let cfg = config as? T {
-          return cfg
+    if var configList = configurations {
+      
+      while !configList.isEmpty {
+        
+        guard let cfg = configList.first else {
+          continue
         }
+        
+        if let cfgType = cfg as? T {
+          return cfgType
+        }
+        
+        if let subConfigs = cfg.subConfigurations {
+          configList += subConfigs
+        }
+        
+        configList.removeFirst(1)
       }
+      
       return nil
     }
     

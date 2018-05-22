@@ -9,8 +9,9 @@ import Foundation
 
 public protocol BVConfiguration {
   var configurationKey: String { get }
-  var type: BVConfigurationType { get }
   var endpoint: String { get }
+  var subConfigurations: [BVConfiguration]? { get }
+  var type: BVConfigurationType { get }
   init?(_ configType: BVConfigurationType, keyValues: [String : Any]?)
   func isSameAs(_ config: BVConfiguration) -> Bool
 }

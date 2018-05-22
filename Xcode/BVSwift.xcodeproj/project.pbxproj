@@ -26,7 +26,7 @@
 		B5B31E5820B37383002DBEC8 /* BVAnalyticsManagerAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4520B37383002DBEC8 /* BVAnalyticsManagerAppState.swift */; };
 		B5B31E5920B37383002DBEC8 /* BVAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4620B37383002DBEC8 /* BVAnalyticsEvent.swift */; };
 		B5B31E5A20B37383002DBEC8 /* BVAnalyticsLocaleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4720B37383002DBEC8 /* BVAnalyticsLocaleService.swift */; };
-		B5B31E5B20B37383002DBEC8 /* BVAnalyticsEventEventable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4820B37383002DBEC8 /* BVAnalyticsEventEventable.swift */; };
+		B5B31E5B20B37383002DBEC8 /* BVAnalyticsEventable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4820B37383002DBEC8 /* BVAnalyticsEventable.swift */; };
 		B5B31E7420B3739A002DBEC8 /* BVURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E5D20B3739A002DBEC8 /* BVURLSession.swift */; };
 		B5B31E7520B3739A002DBEC8 /* BVDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E5E20B3739A002DBEC8 /* BVDispatch.swift */; };
 		B5B31E7620B3739A002DBEC8 /* BVManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E5F20B3739A002DBEC8 /* BVManager.swift */; };
@@ -179,7 +179,7 @@
 		B5B31E4520B37383002DBEC8 /* BVAnalyticsManagerAppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsManagerAppState.swift; sourceTree = "<group>"; };
 		B5B31E4620B37383002DBEC8 /* BVAnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsEvent.swift; sourceTree = "<group>"; };
 		B5B31E4720B37383002DBEC8 /* BVAnalyticsLocaleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsLocaleService.swift; sourceTree = "<group>"; };
-		B5B31E4820B37383002DBEC8 /* BVAnalyticsEventEventable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsEventEventable.swift; sourceTree = "<group>"; };
+		B5B31E4820B37383002DBEC8 /* BVAnalyticsEventable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsEventable.swift; sourceTree = "<group>"; };
 		B5B31E5D20B3739A002DBEC8 /* BVURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVURLSession.swift; sourceTree = "<group>"; };
 		B5B31E5E20B3739A002DBEC8 /* BVDispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVDispatch.swift; sourceTree = "<group>"; };
 		B5B31E5F20B3739A002DBEC8 /* BVManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVManager.swift; sourceTree = "<group>"; };
@@ -351,16 +351,16 @@
 		B5B31E3320B37383002DBEC8 /* BVAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31E3420B37383002DBEC8 /* BVAnalyticsSubmission.swift */,
-				B5B31E3520B37383002DBEC8 /* Types */,
 				B5B31E3E20B37383002DBEC8 /* BVAnalyticsConfiguration.swift */,
-				B5B31E3F20B37383002DBEC8 /* BVPixel.swift */,
-				B5B31E4020B37383002DBEC8 /* BVAnalyticsManager.swift */,
-				B5B31E4120B37383002DBEC8 /* Model */,
-				B5B31E4520B37383002DBEC8 /* BVAnalyticsManagerAppState.swift */,
 				B5B31E4620B37383002DBEC8 /* BVAnalyticsEvent.swift */,
+				B5B31E4820B37383002DBEC8 /* BVAnalyticsEventable.swift */,
 				B5B31E4720B37383002DBEC8 /* BVAnalyticsLocaleService.swift */,
-				B5B31E4820B37383002DBEC8 /* BVAnalyticsEventEventable.swift */,
+				B5B31E4020B37383002DBEC8 /* BVAnalyticsManager.swift */,
+				B5B31E4520B37383002DBEC8 /* BVAnalyticsManagerAppState.swift */,
+				B5B31E3420B37383002DBEC8 /* BVAnalyticsSubmission.swift */,
+				B5B31E3F20B37383002DBEC8 /* BVPixel.swift */,
+				B5B31E4120B37383002DBEC8 /* Model */,
+				B5B31E3520B37383002DBEC8 /* Types */,
 			);
 			name = BVAnalytics;
 			path = ../../Sources/BVSwift/BVAnalytics;
@@ -369,14 +369,14 @@
 		B5B31E3520B37383002DBEC8 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31E3620B37383002DBEC8 /* BVAnalyticsEventFeature.swift */,
-				B5B31E3720B37383002DBEC8 /* BVAnalyticsEventViewed.swift */,
-				B5B31E3820B37383002DBEC8 /* BVAnalyticsEventPageView.swift */,
-				B5B31E3920B37383002DBEC8 /* BVAnalyticsEventInView.swift */,
 				B5B31E3A20B37383002DBEC8 /* BVAnalyticsEventConversion.swift */,
+				B5B31E3620B37383002DBEC8 /* BVAnalyticsEventFeature.swift */,
+				B5B31E3D20B37383002DBEC8 /* BVAnalyticsEventImpression.swift */,
+				B5B31E3920B37383002DBEC8 /* BVAnalyticsEventInView.swift */,
+				B5B31E3820B37383002DBEC8 /* BVAnalyticsEventPageView.swift */,
 				B5B31E3B20B37383002DBEC8 /* BVAnalyticsEventPersonalization.swift */,
 				B5B31E3C20B37383002DBEC8 /* BVAnalyticsEventTransaction.swift */,
-				B5B31E3D20B37383002DBEC8 /* BVAnalyticsEventImpression.swift */,
+				B5B31E3720B37383002DBEC8 /* BVAnalyticsEventViewed.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -384,9 +384,9 @@
 		B5B31E4120B37383002DBEC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B5B31E4420B37383002DBEC8 /* BVAnalyticsEventBatch.swift */,
 				B5B31E4220B37383002DBEC8 /* BVAnalyticsTransactionItem.swift */,
 				B5B31E4320B37383002DBEC8 /* BVAnalyticsTypes.swift */,
-				B5B31E4420B37383002DBEC8 /* BVAnalyticsEventBatch.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -394,18 +394,18 @@
 		B5B31E5C20B3739A002DBEC8 /* BVCommon */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31E5D20B3739A002DBEC8 /* BVURLSession.swift */,
-				B5B31E5E20B3739A002DBEC8 /* BVDispatch.swift */,
-				B5B31E5F20B3739A002DBEC8 /* BVManager.swift */,
-				B5B31E6020B3739A002DBEC8 /* BVURLRequestable.swift */,
-				B5B31E6120B3739A002DBEC8 /* BVParameter.swift */,
-				B5B31E6220B3739A002DBEC8 /* BVUtilities.swift */,
-				B5B31E6320B3739A002DBEC8 /* BVConstants.swift */,
-				B5B31E6420B3739A002DBEC8 /* BVConfiguration.swift */,
-				B5B31E6520B3739A002DBEC8 /* BVLogger.swift */,
 				B5B31E6620B3739A002DBEC8 /* BVCodable.swift */,
-				B5B31E6720B3739A002DBEC8 /* Query */,
+				B5B31E6420B3739A002DBEC8 /* BVConfiguration.swift */,
+				B5B31E6320B3739A002DBEC8 /* BVConstants.swift */,
+				B5B31E5E20B3739A002DBEC8 /* BVDispatch.swift */,
 				B5B31E6D20B3739A002DBEC8 /* BVError.swift */,
+				B5B31E5F20B3739A002DBEC8 /* BVManager.swift */,
+				B5B31E6120B3739A002DBEC8 /* BVParameter.swift */,
+				B5B31E6520B3739A002DBEC8 /* BVLogger.swift */,
+				B5B31E6020B3739A002DBEC8 /* BVURLRequestable.swift */,
+				B5B31E5D20B3739A002DBEC8 /* BVURLSession.swift */,
+				B5B31E6220B3739A002DBEC8 /* BVUtilities.swift */,
+				B5B31E6720B3739A002DBEC8 /* Query */,
 				B5B31E6E20B3739A002DBEC8 /* Submission */,
 			);
 			name = BVCommon;
@@ -415,11 +415,11 @@
 		B5B31E6720B3739A002DBEC8 /* Query */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31E6820B3739A002DBEC8 /* BVQueryable.swift */,
-				B5B31E6920B3739A002DBEC8 /* BVQueryDispatchQueueable.swift */,
+				B5B31E6C20B3739A002DBEC8 /* BVInternalQuery.swift */,
 				B5B31E6A20B3739A002DBEC8 /* BVInternalQueryRequestable.swift */,
 				B5B31E6B20B3739A002DBEC8 /* BVQuery.swift */,
-				B5B31E6C20B3739A002DBEC8 /* BVInternalQuery.swift */,
+				B5B31E6820B3739A002DBEC8 /* BVQueryable.swift */,
+				B5B31E6920B3739A002DBEC8 /* BVQueryDispatchQueueable.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -427,11 +427,11 @@
 		B5B31E6E20B3739A002DBEC8 /* Submission */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31E6F20B3739A002DBEC8 /* BVSubmissionDispatchQueueable.swift */,
 				B5B31E7020B3739A002DBEC8 /* BVInternalSubmission.swift */,
+				B5B31E7320B3739A002DBEC8 /* BVInternalSubmissionRequestable.swift */,
 				B5B31E7120B3739A002DBEC8 /* BVSubmission.swift */,
 				B5B31E7220B3739A002DBEC8 /* BVSubmissionable.swift */,
-				B5B31E7320B3739A002DBEC8 /* BVInternalSubmissionRequestable.swift */,
+				B5B31E6F20B3739A002DBEC8 /* BVSubmissionDispatchQueueable.swift */,
 			);
 			path = Submission;
 			sourceTree = "<group>";
@@ -439,12 +439,12 @@
 		B5B31E8920B373A3002DBEC8 /* BVConversations */ = {
 			isa = PBXGroup;
 			children = (
+				B5B31E8C20B373A3002DBEC8 /* BVConversationsable.swift */,
 				B5B31E8A20B373A3002DBEC8 /* BVConversationsConstants.swift */,
 				B5B31E8B20B373A3002DBEC8 /* BVConversationsConfiguration.swift */,
-				B5B31E8C20B373A3002DBEC8 /* BVConversationsable.swift */,
 				B5B31E8D20B373A3002DBEC8 /* BVConversationsError.swift */,
-				B5B31E8E20B373A3002DBEC8 /* Model */,
 				B5B31EA720B373A3002DBEC8 /* Display */,
+				B5B31E8E20B373A3002DBEC8 /* Model */,
 				B5B31ECF20B373A3002DBEC8 /* Submission */,
 			);
 			name = BVConversations;
@@ -454,30 +454,30 @@
 		B5B31E8E20B373A3002DBEC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31E8F20B373A3002DBEC8 /* BVVideo.swift */,
+				B5B31E9320B373A3002DBEC8 /* BVAnswer.swift */,
+				B5B31E9F20B373A3002DBEC8 /* BVAuthor.swift */,
 				B5B31E9020B373A3002DBEC8 /* BVBadge.swift */,
 				B5B31E9120B373A3002DBEC8 /* BVBrand.swift */,
 				B5B31E9220B373A3002DBEC8 /* BVComment.swift */,
-				B5B31E9320B373A3002DBEC8 /* BVAnswer.swift */,
-				B5B31E9420B373A3002DBEC8 /* BVRatingDistribution.swift */,
-				B5B31E9520B373A3002DBEC8 /* BVSecondaryRatingsAverage.swift */,
+				B5B31EA220B373A3002DBEC8 /* BVContextDataValue.swift */,
 				B5B31E9620B373A3002DBEC8 /* BVDimensionElement.swift */,
+				B5B31E9B20B373A3002DBEC8 /* BVDistributionElement.swift */,
+				B5B31EA020B373A3002DBEC8 /* BVDistributionValue.swift */,
 				B5B31E9720B373A3002DBEC8 /* BVFeedback.swift */,
+				B5B31E9E20B373A3002DBEC8 /* BVFormField.swift */,
+				B5B31E9D20B373A3002DBEC8 /* BVPhoto.swift */,
+				B5B31E9C20B373A3002DBEC8 /* BVProduct.swift */,
+				B5B31EA420B373A3002DBEC8 /* BVProductStatistics.swift */,
+				B5B31EA120B373A3002DBEC8 /* BVQAStatistics.swift */,
+				B5B31EA620B373A3002DBEC8 /* BVQuestion.swift */,
+				B5B31E9420B373A3002DBEC8 /* BVRatingDistribution.swift */,
+				B5B31EA520B373A3002DBEC8 /* BVReview.swift */,
 				B5B31E9820B373A3002DBEC8 /* BVReviewStatistics.swift */,
+				B5B31EA320B373A3002DBEC8 /* BVSecondaryRating.swift */,
+				B5B31E9520B373A3002DBEC8 /* BVSecondaryRatingsAverage.swift */,
 				B5B31E9920B373A3002DBEC8 /* BVSyndicationSource.swift */,
 				B5B31E9A20B373A3002DBEC8 /* BVUAS.swift */,
-				B5B31E9B20B373A3002DBEC8 /* BVDistributionElement.swift */,
-				B5B31E9C20B373A3002DBEC8 /* BVProduct.swift */,
-				B5B31E9D20B373A3002DBEC8 /* BVPhoto.swift */,
-				B5B31E9E20B373A3002DBEC8 /* BVFormField.swift */,
-				B5B31E9F20B373A3002DBEC8 /* BVAuthor.swift */,
-				B5B31EA020B373A3002DBEC8 /* BVDistributionValue.swift */,
-				B5B31EA120B373A3002DBEC8 /* BVQAStatistics.swift */,
-				B5B31EA220B373A3002DBEC8 /* BVContextDataValue.swift */,
-				B5B31EA320B373A3002DBEC8 /* BVSecondaryRating.swift */,
-				B5B31EA420B373A3002DBEC8 /* BVProductStatistics.swift */,
-				B5B31EA520B373A3002DBEC8 /* BVReview.swift */,
-				B5B31EA620B373A3002DBEC8 /* BVQuestion.swift */,
+				B5B31E8F20B373A3002DBEC8 /* BVVideo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -485,12 +485,12 @@
 		B5B31EA720B373A3002DBEC8 /* Display */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31EA820B373A3002DBEC8 /* BVConversationsQueryParameter.swift */,
-				B5B31EA920B373A3002DBEC8 /* Types */,
 				B5B31EB320B373A3002DBEC8 /* BVConversationsQuery.swift */,
-				B5B31EB420B373A3002DBEC8 /* Sorting & Filtering */,
 				B5B31ECD20B373A3002DBEC8 /* BVConversationsQueryable.swift */,
+				B5B31EA820B373A3002DBEC8 /* BVConversationsQueryParameter.swift */,
 				B5B31ECE20B373A3002DBEC8 /* BVConversationsQueryResponse.swift */,
+				B5B31EB420B373A3002DBEC8 /* Sorting & Filtering */,
+				B5B31EA920B373A3002DBEC8 /* Types */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -498,15 +498,15 @@
 		B5B31EA920B373A3002DBEC8 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31EAA20B373A3002DBEC8 /* BVProductSearchQuery.swift */,
-				B5B31EAB20B373A3002DBEC8 /* BVCommentQuery.swift */,
 				B5B31EAC20B373A3002DBEC8 /* BVAuthorQuery.swift */,
-				B5B31EAD20B373A3002DBEC8 /* BVProductQuery.swift */,
+				B5B31EAB20B373A3002DBEC8 /* BVCommentQuery.swift */,
 				B5B31EAE20B373A3002DBEC8 /* BVCommentsQuery.swift */,
+				B5B31EAD20B373A3002DBEC8 /* BVProductQuery.swift */,
+				B5B31EAA20B373A3002DBEC8 /* BVProductSearchQuery.swift */,
 				B5B31EAF20B373A3002DBEC8 /* BVProductsQuery.swift */,
+				B5B31EB220B373A3002DBEC8 /* BVProductStatisticsQuery.swift */,
 				B5B31EB020B373A3002DBEC8 /* BVQuestionQuery.swift */,
 				B5B31EB120B373A3002DBEC8 /* BVReviewQuery.swift */,
-				B5B31EB220B373A3002DBEC8 /* BVProductStatisticsQuery.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -514,9 +514,9 @@
 		B5B31EB420B373A3002DBEC8 /* Sorting & Filtering */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31EB520B373A3002DBEC8 /* Types */,
-				B5B31ECB20B373A3002DBEC8 /* BVRelationalFilterOperator.swift */,
 				B5B31ECC20B373A3002DBEC8 /* BVMonotonicSortOrder.swift */,
+				B5B31ECB20B373A3002DBEC8 /* BVRelationalFilterOperator.swift */,
+				B5B31EB520B373A3002DBEC8 /* Types */,
 			);
 			path = "Sorting & Filtering";
 			sourceTree = "<group>";
@@ -524,27 +524,27 @@
 		B5B31EB520B373A3002DBEC8 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31EB620B373A3002DBEC8 /* BVAuthorStat.swift */,
-				B5B31EB720B373A3002DBEC8 /* BVProductStatisticsFilter.swift */,
-				B5B31EB820B373A3002DBEC8 /* BVCommentInclude.swift */,
-				B5B31EB920B373A3002DBEC8 /* BVProductStatisticsStat.swift */,
-				B5B31EBA20B373A3002DBEC8 /* BVProductSort.swift */,
-				B5B31EBB20B373A3002DBEC8 /* BVAuthorSort.swift */,
-				B5B31EBC20B373A3002DBEC8 /* BVAnswerSort.swift */,
-				B5B31EBD20B373A3002DBEC8 /* BVReviewFilter.swift */,
-				B5B31EBE20B373A3002DBEC8 /* BVAuthorInclude.swift */,
-				B5B31EBF20B373A3002DBEC8 /* BVProductStat.swift */,
-				B5B31EC020B373A3002DBEC8 /* BVCommentSort.swift */,
-				B5B31EC120B373A3002DBEC8 /* BVAuthorFilter.swift */,
-				B5B31EC220B373A3002DBEC8 /* BVReviewSort.swift */,
-				B5B31EC320B373A3002DBEC8 /* BVQuestionInclude.swift */,
-				B5B31EC420B373A3002DBEC8 /* BVQuestionFilter.swift */,
-				B5B31EC520B373A3002DBEC8 /* BVProductFilter.swift */,
-				B5B31EC620B373A3002DBEC8 /* BVQuestionSort.swift */,
 				B5B31EC720B373A3002DBEC8 /* BVAnswerFilter.swift */,
-				B5B31EC820B373A3002DBEC8 /* BVProductInclude.swift */,
+				B5B31EBC20B373A3002DBEC8 /* BVAnswerSort.swift */,
+				B5B31EC120B373A3002DBEC8 /* BVAuthorFilter.swift */,
+				B5B31EBE20B373A3002DBEC8 /* BVAuthorInclude.swift */,
+				B5B31EBB20B373A3002DBEC8 /* BVAuthorSort.swift */,
+				B5B31EB620B373A3002DBEC8 /* BVAuthorStat.swift */,
 				B5B31EC920B373A3002DBEC8 /* BVCommentFilter.swift */,
+				B5B31EB820B373A3002DBEC8 /* BVCommentInclude.swift */,
+				B5B31EC020B373A3002DBEC8 /* BVCommentSort.swift */,
+				B5B31EC520B373A3002DBEC8 /* BVProductFilter.swift */,
+				B5B31EC820B373A3002DBEC8 /* BVProductInclude.swift */,
+				B5B31EBA20B373A3002DBEC8 /* BVProductSort.swift */,
+				B5B31EBF20B373A3002DBEC8 /* BVProductStat.swift */,
+				B5B31EB720B373A3002DBEC8 /* BVProductStatisticsFilter.swift */,
+				B5B31EB920B373A3002DBEC8 /* BVProductStatisticsStat.swift */,
+				B5B31EC420B373A3002DBEC8 /* BVQuestionFilter.swift */,
+				B5B31EC320B373A3002DBEC8 /* BVQuestionInclude.swift */,
+				B5B31EC620B373A3002DBEC8 /* BVQuestionSort.swift */,
+				B5B31EBD20B373A3002DBEC8 /* BVReviewFilter.swift */,
 				B5B31ECA20B373A3002DBEC8 /* BVReviewInclude.swift */,
+				B5B31EC220B373A3002DBEC8 /* BVReviewSort.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -552,10 +552,10 @@
 		B5B31ECF20B373A3002DBEC8 /* Submission */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31ED020B373A3002DBEC8 /* BVConversationsSubmissionResponse.swift */,
-				B5B31ED120B373A3002DBEC8 /* BVConversationsSubmissionable.swift */,
-				B5B31ED220B373A3002DBEC8 /* Types */,
 				B5B31EDB20B373A3002DBEC8 /* BVConversationsSubmission.swift */,
+				B5B31ED120B373A3002DBEC8 /* BVConversationsSubmissionable.swift */,
+				B5B31ED020B373A3002DBEC8 /* BVConversationsSubmissionResponse.swift */,
+				B5B31ED220B373A3002DBEC8 /* Types */,
 			);
 			path = Submission;
 			sourceTree = "<group>";
@@ -563,14 +563,14 @@
 		B5B31ED220B373A3002DBEC8 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31ED320B373A3002DBEC8 /* BVQuestionSubmission.swift */,
 				B5B31ED420B373A3002DBEC8 /* BVAnswerSubmission.swift */,
-				B5B31ED520B373A3002DBEC8 /* BVFeedbackSubmission.swift */,
-				B5B31ED620B373A3002DBEC8 /* BVPhotoSubmission.swift */,
-				B5B31ED720B373A3002DBEC8 /* BVUASSubmission.swift */,
-				B5B31ED820B373A3002DBEC8 /* BVReviewSubmission.swift */,
-				B5B31ED920B373A3002DBEC8 /* BVMediaSubmission.swift */,
 				B5B31EDA20B373A3002DBEC8 /* BVCommentSubmission.swift */,
+				B5B31ED520B373A3002DBEC8 /* BVFeedbackSubmission.swift */,
+				B5B31ED920B373A3002DBEC8 /* BVMediaSubmission.swift */,
+				B5B31ED620B373A3002DBEC8 /* BVPhotoSubmission.swift */,
+				B5B31ED320B373A3002DBEC8 /* BVQuestionSubmission.swift */,
+				B5B31ED820B373A3002DBEC8 /* BVReviewSubmission.swift */,
+				B5B31ED720B373A3002DBEC8 /* BVUASSubmission.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -619,14 +619,14 @@
 		B5B31F3020B373D8002DBEC8 /* Display */ = {
 			isa = PBXGroup;
 			children = (
-				B5B31F3120B373D8002DBEC8 /* BVQueryTest.swift */,
-				B5B31F3220B373D8002DBEC8 /* BVProductStatisticsQueryTest.swift */,
+				B5B31F3820B373D8002DBEC8 /* BVAuthorQueryTest.swift */,
 				B5B31F3320B373D8002DBEC8 /* BVCommentQueryTest.swift */,
 				B5B31F3420B373D8002DBEC8 /* BVProductQueryTest.swift */,
-				B5B31F3520B373D8002DBEC8 /* BVQuestionQueryTest.swift */,
+				B5B31F3220B373D8002DBEC8 /* BVProductStatisticsQueryTest.swift */,
+				B5B31F3120B373D8002DBEC8 /* BVQueryTest.swift */,
 				B5B31F3620B373D8002DBEC8 /* BVQueryParameterTest.swift */,
+				B5B31F3520B373D8002DBEC8 /* BVQuestionQueryTest.swift */,
 				B5B31F3720B373D8002DBEC8 /* BVReviewQueryTest.swift */,
-				B5B31F3820B373D8002DBEC8 /* BVAuthorQueryTest.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -635,9 +635,9 @@
 			isa = PBXGroup;
 			children = (
 				B5B31F3A20B373D8002DBEC8 /* BVAnswerSubmissionTests.swift */,
-				B5B31F3B20B373D8002DBEC8 /* BVPhotoSubmissionTest.swift */,
 				B5B31F3C20B373D8002DBEC8 /* BVCommentSubmissionTest.swift */,
 				B5B31F3D20B373D8002DBEC8 /* BVFeedbackSubmissionTest.swift */,
+				B5B31F3B20B373D8002DBEC8 /* BVPhotoSubmissionTest.swift */,
 				B5B31F3E20B373D8002DBEC8 /* BVQuestionSubmissionTest.swift */,
 				B5B31F3F20B373D8002DBEC8 /* BVReviewSubmissionTest.swift */,
 			);
@@ -794,7 +794,7 @@
 				B5B31F1320B373A3002DBEC8 /* BVQuestionSort.swift in Sources */,
 				B5B31F1D20B373A3002DBEC8 /* BVConversationsSubmissionable.swift in Sources */,
 				B5B31F1220B373A3002DBEC8 /* BVProductFilter.swift in Sources */,
-				B5B31E5B20B37383002DBEC8 /* BVAnalyticsEventEventable.swift in Sources */,
+				B5B31E5B20B37383002DBEC8 /* BVAnalyticsEventable.swift in Sources */,
 				B5B31EFD20B373A3002DBEC8 /* BVCommentsQuery.swift in Sources */,
 				B5B31E8020B3739A002DBEC8 /* BVInternalQueryRequestable.swift in Sources */,
 				B5B31EF820B373A3002DBEC8 /* BVConversationsQueryParameter.swift in Sources */,
