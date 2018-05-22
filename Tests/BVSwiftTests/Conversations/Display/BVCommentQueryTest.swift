@@ -12,19 +12,19 @@ class BVCommentQueryTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
-    return BVConversationsConfiguration.display(
-      clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
-      configType: .staging(clientId: "apitestcustomer"))
-  }()
-  
-  override func setUp() {
-    super.setUp()
     
     let analyticsConfig: BVAnalyticsConfiguration =
       .dryRun(
         configType: .staging(clientId: "apitestcustomer"))
     
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
+    return BVConversationsConfiguration.display(
+      clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+  
+  override func setUp() {
+    super.setUp()
     
     BVPixel.skipAllPixelEvents = true
   }

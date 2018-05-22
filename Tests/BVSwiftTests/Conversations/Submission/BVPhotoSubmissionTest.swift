@@ -39,9 +39,15 @@ class BVPhotoSubmissionTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
     return BVConversationsConfiguration.all(
       clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
-      configType: .staging(clientId: "apitestcustomer"))
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -50,12 +56,6 @@ class BVPhotoSubmissionTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "apitestcustomer"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
     
     BVPixel.skipAllPixelEvents = true
   }
