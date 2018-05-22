@@ -15,9 +15,15 @@ class BVAuthorQueryTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "conciergeapidocumentation"))
+    
     return BVConversationsConfiguration.display(
       clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
-      configType: .staging(clientId: "conciergeapidocumentation"))
+      configType: .staging(clientId: "conciergeapidocumentation"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession: URLSession = {
@@ -26,12 +32,6 @@ class BVAuthorQueryTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "conciergeapidocumentation"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
     
     BVPixel.skipAllPixelEvents = true
   }
@@ -241,11 +241,16 @@ class BVAuthorQueryTest: XCTestCase {
     let expectation =
       self.expectation(description: "testAuthorQueryDisplayFailure")
     
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "conciergeapidocumentation"))
+    
     let badConfig: BVConversationsConfiguration =
       BVConversationsConfiguration.display(
         clientKey: "badkey",
         configType: .staging(
-          clientId: "conciergeapidocumentation"))
+          clientId: "conciergeapidocumentation"),
+        analyticsConfig: analyticsConfig)
     
     let authorQuery = BVAuthorQuery(authorId: "badauthorid")
       .configure(badConfig)

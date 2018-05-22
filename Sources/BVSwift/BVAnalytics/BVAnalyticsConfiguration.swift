@@ -19,6 +19,12 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
     }
   }
   
+  public var subConfigurations: [BVConfiguration]? {
+    get {
+      return nil
+    }
+  }
+  
   public var type: BVConfigurationType {
     get {
       switch self {

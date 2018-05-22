@@ -15,9 +15,15 @@ class BVQuestionSubmissionTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
     return BVConversationsConfiguration.all(
       clientKey: "2cpdrhohmgmwfz8vqyo48f52g",
-      configType: .staging(clientId: "apitestcustomer"))
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -27,17 +33,13 @@ class BVQuestionSubmissionTest: XCTestCase {
   override func setUp() {
     super.setUp()
     
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "conciergeapidocumentation"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
-    
     BVPixel.skipAllPixelEvents = true
   }
   
   override func tearDown() {
     super.tearDown()
+    
+    BVPixel.skipAllPixelEvents = false
   }
   
   func testSubmitQuestionWithPhoto() {
@@ -125,7 +127,8 @@ class BVQuestionSubmissionTest: XCTestCase {
   }
   
   func testSubmitQuestionFailure() {
-    let expectation = self.expectation(description: "testSubmitQuestionFailure")
+    let expectation =
+      self.expectation(description: "testSubmitQuestionFailure")
     
     let question: BVQuestion =
       BVQuestion(
@@ -190,8 +193,8 @@ class BVQuestionSubmissionTest: XCTestCase {
     _ action : BVConversationsSubmissionAction) -> BVQuestionSubmission? {
     
     let questionDetails: String =
-      "Question body Question body Question body Question body Question body " +
-    "Question body Question body"
+      "Question body Question body Question body Question body Question " +
+    "body Question body Question body"
     
     let question: BVQuestion =
       BVQuestion(

@@ -48,12 +48,23 @@ public class BVLogger {
     }
   }
   
+  public var logLevel: BVLogLevel {
+    get {
+      return internalLogLevel
+    }
+    set(newValue) {
+      internalLogLevel = newValue
+    }
+  }
+  
+  /// Private
   @available(iOS 10.0, *)
   lazy private var logger = {
     return OSLog(subsystem: "com.bvswift.BVLogger", category: "Module")
   }()
   
-  private var logLevel: BVLogLevel = .error
+  private var internalLogLevel: BVLogLevel = .error
+
   private init() {}
   
   private func enqueue(_ msg: String, logLevel: BVLogLevel) {

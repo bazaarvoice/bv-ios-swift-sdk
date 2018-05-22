@@ -10,19 +10,41 @@ import Foundation
 
 public enum BVConversationsConfiguration: BVConfiguration {
   
-  case all(clientKey: String, configType: BVConfigurationType)
-  case display(clientKey: String, configType: BVConfigurationType)
-  case submission(clientKey: String, configType: BVConfigurationType)
+  case all(
+    clientKey: String,
+    configType: BVConfigurationType,
+    analyticsConfig: BVAnalyticsConfiguration)
+  case display(
+    clientKey: String,
+    configType: BVConfigurationType,
+    analyticsConfig: BVAnalyticsConfiguration)
+  case submission(
+    clientKey: String,
+    configType: BVConfigurationType,
+    analyticsConfig: BVAnalyticsConfiguration)
   
   public var configurationKey: String {
     get {
       switch self {
-      case let .all(clientKey, _):
+      case let .all(clientKey, _, _):
         return clientKey
-      case let .display(clientKey, _):
+      case let .display(clientKey, _, _):
         return clientKey
-      case let .submission(clientKey, _):
+      case let .submission(clientKey, _, _):
         return clientKey
+      }
+    }
+  }
+  
+  public var subConfigurations: [BVConfiguration]? {
+    get {
+      switch self {
+      case let .all(_, _, analyticsConfig):
+        return [analyticsConfig]
+      case let .display(_, _, analyticsConfig):
+        return [analyticsConfig]
+      case let .submission(_, _, analyticsConfig):
+        return [analyticsConfig]
       }
     }
   }
@@ -30,11 +52,11 @@ public enum BVConversationsConfiguration: BVConfiguration {
   public var type: BVConfigurationType {
     get {
       switch self {
-      case let .all(_, configType):
+      case let .all(_, configType, _):
         return configType
-      case let .display(_, configType):
+      case let .display(_, configType, _):
         return configType
-      case let .submission(_, configType):
+      case let .submission(_, configType, _):
         return configType
       }
     }
@@ -57,12 +79,19 @@ public enum BVConversationsConfiguration: BVConfiguration {
       return nil
     }
     
+    guard let analytics =
+      BVAnalyticsConfiguration(config, keyValues: keyValues) else {
+        return nil
+    }
+    
     guard let clientId: String =
       conversationsKeyValues[BVConstants.clientKey] as? String else {
         return nil
     }
     
-    self = .all(clientKey: clientId, configType: config)
+    self = .all(clientKey: clientId,
+                configType: config,
+                analyticsConfig: analytics)
   }
   
   public func isSameAs(_ config: BVConfiguration) -> Bool {
@@ -79,17 +108,23 @@ extension BVConversationsConfiguration: Equatable {
     (lhs: BVConversationsConfiguration,
      rhs: BVConversationsConfiguration) -> Bool {
     switch (lhs, rhs) {
-    case let (.all(lhsClientKey, lhsType),
-              .all(rhsClientKey, rhsType)) where
-      lhsClientKey == rhsClientKey && lhsType == rhsType:
+    case let (.all(lhsClientKey, lhsType, lhsAnalytics),
+              .all(rhsClientKey, rhsType, rhsAnalytics)) where
+      lhsClientKey == rhsClientKey &&
+        lhsType == rhsType &&
+        lhsAnalytics == rhsAnalytics:
       return true
-    case let (.display(lhsClientKey, lhsType),
-              .display(rhsClientKey, rhsType)) where
-      lhsClientKey == rhsClientKey && lhsType == rhsType:
+    case let (.display(lhsClientKey, lhsType, lhsAnalytics),
+              .display(rhsClientKey, rhsType, rhsAnalytics)) where
+      lhsClientKey == rhsClientKey &&
+        lhsType == rhsType &&
+        lhsAnalytics == rhsAnalytics:
       return true
-    case let (.submission(lhsClientKey, lhsType),
-              .submission(rhsClientKey, rhsType)) where
-      lhsClientKey == rhsClientKey && lhsType == rhsType:
+    case let (.submission(lhsClientKey, lhsType, lhsAnalytics),
+              .submission(rhsClientKey, rhsType, rhsAnalytics)) where
+      lhsClientKey == rhsClientKey &&
+        lhsType == rhsType &&
+        lhsAnalytics == rhsAnalytics:
       return true
     default:
       return false

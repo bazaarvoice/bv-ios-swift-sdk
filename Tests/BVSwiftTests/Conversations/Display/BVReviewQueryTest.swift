@@ -15,9 +15,15 @@ class BVReviewQueryTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
     return BVConversationsConfiguration.display(
       clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
-      configType: .staging(clientId: "apitestcustomer"))
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -26,14 +32,6 @@ class BVReviewQueryTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    
-    //mockingjayRemoveStubOnTearDown = true
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "apitestcustomer"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
     
     BVPixel.skipAllPixelEvents = true
   }
@@ -84,7 +82,15 @@ class BVReviewQueryTest: XCTestCase {
           review.title, "Morbi nibh risus, mattis id placerat a massa nunc.")
         XCTAssertEqual(
           review.reviewText,
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rhoncus scelerisque semper. Morbi in sapien sit amet justo eleifend pellentesque! Cras sollicitudin, quam in ullamcorper faucibus, augue metus blandit justo, vitae ullamcorper tellus quam non purus. Fusce gravida rhoncus placerat. Integer tempus nunc sed elit mollis ut venenatis felis volutpat. Sed a velit et lacus lobortis aliquet? Donec dolor quam, pharetra vitae commodo et, mattis quis nibh? Quisque ultrices neque et lacus volutpat.")
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed " +
+            "rhoncus scelerisque semper. Morbi in sapien sit amet justo " +
+            "eleifend pellentesque! Cras sollicitudin, quam in ullamcorper " +
+            "faucibus, augue metus blandit justo, vitae ullamcorper tellus " +
+            "quam non purus. Fusce gravida rhoncus placerat. Integer tempus " +
+            "nunc sed elit mollis ut venenatis felis volutpat. Sed a velit " +
+            "et lacus lobortis aliquet? Donec dolor quam, pharetra vitae " +
+            "commodo et, mattis quis nibh? Quisque ultrices neque et lacus " +
+          "volutpat.")
         XCTAssertEqual(review.moderationStatus, "APPROVED")
         XCTAssertEqual(review.reviewId, "191975")
         XCTAssertNotNil(review.productId)
@@ -120,7 +126,11 @@ class BVReviewQueryTest: XCTestCase {
         
         XCTAssertEqual(
           firstPhoto.caption,
-          "Etiam malesuada ultricies urna in scelerisque. Sed viverra blandit nibh non egestas. Sed rhoncus, ipsum in vehicula imperdiet, purus lectus sodales erat, eget ornare lacus lectus ac leo. Suspendisse tristique sollicitudin ultricies. Aliquam erat volutpat.")
+          "Etiam malesuada ultricies urna in scelerisque. Sed viverra " +
+            "blandit nibh non egestas. Sed rhoncus, ipsum in vehicula " +
+            "imperdiet, purus lectus sodales erat, eget ornare lacus lectus " +
+            "ac leo. Suspendisse tristique sollicitudin ultricies. Aliquam " +
+          "erat volutpat.")
         XCTAssertEqual(firstPhoto.photoId, "72586")
         XCTAssertNotNil(firstPhoto.photoSizes)
         
@@ -374,7 +384,11 @@ class BVReviewQueryTest: XCTestCase {
         XCTAssertEqual(photos.count, 1)
         XCTAssertEqual(
           photo.caption,
-          "Etiam malesuada ultricies urna in scelerisque. Sed viverra blandit nibh non egestas. Sed rhoncus, ipsum in vehicula imperdiet, purus lectus sodales erat, eget ornare lacus lectus ac leo. Suspendisse tristique sollicitudin ultricies. Aliquam erat volutpat.")
+          "Etiam malesuada ultricies urna in scelerisque. Sed viverra " +
+            "blandit nibh non egestas. Sed rhoncus, ipsum in vehicula " +
+            "imperdiet, purus lectus sodales erat, eget ornare lacus lectus " +
+            "ac leo. Suspendisse tristique sollicitudin ultricies. Aliquam " +
+          "erat volutpat.")
         XCTAssertEqual(photo.photoId, "72586")
         XCTAssertNotNil(thumbnail.url)
         XCTAssertTrue(
@@ -423,7 +437,8 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 0)
       .include(.comments)
-      .filter(.reviewId, op: .equalTo, value: "192463") // This review is know to have a comment
+      .filter(.reviewId, op: .equalTo, value: "192463")
+      // This review is know to have a comment
       .configure(BVReviewQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         
@@ -445,7 +460,8 @@ class BVReviewQueryTest: XCTestCase {
             return
         }
         
-        XCTAssertEqual(reviews.count, 1) // We filtered on a review id, so there should only be one
+        XCTAssertEqual(reviews.count, 1)
+        // We filtered on a review id, so there should only be one
         XCTAssertTrue(comments.count >= 1)
         XCTAssertNotNil(comment.authorId)
         XCTAssertNotNil(comment.badges)

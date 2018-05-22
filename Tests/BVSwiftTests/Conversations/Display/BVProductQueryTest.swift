@@ -15,9 +15,15 @@ class BVProductQueryTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
     return BVConversationsConfiguration.display(
       clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
-      configType: .staging(clientId: "apitestcustomer"))
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -26,12 +32,6 @@ class BVProductQueryTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "apitestcustomer"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
     
     BVPixel.skipAllPixelEvents = true
   }
@@ -81,7 +81,11 @@ class BVProductQueryTest: XCTestCase {
         XCTAssertEqual(brand.name, "mysh")
         XCTAssertEqual(
           product.productDescription,
-          "Our pinpoint oxford is crafted from only the finest 80\'s two-ply cotton fibers.Single-needle stitching on all seams for a smooth flat appearance. Tailored with our Traditional\n                straight collar and button cuffs. Machine wash. Imported.")
+          "Our pinpoint oxford is crafted from only the finest 80\'s " +
+            "two-ply cotton fibers.Single-needle stitching on all seams for " +
+            "a smooth flat appearance. Tailored with our Traditional\n" +
+            "                straight collar and button cuffs. " +
+          "Machine wash. Imported.")
         XCTAssertEqual(product.brandExternalId, "cskg0snv1x3chrqlde0zklodb")
         XCTAssertEqual(
           product.imageUrl?.absoluteString,
@@ -152,12 +156,14 @@ class BVProductQueryTest: XCTestCase {
         XCTAssertEqual(reviews.count, 10)
         XCTAssertEqual(questions.count, 5)
         
-        // Iterate all the included reviews and verify that all the reviews have isRatingsOnly = false
+        // Iterate all the included reviews and verify that all the reviews
+        // have isRatingsOnly = false
         for review in reviews {
           XCTAssertFalse(review.isRatingsOnly!)
         }
         
-        // Iterate all the included questions and verify that all the questions have isFeatured = false
+        // Iterate all the included questions and verify that all the
+        // questions have isFeatured = false
         for question in questions {
           XCTAssertFalse(question.isFeatured!)
         }
