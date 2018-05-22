@@ -10,10 +10,20 @@ import Foundation
 
 internal class BVAnalyticsManager {
   
-  private static var clientId: String? {
+  private static var analyticsConfiguration: BVAnalyticsConfiguration? {
     get {
       guard let analyticsConfig: BVAnalyticsConfiguration =
         BVManager.sharedManager.getConfiguration() else {
+          return nil
+      }
+      return analyticsConfig
+    }
+  }
+  
+  private static var clientId: String? {
+    get {
+      guard let analyticsConfig =
+        BVAnalyticsManager.analyticsConfiguration else {
           return nil
       }
       return analyticsConfig.configurationKey
@@ -161,7 +171,7 @@ internal class BVAnalyticsManager {
     _ event: BVAnalyticsEventable?) -> BVAnalyticsEventable? {
     
     guard let analyticsConfig: BVAnalyticsConfiguration =
-      BVManager.sharedManager.getConfiguration(),
+      BVAnalyticsManager.analyticsConfiguration,
       var mutate: BVAnalyticsEventable = event else {
         assert(
           false, "No valid BVAnalyticsConfiguration for BVAnalyticsManager")
@@ -205,8 +215,8 @@ internal class BVAnalyticsManager {
   private func postBatch(
     batch: BVAnalyticsEventBatch, completion: @escaping (([Error]?) -> Void)) {
     
-    guard let analyticsConfig: BVAnalyticsConfiguration =
-      BVManager.sharedManager.getConfiguration() else {
+    guard let analyticsConfig =
+      BVAnalyticsManager.analyticsConfiguration else {
         assert(
           false, "No valid BVAnalyticsConfiguration for BVAnalyticsManager")
         return 

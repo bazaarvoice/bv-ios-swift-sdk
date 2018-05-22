@@ -13,9 +13,15 @@ class BVCommentSubmissionTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "conciergeapidocumentation"))
+    
     return BVConversationsConfiguration.all(
       clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
-      configType: .staging(clientId: "conciergeapidocumentation"))
+      configType: .staging(clientId: "conciergeapidocumentation"),
+      analyticsConfig: analyticsConfig)
   }()
   
   private static var privateSession:URLSession = {
@@ -25,17 +31,13 @@ class BVCommentSubmissionTest: XCTestCase {
   override func setUp() {
     super.setUp()
     
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .dryRun(
-        configType: .staging(clientId: "conciergeapidocumentation"))
-    
-    BVManager.sharedManager.addConfiguration(analyticsConfig)
-    
     BVPixel.skipAllPixelEvents = true
   }
   
   override func tearDown() {
     super.tearDown()
+    
+    BVPixel.skipAllPixelEvents = false
   }
   
   func testSubmitReviewComment() {
@@ -105,7 +107,8 @@ class BVCommentSubmissionTest: XCTestCase {
   
   func testSumbitCommentWithError() {
     
-    let expectation = self.expectation(description: "testSumbitCommentWithError")
+    let expectation =
+      self.expectation(description: "testSumbitCommentWithError")
     
     let commentText = "short text"
     let reviewId = "12345"

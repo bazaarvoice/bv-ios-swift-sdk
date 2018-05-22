@@ -1,6 +1,6 @@
 //
 //
-//  BVAnalyticsEvenViewed.swift
+//  BVAnalyticsEventViewed.swift
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
@@ -12,7 +12,7 @@ extension BVAnalyticsEvent {
   internal func serializeViewed(
     _ nonPII: Bool = false) -> [String : BVAnyEncodable] {
     
-    guard case .personalization = self else {
+    guard case .viewed = self else {
       fatalError()
     }
     

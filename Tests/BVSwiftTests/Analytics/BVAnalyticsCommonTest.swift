@@ -13,12 +13,6 @@ import XCTest
 
 class BVAnalyticsCommonTest: XCTestCase {
   
-  private static var config: BVConfiguration = { () -> BVConfiguration in
-    return BVConversationsConfiguration.display(
-      clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
-      configType: .staging(clientId: "conciergeapidocumentation"))
-  }()
-  
   private static var privateSession: URLSession = {
     return URLSession(configuration: .default)
   }()
