@@ -39,7 +39,10 @@ public class BVCommentsQuery: BVConversationsQuery<BVComment> {
                   categoryId: nil,
                   additional: nil)
               
-              BVPixel.track(commentImpressionEvent)
+              BVPixel.track(
+                commentImpressionEvent,
+                analyticConfiguration:
+                self.configuration?.analyticsConfiguration)
             }
           }
         }
