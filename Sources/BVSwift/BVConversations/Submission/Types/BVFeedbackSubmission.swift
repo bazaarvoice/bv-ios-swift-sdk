@@ -71,7 +71,9 @@ public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
             productId: contentId,
             brand: nil,
             additional: additional)
-        BVPixel.track(analyticEvent)
+        BVPixel.track(
+          analyticEvent,
+          analyticConfiguration: self.configuration?.analyticsConfiguration)
       }
     }
   }

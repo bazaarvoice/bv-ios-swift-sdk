@@ -41,7 +41,9 @@ public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
         productId: id,
         brand: nil,
         additional: nil)
-    BVPixel.track(analyticsEvent)
+    BVPixel.track(
+      analyticsEvent,
+      analyticConfiguration: self.configuration?.analyticsConfiguration)
   }
   
   override func conversationsPostflightDidSubmitPhotoUpload(
@@ -58,7 +60,9 @@ public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
         productId: id,
         brand: nil,
         additional: ["detail1" : "Answer"])
-    BVPixel.track(analyticsEvent)
+    BVPixel.track(
+      analyticsEvent,
+      analyticConfiguration: self.configuration?.analyticsConfiguration)
   }
 }
 
