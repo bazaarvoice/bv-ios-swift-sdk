@@ -24,6 +24,12 @@ public class BVPixel {
         "the documentation.")
     }
     
+    guard checkForConfiguration() else {
+      fatalError(
+        "No BVAnalyticsConfiguration is set for analytics, please refer to " +
+        "the documentation.")
+    }
+    
     if skipAllPixelEvents {
       return true
     }
