@@ -47,7 +47,7 @@ internal struct BVAnalyticsEventBatch: BVSubmissionable {
 }
 
 extension BVAnalyticsEventBatch: BVSubmissionableInternal {
-  public static var postResource: String? {
+  internal static var postResource: String? {
     get {
       return "event"
     }
