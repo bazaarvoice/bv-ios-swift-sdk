@@ -38,14 +38,7 @@ public enum BVConversationsConfiguration: BVConfiguration {
   
   public var subConfigurations: [BVConfiguration]? {
     get {
-      switch self {
-      case let .all(_, _, analyticsConfig):
-        return [analyticsConfig]
-      case let .display(_, _, analyticsConfig):
-        return [analyticsConfig]
-      case let .submission(_, _, analyticsConfig):
-        return [analyticsConfig]
-      }
+      return [analyticsConfiguration]
     }
   }
   
@@ -70,6 +63,19 @@ public enum BVConversationsConfiguration: BVConfiguration {
       }
       
       return BVConstants.BVConversations.stagingEndpoint
+    }
+  }
+  
+  internal var analyticsConfiguration: BVAnalyticsConfiguration {
+    get {
+      switch self {
+      case let .all(_, _, analyticsConfig):
+        return analyticsConfig
+      case let .display(_, _, analyticsConfig):
+        return analyticsConfig
+      case let .submission(_, _, analyticsConfig):
+        return analyticsConfig
+      }
     }
   }
   
