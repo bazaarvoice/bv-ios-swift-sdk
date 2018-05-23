@@ -144,6 +144,8 @@
 		B5B31F6C20B376D3002DBEC8 /* ph.png in Resources */ = {isa = PBXBuildFile; fileRef = B5B31F2A20B373D8002DBEC8 /* ph.png */; };
 		B5B31F6D20B376D3002DBEC8 /* skelly_android.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5B31F2B20B373D8002DBEC8 /* skelly_android.jpg */; };
 		B5B31F6E20B376D3002DBEC8 /* testJPEGPhotoResourceDecode.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B31F2C20B373D8002DBEC8 /* testJPEGPhotoResourceDecode.json */; };
+		B5B31F7220B5BC93002DBEC8 /* BVNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31F7120B5BC93002DBEC8 /* BVNetworkingManager.swift */; };
+		B5B31F7420B5CF61002DBEC8 /* BVManagerConversations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31F7320B5CF61002DBEC8 /* BVManagerConversations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,6 +299,8 @@
 		B5B31F3F20B373D8002DBEC8 /* BVReviewSubmissionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVReviewSubmissionTest.swift; sourceTree = "<group>"; };
 		B5B31F4120B373D8002DBEC8 /* BVAnalyticsCommonTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsCommonTest.swift; sourceTree = "<group>"; };
 		B5B31F4220B373D8002DBEC8 /* BVPixelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVPixelTest.swift; sourceTree = "<group>"; };
+		B5B31F7120B5BC93002DBEC8 /* BVNetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVNetworkingManager.swift; sourceTree = "<group>"; };
+		B5B31F7320B5CF61002DBEC8 /* BVManagerConversations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVManagerConversations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +404,7 @@
 				B5B31E5E20B3739A002DBEC8 /* BVDispatch.swift */,
 				B5B31E6D20B3739A002DBEC8 /* BVError.swift */,
 				B5B31E5F20B3739A002DBEC8 /* BVManager.swift */,
+				B5B31F7120B5BC93002DBEC8 /* BVNetworkingManager.swift */,
 				B5B31E6120B3739A002DBEC8 /* BVParameter.swift */,
 				B5B31E6520B3739A002DBEC8 /* BVLogger.swift */,
 				B5B31E6020B3739A002DBEC8 /* BVURLRequestable.swift */,
@@ -443,6 +448,7 @@
 				B5B31E8A20B373A3002DBEC8 /* BVConversationsConstants.swift */,
 				B5B31E8B20B373A3002DBEC8 /* BVConversationsConfiguration.swift */,
 				B5B31E8D20B373A3002DBEC8 /* BVConversationsError.swift */,
+				B5B31F7320B5CF61002DBEC8 /* BVManagerConversations.swift */,
 				B5B31EA720B373A3002DBEC8 /* Display */,
 				B5B31E8E20B373A3002DBEC8 /* Model */,
 				B5B31ECF20B373A3002DBEC8 /* Submission */,
@@ -794,6 +800,7 @@
 				B5B31F1320B373A3002DBEC8 /* BVQuestionSort.swift in Sources */,
 				B5B31F1D20B373A3002DBEC8 /* BVConversationsSubmissionable.swift in Sources */,
 				B5B31F1220B373A3002DBEC8 /* BVProductFilter.swift in Sources */,
+				B5B31F7420B5CF61002DBEC8 /* BVManagerConversations.swift in Sources */,
 				B5B31E5B20B37383002DBEC8 /* BVAnalyticsEventable.swift in Sources */,
 				B5B31EFD20B373A3002DBEC8 /* BVCommentsQuery.swift in Sources */,
 				B5B31E8020B3739A002DBEC8 /* BVInternalQueryRequestable.swift in Sources */,
@@ -819,6 +826,7 @@
 				B5B31EF120B373A3002DBEC8 /* BVDistributionValue.swift in Sources */,
 				B5B31EE420B373A3002DBEC8 /* BVAnswer.swift in Sources */,
 				B5B31F1C20B373A3002DBEC8 /* BVConversationsSubmissionResponse.swift in Sources */,
+				B5B31F7220B5BC93002DBEC8 /* BVNetworkingManager.swift in Sources */,
 				B5B31F0A20B373A3002DBEC8 /* BVReviewFilter.swift in Sources */,
 				B5B31F2120B373A3002DBEC8 /* BVPhotoSubmission.swift in Sources */,
 				B5B31F0620B373A3002DBEC8 /* BVProductStatisticsStat.swift in Sources */,
