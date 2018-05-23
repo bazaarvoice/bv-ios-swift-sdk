@@ -117,6 +117,23 @@ internal extension String {
   }
 }
 
+internal extension Sequence where Iterator.Element == String {
+  var hashValue: Int {
+    get {
+      var hash: Int = 0
+      var first: Bool = true
+      for str in self {
+        if first {
+          hash = str.djb2hash
+          first = false
+        }
+        hash ^= str.hashValue
+      }
+      return hash
+    }
+  }
+}
+
 internal extension Sequence where
 Iterator.Element == (key: String, value: String) {
   func toBVURLQueryItems() -> [URLQueryItem] {

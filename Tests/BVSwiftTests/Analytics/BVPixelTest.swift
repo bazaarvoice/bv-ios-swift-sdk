@@ -15,16 +15,16 @@ class BVPixelTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
-    
-    let analyticsConfig: BVAnalyticsConfiguration =
-      .configuration(
-        locale: Locale.autoupdatingCurrent,
-        configType: .staging(clientId: "conciergeapidocumentation"))
-    
     return BVConversationsConfiguration.display(
       clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
       configType: .staging(clientId: "conciergeapidocumentation"),
       analyticsConfig: analyticsConfig)
+  }()
+  
+  private static var analyticsConfig: BVAnalyticsConfiguration = {
+    return .configuration(
+      locale: Locale.autoupdatingCurrent,
+      configType: .staging(clientId: "conciergeapidocumentation"))
   }()
   
   private static var privateSession: URLSession = {
@@ -33,11 +33,17 @@ class BVPixelTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
+    
     BVManager.sharedManager.addConfiguration(BVPixelTest.config)
+    BVManager.sharedManager.logLevel = .info
+    
+    BVPixel.skipAllPixelEvents = false
   }
   
   override func tearDown() {
     super.tearDown()
+    
+    BVPixel.skipAllPixelEvents = true
   }
   
   func testPixelConversionEvent() {
@@ -240,7 +246,11 @@ class BVPixelTest: XCTestCase {
     // We don't explicitly call BVPixel.track(pageView) because it kicks off a
     // flush for us and we won't be able to check the success of the event
     // because we have to use the callback signature.
-    BVAnalyticsManager.sharedManager.enqueue(analyticsEvent: pageView)
+    BVAnalyticsManager.sharedManager
+      .enqueue(
+        analyticsEvent: pageView,
+        configuration: BVPixelTest.analyticsConfig)
+    
     BVAnalyticsManager.sharedManager.flush
       { (successes: UInt?, errors: [Error]?) in
         if let errs = errors {
@@ -282,7 +292,11 @@ class BVPixelTest: XCTestCase {
     // We don't explicitly call BVPixel.track(personalization) because it kicks
     // off a flush for us and we won't be able to check the success of the event
     // because we have to use the callback signature.
-    BVAnalyticsManager.sharedManager.enqueue(analyticsEvent: personalization)
+    BVAnalyticsManager.sharedManager
+      .enqueue(
+        analyticsEvent: personalization,
+        configuration: BVPixelTest.analyticsConfig)
+    
     BVAnalyticsManager.sharedManager.flush
       { (successes: UInt?, errors: [Error]?) in
         if let errs = errors {

@@ -10,7 +10,7 @@ import Foundation
 
 public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
   
-  private var feedback: BVFeedback?
+  public let feedback: BVFeedback?
   
   public override init?(_ feedback: BVFeedback)  {
     guard let urlQueryItems = feedback.urlQueryItems else {

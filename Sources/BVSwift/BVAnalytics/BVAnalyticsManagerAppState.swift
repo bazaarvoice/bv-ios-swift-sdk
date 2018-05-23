@@ -103,6 +103,16 @@ extension BVAnalyticsManager {
   
   private func enqueueAppStateEvent(_ event: [String : String]) {
     let eventData = event + BVAnalyticsManager.defaultAppState
-    enqueue(analyticsEventable: convertToEventable(eventData))
+    
+    guard let config: BVAnalyticsConfiguration =
+      BVManager.sharedManager.getConfiguration() else {
+        BVLogger.sharedLogger.warning(
+          "No default BVAnalytics configuration was found, skipping app " +
+          "state event logging.")
+        return
+    }
+    
+    enqueue(
+      analyticsEventable: convertToEventable(eventData), configuration: config)
   }
 }

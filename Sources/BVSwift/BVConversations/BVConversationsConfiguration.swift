@@ -94,7 +94,7 @@ public enum BVConversationsConfiguration: BVConfiguration {
                 analyticsConfig: analytics)
   }
   
-  public func isSameAs(_ config: BVConfiguration) -> Bool {
+  public func isSameTypeAs(_ config: BVConfiguration) -> Bool {
     guard let conversationsConfig =
       config as? BVConversationsConfiguration else {
         return false
@@ -107,6 +107,11 @@ extension BVConversationsConfiguration: Equatable {
   public static func ==
     (lhs: BVConversationsConfiguration,
      rhs: BVConversationsConfiguration) -> Bool {
+    
+    if lhs.hashValue != rhs.hashValue {
+      return false
+    }
+    
     switch (lhs, rhs) {
     case let (.all(lhsClientKey, lhsType, lhsAnalytics),
               .all(rhsClientKey, rhsType, rhsAnalytics)) where
@@ -128,6 +133,31 @@ extension BVConversationsConfiguration: Equatable {
       return true
     default:
       return false
+    }
+  }
+}
+
+extension BVConversationsConfiguration: Hashable {
+  public var hashValue: Int {
+    switch self {
+    case let .all(clientKey, configType, analyticsConfig):
+      return
+        "all".djb2hash ^
+          clientKey.hashValue ^
+          configType.hashValue ^
+          analyticsConfig.hashValue
+    case let .display(clientKey, configType, analyticsConfig):
+      return
+        "display".djb2hash ^
+          clientKey.hashValue ^
+          configType.hashValue ^
+          analyticsConfig.hashValue
+    case let .submission(clientKey, configType, analyticsConfig):
+      return
+        "submission".djb2hash ^
+          clientKey.hashValue ^
+          configType.hashValue ^
+          analyticsConfig.hashValue
     }
   }
 }
