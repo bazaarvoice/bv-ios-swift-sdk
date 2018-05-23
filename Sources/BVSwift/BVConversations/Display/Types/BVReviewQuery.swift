@@ -48,7 +48,10 @@ public final class BVReviewQuery: BVConversationsQuery<BVReview> {
                   categoryId: product.categoryId,
                   additional: nil)
               
-              BVPixel.track(reviewImpressionEvent)
+              BVPixel.track(
+                reviewImpressionEvent,
+                analyticConfiguration:
+                self.configuration?.analyticsConfiguration)
             }
           }
           
@@ -70,7 +73,10 @@ public final class BVReviewQuery: BVConversationsQuery<BVReview> {
                 rootCategoryId: nil,
                 additional: add)
             
-            BVPixel.track(reviewPageViewEvent)
+            BVPixel.track(
+              reviewPageViewEvent,
+              analyticConfiguration:
+              self.configuration?.analyticsConfiguration)
           }
         }
       }

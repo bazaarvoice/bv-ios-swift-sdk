@@ -32,7 +32,9 @@ public final class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
               productId: "none",
               brand: nil,
               additional: ["page" : self.authorIdPriv, "interaction" : false])
-          BVPixel.track(authorFeatureEvent)
+          BVPixel.track(
+            authorFeatureEvent,
+            analyticConfiguration: self.configuration?.analyticsConfiguration)
         }
       }
     }
