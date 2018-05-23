@@ -41,7 +41,10 @@ public final class BVProductQuery: BVConversationsQuery<BVProduct> {
                     categoryId: product.categoryId,
                     additional: nil)
                 
-                BVPixel.track(reviewImpressionEvent)
+                BVPixel.track(
+                  reviewImpressionEvent,
+                  analyticConfiguration:
+                  self.configuration?.analyticsConfiguration)
               }
             }
           }
@@ -62,7 +65,10 @@ public final class BVProductQuery: BVConversationsQuery<BVProduct> {
                     categoryId: categoryId,
                     additional: nil)
                 
-                BVPixel.track(questionImpressionEvent)
+                BVPixel.track(
+                  questionImpressionEvent,
+                  analyticConfiguration:
+                  self.configuration?.analyticsConfiguration)
               }
             }
           }
@@ -76,7 +82,9 @@ public final class BVProductQuery: BVConversationsQuery<BVProduct> {
               rootCategoryId: nil,
               additional: nil)
           
-          BVPixel.track(productPageView)
+          BVPixel.track(
+            productPageView,
+            analyticConfiguration: self.configuration?.analyticsConfiguration)
         }
       }
     }
