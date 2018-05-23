@@ -18,6 +18,12 @@ public class BVPixel {
     _ analyticsEvent: BVAnalyticsEvent,
     analyticConfiguration: BVAnalyticsConfiguration? = nil) -> Bool {
     
+    guard checkForConfiguration() else {
+      fatalError(
+        "No BVAnalyticsConfiguration is set for analytics, please refer to " +
+        "the documentation.")
+    }
+    
     if skipAllPixelEvents {
       return true
     }
@@ -70,4 +76,12 @@ public class BVPixel {
   }
   
   private init() {}
+  
+  private class func checkForConfiguration() -> Bool {
+    guard let _: BVAnalyticsConfiguration =
+      BVManager.sharedManager.getConfiguration() else {
+        return false
+    }
+    return true
+  }
 }
