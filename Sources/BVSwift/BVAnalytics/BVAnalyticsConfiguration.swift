@@ -80,7 +80,7 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
         locale: Locale(identifier: localeIdentifier), configType: config)
   }
   
-  public func isSameAs(_ config: BVConfiguration) -> Bool {
+  public func isSameTypeAs(_ config: BVConfiguration) -> Bool {
     guard let analyticsConfig =
       config as? BVAnalyticsConfiguration else {
         return false
@@ -93,6 +93,10 @@ extension BVAnalyticsConfiguration: Equatable {
   public static func ==
     (lhs: BVAnalyticsConfiguration, rhs: BVAnalyticsConfiguration) -> Bool {
     
+    if lhs.hashValue != rhs.hashValue {
+      return false
+    }
+    
     switch (lhs, rhs) {
     case let (.configuration(lhsLocale, lhsType),
               .configuration(rhsLocale, rhsType)) where
@@ -103,6 +107,23 @@ extension BVAnalyticsConfiguration: Equatable {
       return true
     default:
       return false
+    }
+  }
+}
+
+extension BVAnalyticsConfiguration: Hashable {
+  public var hashValue: Int {
+    switch self {
+    case let .configuration(locale, configType):
+      var localeHash: Int = 17
+      
+      if let lc = locale {
+        localeHash = lc.hashValue
+      }
+      
+      return localeHash ^ configType.hashValue
+    case let .dryRun(configType):
+      return "dryRun".djb2hash ^ configType.hashValue
     }
   }
 }

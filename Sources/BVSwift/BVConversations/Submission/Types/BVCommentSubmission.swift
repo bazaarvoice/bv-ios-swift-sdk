@@ -10,7 +10,7 @@ import Foundation
 
 public class BVCommentSubmission: BVMediaSubmission<BVComment> {
   
-  private var reviewId: String?
+  public let reviewId: String?
   
   public override init?(_ comment: BVComment) {
     guard let reviewId = comment.reviewId?.urlEncode(),
