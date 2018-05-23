@@ -124,7 +124,12 @@ internal struct BVConversationsQueryResponseInternal
     if let ids: [String] =
       try container
         .decodeIfPresent([String].self, forKey: major) {
-      extraction = ids.flatMap { lookup[$0] }
+      extraction = ids.reduce([]) { (result: [T], id: String) -> [T] in
+        guard let obj = lookup[id] else {
+          return result
+        }
+        return result + [obj]
+      }
     } else if let id: String =
       try container
         .decodeIfPresent(String.self, forKey: minor),

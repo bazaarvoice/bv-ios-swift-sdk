@@ -210,7 +210,7 @@ extension BVQuestion: BVQueryableInternal {
 }
 
 extension BVQuestion: BVSubmissionableInternal {
-  static var postResource: String? {
+  internal static var postResource: String? {
     get {
       return BVConversationsConstants.BVQuestions.postResource
     }

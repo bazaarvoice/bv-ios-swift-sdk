@@ -10,7 +10,7 @@ import Foundation
 
 public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   
-  private var productId: String?
+  public let productId: String?
   
   public override init?(_ review: BVReview) {
     guard let title = review.title,

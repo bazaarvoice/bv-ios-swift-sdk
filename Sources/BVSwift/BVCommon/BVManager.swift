@@ -42,11 +42,22 @@ public class BVManager {
   }()
   
   private var configurations: [BVConfiguration]?
+  private var internalURLSession: URLSession =
+    BVNetworkingManager.sharedManager.networkingSession
   
   private init() {}
   
   /// Public
   public static let sharedManager = BVManager()
+  
+  public var urlSession: URLSession {
+    get {
+      return internalURLSession
+    }
+    set(newValue) {
+      internalURLSession = newValue
+    }
+  }
   
   public var logLevel: BVLogger.BVLogLevel {
     get {
@@ -64,7 +75,7 @@ public class BVManager {
     var configs = configurations ?? [BVConfiguration]()
     
     if !configs.contains(where: { (config: BVConfiguration) -> Bool in
-      config.isSameAs(configuration)
+      config.isSameTypeAs(configuration)
     }) {
       configs.append(configuration)
     }

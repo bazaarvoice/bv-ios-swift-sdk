@@ -10,7 +10,7 @@ import Foundation
 
 public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
   
-  private let questionId: String?
+  public let questionId: String?
   
   public override init?(_ answer: BVAnswer) {
     guard let questionId = answer.questionId?.urlEncode(),

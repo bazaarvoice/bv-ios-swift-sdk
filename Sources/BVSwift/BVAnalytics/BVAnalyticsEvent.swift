@@ -309,5 +309,7 @@ internal protocol BVAnalyticsEventable {
 }
 
 internal typealias BVAnalyticsEventInstance =
-  (event: BVAnalyticsEventable, anonymous: Bool)
+  (event: BVAnalyticsEventable,
+  configuration: BVAnalyticsConfiguration,
+  anonymous: Bool)
 
