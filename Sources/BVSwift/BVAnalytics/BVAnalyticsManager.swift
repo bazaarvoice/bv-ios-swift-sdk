@@ -8,6 +8,9 @@
 
 import Foundation
 
+typealias BVAnalyticsEventInstanceMap =
+  [BVAnalyticsConfiguration : [BVAnalyticsEventInstance]]
+
 internal class BVAnalyticsManager {
   
   private static var analyticsConfiguration: BVAnalyticsConfiguration? {
@@ -52,14 +55,21 @@ internal class BVAnalyticsManager {
   internal static let sharedManager = BVAnalyticsManager()
   
   internal func enqueue(
-    analyticsEvent: BVAnalyticsEvent, anonymous: Bool = false) {
+    analyticsEvent: BVAnalyticsEvent,
+    configuration: BVAnalyticsConfiguration,
+    anonymous: Bool = false) {
     
-    guard let event = augmentEventWithClientData(analyticsEvent) else {
-      return
+    guard let event =
+      augmentEventWithClientData(
+        analyticsEvent, configuration: configuration) else {
+          return
     }
     
     concurrentEventDispatchQueue.async(flags: .barrier) {
-      let instance: BVAnalyticsEventInstance = (event, anonymous)
+      
+      let instance: BVAnalyticsEventInstance =
+        (event, configuration, anonymous)
+      
       switch analyticsEvent {
       case .pageView:
         self.pageViewQueue.append(instance)
@@ -73,14 +83,21 @@ internal class BVAnalyticsManager {
   }
   
   internal func enqueue(
-    analyticsEventable: BVAnalyticsEventable, anonymous: Bool = false) {
+    analyticsEventable: BVAnalyticsEventable,
+    configuration: BVAnalyticsConfiguration,
+    anonymous: Bool = false) {
     
-    guard let event = augmentEventWithClientData(analyticsEventable) else {
-      return
+    guard let event =
+      augmentEventWithClientData(
+        analyticsEventable, configuration: configuration) else {
+          return
     }
     
     concurrentEventDispatchQueue.async(flags: .barrier) {
-      let instance: BVAnalyticsEventInstance = (event, anonymous)
+      
+      let instance: BVAnalyticsEventInstance =
+        (event, configuration, anonymous)
+      
       self.eventQueue.append(instance)
       self.scheduleEventQueueFlush()
     }
@@ -112,47 +129,92 @@ internal class BVAnalyticsManager {
       var batchErrors: [Error] = []
       
       if !self.eventQueue.isEmpty {
-        let batch: BVAnalyticsEventBatch =
-          BVAnalyticsEventBatch(self.eventQueue)
-        let batchAttempt = UInt(self.eventQueue.count)
         
-        flushGroup.enter()
-        
-        self.postBatch(batch: batch) { (errors: [Error]?) in
-          if let errs = errors {
-            flushQueue.sync {
-              batchErrors += errs
-            }
-          } else {
-            flushQueue.sync {
-              batchSize += batchAttempt
-            }
-          }
+        for (config, batch) in self.generateBatches(self.eventQueue) {
           
-          flushGroup.leave()
+          let thisBatch: BVAnalyticsEventBatch =
+            BVAnalyticsEventBatch(batch)
+          
+          let batchAttempt = UInt(batch.count)
+          
+          BVLogger.sharedLogger
+            .info(
+              "Enqueing BVAnalyticsEventBatch: " +
+              "(\"event\", \(batchAttempt), \(thisBatch))")
+          
+          flushGroup.enter()
+          
+          self.postBatch(batch: thisBatch, configuration: config)
+          { (errors: [Error]?) in
+            
+            if let errs = errors {
+              flushQueue.sync {
+                batchErrors += errs
+              }
+              
+              BVLogger.sharedLogger
+                .info(
+                  "Failed BVAnalyticsEventBatch: " +
+                  "(\"event\", \(batchAttempt), \(thisBatch))")
+              
+            } else {
+              flushQueue.sync {
+                batchSize += batchAttempt
+              }
+              
+              BVLogger.sharedLogger
+                .info(
+                  "Succeeded BVAnalyticsEventBatch: " +
+                  "(\"event\", \(batchAttempt), \(thisBatch))")
+            }
+            
+            flushGroup.leave()
+          }
         }
+        
         self.eventQueue.removeAll()
       }
       
       if !self.pageViewQueue.isEmpty {
-        let batch: BVAnalyticsEventBatch =
-          BVAnalyticsEventBatch(self.pageViewQueue)
-        let batchAttempt = UInt(self.pageViewQueue.count)
         
-        flushGroup.enter()
-        
-        self.postBatch(batch: batch) { (errors: [Error]?) in
-          if let errs = errors {
-            flushQueue.sync {
-              batchErrors += errs
-            }
-          } else {
-            flushQueue.sync {
-              batchSize += batchAttempt
-            }
-          }
+        for (config, batch) in self.generateBatches(self.pageViewQueue) {
           
-          flushGroup.leave()
+          let thisBatch: BVAnalyticsEventBatch =
+            BVAnalyticsEventBatch(batch)
+          let batchAttempt = UInt(batch.count)
+          
+          BVLogger.sharedLogger
+            .info(
+              "Enqueing BVAnalyticsEventBatch: " +
+              "(\"pageView\", \(batchAttempt), \(thisBatch))")
+          
+          flushGroup.enter()
+          
+          self.postBatch(batch: thisBatch, configuration: config)
+          { (errors: [Error]?) in
+            if let errs = errors {
+              flushQueue.sync {
+                batchErrors += errs
+              }
+              
+              BVLogger.sharedLogger
+                .info(
+                  "Failed BVAnalyticsEventBatch: " +
+                  "(\"pageView\", \(batchAttempt), \(thisBatch))")
+              
+            } else {
+              flushQueue.sync {
+                batchSize += batchAttempt
+              }
+              
+              BVLogger.sharedLogger
+                .info(
+                  "Succeeded BVAnalyticsEventBatch: " +
+                  "(\"pageView\", \(batchAttempt), \(thisBatch))")
+            }
+            
+            flushGroup.leave()
+          }
         }
         self.pageViewQueue.removeAll()
       }
@@ -168,7 +230,8 @@ internal class BVAnalyticsManager {
   private init() { }
   
   private func augmentEventWithClientData(
-    _ event: BVAnalyticsEventable?) -> BVAnalyticsEventable? {
+    _ event: BVAnalyticsEventable?,
+    configuration: BVAnalyticsConfiguration) -> BVAnalyticsEventable? {
     
     guard let analyticsConfig: BVAnalyticsConfiguration =
       BVAnalyticsManager.analyticsConfiguration,
@@ -212,24 +275,35 @@ internal class BVAnalyticsManager {
     }
   }
   
-  private func postBatch(
-    batch: BVAnalyticsEventBatch, completion: @escaping (([Error]?) -> Void)) {
-    
-    guard let analyticsConfig =
-      BVAnalyticsManager.analyticsConfiguration else {
-        assert(
-          false, "No valid BVAnalyticsConfiguration for BVAnalyticsManager")
-        return 
+  private func generateBatches(
+    _ instances: [BVAnalyticsEventInstance]) -> BVAnalyticsEventInstanceMap {
+    return
+      instances.reduce([:])
+      { (result, instance) -> BVAnalyticsEventInstanceMap in
+        var resultCopy = result
+        var collection: [BVAnalyticsEventInstance] = []
+        if let existing = resultCopy[instance.configuration] {
+          collection = existing
+        }
+        collection.append(instance)
+        resultCopy[instance.configuration] = collection
+        return resultCopy
     }
+  }
+  
+  private func postBatch(
+    batch: BVAnalyticsEventBatch,
+    configuration: BVAnalyticsConfiguration,
+    completion: @escaping (([Error]?) -> Void)) {
     
-    /// Dry run, bail and log
-    if case .dryRun = analyticsConfig {
+    /// Dry run, we callback and then bail
+    if case .dryRun = configuration {
       completion(nil)
       return
     }
     
     let batchPost = BVAnalyticsSubmission(batch)
-      .configure(analyticsConfig)
+      .configure(configuration)
       .handler { (response: BVAnalyticsSubmission.BVAnalyticsEventResponse) in
         if case let .failure(errors) = response {
           completion(errors)

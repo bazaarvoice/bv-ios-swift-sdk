@@ -13,6 +13,12 @@ import XCTest
 
 class BVAnalyticsCommonTest: XCTestCase {
   
+  private static var analyticsConfig: BVAnalyticsConfiguration = {
+    return .configuration(
+      locale: Locale.autoupdatingCurrent,
+      configType: .staging(clientId: "conciergeapidocumentation"))
+  }()
+  
   private static var privateSession: URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -69,11 +75,13 @@ class BVAnalyticsCommonTest: XCTestCase {
     let conversion: BVAnalyticsEvent =
       .conversion(type: "fruit", value: "apples", label: nil, additional: nil)
     
+    let config = BVAnalyticsCommonTest.analyticsConfig
+    
     let encodedPII: [BVAnalyticsEventInstance] =
-      [ transaction, conversion ].map { ($0, false) }
+      [ transaction, conversion ].map { ($0, config, false) }
     
     let encodedNoPII: [BVAnalyticsEventInstance] =
-      [ transaction, conversion ].map { ($0, true) }
+      [ transaction, conversion ].map { ($0, config, true) }
     
     let batch: BVAnalyticsEventBatch =
       BVAnalyticsEventBatch(encodedPII + encodedNoPII)
@@ -138,8 +146,10 @@ class BVAnalyticsCommonTest: XCTestCase {
     let conversion: BVAnalyticsEvent =
       .conversion(type: "fruit", value: "apples", label: nil, additional: nil)
     
+    let config = BVAnalyticsCommonTest.analyticsConfig
+    
     let encodedPII: [BVAnalyticsEventInstance] =
-      [ transaction, conversion ].map { ($0, false) }
+      [ transaction, conversion ].map { ($0, config, false) }
     
     let batch: BVAnalyticsEventBatch =
       BVAnalyticsEventBatch(encodedPII)
@@ -180,10 +190,13 @@ class BVAnalyticsCommonTest: XCTestCase {
        "appSubState" : "remote-notification-initiated"]
     let appStateEvent = dummyAppState + BVAnalyticsManager.defaultAppState
     
+    let config = BVAnalyticsCommonTest.analyticsConfig
+    
     let batch: BVAnalyticsEventBatch =
       BVAnalyticsEventBatch(
         [
           (BVAnalyticsManager.sharedManager.convertToEventable(appStateEvent),
+           config,
            false)
         ])
     

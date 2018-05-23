@@ -178,7 +178,7 @@ extension BVPhoto: BVMergeable {
 }
 
 extension BVPhoto: BVSubmissionableInternal {
-  static var postResource: String? {
+  internal static var postResource: String? {
     get {
       return "uploadphoto.json"
     }

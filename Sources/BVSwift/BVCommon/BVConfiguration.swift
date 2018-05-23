@@ -13,7 +13,7 @@ public protocol BVConfiguration {
   var subConfigurations: [BVConfiguration]? { get }
   var type: BVConfigurationType { get }
   init?(_ configType: BVConfigurationType, keyValues: [String : Any]?)
-  func isSameAs(_ config: BVConfiguration) -> Bool
+  func isSameTypeAs(_ config: BVConfiguration) -> Bool
 }
 
 public enum BVConfigurationType {
@@ -34,6 +34,33 @@ public enum BVConfigurationType {
   }
 }
 
+extension BVConfigurationType: Equatable {
+  public static 
+    func ==(lhs: BVConfigurationType, rhs: BVConfigurationType) -> Bool {
+    switch (lhs, rhs) {
+    case (.production, .production):
+      fallthrough
+    case (.staging, .staging):
+      return true
+    default:
+      return false
+    }
+  }
+}
+
+extension  BVConfigurationType: Hashable {
+  public var hashValue: Int {
+    get {
+      switch self {
+      case let .production(clientId):
+        return "production".djb2hash ^ clientId.hashValue
+      case let .staging(clientId):
+        return "staging".djb2hash ^ clientId.hashValue
+      }
+    }
+  }
+}
+
 public protocol BVConfigurable {
   associatedtype Configuration: BVConfiguration
   func configure(_ config: Configuration) -> Self
@@ -46,16 +73,4 @@ internal protocol BVConfigurableInternal {
 
 internal protocol BVConfigureExistentially {
   func configureExistentially(_ config: BVConfiguration) -> Self
-}
-
-internal func ==
-  (lhs: BVConfigurationType, rhs: BVConfigurationType) -> Bool {
-  switch (lhs, rhs) {
-  case (.production, .production):
-    fallthrough
-  case (.staging, .staging):
-    return true
-  default:
-    return false
-  }
 }

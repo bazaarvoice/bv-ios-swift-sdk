@@ -10,7 +10,7 @@ import Foundation
 
 public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
   
-  private var productId: String?
+  public let productId: String?
   
   public override init?(_ question: BVQuestion) {
     guard let isUserAnonymous = question.isUserAnonymous,
