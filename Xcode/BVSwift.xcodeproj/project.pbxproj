@@ -27,7 +27,6 @@
 		B5B31E5220B37383002DBEC8 /* BVAnalyticsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E3E20B37383002DBEC8 /* BVAnalyticsConfiguration.swift */; };
 		B5B31E5320B37383002DBEC8 /* BVPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E3F20B37383002DBEC8 /* BVPixel.swift */; };
 		B5B31E5420B37383002DBEC8 /* BVAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4020B37383002DBEC8 /* BVAnalyticsManager.swift */; };
-		B5B31E5520B37383002DBEC8 /* BVAnalyticsTransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4220B37383002DBEC8 /* BVAnalyticsTransactionItem.swift */; };
 		B5B31E5620B37383002DBEC8 /* BVAnalyticsTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4320B37383002DBEC8 /* BVAnalyticsTypes.swift */; };
 		B5B31E5720B37383002DBEC8 /* BVAnalyticsEventBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4420B37383002DBEC8 /* BVAnalyticsEventBatch.swift */; };
 		B5B31E5820B37383002DBEC8 /* BVAnalyticsManagerAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B31E4520B37383002DBEC8 /* BVAnalyticsManagerAppState.swift */; };
@@ -189,7 +188,6 @@
 		B5B31E3E20B37383002DBEC8 /* BVAnalyticsConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsConfiguration.swift; sourceTree = "<group>"; };
 		B5B31E3F20B37383002DBEC8 /* BVPixel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVPixel.swift; sourceTree = "<group>"; };
 		B5B31E4020B37383002DBEC8 /* BVAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsManager.swift; sourceTree = "<group>"; };
-		B5B31E4220B37383002DBEC8 /* BVAnalyticsTransactionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsTransactionItem.swift; sourceTree = "<group>"; };
 		B5B31E4320B37383002DBEC8 /* BVAnalyticsTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsTypes.swift; sourceTree = "<group>"; };
 		B5B31E4420B37383002DBEC8 /* BVAnalyticsEventBatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsEventBatch.swift; sourceTree = "<group>"; };
 		B5B31E4520B37383002DBEC8 /* BVAnalyticsManagerAppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVAnalyticsManagerAppState.swift; sourceTree = "<group>"; };
@@ -403,7 +401,6 @@
 			isa = PBXGroup;
 			children = (
 				B5B31E4420B37383002DBEC8 /* BVAnalyticsEventBatch.swift */,
-				B5B31E4220B37383002DBEC8 /* BVAnalyticsTransactionItem.swift */,
 				B5B31E4320B37383002DBEC8 /* BVAnalyticsTypes.swift */,
 			);
 			path = Model;
@@ -819,7 +816,6 @@
 				B5B31E7E20B3739A002DBEC8 /* BVQueryable.swift in Sources */,
 				B5B31E7D20B3739A002DBEC8 /* BVCodable.swift in Sources */,
 				B5B31EEA20B373A3002DBEC8 /* BVSyndicationSource.swift in Sources */,
-				B5B31E5520B37383002DBEC8 /* BVAnalyticsTransactionItem.swift in Sources */,
 				B5B31F1320B373A3002DBEC8 /* BVQuestionSort.swift in Sources */,
 				B5B31F1D20B373A3002DBEC8 /* BVConversationsSubmissionable.swift in Sources */,
 				B5B31F1220B373A3002DBEC8 /* BVProductFilter.swift in Sources */,
