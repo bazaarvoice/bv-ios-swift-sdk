@@ -8,23 +8,38 @@
 
 import Foundation
 
+/// The BVAnalytics BVConfiguration Conformance enum
+///
+/// This configuration is necessary for all analytics related submissions
 public enum BVAnalyticsConfiguration: BVConfiguration {
   
+  /// Main configuration
+  /// - Parameters:
+  ///   - locale: Locale used in determining analytics routing
+  ///   - configType: Type of base configuration, e.g., production, etc.
   case configuration(locale: Locale?, configType: BVConfigurationType)
+  
+  /// Supplimentary configuration mostly used just for debugging and for
+  /// silencing any analytics that you don't want leaking out into the wild.
+  /// - Parameters:
+  ///   - configType: Type of base configuration, e.g., production, etc.
   case dryRun(configType: BVConfigurationType)
   
+  /// See Protocol Definition for more info
   public var configurationKey: String {
     get {
       return type.clientId
     }
   }
   
+  /// See Protocol Definition for more info
   public var subConfigurations: [BVConfiguration]? {
     get {
       return nil
     }
   }
   
+  /// See Protocol Definition for more info
   public var type: BVConfigurationType {
     get {
       switch self {
@@ -36,6 +51,7 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
     }
   }
   
+  /// See Protocol Definition for more info
   public var endpoint: String {
     get {
       return BVAnalyticsLocaleService(
@@ -43,6 +59,7 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
     }
   }
   
+  /// See above enum documentation
   internal var locale: Locale {
     get {
       switch self {
@@ -54,6 +71,7 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
     }
   }
   
+  /// Conformance to BVConfiguration
   public init?(_ config: BVConfigurationType, keyValues: [String : Any]?) {
     
     guard let analyticKeyValues = keyValues else {
@@ -80,6 +98,7 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
         locale: Locale(identifier: localeIdentifier), configType: config)
   }
   
+  /// Conformance to BVConfiguration
   public func isSameTypeAs(_ config: BVConfiguration) -> Bool {
     guard let analyticsConfig =
       config as? BVAnalyticsConfiguration else {
@@ -89,6 +108,7 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
   }
 }
 
+/// Conformance to  Equatable
 extension BVAnalyticsConfiguration: Equatable {
   public static func ==
     (lhs: BVAnalyticsConfiguration, rhs: BVAnalyticsConfiguration) -> Bool {
@@ -111,6 +131,7 @@ extension BVAnalyticsConfiguration: Equatable {
   }
 }
 
+/// Conformance to Hashable
 extension BVAnalyticsConfiguration: Hashable {
   public var hashValue: Int {
     switch self {
