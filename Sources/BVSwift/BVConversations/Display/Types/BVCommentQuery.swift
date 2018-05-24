@@ -9,9 +9,32 @@ import Foundation
 
 public final class BVCommentQuery: BVConversationsQuery<BVComment> {
   
-  /// Private
-  private var productIdPriv: String
-  private var commentIdPriv: String
+  /// Public
+  public let productId: String?
+  public let commentId: String?
+  
+  public init(productId: String, commentId: String) {
+    self.productId = productId
+    self.commentId = commentId
+    
+    super.init(BVComment.self)
+    
+    let productFilter:BVConversationsQueryParameter =
+      .filter(
+        BVCommentFilter.productId,
+        BVRelationalFilterOperator.equalTo,
+        [productId],
+        nil)
+    
+    let commentFilter:BVConversationsQueryParameter =
+      .filter(BVCommentFilter.commentId,
+              BVRelationalFilterOperator.equalTo,
+              [commentId],
+              nil)
+    
+    add(parameter: productFilter)
+    add(parameter: commentFilter)
+  }
   
   /// Internal
   internal override var conversationsPostflightResultsClosure:
@@ -41,42 +64,6 @@ public final class BVCommentQuery: BVConversationsQuery<BVComment> {
         }
       }
     }
-  }
-  
-  /// Public
-  public var productId: String {
-    get {
-      return productIdPriv
-    }
-  }
-  
-  public var commentId: String {
-    get {
-      return commentIdPriv
-    }
-  }
-  
-  public init(productId: String, commentId: String) {
-    productIdPriv = productId
-    commentIdPriv = commentId
-    
-    super.init(BVComment.self)
-    
-    let productFilter:BVConversationsQueryParameter =
-      .filter(
-        BVCommentFilter.productId,
-        BVRelationalFilterOperator.equalTo,
-        [productIdPriv],
-        nil)
-    
-    let commentFilter:BVConversationsQueryParameter =
-      .filter(BVCommentFilter.commentId,
-              BVRelationalFilterOperator.equalTo,
-              [commentIdPriv],
-              nil)
-    
-    add(parameter: productFilter)
-    add(parameter: commentFilter)
   }
 }
 

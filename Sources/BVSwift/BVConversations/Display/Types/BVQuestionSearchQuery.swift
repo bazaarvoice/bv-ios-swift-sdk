@@ -1,23 +1,29 @@
 //
-//
-//  BVQuestionQuery.swift
+//  BVQuestionSearchQuery.swift
 //  BVSwift
 //
-//  Copyright © 2018 Bazaarvoice. All rights reserved.
+//  Created by Michael Van Milligan on 5/24/18.
+//  Copyright © 2018 Michael Van Milligan. All rights reserved.
 //
-//  
 
 import Foundation
 
-public final class BVQuestionQuery: BVConversationsQuery<BVQuestion> {
+public final class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
   
   /// Public
   public let productId: String?
+  public let searchQuery: String?
   public let limit: UInt16?
   public let offset: UInt16?
   
-  public init(productId: String, limit: UInt16 = 100, offset: UInt16 = 0) {
+  public init(
+    productId: String,
+    searchQuery: String,
+    limit: UInt16 = 100,
+    offset: UInt16 = 0) {
+    
     self.productId = productId
+    self.searchQuery = searchQuery
     self.limit = limit
     self.offset = offset
     
@@ -32,6 +38,12 @@ public final class BVQuestionQuery: BVConversationsQuery<BVQuestion> {
     
     add(parameter: productFilter)
     
+    let queryField: BVSearchQueryField = BVSearchQueryField(searchQuery)
+    let searchField: BVConversationsQueryParameter =
+      .customField(queryField, nil)
+    
+    add(parameter: searchField)
+    
     if 0 < limit {
       let limitField: BVLimitQueryField = BVLimitQueryField(limit)
       add(parameter: .custom(limitField, limitField, nil))
@@ -44,8 +56,8 @@ public final class BVQuestionQuery: BVConversationsQuery<BVQuestion> {
   }
 }
 
-// MARK: - BVQuestionQuery: BVConversationsQueryFilterable
-extension BVQuestionQuery: BVConversationsQueryFilterable {
+// MARK: - BVQuestionSearchQuery: BVConversationsQueryFilterable
+extension BVQuestionSearchQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVQuestionFilter
   public typealias Operator = BVRelationalFilterOperator
   
@@ -67,8 +79,8 @@ extension BVQuestionQuery: BVConversationsQueryFilterable {
   }
 }
 
-// MARK: - BVQuestionQuery: BVConversationsQueryIncludeable
-extension BVQuestionQuery: BVConversationsQueryIncludeable {
+// MARK: - BVQuestionSearchQuery: BVConversationsQueryIncludeable
+extension BVQuestionSearchQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVQuestionInclude
   
   @discardableResult public func include(
@@ -80,19 +92,6 @@ extension BVQuestionQuery: BVConversationsQueryIncludeable {
         .includeLimit(include, limit, nil)
       add(parameter: internalIncludeLimit)
     }
-    return self
-  }
-}
-
-// MARK: - BVQuestionQuery: BVConversationsQuerySortable
-extension BVQuestionQuery: BVConversationsQuerySortable {
-  public typealias Sort = BVQuestionSort
-  public typealias Order = BVMonotonicSortOrder
-  
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = .sort(sort, order, nil)
-    add(parameter: internalSort)
     return self
   }
 }

@@ -10,15 +10,31 @@ import Foundation
 
 public final class BVProductQuery: BVConversationsQuery<BVProduct> {
   
-  /// Private
-  private var productIdPriv: String
+  /// Public
+  public let productId: String?
+  
+  public init(productId: String) {
+    self.productId = productId
+    
+    super.init(BVProduct.self)
+    
+    let productFilter:BVConversationsQueryParameter =
+      .filter(
+        BVProductFilter.productId,
+        BVRelationalFilterOperator.equalTo,
+        [productId],
+        nil)
+    
+    add(parameter: productFilter)
+  }
   
   /// Internal
   internal override var conversationsPostflightResultsClosure:
     (([BVProduct]?) -> Swift.Void)? {
     get {
       return { (results: [BVProduct]?) in
-        if let product = results?.first {
+        if let product = results?.first,
+          let productId = self.productId {
           
           if let reviews = product.reviews {
             for review in reviews {
@@ -76,7 +92,7 @@ public final class BVProductQuery: BVConversationsQuery<BVProduct> {
           let productPageView: BVAnalyticsEvent =
             .pageView(
               bvProduct: .reviews,
-              productId: self.productId,
+              productId: productId,
               brand: product.brand?.brandId,
               categoryId: nil,
               rootCategoryId: nil,
@@ -88,28 +104,6 @@ public final class BVProductQuery: BVConversationsQuery<BVProduct> {
         }
       }
     }
-  }
-  
-  /// Public
-  public var productId: String {
-    get {
-      return productIdPriv
-    }
-  }
-  
-  public init(productId: String) {
-    productIdPriv = productId
-    
-    super.init(BVProduct.self)
-    
-    let productFilter:BVConversationsQueryParameter =
-      .filter(
-        BVProductFilter.productId,
-        BVRelationalFilterOperator.equalTo,
-        [productIdPriv],
-        nil)
-    
-    add(parameter: productFilter)
   }
 }
 

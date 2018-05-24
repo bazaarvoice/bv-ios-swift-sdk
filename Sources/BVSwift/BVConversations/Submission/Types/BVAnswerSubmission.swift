@@ -12,6 +12,10 @@ public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
   
   public let questionId: String?
   
+  public convenience init?(questionId: String, answerText: String) {
+    self.init(BVAnswer(questionId: questionId, answerText: answerText))
+  }
+  
   public override init?(_ answer: BVAnswer) {
     guard let questionId = answer.questionId?.urlEncode(),
       let text = answer.answerText?.urlEncode() else {
