@@ -12,14 +12,35 @@
 
 import Foundation
 
+/// The BVAnalytics BVAnalyticsEvent enum
+///
+/// This enumeration represents all the BV Analytic Objects that are currently
+/// supported by our SDK.
+/// - Note:
+///   \
+///   For more information regarding [Analytics]
+///   (https://developer.bazaarvoice.com/conversations-api/tutorials/bv-pixel)
 public enum BVAnalyticsEvent {
   
+  /// Conversion Analytics Event
+  /// - Parameters:
+  ///   - type: The type of event
+  ///   - value: The value related to the event
+  ///   - label: The label of the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case conversion(
     type: String,
     value: String,
     label: String?,
     additional: [String : Encodable]?)
   
+  /// Feature Analytics Event
+  /// - Parameters:
+  ///   - bvProduct: The product type of event
+  ///   - name: The feature type name of event
+  ///   - productId: The product id of the event
+  ///   - brand: The brand related to the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case feature(
     bvProduct: BVAnalyticsProductType,
     name: BVAnalyticsFeatureType,
@@ -27,6 +48,15 @@ public enum BVAnalyticsEvent {
     brand: String?,
     additional: [String : Encodable]?)
   
+  /// Impression Analytics Event
+  /// - Parameters:
+  ///   - bvProduct: The product type of event
+  ///   - contentId: The content id related to the event
+  ///   - contentType: The impression type related to the event
+  ///   - productId: The product id of the event
+  ///   - brand: The brand related to the event
+  ///   - categoryId: The category id related to the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case impression(
     bvProduct: BVAnalyticsProductType,
     contentId: String,
@@ -36,6 +66,13 @@ public enum BVAnalyticsEvent {
     categoryId: String?,
     additional: [String : Encodable]?)
   
+  /// In-View Analytics Event
+  /// - Parameters:
+  ///   - bvProduct: The product type of event
+  ///   - component: The view component related to the event
+  ///   - productId: The product id of the event
+  ///   - brand: The brand related to the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case inView(
     bvProduct: BVAnalyticsProductType,
     component: String,
@@ -43,6 +80,14 @@ public enum BVAnalyticsEvent {
     brand: String?,
     additional: [String : Encodable]?)
   
+  /// Page View Analytics Event
+  /// - Parameters:
+  ///   - bvProduct: The product type of event
+  ///   - productId: The product id of the event
+  ///   - brand: The brand related to the event
+  ///   - categoryId: The category id related to the event
+  ///   - rootCategoryId: The root category id related to the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case pageView(
     bvProduct: BVAnalyticsProductType,
     productId: String,
@@ -51,10 +96,26 @@ public enum BVAnalyticsEvent {
     rootCategoryId: String?,
     additional: [String : Encodable]?)
   
+  /// Personalization Analytics Event
+  /// - Parameters:
+  ///   - profileId: The profile id for user of event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case personalization(
     profileId: String,
     additional: [String : Encodable]?)
   
+  /// Transaction Analytics Event
+  /// - Parameters:
+  ///   - items: The list of items being tracked in this event
+  ///   - orderId: The related order id for the event
+  ///   - total: The related total for the event
+  ///   - city: The related city for the event
+  ///   - country: The related country for the event
+  ///   - currency: The related currency for the event
+  ///   - shipping: The related shipping costs for the event
+  ///   - state: The related state for the event
+  ///   - tax: The related taxes for the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case transaction(
     items: [BVAnalyticsTransactionItem],
     orderId: String,
@@ -67,6 +128,14 @@ public enum BVAnalyticsEvent {
     tax: Double?,
     additional: [String : Encodable]?)
   
+  /// Viewed Analytics Event
+  /// - Parameters:
+  ///   - bvProduct: The product type of event
+  ///   - productId: The product id of the event
+  ///   - brand: The brand related to the event
+  ///   - categoryId: The category id related to the event
+  ///   - rootCategoryId: The root category id related to the event
+  ///   - additional: Extra freeform [key, value] to merge into event
   case viewed(
     bvProduct: BVAnalyticsProductType,
     productId: String,

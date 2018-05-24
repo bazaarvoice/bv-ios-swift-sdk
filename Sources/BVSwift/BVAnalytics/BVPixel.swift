@@ -8,11 +8,28 @@
 
 import Foundation
 
+/// The BVPixel singleton class for tracking analytic events.
+///
+/// This singleton is used to track all the various BVAnalyticsEvent types
+/// - Note:
+///   \
+///   For more information regarding [Analytics]
+///   (https://developer.bazaarvoice.com/conversations-api/tutorials/bv-pixel)
 public class BVPixel {
   
   // This is solely for BVSwiftTests to circumvent analytics
   internal static var skipAllPixelEvents: Bool = false
   
+  /// Main method used to track a BVAnalyticsEvent type
+  /// - Parameters:
+  ///   - analyticsEvent: The event to track
+  ///   - analyticConfiguration: The BVAnalyticsConfiguration to be assigned
+  ///     to the event to be tracked.
+  /// - Note:
+  ///   \
+  ///   If you do not pass in a valid BVAnalyticsConfiguration then the module
+  ///   will attempt to acquire one through the BVManager. If nothing is found
+  ///   at the BVManager level then this call will fail fatally.
   @discardableResult
   public class func track(
     _ analyticsEvent: BVAnalyticsEvent,
