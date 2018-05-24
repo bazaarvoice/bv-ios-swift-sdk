@@ -1,23 +1,29 @@
 //
-//
-//  BVReviewQuery.swift
+//  BVReviewSearchQuery.swift
 //  BVSwift
 //
-//  Copyright © 2018 Bazaarvoice. All rights reserved.
+//  Created by Michael Van Milligan on 5/24/18.
+//  Copyright © 2018 Michael Van Milligan. All rights reserved.
 //
-//  
 
 import Foundation
 
-public final class BVReviewQuery: BVConversationsQuery<BVReview> {
+public final class BVReviewSearchQuery: BVConversationsQuery<BVReview> {
   
   /// Public
   public let productId: String?
+  public let searchQuery: String?
   public let limit: UInt16?
   public let offset: UInt16?
   
-  public init(productId: String, limit: UInt16 = 100, offset: UInt16 = 0) {
+  public init(
+    productId: String,
+    searchQuery: String,
+    limit: UInt16 = 100,
+    offset: UInt16 = 0) {
+    
     self.productId = productId
+    self.searchQuery = searchQuery
     self.limit = limit
     self.offset = offset
     
@@ -31,6 +37,12 @@ public final class BVReviewQuery: BVConversationsQuery<BVReview> {
         nil)
     
     add(parameter: productFilter)
+    
+    let queryField: BVSearchQueryField = BVSearchQueryField(searchQuery)
+    let searchField: BVConversationsQueryParameter =
+      .customField(queryField, nil)
+    
+    add(parameter: searchField)
     
     if 0 < limit {
       let limitField: BVLimitQueryField = BVLimitQueryField(limit)
@@ -107,8 +119,8 @@ public final class BVReviewQuery: BVConversationsQuery<BVReview> {
   }
 }
 
-// MARK: - BVReviewQuery: BVConversationsQueryFilterable
-extension BVReviewQuery: BVConversationsQueryFilterable {
+// MARK: - BVReviewSearchQuery: BVConversationsQueryFilterable
+extension BVReviewSearchQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVReviewFilter
   public typealias Operator = BVRelationalFilterOperator
   
@@ -130,8 +142,8 @@ extension BVReviewQuery: BVConversationsQueryFilterable {
   }
 }
 
-// MARK: - BVReviewQuery: BVConversationsQueryIncludeable
-extension BVReviewQuery: BVConversationsQueryIncludeable {
+// MARK: - BVReviewSearchQuery: BVConversationsQueryIncludeable
+extension BVReviewSearchQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVReviewInclude
   
   @discardableResult public func include(
@@ -146,17 +158,3 @@ extension BVReviewQuery: BVConversationsQueryIncludeable {
     return self
   }
 }
-
-// MARK: - BVReviewQuery: BVConversationsQuerySortable
-extension BVReviewQuery: BVConversationsQuerySortable {
-  public typealias Sort = BVReviewSort
-  public typealias Order = BVMonotonicSortOrder
-  
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = .sort(sort, order, nil)
-    add(parameter: internalSort)
-    return self
-  }
-}
-

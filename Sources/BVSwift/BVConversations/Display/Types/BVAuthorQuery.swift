@@ -8,15 +8,23 @@
 import Foundation
 
 public final class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
-  /// Private
-  private var authorIdPriv: String
   
-  private struct BVAuthorFilter: BVConversationsQueryFilter {
-    var description: String {
-      get {
-        return BVConversationsConstants.BVAuthors.Keys.authorId
-      }
-    }
+  /// Public
+  public let authorId: String?
+  
+  public init(authorId: String) {
+    self.authorId = authorId
+    
+    super.init(BVAuthor.self)
+    
+    let authorFilter:BVConversationsQueryParameter =
+      .filter(
+        BVAuthorFilter.authorId,
+        BVRelationalFilterOperator.equalTo,
+        [authorId],
+        nil)
+    
+    add(parameter: authorFilter)
   }
   
   /// Internal
@@ -24,42 +32,21 @@ public final class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
     (([BVAuthor]?) -> Swift.Void)? {
     get {
       return { (results: [BVAuthor]?) in
-        if let _ = results  {
+        if let _ = results,
+          let authorId = self.authorId {
           let authorFeatureEvent: BVAnalyticsEvent =
             .feature(
               bvProduct: .profile,
               name: .profile,
               productId: "none",
               brand: nil,
-              additional: ["page" : self.authorIdPriv, "interaction" : false])
+              additional: ["page" : authorId, "interaction" : false])
           BVPixel.track(
             authorFeatureEvent,
             analyticConfiguration: self.configuration?.analyticsConfiguration)
         }
       }
     }
-  }
-  
-  /// Public
-  public var authorId: String {
-    get {
-      return authorIdPriv
-    }
-  }
-  
-  public init(authorId: String) {
-    authorIdPriv = authorId
-    
-    super.init(BVAuthor.self)
-    
-    let authorFilter:BVConversationsQueryParameter =
-      .filter(
-        BVAuthorFilter(),
-        BVRelationalFilterOperator.equalTo,
-        [authorIdPriv],
-        nil)
-    
-    add(parameter: authorFilter)
   }
 }
 

@@ -12,6 +12,19 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   
   public let productId: String?
   
+  public convenience init?(
+    productId: String,
+    reviewTitle: String,
+    reviewText: String,
+    reviewRating: Int) {
+    self.init(
+      BVReview(
+        reviewTitle: reviewTitle,
+        reviewText: reviewText,
+        reviewRating: reviewRating,
+        productId: productId))
+  }
+  
   public override init?(_ review: BVReview) {
     guard let title = review.title,
       let text = review.reviewText,
