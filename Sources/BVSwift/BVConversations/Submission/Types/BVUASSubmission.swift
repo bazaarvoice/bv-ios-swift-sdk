@@ -9,6 +9,11 @@
 import Foundation
 
 public class BVUASSubmission: BVConversationsSubmission<BVUAS> {
+  
+  public convenience init?(bvAuthToken: String) {
+    self.init(BVUAS(bvAuthToken))
+  }
+  
   public override init?(_ uas: BVUAS)  {
     guard let bvAuthToken = uas.bvAuthToken else {
       return nil

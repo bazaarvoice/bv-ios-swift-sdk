@@ -10,7 +10,7 @@ import Foundation
 // MARK: - BVConversationsQueryField
 internal protocol BVConversationsQueryField:
 BVInternalCustomStringConvertible {
-  static var prefix: String { get }
+  static var fieldPrefix: String { get }
 }
 
 // MARK: - BVConversationsQueryValue

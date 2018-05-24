@@ -9,16 +9,50 @@ import Foundation
 
 public class BVCommentsQuery: BVConversationsQuery<BVComment> {
   
-  /// Private
-  private static let limitKey:String =
-    BVConversationsConstants.BVQueryType.Keys.limit
-  private static let offsetKey:String =
-    BVConversationsConstants.BVQueryType.Keys.offset
+  /// Public
+  public let productId: String?
+  public let reviewId: String?
+  public let limit: UInt16?
+  public let offset: UInt16?
   
-  private var productIdPriv: String
-  private var reviewIdPriv: String
-  private var limitPriv: UInt16
-  private var offsetPriv: UInt16
+  public init(
+    productId: String,
+    reviewId: String,
+    limit: UInt16 = 100,
+    offset: UInt16 = 0) {
+    self.productId = productId
+    self.reviewId = reviewId
+    self.limit = limit
+    self.offset = offset
+    
+    super.init(BVComment.self)
+    
+    let productFilter:BVConversationsQueryParameter =
+      .filter(
+        BVCommentFilter.productId,
+        BVRelationalFilterOperator.equalTo,
+        [productId],
+        nil)
+    
+    let reviewFilter:BVConversationsQueryParameter =
+      .filter(BVCommentFilter.reviewId,
+              BVRelationalFilterOperator.equalTo,
+              [reviewId],
+              nil)
+    
+    add(parameter: productFilter)
+    add(parameter: reviewFilter)
+    
+    if 0 < limit {
+      let limitField: BVLimitQueryField = BVLimitQueryField(limit)
+      add(parameter: .custom(limitField, limitField, nil))
+    }
+    
+    if 0 < offset {
+      let offsetField: BVOffsetQueryField = BVOffsetQueryField(offset)
+      add(parameter: .custom(offsetField, offsetField, nil))
+    }
+  }
   
   /// Internal
   internal override var conversationsPostflightResultsClosure:
@@ -47,68 +81,6 @@ public class BVCommentsQuery: BVConversationsQuery<BVComment> {
           }
         }
       }
-    }
-  }
-  
-  /// Public
-  public var productId: String {
-    get {
-      return productIdPriv
-    }
-  }
-  
-  public var reviewId: String {
-    get {
-      return reviewIdPriv
-    }
-  }
-  
-  public var limit: UInt16 {
-    get {
-      return limitPriv
-    }
-  }
-  
-  public var offset: UInt16 {
-    get {
-      return offsetPriv
-    }
-  }
-  
-  public init(
-    productId: String,
-    reviewId: String,
-    limit: UInt16 = 100,
-    offset: UInt16 = 0) {
-    productIdPriv = productId
-    reviewIdPriv = reviewId
-    limitPriv = limit
-    offsetPriv = offset
-    
-    super.init(BVComment.self)
-    
-    let productFilter:BVConversationsQueryParameter =
-      .filter(
-        BVCommentFilter.productId,
-        BVRelationalFilterOperator.equalTo,
-        [productIdPriv],
-        nil)
-    
-    let reviewFilter:BVConversationsQueryParameter =
-      .filter(BVCommentFilter.reviewId,
-              BVRelationalFilterOperator.equalTo,
-              [reviewIdPriv],
-              nil)
-    
-    add(parameter: productFilter)
-    add(parameter: reviewFilter)
-    
-    if 0 < limitPriv {
-      add(parameter: .custom(BVCommentsQuery.limitKey, limitPriv, nil))
-    }
-    
-    if 0 < offsetPriv {
-      add(parameter: .custom(BVCommentsQuery.offsetKey, offsetPriv, nil))
     }
   }
 }

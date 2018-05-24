@@ -9,7 +9,6 @@
 import Foundation
 
 public final class BVProductsQuery: BVConversationsQuery<BVProduct> {
-  
   public init() {
     super.init(BVProduct.self)
   }
