@@ -10,46 +10,17 @@ import Foundation
 
 public final class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
   
-  /// Private
-  private var searchQueryPriv: String
-  
-  private struct BVProductSearchQueryField: CustomStringConvertible,
-  BVConversationsQueryField {
-    
-    static var prefix: String {
-      get {
-        return BVConversationsConstants.BVQuerySearch.defaultField
-      }
-    }
-    
-    var internalDescription: String
-    
-    var description: String {
-      get {
-        return internalDescription
-      }
-    }
-    
-    init(searchQuery: String) {
-      internalDescription = searchQuery
-    }
-  }
-  
   /// Public
-  public var searchQuery: String {
-    get {
-      return searchQueryPriv
-    }
-  }
+  public let searchQuery: String?
   
   public init(searchQuery: String) {
-    searchQueryPriv = searchQuery
+    self.searchQuery = searchQuery
     
     super.init(BVProduct.self)
     
-    let queryField: BVProductSearchQueryField =
-      BVProductSearchQueryField(searchQuery: searchQueryPriv)
-    let searchField: BVConversationsQueryParameter = .custom(queryField, queryField, nil)
+    let queryField: BVSearchQueryField = BVSearchQueryField(searchQuery)
+    let searchField: BVConversationsQueryParameter =
+      .customField(queryField, nil)
     
     add(parameter: searchField)
   }

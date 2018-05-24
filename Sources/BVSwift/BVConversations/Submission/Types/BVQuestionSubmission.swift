@@ -12,6 +12,19 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
   
   public let productId: String?
   
+  public convenience init?(
+    productId: String,
+    questionDetails: String,
+    questionSummary: String,
+    isUserAnonymous: Bool = false) {
+    self.init(
+      BVQuestion(
+        isUserAnonymous: isUserAnonymous,
+        productId: productId,
+        questionDetails: questionDetails,
+        questionSummary: questionSummary))
+  }
+  
   public override init?(_ question: BVQuestion) {
     guard let isUserAnonymous = question.isUserAnonymous,
       let productId = question.productId,
