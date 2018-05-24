@@ -7,10 +7,14 @@
 
 import Foundation
 
+// MARK: - BVConversationsQueryParameter
 internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
   case custom(
     CustomStringConvertible,
     CustomStringConvertible,
+    BVConversationsQueryParameter?)
+  case customField(
+    BVConversationsQueryField,
     BVConversationsQueryParameter?)
   case filter(
     BVConversationsQueryFilter,
@@ -42,6 +46,8 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
       switch self {
       case .custom(let field, _, _):
         return field.description
+      case .customField(let field, _):
+        return type(of: field).fieldPrefix
       case .filter(let filter, _, _, _):
         return type(of: filter).filterPrefix
       case .filterType(let filter, _, _, _, _):
@@ -74,6 +80,9 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
       switch self {
       case .custom(_, let value, _):
         final = value.description
+        break
+      case .customField(let field, _):
+        final = field.description
         break
       case .filter(let filter, let op, let values, _):
         let regex:String =
@@ -144,6 +153,9 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
     case let .custom(field, value, _):
       self = .custom(field, value, child)
       break
+    case let .customField(field, _):
+      self = .customField(field, child)
+      break
     case let .filter(filter, op, values, _):
       self = .filter(filter, op, values, child)
       break
@@ -171,6 +183,8 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
   private var peek: String {
     switch self {
     case .custom(_, let value, _):
+      return value.description.escaping()
+    case .customField(let value, _):
       return value.description.escaping()
     case .filter(let filter, let op, let values, _):
       let regex:String =
@@ -213,6 +227,8 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
     get {
       switch self {
       case .custom(_, _, let child):
+        return child
+      case .customField(_, let child):
         return child
       case .filter(_, _, _, let child):
         return child
@@ -266,6 +282,8 @@ extension BVConversationsQueryParameter {
      rhs: BVConversationsQueryParameter) -> Bool {
     switch (lhs, rhs) {
     case (.custom, .custom) where lhs.name == rhs.name:
+      return true
+    case (.customField, .customField) where lhs.name == rhs.name:
       return true
     case (.filter, .filter) where lhs.name == rhs.name:
       return true
@@ -403,5 +421,71 @@ extension BVConversationsQueryParameter {
       next: BVConversationsQueryParameter) -> BVConversationsQueryParameter in
       return BVConversationsQueryParameter(parent: next, child: previous)
     }
+  }
+}
+
+// MARK: - BVSearchQueryField
+internal struct BVSearchQueryField: BVConversationsQueryField {
+  
+  static var fieldPrefix: String {
+    get {
+      return BVConversationsConstants.BVQuerySearch.defaultField
+    }
+  }
+  
+  var internalDescription: String
+  
+  var description: String {
+    get {
+      return internalDescription
+    }
+  }
+  
+  init(_ searchQuery: String) {
+    internalDescription = searchQuery
+  }
+}
+
+// MARK: - BVLimitQueryField
+internal struct BVLimitQueryField: BVConversationsQueryField {
+  
+  static var fieldPrefix: String {
+    get {
+      return BVConversationsConstants.BVQueryType.Keys.limit
+    }
+  }
+  
+  var internalDescription: String
+  
+  var description: String {
+    get {
+      return internalDescription
+    }
+  }
+  
+  init(_ limit: UInt16) {
+    internalDescription = "\(limit)"
+  }
+}
+
+// MARK: - BVOffsetQueryField
+internal struct BVOffsetQueryField: BVConversationsQueryField {
+  
+  static var fieldPrefix: String {
+    get {
+      return BVConversationsConstants.BVQueryType.Keys.offset
+    }
+  }
+  
+  var internalDescription: String
+  
+  var description: String {
+    get {
+      return internalDescription
+    }
+  }
+  
+  init(_ offset: UInt16) {
+    internalDescription = "\(offset)"
   }
 }

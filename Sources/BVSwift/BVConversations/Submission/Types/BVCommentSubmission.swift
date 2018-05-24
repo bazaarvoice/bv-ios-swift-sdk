@@ -12,6 +12,15 @@ public class BVCommentSubmission: BVMediaSubmission<BVComment> {
   
   public let reviewId: String?
   
+  public convenience init?(
+    reviewId: String, commentText: String, commentTitle: String?) {
+    self.init(
+      BVComment(
+        reviewId: reviewId,
+        commentText: commentText,
+        commentTitle: commentTitle))
+  }
+  
   public override init?(_ comment: BVComment) {
     guard let reviewId = comment.reviewId?.urlEncode(),
       let text = comment.commentText?.urlEncode() else {
