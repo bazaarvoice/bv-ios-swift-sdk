@@ -10,18 +10,12 @@ import Foundation
 
 public final class BVProductStatisticsQuery:
 BVConversationsQuery<BVProductStatistics> {
-  /// Private
-  private var productIdsPriv: [String]
   
   /// Public
-  public var productIds: [String] {
-    get {
-      return productIdsPriv
-    }
-  }
+  public let productIds: [String]?
   
   public init(productIds: [String]) {
-    productIdsPriv = productIds
+    self.productIds = productIds
     
     super.init(BVProductStatistics.self)
     
@@ -29,7 +23,7 @@ BVConversationsQuery<BVProductStatistics> {
       .filter(
         BVProductStatisticsFilter.productId,
         BVRelationalFilterOperator.equalTo,
-        productIdsPriv,
+        productIds,
         nil)
     
     add(parameter: productIdFilter)

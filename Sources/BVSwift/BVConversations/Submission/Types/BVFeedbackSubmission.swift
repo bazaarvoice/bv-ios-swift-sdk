@@ -10,6 +10,7 @@ import Foundation
 
 public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
   
+  /// Public
   public let feedback: BVFeedback?
   
   public override init?(_ feedback: BVFeedback)  {
@@ -23,7 +24,9 @@ public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
     conversationsParameters ∪= urlQueryItems
   }
   
-  override var conversationsPostflightResultsClosure: (([BVFeedback]?) -> Void)? {
+  /// Internal
+  override var
+  conversationsPostflightResultsClosure: (([BVFeedback]?) -> Void)? {
     get {
       return { (results: [BVFeedback]?) in
         guard let _ = results,
