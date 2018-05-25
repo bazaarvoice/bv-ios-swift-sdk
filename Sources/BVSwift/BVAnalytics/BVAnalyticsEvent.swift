@@ -17,9 +17,9 @@ import Foundation
 /// This enumeration represents all the BV Analytic Objects that are currently
 /// supported by our SDK.
 /// - Note:
-///   \
-///   For more information regarding [Analytics]
-///   (https://developer.bazaarvoice.com/conversations-api/tutorials/bv-pixel)
+/// \
+/// For more information regarding [Analytics]
+/// (https://developer.bazaarvoice.com/conversations-api/tutorials/bv-pixel)
 public enum BVAnalyticsEvent {
   
   /// Conversion Analytics Event
@@ -145,8 +145,9 @@ public enum BVAnalyticsEvent {
     additional: [String : Encodable]?)
 }
 
+/// - Important:
+/// We need to make sure to keep this updated with the types that we use...
 extension BVAnalyticsEvent {
-  /// Note: make sure to keep this updated with the types that we use...
   internal static func stringifyAndTypeErase(
     _ encodableDict: [String : Encodable]?) -> [String : BVAnyEncodable] {
     
@@ -381,4 +382,3 @@ internal typealias BVAnalyticsEventInstance =
   (event: BVAnalyticsEventable,
   configuration: BVAnalyticsConfiguration,
   anonymous: Bool)
-
