@@ -7,28 +7,65 @@
 
 import Foundation
 
-/// Shadowed non-closure based extensions
+/// A shadowing URLSession extension to allow for BVURLRequest types to be
+/// executed through URLSessions.
+/// - Note:
+/// \
+/// These extension functions don't use the completion handler variants, but
+/// rather, passthrough to them. Obviously, these will be used most often since
+/// conformance to BVURLRequest requires calling the respective processing
+/// function callback.
 public extension URLSession {
   
+  /// Shadowed URLSession.dataTask function call
+  /// - Parameters:
+  ///   - requestable: BVURLRequestable to be invoked
   @discardableResult func dataTask(
     with requestable: BVURLRequestable) -> URLSessionDataTask? {
     return dataTask(with: requestable) { (_, _, _) in }
   }
   
+  /// Shadowed URLSession.uploadTask function call
+  /// - Parameters:
+  ///   - requestable: BVURLRequestableWithFileURL to be invoked
   @discardableResult func uploadTask(
     with requestable: BVURLRequestableWithFileURL) -> URLSessionUploadTask? {
     return uploadTask(with: requestable) { (_, _, _) in }
   }
   
+  /// Shadowed URLSession.uploadTask function call
+  /// - Parameters:
+  ///   - requestable: BVURLRequestableWithBodyData to be invoked
   @discardableResult func uploadTask(
     with requestable: BVURLRequestableWithBodyData) -> URLSessionUploadTask? {
     return uploadTask(with: requestable) { (_, _, _) in }
   }
 }
 
-/// Shadowed closure based extensions
+/// A shadowing URLSession extension to allow for BVURLRequest types to be
+/// executed through URLSessions.
+/// - Note:
+/// \
+/// These extension functions are exposed not only as a requirement for the
+/// other URLSession extensions but also for a convenience just in case there
+/// needs to be some granularity of access not provided by the defined types
+/// conforming to BVURLRequest, e.g., logging, debugging, etc.
 public extension URLSession {
   
+  /// Shadowed URLSession.dataTask function call with completion handler
+  /// - Parameters:
+  ///   - requestable: BVURLRequestable to be invoked
+  ///   - completionHandler: The completion handler to be invoked
+  /// - Important:
+  /// \
+  /// If the BVURLRequestable type instantiates preflight handling by returning
+  /// true from the preflight function then this function will return nil and
+  /// therefore the reference to underlying URLSessionDataTask will be lost at
+  /// the call site. This seemed like an adaquate trade-off since the task can
+  /// be acquired back if really needed by using a custom URLSession*Delegate
+  /// and capturing it there. If this ends up being a problem we'll have to
+  /// figure out some way to defer in which case we'll have to change the
+  /// function signature to be less "pure" with respect to the original.
   @discardableResult func dataTask(
     with requestable: BVURLRequestable,
     completionHandler:
@@ -70,6 +107,20 @@ public extension URLSession {
     return nil
   }
   
+  /// Shadowed URLSession.uploadTask function call with completion handler
+  /// - Parameters:
+  ///   - requestable: BVURLRequestableWithFileURL to be invoked
+  ///   - completionHandler: The completion handler to be invoked
+  /// - Important:
+  /// \
+  /// If the BVURLRequestable type instantiates preflight handling by returning
+  /// true from the preflight function then this function will return nil and
+  /// therefore the reference to underlying URLSessionDataTask will be lost at
+  /// the call site. This seemed like an adaquate trade-off since the task can
+  /// be acquired back if really needed by using a custom URLSession*Delegate
+  /// and capturing it there. If this ends up being a problem we'll have to
+  /// figure out some way to defer in which case we'll have to change the
+  /// function signature to be less "pure" with respect to the original.
   @discardableResult func uploadTask(
     with requestable: BVURLRequestableWithFileURL,
     completionHandler:
@@ -116,6 +167,20 @@ public extension URLSession {
     return nil
   }
   
+  /// Shadowed URLSession.uploadTask function call with completion handler
+  /// - Parameters:
+  ///   - requestable: BVURLRequestableWithBodyData to be invoked
+  ///   - completionHandler: The completion handler to be invoked
+  /// - Important:
+  /// \
+  /// If the BVURLRequestable type instantiates preflight handling by returning
+  /// true from the preflight function then this function will return nil and
+  /// therefore the reference to underlying URLSessionDataTask will be lost at
+  /// the call site. This seemed like an adaquate trade-off since the task can
+  /// be acquired back if really needed by using a custom URLSession*Delegate
+  /// and capturing it there. If this ends up being a problem we'll have to
+  /// figure out some way to defer in which case we'll have to change the
+  /// function signature to be less "pure" with respect to the original.
   @discardableResult func uploadTask(
     with requestable: BVURLRequestableWithBodyData,
     completionHandler:

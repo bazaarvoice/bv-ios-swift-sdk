@@ -8,10 +8,11 @@
 
 import Foundation
 
-// MARK: - BVSubmissionable
+/// The main base protocol for BV Types used for Submission Requests
 public protocol BVSubmissionable: BVResourceable { }
 
-// MARK: - BVSubmissionActionable
+/// The main base protocol for BV Types used for Submission Requests that have
+/// actionable callback handlers associated with them
 public protocol BVSubmissionActionable: BVURLRequestableWithHandler { }
 
 // MARK: - BVSubmissionableInternal

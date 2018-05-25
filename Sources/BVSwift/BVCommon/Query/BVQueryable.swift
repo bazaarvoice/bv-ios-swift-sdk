@@ -8,10 +8,11 @@
 
 import Foundation
 
-// MARK: - BVQueryable
+/// The main base protocol for BV Types used for Query Requests
 public protocol BVQueryable: BVResourceable { }
 
-// MARK: - BVQueryActionable
+/// The main base protocol for BV Types used for Query Requests that have
+/// actionable callback handlers associated with them
 public protocol BVQueryActionable: BVURLRequestableWithHandler {
   associatedtype Kind: BVQueryable
 }
