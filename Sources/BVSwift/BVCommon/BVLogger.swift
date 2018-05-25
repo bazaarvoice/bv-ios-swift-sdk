@@ -9,9 +9,17 @@
 import Foundation
 import os.log
 
+/// The global logger packaged with this module
+///
+/// - Note:
+/// \
+/// If it's not entirely obvious, this logger will use os_log(3) by default if
+/// running on an applicable and supported platform version. It will also log
+/// to stdout during debug builds or if this isn't a supported os_log(3)
+/// platform.
 public class BVLogger {
   
-  /// Public
+  /// Supported log levels
   public enum BVLogLevel: UInt {
     case analytics = 0
     case verbose = 1
@@ -20,51 +28,100 @@ public class BVLogger {
     case error = 4
   }
   
+  /// Singleton interface
   public static let sharedLogger = BVLogger()
   
+  /// Log an analytic messages
+  /// - Parameters:
+  ///   - loglLevel: Log level to be set
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public func analytics(_ msg: String) {
     enqueue(msg, logLevel: .analytics)
   }
   
+  /// Log an error messages
+  /// - Parameters:
+  ///   - loglLevel: Log level to be set
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public func error(_ msg: String) {
     enqueue(msg, logLevel: .error)
   }
   
+  /// Log an info messages
+  /// - Parameters:
+  ///   - loglLevel: Log level to be set
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public func info(_ msg: String) {
     enqueue(msg, logLevel: .info)
   }
   
+  /// Log an verbose messages
+  /// - Parameters:
+  ///   - loglLevel: Log level to be set
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public func verbose(_ msg: String) {
     enqueue(msg, logLevel: .verbose)
   }
   
+  /// Log an analytic messages
+  /// - Parameters:
+  ///   - loglLevel: Log level to be set
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public func warning(_ msg: String) {
     enqueue(msg, logLevel: .warning)
   }
   
+  /// Set the current log level
+  /// - Parameters:
+  ///   - loglLevel: Log level to be set
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public func setLogLevel(_ logLevel: BVLogLevel) {
-    DispatchQueue.main.async {
-      self.logLevel = logLevel
-    }
+    self.logLevel = logLevel
   }
   
+  /// Get the current log level
+  /// - Note:
+  /// \
+  /// This is thread safe.
   public var logLevel: BVLogLevel {
     get {
-      return internalLogLevel
+      var level: BVLogLevel = .error
+      loggerQueue.sync {
+        level = internalLogLevel
+      }
+      return level
     }
     set(newValue) {
-      internalLogLevel = newValue
+      loggerQueue.sync {
+        internalLogLevel = newValue
+      }
     }
   }
   
   /// Private
+  private var loggerQueue: DispatchQueue =
+    DispatchQueue(
+      label: "com.bvswift.BVLogger.loggerQueue")
+  
   @available(iOS 10.0, *)
   lazy private var logger = {
     return OSLog(subsystem: "com.bvswift.BVLogger", category: "Module")
   }()
   
   private var internalLogLevel: BVLogLevel = .error
-
+  
   private init() {}
   
   private func enqueue(_ msg: String, logLevel: BVLogLevel) {

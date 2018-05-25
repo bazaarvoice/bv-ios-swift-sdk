@@ -7,25 +7,59 @@
 
 import Foundation
 
-/// Public
+/// Typealiases for the most commmonly used closures througout the
+/// BVURLRequestable family of protocols.
 public typealias BVCompletionHandler = (() -> Swift.Void)
 public typealias BVCompletionWithErrorsHandler = ((Error?) -> Swift.Void)
 
+/// The main base protocol for BV based networking requests.
 public protocol BVURLRequestable {
+  
+  /// The request object constructed from the conforming type
+  /// - Note:
+  /// \
+  /// Argulably the most important conformance, because, without it, we cannot
+  /// have all the pieces fit together to construct the actions necessary to
+  /// query or submit.
   var request: URLRequest? { get }
+  
+  /// Callback function for handling anything needed before construction of the
+  /// URLRequest object and then the intial networking call happens.
+  /// - Parameters:
+  ///   - completion: The callback closure to be invoked
   func preflight(_ completion: BVCompletionWithErrorsHandler?) -> Bool
+  
+  /// Callback function for handling the processing of a URLResponse coming in
+  /// from a URL data request.
+  /// - Parameters:
+  ///   - data: The data returned from the URLRequest
+  ///   - urlResponse: The URLResponse returned from the URLRequest
+  ///   - error: Any error encountered through the URLRequest
   func process(data: Data?, urlResponse: URLResponse?, error: Error?)
+  
+  /// Callback function for handling the processing of a URLResponse coming in
+  /// from a URL request.
+  /// - Parameters:
+  ///   - url: The url usd for the URLRequest
+  ///   - urlResponse: The URLResponse returned from the URLRequest
+  ///   - error: Any error encountered through the URLRequest
   func process(url: URL?, urlResponse: URLResponse?, error: Error?)
 }
 
+/// This protocol augments the BVURLRequestable protocol by having conformance
+/// for requests that will have a body.
 public protocol BVURLRequestableWithBodyData: BVURLRequestable {
   var bodyData: Data? { get }
 }
 
+/// This protocol augments the BVURLRequestable protocol by having conformance
+/// for requests that will likley be pulling some raw data from file.
 public protocol BVURLRequestableWithFileURL: BVURLRequestable {
   var fileURL: URL? { get }
 }
 
+/// The base protocol for all URLResponses to be packaged into a top level BV
+/// object graph.
 public protocol BVURLRequestableResponse {
   associatedtype ResponseType
   associatedtype MetaType
@@ -33,6 +67,8 @@ public protocol BVURLRequestableResponse {
   var errors: [Error]? { get }
 }
 
+/// The protocol concerning itself with types that will register response
+/// handlers for when various requests start/finish/error.
 public protocol BVURLRequestableWithHandler {
   associatedtype Response
   var ignoringCompletion: Bool { get set }
@@ -40,7 +76,6 @@ public protocol BVURLRequestableWithHandler {
 }
 
 /// Internal
-
 internal protocol BVURLRequestableInternal {
   var bvPath: String { get }
   var commonEndpoint: String { get }

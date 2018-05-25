@@ -7,6 +7,18 @@
 
 import Foundation
 
+/// This is the middleware class used as a public interface into crafting BV
+/// specific query objects.
+/// - Important:
+/// \
+/// This class is meant to be agonstic of the types and deal mostly in
+/// protocols so that no layer violation exists between submodules and code
+/// reuse is of utmost importance.
+/// - Note:
+/// \
+/// If you're not internal to BV then it's likely that you shouldn't want
+/// to subclass this class, however, if the need arises we can make this open
+/// with relative ease.
 public class BVQuery<BVType: BVQueryable> {
   private var box: BVInternalQuery<BVType>
   
