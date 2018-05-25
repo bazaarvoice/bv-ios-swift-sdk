@@ -382,4 +382,3 @@ internal typealias BVAnalyticsEventInstance =
   (event: BVAnalyticsEventable,
   configuration: BVAnalyticsConfiguration,
   anonymous: Bool)
-
