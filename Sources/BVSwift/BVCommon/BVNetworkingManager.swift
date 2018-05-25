@@ -32,7 +32,6 @@ internal class BVNetworkingManager: NSObject {
   
   private override init() {}
   
-  /// Public
   internal static let sharedManager = BVNetworkingManager()
 }
 
