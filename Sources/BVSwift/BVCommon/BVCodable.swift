@@ -8,11 +8,22 @@
 
 import Foundation
 
+/// A protocol to help match the naming taxonomy of objects
+///
+/// - Note:
+/// \
+/// Many BVSwift objects conform to this protocol as a lot of the backend
+/// objects take on the form of single requests and bulk requests
+/// cooresponding to respective responses of object(s).
 public protocol BVResourceable: Codable {
   static var singularKey: String { get }
   static var pluralKey: String { get }
 }
 
+/// We use this to consolidate BV Objects since most of them have a collection
+/// of let ivars. We do this to keep the door open to "immutability" if we ever
+/// want to go down the Rx route and to also protect against coding instability
+/// and anti-patterns by the consumers of the module.
 internal protocol BVMergeable: Codable {
   associatedtype Mergeable = BVMergeable
   static func merge(from: Mergeable, into: Mergeable) -> Mergeable
@@ -124,7 +135,7 @@ internal struct BVCodableRawDecoder: Codable {
   }
 }
 
-// So far this only does decoding
+/// So far this only does decoding
 internal struct BVCodableWrapper<T: Codable>: Codable {
   let unwrapped:T?
   

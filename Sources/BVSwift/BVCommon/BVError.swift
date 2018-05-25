@@ -7,12 +7,19 @@
 
 import Foundation
 
+/// A protocol to represent all the basic errors that are returned/thrown
 public protocol BVError: Error, CustomStringConvertible,
 CustomDebugStringConvertible {
   var code: String { get }
   var message: String { get }
 }
 
+/// The basic error type of this module
+/// - Note:
+/// \
+/// This is mostly used as very top level errors where we can't figure out
+/// the specifics of what's going on or they're errors that are very close
+/// to being fatal, however, are still recoverable.
 public enum BVCommonError: BVError {
   case limit(Int)
   case network(Int, String)
