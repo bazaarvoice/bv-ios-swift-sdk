@@ -2,8 +2,7 @@
 //  BVQuestionSearchQueryTest.swift
 //  BVSwiftTests
 //
-//  Created by Michael Van Milligan on 5/24/18.
-//  Copyright © 2018 Michael Van Milligan. All rights reserved.
+//  Copyright © 2018 Bazaarvoice. All rights reserved.
 //
 
 import Foundation

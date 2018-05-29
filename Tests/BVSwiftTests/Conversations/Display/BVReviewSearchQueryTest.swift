@@ -2,8 +2,7 @@
 //  BVReviewSearchQueryTest.swift
 //  BVSwiftTests
 //
-//  Created by Michael Van Milligan on 5/24/18.
-//  Copyright © 2018 Michael Van Milligan. All rights reserved.
+//  Copyright © 2018 Bazaarvoice. All rights reserved.
 //
 
 import Foundation
@@ -75,7 +74,7 @@ class BVReviewSearchQueryTest: XCTestCase {
               return
           }
           
-          XCTAssertEqual(reviews.count, 10)
+          XCTAssertGreaterThanOrEqual(reviews.count, 10)
           XCTAssertEqual(review.rating, 5)
           XCTAssertEqual(
             review.title,

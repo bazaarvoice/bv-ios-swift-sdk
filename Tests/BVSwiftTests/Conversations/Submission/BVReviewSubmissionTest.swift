@@ -182,10 +182,11 @@ class BVReviewSubmissionTest: XCTestCase {
   func testSubmitReviewFailure() {
     let expectation = self.expectation(description: "testSubmitReviewFailure")
     
-    let review: BVReview = BVReview(reviewTitle: "",
+    let review: BVReview = BVReview(productId: "1000001",
                                     reviewText: "",
-                                    reviewRating: 123,
-                                    productId: "1000001")
+                                    reviewTitle: "",
+                                    
+                                    reviewRating: 123)
     
     guard let reviewSubmission = BVReviewSubmission(review) else {
       XCTFail()
@@ -223,10 +224,10 @@ class BVReviewSubmissionTest: XCTestCase {
     let expectation =
       self.expectation(description: "testSubmitReviewFailureFormCodeParsing")
     
-    let review: BVReview = BVReview(reviewTitle: "",
+    let review: BVReview = BVReview(productId: "1000001",
                                     reviewText: "",
-                                    reviewRating: 123,
-                                    productId: "1000001")
+                                    reviewTitle: "",
+                                    reviewRating: 123)
     
     guard let reviewSubmission = BVReviewSubmission(review) else {
       XCTFail()
@@ -289,10 +290,11 @@ class BVReviewSubmissionTest: XCTestCase {
     let expectation =
       self.expectation(description: "testSubmitReviewFailureCodeParsing")
     
-    let review: BVReview = BVReview(reviewTitle: "",
+    let review: BVReview = BVReview(productId: "",
                                     reviewText: "",
-                                    reviewRating: 123,
-                                    productId: "")
+                                    reviewTitle: "",
+                                    reviewRating: 123
+    )
     
     guard let reviewSubmission = BVReviewSubmission(review) else {
       XCTFail()
@@ -349,10 +351,10 @@ class BVReviewSubmissionTest: XCTestCase {
     let reviewText = "more than 50 more than 50 " +
     "more than 50 more than 50 more than 50"
     
-    let review: BVReview = BVReview(reviewTitle: "review title",
+    let review: BVReview = BVReview(productId: "test1",
                                     reviewText: reviewText,
-                                    reviewRating: 4,
-                                    productId: "test1")
+                                    reviewTitle: "review title",
+                                    reviewRating: 4)
     
     guard let reviewSubmission = BVReviewSubmission(review),
       let png = BVPhotoSubmissionTest.createPNG() else {

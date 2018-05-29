@@ -8,46 +8,258 @@
 
 import Foundation
 
+/// The BVConversations errors
+/// - Note:
+/// \
+/// Most of these will always have a message attached to them if they're coming
+/// back from a query/submission, however, it's not guarenteed in all cases so
+/// be sure to check and make sure.
 public enum BVConversationsError {
+  
+  /// Insufficient privileges to perform the operation
+  /// - Note:
+  /// \
+  /// ERROR_ACCESS_DENIED
   case accessDenied(String?)
+  
+  /// Authentication token is invalid, missing or the user has already been
+  /// authenticated
+  /// - Note:
+  /// \
+  /// ERROR_BAD_REQUEST
   case badRequest(String?)
+  
+  /// The parameter value is already in use.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_DUPLICATE
   case duplicate(String?)
+  
+  /// The nickname is already in use.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_DUPLICATE_NICKNAME
   case duplicateNickname(String?)
+  
+  /// Duplicate submissions are not allowed for this client.
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_DUPLICATE_SUBMISSION
   case duplicateSubmission(String?)
+  
+  /// Invalid API Key value
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_API_KEY
   case invalidApiKey(String?)
+  
+  /// Invalid callback function
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_CALLBACK
   case invalidCallback(String?)
+  
+  /// Email address is not in the proper format.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_INVALID_EMAILADDRESS
   case invalidEmailAddress(String?)
+  
+  /// Invalid filter attribute name
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_FILTER_ATTRIBUTE
   case invalidFilterAttribute(String?)
+  
+  /// Invalid parameter value
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_INCLUDED
   case invalidIncluded(String?)
+  
+  /// The IP address is invalid.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_INVALID_IPADDRESS
   case invalidIPAddress(String?)
+  
+  /// Invalid limit value
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_LIMIT
   case invalidLimit(String?)
+  
+  /// Invalid locale code
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_LOCALE
   case invalidLocale(String?)
+  
+  /// Invalid offset value
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_OFFSET
   case invalidOffset(String?)
+  
+  /// The selected option has been removed.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_INVALID_OPTION
   case invalidOption(String?)
+  
+  /// Invalid parameter in content submission.
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_PARAMETERS
   case invalidParameters(String?)
+  
+  /// Invalid search attribute name or search not supported
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_SEARCH_ATTRIBUTE
   case invalidSearchAttribute(String?)
+  
+  /// Invalid sort attribute name
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_SORT_ATTRIBUTE
   case invalidSortAttribute(String?)
+  
+  /// An object id must be specified since accepting objects can only be
+  /// submitted on the object type representing the id.
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_INVALID_SUBJECT_ID
   case invalidSubjectId(String?)
+  
+  /// Submission is missing a an object id to submit against. An object id is
+  /// REQUIRED for submissions.
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_MISSING_SUBJECT_ID
   case missingSubjectId(String?)
+  
+  /// This client does not allow unauthenticated submissions. A valid UserId is
+  /// required.
+  /// - Note:
+  /// \
+  /// ERROR_PARAM_MISSING_USER_ID
   case missingUserId(String?)
+  
+  /// This field is not in the correct format.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_PATTERN_MISMATCH
   case patternMismatch(String?)
+  
+  /// The content contains inappropriate language.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_PROFANITY
   case profanity(String?)
+  
+  /// The submission was rejected.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_REJECTED
   case rejected(String?)
+  
+  /// Rate limiting error, i.e. too many requests per time interval
+  /// - Note:
+  /// \
+  /// ERROR_REQUEST_LIMIT_REACHED
   case requestLimitReached(String?)
+  
+  /// A required field was not supplied.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_REQUIRED
   case required(String?)
+  
+  /// Both of the required hosted authentication parameters are missing.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_REQUIRED_EITHER
   case requiredEither(String?)
+  
+  /// You must enter a nickname.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_REQUIRED_NICKNAME
   case requiredNickname(String?)
+  
+  /// A field requires a value of true. (e.g., "You must agree to the terms and
+  /// conditions.")
+  /// - Note:
+  /// \
+  /// ERROR_FORM_REQUIRES_TRUE
   case requiresTrue(String?)
+  
+  /// Content provider's age is too young. (e.g., "Content cannot be accepted from
+  /// minors under age 13.")
+  /// - Note:
+  /// \
+  /// ERROR_FORM_RESTRICTED
   case restricted(String?)
+  
+  /// The uploaded file could not be stored. Try uploading again later.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_STORAGE_PROVIDER_FAILED
   case storageProviderFailed(String?)
+  
+  /// This nickname has already been submitted.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_SUBMITTED_NICKNAME
   case submittedNickname(String?)
+  
+  /// There must be a minimum number of items contributed for this field.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_TOO_FEW
   case tooFew(String?)
+  
+  /// This field has too many items.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_TOO_HIGH
   case tooHigh(String?)
+  
+  /// The field has too many characters.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_TOO_LONG
   case tooLong(String?)
+  
+  /// This field has too few items.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_TOO_LOW
   case tooLow(String?)
+  
+  /// The field doesn't have enough characters.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_TOO_SHORT
   case tooShort(String?)
+  
+  /// The item could not be uploaded. Ensure that it is a valid file type.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_UPLOAD_IO
   case uploadIO(String?)
+  
+  /// For unsupported features, clients etc.
+  /// - Note:
+  /// \
+  /// ERROR_UNSUPPORTED
   case unsupported(String?)
+  
+  /// Unknown error (internal server error, for instance)
+  /// - Note:
+  /// \
+  /// ERROR_UNKNOWN
   case unknown(String?)
   
   private enum CodingKeys: String, CodingKey {
@@ -57,10 +269,20 @@ public enum BVConversationsError {
 }
 
 extension BVConversationsError: Codable {
+  /// Conformance with Encodable. Currently it isn't implemented and therefore
+  /// shouldn't be used. It will fatalError to remind you :)
+  /// - Note:
+  /// \
+  /// Please see the plethora of information regarding this protocol.
   public func encode(to encoder: Encoder) throws {
     fatalError("This isn't implemented, nor will it be.")
   }
   
+  /// Conformance with Decodable. Used to hydrate from the json returned from
+  /// the various API calls.
+  /// - Note:
+  /// \
+  /// Please see the plethora of information regarding this protocol.
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
@@ -213,6 +435,7 @@ extension BVConversationsError: Codable {
   }
 }
 
+/// Conformance with the BVError Protocol
 extension BVConversationsError: BVError {
   
   public var code: String {
