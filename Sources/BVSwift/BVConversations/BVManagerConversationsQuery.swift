@@ -2,36 +2,96 @@
 //  BVManagerConversationsQuery.swift
 //  BVSwift
 //
-//  Created by Michael Van Milligan on 5/24/18.
-//  Copyright © 2018 Michael Van Milligan. All rights reserved.
+//  Copyright © 2018 Bazaarvoice. All rights reserved.
 //
 
 import Foundation
 
-// MARK: - BVConversationsQueryGenerator
+/// Protocol defining the gestalt of query requests. To be used as a vehicle to
+/// generate types which are likely generative of all of the query types.
 public protocol BVConversationsQueryGenerator {
+  
+  /// Generator for BVAuthorQuery
+  /// - Parameters:
+  ///   - authorId: Author id to query against
   func query(authorId: String) -> BVAuthorQuery?
+  
+  /// Generator for BVCommentQuery
+  /// - Parameters:
+  ///   - commentProductId: Product id to query against
+  ///   - commentId: Comment id to query against
   func query(commentProductId: String, commentId: String) -> BVCommentQuery?
+  
+  /// Generator for BVCommentsQuery
+  /// - Parameters:
+  ///   - commentProductId: Product id to query against
+  ///   - commentReviewId: Review id to query against
+  ///   - limit: Limit value for query
+  ///   - offset: Offset in paging for query
   func query(
     commentProductId: String,
     commentReviewId: String,
     limit: UInt16,
     offset: UInt16) -> BVCommentsQuery?
+  
+  /// Generator for BVProductQuery
+  /// - Parameters:
+  ///   - productId: Product id to query against
   func query(productId: String) -> BVProductQuery?
+  
+  /// Generator for BVProductSearchQuery
+  /// - Parameters:
+  ///   - productSearchQuery: Search query string to query against
   func query(productSearchQuery: String) -> BVProductSearchQuery?
+  
+  /// Generator for BVProductsQuery
+  /// - Note:
+  /// \
+  /// This is the only generator that takes no parameter. It's assumed that if
+  /// you need no other bit of information you're querying against products.
   func query() -> BVProductsQuery?
+  
+  /// Generator for BVProductStatisticsQuery
+  /// - Parameters:
+  ///   - productIds: Array of product ids to query against
   func query(productIds: [String]) -> BVProductStatisticsQuery?
+  
+  /// Generator for BVQuestionQuery
+  /// - Parameters:
+  ///   - questionProductId: Product id to query against
+  ///   - limit: Limit value for query
+  ///   - offset: Offset in paging for query
   func query(
     questionProductId: String,
     limit: UInt16,
     offset: UInt16) -> BVQuestionQuery?
+  
+  /// Generator for BVQuestionSearchQuery
+  /// - Parameters:
+  ///   - questionProductId: Product id to query against
+  ///   - searchQuery: Search query string to query against
+  ///   - limit: Limit value for query
+  ///   - offset: Offset in paging for query
   func query(
     questionProductId: String,
     searchQuery: String,
     limit: UInt16,
     offset: UInt16) -> BVQuestionSearchQuery?
+  
+  /// Generator for BVReviewQuery
+  /// - Parameters:
+  ///   - reviewProductId: Product id to query against
+  ///   - limit: Limit value for query
+  ///   - offset: Offset in paging for query
   func query(
     reviewProductId: String, limit: UInt16, offset: UInt16) -> BVReviewQuery?
+  
+  /// Generator for BVReviewSearchQuery
+  /// - Parameters:
+  ///   - reviewProductId: Product id to query against
+  ///   - searchQuery: Search query string to query against
+  ///   - limit: Limit value for query
+  ///   - offset: Offset in paging for query
   func query(
     reviewProductId: String,
     searchQuery: String,
@@ -39,7 +99,13 @@ public protocol BVConversationsQueryGenerator {
     offset: UInt16) -> BVReviewSearchQuery?
 }
 
-// MARK: - BVManager: BVConversationsQueryGenerator
+/// BVManager's conformance to the BVConversationsQueryGenerator protocol
+/// - Note:
+/// \
+/// This is a convenience extension to generate already preconfigured
+/// query types. It's also an abstraction layer to allow for easier
+/// integration with any future advamcements made in the configuration layer
+/// instead of having to manually configure each type.
 extension BVManager: BVConversationsQueryGenerator {
   
   public func query(authorId: String) -> BVAuthorQuery? {

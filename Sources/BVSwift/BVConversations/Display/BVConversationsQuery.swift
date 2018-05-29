@@ -8,6 +8,13 @@
 
 import Foundation
 
+/// Base public class for handling Conversation Queries
+/// - Note:
+/// \
+/// This really only exists publicly as a convenience to the actual type
+/// specific queries. There shouldn't be any need to subclass this if you're an
+/// external developer; unless of course you're fixing bugs or extending
+/// something that you want to see being made public :)
 public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var ignoreCompletion: Bool = false
   private var paramsPriv: [BVConversationsQueryParameter]
@@ -39,16 +46,8 @@ public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   }
 }
 
-// MARK: - BVConversationsQuery: BVConversationsQueryPostflightable
-extension BVConversationsQuery: BVConversationsQueryPostflightable {
-  internal typealias ConversationsPostflightResult = BVType
-  
-  func conversationsPostflight(_ results: [BVType]?) {
-    conversationsPostflightResultsClosure?(results)
-  }
-}
-
-// MARK: - BVConversationsQuery: BVQueryActionable
+/// Conformance with BVQueryActionable. Please see protocol definition for more
+/// information.
 extension BVConversationsQuery: BVQueryActionable {
   public typealias Kind = BVType
   public typealias Response =
@@ -120,7 +119,8 @@ extension BVConversationsQuery: BVQueryActionable {
   }
 }
 
-// MARK: - BVConversationsQuery: BVConfigurable
+/// Conformance with BVConfigurable. Please see protocol definition for more
+/// information.
 extension BVConversationsQuery: BVConfigurable {
   public typealias Configuration = BVConversationsConfiguration
   
@@ -146,20 +146,30 @@ extension BVConversationsQuery: BVConfigurable {
   }
 }
 
-// MARK: - BVConversationsQuery: BVConfigurableInternal
-extension BVConversationsQuery: BVConfigurableInternal {
-  var configuration: BVConversationsConfiguration? {
-    return conversationsConfiguration
-  }
-}
-
-// MARK: - BVConversationsQuery: BVConversationsQueryCustomizable
+//// Conformance with BVConversationsQueryCustomizable. Please see protocol
+/// definition for more information.
 extension BVConversationsQuery: BVConversationsQueryCustomizable {
   @discardableResult final public func custom(
     _ field: CustomStringConvertible, value: CustomStringConvertible) -> Self {
     let custom:BVConversationsQueryParameter = .custom(field, value, nil)
     add(parameter: custom)
     return self
+  }
+}
+
+// MARK: - BVConversationsQuery: BVConversationsQueryPostflightable
+extension BVConversationsQuery: BVConversationsQueryPostflightable {
+  internal typealias ConversationsPostflightResult = BVType
+  
+  func conversationsPostflight(_ results: [BVType]?) {
+    conversationsPostflightResultsClosure?(results)
+  }
+}
+
+// MARK: - BVConversationsQuery: BVConfigurableInternal
+extension BVConversationsQuery: BVConfigurableInternal {
+  var configuration: BVConversationsConfiguration? {
+    return conversationsConfiguration
   }
 }
 
