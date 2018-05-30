@@ -128,7 +128,8 @@ extension BVComment: BVReviewIncludable { }
 // MARK: - BVComment: BVConversationsUpdateIncludable
 extension BVComment: BVConversationsUpdateIncludable {
   
-  mutating func updateIncludable(_ includable: BVConversationsIncludable) {
+  internal mutating
+  func updateIncludable(_ includable: BVConversationsIncludable) {
     
     if let authors: [BVAuthor] = includable.authors {
       self.authors = authors

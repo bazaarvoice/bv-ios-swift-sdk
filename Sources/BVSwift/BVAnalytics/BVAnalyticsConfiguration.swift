@@ -33,13 +33,6 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
   }
   
   /// See Protocol Definition for more info
-  public var subConfigurations: [BVConfiguration]? {
-    get {
-      return nil
-    }
-  }
-  
-  /// See Protocol Definition for more info
   public var type: BVConfigurationType {
     get {
       switch self {
@@ -70,45 +63,9 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
       }
     }
   }
-  
-  /// Conformance to BVConfiguration
-  public init?(_ config: BVConfigurationType, keyValues: [String : Any]?) {
-    
-    guard let analyticKeyValues = keyValues else {
-      self = .dryRun(configType: config)
-      return
-    }
-    
-    if let dryRun: Bool =
-      analyticKeyValues[BVConstants.BVAnalytics.dryRunKey] as? Bool,
-      dryRun {
-      self = .dryRun(configType: config)
-      return
-    }
-    
-    guard let localeIdentifier: String =
-      analyticKeyValues[BVConstants.BVAnalytics.localeKey] as? String else {
-        self =
-          .configuration(locale: nil, configType: config)
-        return
-    }
-    
-    self =
-      .configuration(
-        locale: Locale(identifier: localeIdentifier), configType: config)
-  }
-  
-  /// Conformance to BVConfiguration
-  public func isSameTypeAs(_ config: BVConfiguration) -> Bool {
-    guard let analyticsConfig =
-      config as? BVAnalyticsConfiguration else {
-        return false
-    }
-    return self == analyticsConfig
-  }
 }
 
-/// Conformance to  Equatable
+/// Conformance to Equatable
 extension BVAnalyticsConfiguration: Equatable {
   public static func ==
     (lhs: BVAnalyticsConfiguration, rhs: BVAnalyticsConfiguration) -> Bool {
@@ -146,6 +103,50 @@ extension BVAnalyticsConfiguration: Hashable {
     case let .dryRun(configType):
       return "dryRun".djb2hash ^ configType.hashValue
     }
+  }
+}
+
+extension BVAnalyticsConfiguration: BVConfigurationInternal {
+  
+  /// There is no sub-configuration for analytics.
+  internal var subConfigurations: [BVConfigurationInternal]? {
+    get {
+      return nil
+    }
+  }
+  
+  internal init?(_ config: BVConfigurationType, keyValues: [String : Any]?) {
+    
+    guard let analyticKeyValues = keyValues else {
+      self = .dryRun(configType: config)
+      return
+    }
+    
+    if let dryRun: Bool =
+      analyticKeyValues[BVConstants.BVAnalytics.dryRunKey] as? Bool,
+      dryRun {
+      self = .dryRun(configType: config)
+      return
+    }
+    
+    guard let localeIdentifier: String =
+      analyticKeyValues[BVConstants.BVAnalytics.localeKey] as? String else {
+        self =
+          .configuration(locale: nil, configType: config)
+        return
+    }
+    
+    self =
+      .configuration(
+        locale: Locale(identifier: localeIdentifier), configType: config)
+  }
+  
+  internal func isSameTypeAs(_ config: BVConfiguration) -> Bool {
+    guard let analyticsConfig =
+      config as? BVAnalyticsConfiguration else {
+        return false
+    }
+    return self == analyticsConfig
   }
 }
 
