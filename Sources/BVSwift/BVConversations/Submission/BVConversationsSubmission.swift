@@ -7,7 +7,15 @@
 
 import Foundation
 
-public class BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
+/// Base public class for handling Conversation Submissions
+/// - Note:
+/// \
+/// This really only exists publicly as a convenience to the actual type
+/// specific submissions. There shouldn't be any need to subclass this if
+/// you're an external developer; unless of course you're fixing bugs or
+/// extending something that you want to see being made public :)
+public class
+BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   
   /// Private
   private var ignoreCompletion: Bool = false
@@ -167,13 +175,15 @@ extension BVConversationsSubmission: BVSubmissionActionable {
             return
         }
         
-//        do {
-//          let jsonObject =
-//            try JSONSerialization.jsonObject(with: jsonData, options: [])
-//          print(jsonObject)
-//        } catch {
-//          BVLogger.sharedLogger.error("Error: \(error)")
-//        }
+        /*
+         do {
+         let jsonObject =
+         try JSONSerialization.jsonObject(with: jsonData, options: [])
+         print(jsonObject)
+         } catch {
+         BVLogger.sharedLogger.error("Error: \(error)")
+         }
+         */
         
         completion(.success(response, result))
         self.conversationsPostflight([result])

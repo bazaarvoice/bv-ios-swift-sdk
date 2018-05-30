@@ -52,7 +52,7 @@ public class BVManager {
       return nil
   }()
   
-  private var configurations: [BVConfiguration]?
+  private var configurations: [BVConfigurationInternal]?
   private var internalURLSession: URLSession =
     BVNetworkingManager.sharedManager.networkingSession
   
@@ -101,12 +101,16 @@ public class BVManager {
   public func addConfiguration(
     _ configuration: BVConfiguration) -> Self {
     
-    var configs = configurations ?? [BVConfiguration]()
+    guard let internalConfig = configuration as? BVConfigurationInternal else {
+      return self
+    }
     
-    if !configs.contains(where: { (config: BVConfiguration) -> Bool in
-      config.isSameTypeAs(configuration)
+    var configs = configurations ?? [BVConfigurationInternal]()
+    
+    if !configs.contains(where: { (config: BVConfigurationInternal) -> Bool in
+      config.isSameTypeAs(internalConfig)
     }) {
-      configs.append(configuration)
+      configs.append(internalConfig)
     }
     configurations = configs
     
@@ -119,7 +123,7 @@ public class BVManager {
 /// of configuration and it defaults to any that are programmatically added
 /// before switching to what is in the configuration file.
 internal extension BVManager {
-  func getConfiguration<T: BVConfiguration>() -> T? {
+  func getConfiguration<T: BVConfigurationInternal>() -> T? {
     
     if var configList = configurations {
       

@@ -187,7 +187,8 @@ extension BVQuestion: BVProductIncludable { }
 // MARK: - BVQuestion: BVConversationsUpdateIncludable
 extension BVQuestion: BVConversationsUpdateIncludable {
   
-  mutating func updateIncludable(_ includable: BVConversationsIncludable) {
+  internal mutating
+  func updateIncludable(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
       self.answers = answers

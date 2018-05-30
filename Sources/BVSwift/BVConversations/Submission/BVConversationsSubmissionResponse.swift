@@ -8,18 +8,40 @@
 
 import Foundation
 
+/// Protocol defining the meta-data header for submissions
 public protocol BVConversationsSubmissionMetaData {
+  
+  /// The submission token for the submission
   var authorSubmissionToken: String? { get }
+  
+  /// Field errors
   var formFieldErrors: [BVFormFieldError]? { get }
+  
+  /// Fields attached to submission
+  /// - Note:
+  /// \
+  /// Useful for debugging Preview submissions
   var formFields: [BVFormField]? { get }
+  
+  /// Flag for the existence of errors
   var hasErrors: Bool { get }
+  
+  /// Locale for the submission
   var locale: String? { get }
+  
+  /// Identifier for the submission
   var submissionId: String? { get }
+  
+  /// Typical hours for post to be live
   var typicalHoursToPost: Int? { get }
 }
 
-public enum BVConversationsSubmissionResponse<BVType: BVSubmissionable>:
-BVURLRequestableResponse {
+/// Public return type for all BVConversation Submissions
+/// - Note:
+/// \
+/// The result type must always be a BVSubmissionable type.
+public enum BVConversationsSubmissionResponse
+<BVType: BVSubmissionable>: BVURLRequestableResponse {
   public typealias ResponseType = BVType
   public typealias MetaType = BVConversationsSubmissionMetaData
   

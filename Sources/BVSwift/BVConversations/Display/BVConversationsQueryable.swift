@@ -7,73 +7,31 @@
 
 import Foundation
 
-// MARK: - BVConversationsQueryField
-internal protocol BVConversationsQueryField:
-BVInternalCustomStringConvertible {
-  static var fieldPrefix: String { get }
-}
-
-// MARK: - BVConversationsQueryValue
-internal protocol BVConversationsQueryValue:
-BVInternalCustomStringConvertible { }
-
-// MARK: - BVConversationsQueryFilter
+/// Protocol defining the primitive query filter types
 public protocol BVConversationsQueryFilter: CustomStringConvertible { }
 
-internal extension BVConversationsQueryFilter {
-  static var filterPrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQueryFilter.defaultField
-    }
-  }
-}
-
-// MARK: - BVConversationsQueryFilterOperator
+/// Protocol defining the primitive query filter operator types
 public protocol BVConversationsQueryFilterOperator: CustomStringConvertible { }
 
-// MARK: - BVConversationsQueryInclude
+/// Protocol defining the primitive query include types
 public protocol BVConversationsQueryInclude: CustomStringConvertible { }
 
-internal extension BVConversationsQueryInclude {
-  static var includePrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQueryInclude.defaultField
-    }
-  }
-}
-
-// MARK: - BVConversationsQuerySort
+/// Protocol defining the primitive query sort types
 public protocol BVConversationsQuerySort: CustomStringConvertible { }
 
-internal extension BVConversationsQuerySort {
-  static var sortPrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQuerySort.defaultField
-    }
-  }
-}
-
-// MARK: - BVConversationsQuerySortOrder
+/// Protocol defining the primitive query sort order types
 public protocol BVConversationsQuerySortOrder: CustomStringConvertible { }
 
-// MARK: - BVConversationsQueryStat
+/// Protocol defining the primitive query stat types
 public protocol BVConversationsQueryStat: CustomStringConvertible { }
 
-internal extension BVConversationsQueryStat {
-  static var statPrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQueryStat.defaultField
-    }
-  }
-}
-
-// MARK: - BVConversationsQueryCustomizable
+/// Protocol definition for the behavior of adding custom query fields
 public protocol BVConversationsQueryCustomizable {
   func custom(_ field: CustomStringConvertible,
               value: CustomStringConvertible) -> Self
 }
 
-// MARK: - BVConversationsQueryFilterable
+/// Protocol definition for the behavior of adding filters
 public protocol BVConversationsQueryFilterable {
   associatedtype Filter: BVConversationsQueryFilter
   associatedtype Operator: BVConversationsQueryFilterOperator
@@ -87,49 +45,75 @@ public protocol BVConversationsQueryFilterable {
     value: CustomStringConvertible) -> Self
 }
 
-// MARK: - BVConversationsQueryIncludeable
+/// Protocol definition for the behavior of adding included filters
 public protocol BVConversationsQueryIncludeable {
   associatedtype Include: BVConversationsQueryInclude
   func include(_ include: Include, limit: UInt16) -> Self
 }
 
-// MARK: - BVConversationsQuerySortable
+/// Protocol definition for the behavior of adding sort filters
 public protocol BVConversationsQuerySortable {
   associatedtype Sort: BVConversationsQuerySort
   associatedtype Order: BVConversationsQuerySortOrder
   func sort(_ sort: Sort, order: Order) -> Self
 }
 
-// MARK: - BVConversationsQueryStatable
+/// Protocol definition for the behavior of adding stat filters
 public protocol BVConversationsQueryStatable {
   associatedtype Stat: BVConversationsQueryStat
   func stats(_ for: Stat) -> Self
 }
 
-// MARK: - BVQueryable Types
+/// Protocol definition for the answer includable instances
 public protocol BVAnswerIncludable: BVQueryable {
   var answers: [BVAnswer]? { get }
 }
 
+/// Protocol definition for the author includable instances
 public protocol BVAuthorIncludable: BVQueryable {
   var authors: [BVAuthor]? { get }
 }
 
+/// Protocol definition for the comment includable instances
 public protocol BVCommentIncludable: BVQueryable {
   var comments: [BVComment]? { get }
 }
 
+/// Protocol definition for the product includable instances
 public protocol BVProductIncludable: BVQueryable {
   var products: [BVProduct]? { get }
 }
 
+/// Protocol definition for the question includable instances
 public protocol BVQuestionIncludable: BVQueryable {
   var questions: [BVQuestion]? { get }
 }
 
+/// Protocol definition for the review includable instances
 public protocol BVReviewIncludable: BVQueryable {
   var reviews: [BVReview]? { get }
 }
+
+/// Internal
+
+extension BVConversationsUpdateIncludable {
+  internal mutating func update(_ any: Any?) {
+    if let includable: BVConversationsIncludable =
+      any as? BVConversationsIncludable {
+      updateIncludable(includable)
+    }
+  }
+}
+
+// MARK: - BVConversationsQueryField
+internal protocol BVConversationsQueryField:
+BVInternalCustomStringConvertible {
+  static var fieldPrefix: String { get }
+}
+
+// MARK: - BVConversationsQueryValue
+internal protocol BVConversationsQueryValue:
+BVInternalCustomStringConvertible { }
 
 internal protocol BVConversationsUpdateable: BVQueryable {
   mutating func update(_ any: Any?)
@@ -139,17 +123,40 @@ internal protocol BVConversationsUpdateIncludable: BVConversationsUpdateable {
   mutating func updateIncludable(_ includable: BVConversationsIncludable)
 }
 
-extension BVConversationsUpdateIncludable {
-  mutating func update(_ any: Any?) {
-    if let includable: BVConversationsIncludable =
-      any as? BVConversationsIncludable {
-      updateIncludable(includable)
-    }
-  }
-}
-
 // MARK: - BVConversationsQueryPostflightable
 internal protocol BVConversationsQueryPostflightable: BVQueryActionable {
   associatedtype ConversationsPostflightResult: BVQueryable
   func conversationsPostflight(_ results: [ConversationsPostflightResult]?)
+}
+
+internal extension BVConversationsQueryFilter {
+  static var filterPrefix: String {
+    get {
+      return BVConversationsConstants.BVConversationsQueryFilter.defaultField
+    }
+  }
+}
+
+internal extension BVConversationsQueryInclude {
+  static var includePrefix: String {
+    get {
+      return BVConversationsConstants.BVConversationsQueryInclude.defaultField
+    }
+  }
+}
+
+internal extension BVConversationsQuerySort {
+  static var sortPrefix: String {
+    get {
+      return BVConversationsConstants.BVConversationsQuerySort.defaultField
+    }
+  }
+}
+
+internal extension BVConversationsQueryStat {
+  static var statPrefix: String {
+    get {
+      return BVConversationsConstants.BVConversationsQueryStat.defaultField
+    }
+  }
 }

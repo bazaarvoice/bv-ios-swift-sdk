@@ -7,18 +7,32 @@
 
 import Foundation
 
+/// Protocol defining the meta-data header for queries
 public protocol BVConversationsQueryMetaData {
+  
+  /// The limit used in the query
   var limit: UInt16? { get }
+  
+  /// The locale type of the query
   var locale: String? { get }
+  
+  /// The offset used in the query
   var offset: UInt16? { get }
+  
+  /// The total returned results of the query
   var totalResults: UInt16? { get }
 }
 
-public enum BVConversationsQueryResponse<BVType: BVQueryable>:
-BVURLRequestableResponse {
+/// Public return type for all BVConversation Queries
+/// - Note:
+/// \
+/// The result type must always be a BVQueryable type.
+public enum
+BVConversationsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
   public typealias ResponseType = [BVType]
   public typealias MetaType = BVConversationsQueryMetaData
   
+  /// Success state of the query, a.k.a, no errors.
   public var success: Bool {
     get {
       guard case .success = self else {
@@ -28,6 +42,7 @@ BVURLRequestableResponse {
     }
   }
   
+  /// Failure case returned errors.
   public var errors: [Error]? {
     get {
       guard case let .failure(errors) = self else {
@@ -114,16 +129,33 @@ internal struct BVConversationsQueryResponseInternal
     case reviewIds = "ReviewIds"
   }
   
+  /// Function to walk include objects by id and in order to make sure that the
+  /// returned array preserves the ordering so that we don't have to also
+  /// squirrel away the order somewhere else.
+  /// - Parameters:
+  ///   - container: The decodable container keyed off whatever respective
+  ///     object id representation.
+  ///   - lookup: BVIncludesDictionaries containing the mappings of ids to
+  ///     objects.
+  ///   - plural: The plural key is the key representing the potential list of
+  ///     objects to be included; list > 1.
+  ///   - singular: The singular key is the key representing the potential list
+  ///     objects to be included; list <= 1.
+  /// - Note:
+  /// \
+  /// The use of singular and plural keys may be overkill but we're just
+  /// protecting against that possibility of having only one singular object as
+  /// part of the includes.
   private static func extractInclude<T : BVQueryable, Key>(
     container: KeyedDecodingContainer<Key>,
     lookup: [String : T],
-    major: Key,
-    minor: Key) throws -> [T] {
+    plural: Key,
+    singular: Key) throws -> [T] {
     
     var extraction: [T] = []
     if let ids: [String] =
       try container
-        .decodeIfPresent([String].self, forKey: major) {
+        .decodeIfPresent([String].self, forKey: plural) {
       extraction = ids.reduce([]) { (result: [T], id: String) -> [T] in
         guard let obj = lookup[id] else {
           return result
@@ -132,7 +164,7 @@ internal struct BVConversationsQueryResponseInternal
       }
     } else if let id: String =
       try container
-        .decodeIfPresent(String.self, forKey: minor),
+        .decodeIfPresent(String.self, forKey: singular),
       let object: T = lookup[id] {
       extraction = [object]
     }
@@ -197,6 +229,7 @@ internal struct BVConversationsQueryResponseInternal
         try includesContainer.nestedContainer(keyedBy: IncludeCodingKeys.self)
       
       // We could really do with some preprocessor macros here...
+      // although, I will not apologize for: `type(of: self)`
       
       // BVAnswerIncludable
       if let answers: [String : BVAnswer] =
@@ -205,8 +238,8 @@ internal struct BVConversationsQueryResponseInternal
           type(of: self).extractInclude(
             container: includeContainer,
             lookup: answers,
-            major: .answerIds,
-            minor: .answerId)
+            plural: .answerIds,
+            singular: .answerId)
       }
       
       // BVAuthorIncludableInternal
@@ -216,8 +249,8 @@ internal struct BVConversationsQueryResponseInternal
           type(of: self).extractInclude(
             container: includeContainer,
             lookup: authors,
-            major: .authorIds,
-            minor: .authorId)
+            plural: .authorIds,
+            singular: .authorId)
       }
       
       // BVCommentIncludableInternal
@@ -227,8 +260,8 @@ internal struct BVConversationsQueryResponseInternal
           type(of: self).extractInclude(
             container: includeContainer,
             lookup: comments,
-            major: .commentIds,
-            minor: .commentId)
+            plural: .commentIds,
+            singular: .commentId)
       }
       
       // BVProductIncludableInternal
@@ -238,8 +271,8 @@ internal struct BVConversationsQueryResponseInternal
           type(of: self).extractInclude(
             container: includeContainer,
             lookup: products,
-            major: .productIds,
-            minor: .productId)
+            plural: .productIds,
+            singular: .productId)
       }
       
       // BVQuestionIncludableInternal
@@ -249,8 +282,8 @@ internal struct BVConversationsQueryResponseInternal
           type(of: self).extractInclude(
             container: includeContainer,
             lookup: questions,
-            major: .questionIds,
-            minor: .questionId)
+            plural: .questionIds,
+            singular: .questionId)
       }
       
       // BVReviewIncludableInternal
@@ -260,8 +293,8 @@ internal struct BVConversationsQueryResponseInternal
           type(of: self).extractInclude(
             container: includeContainer,
             lookup: reviews,
-            major: .reviewIds,
-            minor: .reviewId)
+            plural: .reviewIds,
+            singular: .reviewId)
       }
       
       resultUpdateIncludable.update(internalIncludes)
