@@ -155,10 +155,10 @@ public struct BVReview: BVQueryable, BVSubmissionable {
 
 extension BVReview {
   public init(
-    reviewTitle: String,
+    productId: String,
     reviewText: String,
-    reviewRating: Int,
-    productId: String) {
+    reviewTitle: String,
+    reviewRating: Int) {
     self.title = reviewTitle
     self.reviewText = reviewText
     self.rating = reviewRating
@@ -211,7 +211,8 @@ extension BVReview: BVProductIncludable { }
 // MARK: - BVReview: BVConversationsUpdateIncludable
 extension BVReview: BVConversationsUpdateIncludable {
   
-  mutating func updateIncludable(_ includable: BVConversationsIncludable) {
+  internal mutating
+  func updateIncludable(_ includable: BVConversationsIncludable) {
     
     if let comments: [BVComment] = includable.comments {
       self.comments = comments

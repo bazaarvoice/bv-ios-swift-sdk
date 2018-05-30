@@ -34,12 +34,12 @@ public final class BVReviewQuery: BVConversationsQuery<BVReview> {
     
     if 0 < limit {
       let limitField: BVLimitQueryField = BVLimitQueryField(limit)
-      add(parameter: .custom(limitField, limitField, nil))
+      add(parameter: .customField(limitField, nil))
     }
     
     if 0 < offset {
       let offsetField: BVOffsetQueryField = BVOffsetQueryField(offset)
-      add(parameter: .custom(offsetField, offsetField, nil))
+      add(parameter: .customField(offsetField, nil))
     }
   }
   
