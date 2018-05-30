@@ -19,10 +19,10 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
     reviewRating: Int) {
     self.init(
       BVReview(
-        reviewTitle: reviewTitle,
+        productId: productId,
         reviewText: reviewText,
-        reviewRating: reviewRating,
-        productId: productId))
+        reviewTitle: reviewTitle,
+        reviewRating: reviewRating))
   }
   
   public override init?(_ review: BVReview) {

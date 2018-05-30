@@ -392,7 +392,7 @@ extension BVConversationsQueryParameter {
       return lhs
     }
     
-    /// They're completely the same, psss.
+    /// They're completely the same, pass.
     if lhs === rhs {
       return lhs
     }

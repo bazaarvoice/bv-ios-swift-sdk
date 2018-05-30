@@ -2,8 +2,7 @@
 //  BVQuestionSearchQuery.swift
 //  BVSwift
 //
-//  Created by Michael Van Milligan on 5/24/18.
-//  Copyright © 2018 Michael Van Milligan. All rights reserved.
+//  Copyright © 2018 Bazaarvoice. All rights reserved.
 //
 
 import Foundation
@@ -46,12 +45,12 @@ public final class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
     
     if 0 < limit {
       let limitField: BVLimitQueryField = BVLimitQueryField(limit)
-      add(parameter: .custom(limitField, limitField, nil))
+      add(parameter: .customField(limitField, nil))
     }
     
     if 0 < offset {
       let offsetField: BVOffsetQueryField = BVOffsetQueryField(offset)
-      add(parameter: .custom(offsetField, offsetField, nil))
+      add(parameter: .customField(offsetField, nil))
     }
   }
 }
