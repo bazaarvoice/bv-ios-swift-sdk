@@ -7,30 +7,14 @@
 
 import Foundation
 
-/// Public class for handling BVComment Queries
-/// - Note:
-/// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-display)
 public class BVCommentsQuery: BVConversationsQuery<BVComment> {
   
-  /// The Product identifier to query
+  /// Public
   public let productId: String?
-  
-  /// The Review identifier to query
   public let reviewId: String?
-  
-  /// The limit for the maximum number of results to be returned
   public let limit: UInt16?
-  
-  /// The offset in increments of limit to return from
   public let offset: UInt16?
   
-  /// The initializer for BVAuthorQuery
-  /// - Parameters:
-  ///   - productId: The Product identifier to query
-  ///   - reviewId: The Review identifier to query
-  ///   - limit: The limit for the maximum number of results to be returned
-  ///   - offset: The offset in increments of limit to return from
   public init(
     productId: String,
     reviewId: String,

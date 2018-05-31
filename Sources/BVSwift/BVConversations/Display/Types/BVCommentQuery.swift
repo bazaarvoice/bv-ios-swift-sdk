@@ -7,22 +7,12 @@
 
 import Foundation
 
-/// Public class for handling BVComment Queries
-/// - Note:
-/// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-display)
-public class BVCommentQuery: BVConversationsQuery<BVComment> {
+public final class BVCommentQuery: BVConversationsQuery<BVComment> {
   
-  /// The Product identifier to query
+  /// Public
   public let productId: String?
-  
-  /// The Comment identifier to query
   public let commentId: String?
   
-  /// The initializer for BVAuthorQuery
-  /// - Parameters:
-  ///   - productId: The Product identifier to query
-  ///   - commentId: The Comment identifier to query
   public init(productId: String, commentId: String) {
     self.productId = productId
     self.commentId = commentId

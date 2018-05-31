@@ -9,8 +9,6 @@
 import Foundation
 import os.log
 
-public typealias BVLoggerRedirectClosure = ((_ msg: String) -> Swift.Void)
-
 /// The global logger packaged with this module
 ///
 /// - Note:
@@ -24,10 +22,10 @@ public class BVLogger {
   /// Supported log levels
   public enum BVLogLevel: UInt {
     case analytics = 0
-    case info = 1
-    case debug = 2
-    case error = 3
-    case fault = 4
+    case verbose = 1
+    case info = 2
+    case warning = 3
+    case error = 4
   }
   
   /// Singleton interface
@@ -69,8 +67,8 @@ public class BVLogger {
   /// - Note:
   /// \
   /// This is thread safe.
-  public func debug(_ msg: String) {
-    enqueue(msg, logLevel: .debug)
+  public func verbose(_ msg: String) {
+    enqueue(msg, logLevel: .verbose)
   }
   
   /// Log an analytic messages
@@ -79,8 +77,8 @@ public class BVLogger {
   /// - Note:
   /// \
   /// This is thread safe.
-  public func fault(_ msg: String) {
-    enqueue(msg, logLevel: .fault)
+  public func warning(_ msg: String) {
+    enqueue(msg, logLevel: .warning)
   }
   
   /// Set the current log level
@@ -112,84 +110,7 @@ public class BVLogger {
     }
   }
   
-  /// Understanding the need for logging unification this redirect closure is
-  /// an interface for serializing logging facilities.
-  /// - Note:
-  /// \
-  /// If this is set with a backing closure then the default logging behavior
-  /// will be turned off and instead funneled through the provided closure. The
-  /// filtering based on log level will still occur, however, instead of
-  /// logging it will package the message up and send it through to the provided
-  /// closure. If needing to turn off redirection just set the closure value to
-  /// nil.
-  ///
-  /// This is thread safe.
-  public var loggerRedirect: BVLoggerRedirectClosure? {
-    get {
-      var closure: BVLoggerRedirectClosure?
-      loggerQueue.sync {
-        closure = internalLoggerRedirect
-      }
-      return closure
-    }
-    set(newValue) {
-      loggerQueue.sync {
-        internalLoggerRedirect = newValue
-      }
-    }
-  }
-  
-  @available(iOS 10.0, *)
-  public var oslogLevel: OSLogType {
-    get {
-      switch logLevel {
-      case .info:
-        return .info
-      case .debug:
-        return .debug
-      case .error:
-        return .error
-      case .fault:
-        return .fault
-      default:
-        return .default
-      }
-    }
-    set(newValue) {
-      switch newValue {
-      case .info:
-        logLevel = .info
-      case .debug:
-        logLevel = .debug
-      case .error:
-        logLevel = .error
-      case .fault:
-        logLevel = .fault
-      default:
-        break
-      }
-    }
-  }
-  
   /// Private
-  lazy private var defaultLogClosure: BVLoggerRedirectClosure = {
-    return { (msg: String) -> Swift.Void in
-      DispatchQueue.main.async {
-        if #available(iOS 10.0, *) {
-          
-          os_log("%{public}@", log: self.logger, msg)
-          
-          #if DEBUG
-            print(msg)
-          #endif
-          
-        } else {
-          print(msg)
-        }
-      }
-    }
-  }()
-  
   private var loggerQueue: DispatchQueue =
     DispatchQueue(
       label: "com.bvswift.BVLogger.loggerQueue")
@@ -200,28 +121,33 @@ public class BVLogger {
   }()
   
   private var internalLogLevel: BVLogLevel = .error
-  private var internalLoggerRedirect: BVLoggerRedirectClosure?
   
   private init() {}
   
   private func enqueue(_ msg: String, logLevel: BVLogLevel) {
-    loggerQueue.async {
+    DispatchQueue.main.async {
       
-      switch (self.internalLogLevel, logLevel) {
+      switch (self.logLevel, logLevel) {
       case (.analytics, .analytics):
         break
       case (.analytics, _):
         return
-      case (_, _) where self.internalLogLevel.rawValue <= logLevel.rawValue:
+      case (_, _) where self.logLevel.rawValue <= logLevel.rawValue:
         break
       default:
         return
       }
       
-      let closure: BVLoggerRedirectClosure =
-        self.internalLoggerRedirect ?? self.defaultLogClosure
-      closure(msg)
-      
+      if #available(iOS 10.0, *) {
+        
+        #if DEBUG
+          print(msg)
+        #endif
+        
+        os_log("%{public}@", log: self.logger, msg)
+      } else {
+        print(msg)
+      }
     }
   }
 }

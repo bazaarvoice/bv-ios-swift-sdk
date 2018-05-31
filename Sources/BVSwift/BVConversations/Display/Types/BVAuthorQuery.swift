@@ -7,18 +7,11 @@
 
 import Foundation
 
-/// Public class for handling BVAuthor Queries
-/// - Note:
-/// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/profiles/profile-display)
-public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
+public final class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
   
-  /// The Author identifier to query
+  /// Public
   public let authorId: String?
   
-  /// The initializer for BVAuthorQuery
-  /// - Parameters:
-  ///   - authorId: The Author identifier to query
   public init(authorId: String) {
     self.authorId = authorId
     

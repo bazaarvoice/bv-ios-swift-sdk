@@ -116,15 +116,6 @@ extension BVSubmission: BVURLRequestableWithBodyData {
   }
 }
 
-// MARK: - BVSubmission: BVSubmissionableConsumable
-extension BVSubmission: BVSubmissionableConsumable {
-  var submissionableInternal: BVSubmissionableInternal? {
-    get {
-      return box.submissionableInternal
-    }
-  }
-}
-
 // MARK: - BVSubmission: BVSubmissionActionableInternal
 extension BVSubmission: BVSubmissionActionableInternal {
   
