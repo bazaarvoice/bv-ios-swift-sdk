@@ -8,10 +8,58 @@
 
 import Foundation
 
+/// Public class for handling BVReview Submissions
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/reviews/review-submission)
 public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   
-  public let productId: String?
+  /// The Product identifier to submit against
+  public var productId: String? {
+    get {
+      guard let review = submissionable else {
+        return nil
+      }
+      return review.productId
+    }
+  }
   
+  /// The Product identifier to submit against
+  public var reviewTitle: String? {
+    get {
+      guard let review = submissionable else {
+        return nil
+      }
+      return review.title
+    }
+  }
+  
+  /// The Product identifier to submit against
+  public var reviewText: String? {
+    get {
+      guard let review = submissionable else {
+        return nil
+      }
+      return review.reviewText
+    }
+  }
+  
+  /// The Product identifier to submit against
+  public var reviewRating: Int? {
+    get {
+      guard let review = submissionable else {
+        return nil
+      }
+      return review.rating
+    }
+  }
+  
+  /// The initializer for BVReviewSubmission
+  /// - Parameters:
+  ///   - productId: The Product identifier to submit against
+  ///   - reviewTitle: The Review title content text to submit
+  ///   - reviewText: The Review text content text to submit
+  ///   - reviewRating: The Review rating value to submit
   public convenience init?(
     productId: String,
     reviewTitle: String,
@@ -25,6 +73,10 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
         reviewRating: reviewRating))
   }
   
+  /// The initializer for BVReviewSubmission
+  /// - Parameters:
+  ///   - review: The BVReview object containing a product id, review text,
+  ///     review title text, and review rating value to submit against.
   public override init?(_ review: BVReview) {
     guard let title = review.title,
       let text = review.reviewText,
@@ -32,8 +84,6 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
       let productId = review.productId else {
         return nil
     }
-    
-    self.productId = productId
     super.init(review)
     
     conversationsParameters ∪= [

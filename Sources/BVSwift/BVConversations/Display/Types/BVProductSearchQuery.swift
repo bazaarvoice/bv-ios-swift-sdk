@@ -8,11 +8,18 @@
 
 import Foundation
 
-public final class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
+/// Public class for handling BVProduct Text Search Queries
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
+public class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
   
-  /// Public
+  /// The Product text search query
   public let searchQuery: String?
   
+  /// The initializer for BVProductSearchQuery
+  /// - Parameters:
+  ///   - searchQuery: The Product text search query
   public init(searchQuery: String) {
     self.searchQuery = searchQuery
     
