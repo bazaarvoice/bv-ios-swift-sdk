@@ -8,26 +8,17 @@
 
 import Foundation
 
-/// Public class for handling BVFeedback Submissions
-/// - Note:
-/// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/feedback/feedback-submission)
 public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
   
-  /// The Feedback to submit against
-  public var feedback: BVFeedback? {
-    get {
-      return submissionable
-    }
-  }
+  /// Public
+  public let feedback: BVFeedback?
   
-  /// The initializer for BVFeedbackSubmission
-  /// - Parameters:
-  ///   - feedback: The BVFeedback object to submit against.
   public override init?(_ feedback: BVFeedback)  {
     guard let urlQueryItems = feedback.urlQueryItems else {
       return nil
     }
+    
+    self.feedback = feedback
     super.init(feedback)
     
     conversationsParameters ∪= urlQueryItems

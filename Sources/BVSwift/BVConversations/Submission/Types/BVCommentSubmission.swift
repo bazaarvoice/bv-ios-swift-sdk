@@ -8,47 +8,10 @@
 
 import Foundation
 
-/// Public class for handling BVComment Submissions
-/// - Note:
-/// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-submission)
 public class BVCommentSubmission: BVMediaSubmission<BVComment> {
   
-  /// The Review identifier to submit against
-  public var reviewId: String? {
-    get {
-      guard let comment = submissionable else {
-        return nil
-      }
-      return comment.reviewId
-    }
-  }
+  public let reviewId: String?
   
-  /// The Comment content text to submit
-  public var commentText: String? {
-    get {
-      guard let comment = submissionable else {
-        return nil
-      }
-      return comment.commentText
-    }
-  }
-  
-  /// The Comment content title to submit
-  public var commentTitle: String? {
-    get {
-      guard let comment = submissionable else {
-        return nil
-      }
-      return comment.title
-    }
-  }
-  
-  /// The initializer for BVCommentSubmission
-  /// - Parameters:
-  ///   - reviewId: The Review identifier to submit against
-  ///   - commentText: The Comment content text to submit
-  ///   - commentTitle: The Comment content title to submit
   public convenience init?(
     reviewId: String, commentText: String, commentTitle: String?) {
     self.init(
@@ -58,15 +21,13 @@ public class BVCommentSubmission: BVMediaSubmission<BVComment> {
         commentTitle: commentTitle))
   }
   
-  /// The initializer for BVCommentSubmission
-  /// - Parameters:
-  ///   - comment: The BVComment object containing a review id, comment text,
-  ///     and comment title to submit against.
   public override init?(_ comment: BVComment) {
     guard let reviewId = comment.reviewId?.urlEncode(),
       let text = comment.commentText?.urlEncode() else {
         return nil
     }
+    
+    self.reviewId = reviewId
     super.init(comment)
     
     conversationsParameters ∪= [

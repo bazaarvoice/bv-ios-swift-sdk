@@ -8,18 +8,11 @@
 
 import Foundation
 
-/// Public class for handling BVProduct Queries
-/// - Note:
-/// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
-public class BVProductQuery: BVConversationsQuery<BVProduct> {
+public final class BVProductQuery: BVConversationsQuery<BVProduct> {
   
-  /// The Product identifier to query
+  /// Public
   public let productId: String?
   
-  /// The initializer for BVProductQuery
-  /// - Parameters:
-  ///   - productId: The Product identifier to query
   public init(productId: String) {
     self.productId = productId
     
