@@ -133,14 +133,14 @@ public struct BVQuestion: BVQueryable, BVSubmissionable {
 
 extension BVQuestion {
   public init(
+    isUserAnonymous: Bool,
     productId: String,
     questionDetails: String,
-    questionSummary: String,
-    isUserAnonymous: Bool) {
+    questionSummary: String) {
+    self.isUserAnonymous = isUserAnonymous
     self.productId = productId
     self.questionDetails = questionDetails
     self.questionSummary = questionSummary
-    self.isUserAnonymous = isUserAnonymous
     self.answers = nil
     self.authors = nil
     self.products = nil
