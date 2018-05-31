@@ -8,7 +8,13 @@
 
 import Foundation
 
-public final class BVProductsQuery: BVConversationsQuery<BVProduct> {
+/// Public class for handling BVProducts Queries
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
+public class BVProductsQuery: BVConversationsQuery<BVProduct> {
+  
+  /// The initializer for BVProductSearchQuery
   public init() {
     super.init(BVProduct.self)
   }

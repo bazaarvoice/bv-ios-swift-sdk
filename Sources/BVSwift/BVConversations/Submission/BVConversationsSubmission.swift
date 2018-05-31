@@ -73,6 +73,16 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
       return nil
     }
   }
+  
+  internal var submissionable: BVType? {
+    get {
+      guard let erased: BVType = submissionableInternal as? BVType else {
+        return nil
+      }
+      return erased
+    }
+  }
+  
 }
 
 // MARK: - BVConversationsSubmission: BVConversationsSubmissionPostflightable
