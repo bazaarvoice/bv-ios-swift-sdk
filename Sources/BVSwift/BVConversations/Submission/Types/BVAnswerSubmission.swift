@@ -8,21 +8,49 @@
 
 import Foundation
 
+/// Public class for handling BVAnswer Submissions
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/answers/answer-submission)
 public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
   
-  public let questionId: String?
+  /// The Question identifier to submit against
+  public var questionId: String? {
+    get {
+      guard let answer = submissionable else {
+        return nil
+      }
+      return answer.questionId
+    }
+  }
   
+  /// The Answer Text to submit against
+  public var answerText: String? {
+    get {
+      guard let answer = submissionable else {
+        return nil
+      }
+      return answer.answerText
+    }
+  }
+  
+  /// The initializer for BVAnswerSubmission
+  /// - Parameters:
+  ///   - questionId: The Question identifier to submit against
+  ///   - answerText: The Answer content text to submit
   public convenience init?(questionId: String, answerText: String) {
     self.init(BVAnswer(questionId: questionId, answerText: answerText))
   }
   
+  /// The initializer for BVAnswerSubmission
+  /// - Parameters:
+  ///   - answer: The BVAnswer object containing a question id and answer text
+  ///     to submit against.
   public override init?(_ answer: BVAnswer) {
     guard let questionId = answer.questionId?.urlEncode(),
       let text = answer.answerText?.urlEncode() else {
         return nil
     }
-    
-    self.questionId = questionId
     super.init(answer)
     
     conversationsParameters ∪= [
