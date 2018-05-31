@@ -88,7 +88,7 @@ extension BVInternalSubmission: BVURLRequestableWithBodyData {
   internal var bodyData: Data? {
     get {
       guard let bodyable = submissionBodyable,
-        let type = encodableType else {
+        let type = submissionableType else {
           return nil
       }
       

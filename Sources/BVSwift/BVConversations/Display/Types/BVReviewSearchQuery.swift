@@ -7,14 +7,30 @@
 
 import Foundation
 
-public final class BVReviewSearchQuery: BVConversationsQuery<BVReview> {
+/// Public class for handling BVReview Text Search Queries
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/reviews)
+public class BVReviewSearchQuery: BVConversationsQuery<BVReview> {
   
-  /// Public
+  /// The Product identifier to query
   public let productId: String?
+  
+  /// The text search query
   public let searchQuery: String?
+  
+  /// The limit for the maximum number of results to be returned
   public let limit: UInt16?
+  
+  /// The offset in increments of limit to return from
   public let offset: UInt16?
   
+  /// The initializer for BVReviewQuery
+  /// - Parameters:
+  ///   - productId: The Product identifier to query
+  ///   - searchQuery: The text search query
+  ///   - limit: The limit for the maximum number of results to be returned
+  ///   - offset: The offset in increments of limit to return from
   public init(
     productId: String,
     searchQuery: String,

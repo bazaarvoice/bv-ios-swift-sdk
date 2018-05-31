@@ -7,14 +7,30 @@
 
 import Foundation
 
-public final class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
+/// Public class for handling BVQuestion Search Queries
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/questions/question-display)
+public class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
   
-  /// Public
+  /// The Product identifier to query
   public let productId: String?
+  
+  /// The text search query
   public let searchQuery: String?
+  
+  /// The limit for the maximum number of results to be returned
   public let limit: UInt16?
+  
+  /// The offset in increments of limit to return from
   public let offset: UInt16?
   
+  /// The initializer for BVAuthorQuery
+  /// - Parameters:
+  ///   - productId: The Product identifier to query
+  ///   - searchQuery: The text search query
+  ///   - limit: The limit for the maximum number of results to be returned
+  ///   - offset: The offset in increments of limit to return from
   public init(
     productId: String,
     searchQuery: String,

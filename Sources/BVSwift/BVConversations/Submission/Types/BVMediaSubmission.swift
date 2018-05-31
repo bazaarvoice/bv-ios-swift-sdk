@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// Public utility class for handling Submissions with attached media
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/media)
 public class
 BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
   
@@ -179,7 +183,7 @@ extension BVMediaSubmission {
             
             concurrentGroup.enter()
             
-            BVLogger.sharedLogger.verbose("Attempting to Upload Photo")
+            BVLogger.sharedLogger.debug("Attempting to Upload Photo")
             
             photoSubmission
               .configure(config)
@@ -197,7 +201,7 @@ extension BVMediaSubmission {
                     returnedPhotos.append(actualPhoto.merge(photo))
                   }
                   
-                  BVLogger.sharedLogger.verbose("Uploaded Photo")
+                  BVLogger.sharedLogger.debug("Uploaded Photo")
                 }
                 
                 concurrentGroup.leave()
