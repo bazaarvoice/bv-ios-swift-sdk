@@ -8,10 +8,58 @@
 
 import Foundation
 
+/// Public class for handling BVQuestion Submissions
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/questions/question-submission)
 public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
   
-  public let productId: String?
+  /// The Product identifier to submit against
+  public var productId: String? {
+    get {
+      guard let question = submissionable else {
+        return nil
+      }
+      return question.productId
+    }
+  }
   
+  /// The Question details content text to submit
+  public var questionDetails: String? {
+    get {
+      guard let question = submissionable else {
+        return nil
+      }
+      return question.questionDetails
+    }
+  }
+  
+  /// The Question summary content text to submit
+  public var questionSummary: String? {
+    get {
+      guard let question = submissionable else {
+        return nil
+      }
+      return question.questionSummary
+    }
+  }
+  
+  /// The user anonymity flag to submit
+  public var isUserAnonymous: Bool? {
+    get {
+      guard let question = submissionable else {
+        return nil
+      }
+      return question.isUserAnonymous
+    }
+  }
+  
+  /// The initializer for BVQuestionSubmission
+  /// - Parameters:
+  ///   - productId: The Product identifier to submit against
+  ///   - questionDetails: The Question details content text to submit
+  ///   - questionSummary: The Question summary content text to submit
+  ///   - isUserAnonymous: The user anonymity flag to submit
   public convenience init?(
     productId: String,
     questionDetails: String,
@@ -19,12 +67,17 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
     isUserAnonymous: Bool = false) {
     self.init(
       BVQuestion(
-        isUserAnonymous: isUserAnonymous,
         productId: productId,
         questionDetails: questionDetails,
-        questionSummary: questionSummary))
+        questionSummary: questionSummary,
+        isUserAnonymous: isUserAnonymous))
   }
   
+  /// The initializer for BVQuestionSubmission
+  /// - Parameters:
+  ///   - question: The BVQuestion object containing a product id, question
+  ///     details text, and question summary text, and whether the user is
+  ///     anonymous to submit against.
   public override init?(_ question: BVQuestion) {
     guard let isUserAnonymous = question.isUserAnonymous,
       let productId = question.productId,
@@ -32,8 +85,6 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
       let summary = question.questionSummary else {
         return nil
     }
-    
-    self.productId = productId
     super.init(question)
     
     conversationsParameters ∪= [
@@ -102,7 +153,8 @@ extension BVQuestionSubmission: BVConversationsSubmissionAuthenticityable {
 }
 
 // MARK: - BVQuestionSubmission: BVConversationsSubmissionHostedAuthenticatable
-extension BVQuestionSubmission: BVConversationsSubmissionHostedAuthenticatable {
+extension
+BVQuestionSubmission: BVConversationsSubmissionHostedAuthenticatable {
   @discardableResult
   public func add(
     _ hostedAuth: BVConversationsSubmissionHostedAuthenticated) -> Self {
@@ -130,7 +182,8 @@ extension BVQuestionSubmission: BVConversationsSubmissionTaggable {
 }
 
 // MARK: - BVQuestionSubmission: BVConversationsSubmissionTermsAndConditionsable
-extension BVQuestionSubmission: BVConversationsSubmissionTermsAndConditionsable {
+extension
+BVQuestionSubmission: BVConversationsSubmissionTermsAndConditionsable {
   @discardableResult
   public func add(
     _ termsAndConditions: BVConversationsSubmissionTermsAndConditions) -> Self {

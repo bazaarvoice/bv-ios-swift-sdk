@@ -20,14 +20,23 @@ internal class BVInternalSubmission {
   private let postResource: String
   
   /// Internal
-  final internal let encodableType: BVSubmissionableInternal?
+  final internal let submissionableType: BVSubmissionableInternal?
   final internal var configurationType: BVConfiguration?
   internal weak var submissionBodyable: BVInternalSubmissionDelegate?
   
   internal init(_ internalType: BVSubmissionableInternal) {
     postResource =
       type(of: internalType).postResource ?? String.empty
-    encodableType = internalType
+    submissionableType = internalType
+  }
+}
+
+// MARK: - BVSubmissionableConsumable: BVSubmissionableConsumable
+extension BVInternalSubmission: BVSubmissionableConsumable {
+  var submissionableInternal: BVSubmissionableInternal? {
+    get {
+      return submissionableType
+    }
   }
 }
 
