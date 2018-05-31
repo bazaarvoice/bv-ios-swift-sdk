@@ -8,12 +8,19 @@
 
 import Foundation
 
-public final class BVProductStatisticsQuery:
-BVConversationsQuery<BVProductStatistics> {
+/// Public class for handling BVProductStatistics Queries
+/// - Note:
+/// \
+/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/statistics/statistics-display)
+public class
+BVProductStatisticsQuery: BVConversationsQuery<BVProductStatistics> {
   
-  /// Public
+  /// The Product ids for the query
   public let productIds: [String]?
   
+  /// The initializer for BVProductStatisticsQuery
+  /// - Parameters:
+  ///   - productIds: The Product ids for the query
   public init(productIds: [String]) {
     self.productIds = productIds
     
