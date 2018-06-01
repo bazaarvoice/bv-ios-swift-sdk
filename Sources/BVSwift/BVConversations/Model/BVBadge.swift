@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVBadge: Codable {
+/// The definition for the BVBadge type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVBadge: BVAuxiliaryable {
   private let badgeTypeString: String?
   let contentType: String?
   let badgeId: String?

@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVReviewStatistics: Codable {
+/// The definition for the BVReviewStatistics type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVReviewStatistics: BVAuxiliaryable {
   let averageOverallRating: Double?
   var contextDataDistribution: [BVDistributionElement]? {
     get {

@@ -7,6 +7,11 @@
 
 import Foundation
 
+/// An enum that represents the possible sorting comparators to filter on for
+/// the BVComment[s]Query
+/// - Note:
+/// \
+/// Used for conformance with the BVConversationsQuerySortable protocol.
 public enum BVCommentSort: BVConversationsQuerySort {
   
   case authorId

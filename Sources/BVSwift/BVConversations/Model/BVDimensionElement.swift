@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVDimensionElement: Codable {
+/// The definition for the BVDimensionElement type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVDimensionElement: BVAuxiliaryable {
   let dimensionElementId: String?
   let label: String?
   let values: [String]?

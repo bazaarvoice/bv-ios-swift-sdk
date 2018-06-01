@@ -7,6 +7,11 @@
 
 import Foundation
 
+/// The definition for the BVAnswer type
+/// - Note:
+/// \
+/// It conforms to BVQueryable and BVSubmissionable, therefore, it is used for
+/// both BVQuery and BVSubmission.
 public struct BVAnswer: BVQueryable, BVSubmissionable {
   
   public static var singularKey: String {

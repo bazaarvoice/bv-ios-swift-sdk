@@ -8,6 +8,17 @@
 
 import Foundation
 
+/// A protocol for any and all BV objects that are not directly a part of the
+/// query or submission but are likely returned from the responses to serve an
+/// auxiliary purpose.
+/// - Note:
+/// \
+/// It's necessary but not necessarily sufficient to be a part of this protocol
+/// if it means that the object is returned via some query or submission. Some
+/// types may actually just use it as a placeholder to reserve the future
+/// possibility.
+public protocol BVAuxiliaryable: Codable { }
+
 /// A protocol to help match the naming taxonomy of objects
 ///
 /// - Note:

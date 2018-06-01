@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVSyndicationSource: Codable {
+/// The definition for the BVSyndicationSource type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVSyndicationSource: BVAuxiliaryable {
   let contentLink: URL?
   let logoImageUrl: String?
   let name: String?
