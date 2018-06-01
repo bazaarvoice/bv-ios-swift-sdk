@@ -7,6 +7,11 @@
 
 import Foundation
 
+/// An enum that represents the possible includable BVQueryable objects with a
+/// relation to the target BVQuestion object.
+/// - Note:
+/// \
+/// Used for conformance with the BVConversationsQueryIncludeable protocol.
 public enum BVReviewInclude: BVConversationsQueryInclude {
   
   case comments

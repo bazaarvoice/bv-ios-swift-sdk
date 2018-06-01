@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// An enum that represents a filtering mechanism that allows for filtering by
+/// the usual relational operators that we all know and love.
 public enum BVRelationalFilterOperator: BVConversationsQueryFilterOperator {
   case greaterThan
   case greaterThanOrEqualTo

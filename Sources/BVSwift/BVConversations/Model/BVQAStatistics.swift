@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVQAStatistics: Codable {
+/// The definition for the BVQAStatistics type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVQAStatistics: BVAuxiliaryable {
   let answerHelpfulVoteCount: Int?
   let answerNotHelpfulVoteCount: Int?
   let bestAnswerCount: Int?

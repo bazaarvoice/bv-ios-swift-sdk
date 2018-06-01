@@ -8,7 +8,11 @@
 
 import Foundation
 
-public struct BVFormField: Codable {
+/// The definition for the BVFormField type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVFormField: BVAuxiliaryable {
   private let type: String?
   var formInputType: BVFormInputType {
     get {
