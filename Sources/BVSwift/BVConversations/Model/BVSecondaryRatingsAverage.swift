@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVSecondaryRatingsAverage: Codable {
+/// The definition for the BVSecondaryRatingsAverage type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVSecondaryRatingsAverage: BVAuxiliaryable {
   let averageRating: Double?
   let secondaryRatingsId: String?
   

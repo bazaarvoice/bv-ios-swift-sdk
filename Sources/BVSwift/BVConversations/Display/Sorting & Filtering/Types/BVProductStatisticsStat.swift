@@ -8,6 +8,12 @@
 
 import Foundation
 
+/// An enum that represents the possible representatble statistics for
+/// BVQueryable objects with a relation to the target BVProductStatistics
+/// object.
+/// - Note:
+/// \
+/// Used for conformance with the BVConversationsQueryStatable protocol.
 public enum BVProductStatisticsStat: BVConversationsQueryStat {
   
   case nativeReviews

@@ -8,6 +8,11 @@
 
 import Foundation
 
+/// An enum that represents the possible filtering comparators to filter on for
+/// the BVProductStatisticsQuery
+/// - Note:
+/// \
+/// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVProductStatisticsFilter: BVConversationsQueryFilter {
   case contentLocale
   case productId

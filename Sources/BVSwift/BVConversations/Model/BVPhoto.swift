@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+/// The definition for the BVPhoto type
+/// - Note:
+/// \
+/// It conforms to BVSubmissionable and, therefore, it is used only for
+/// BVSubmission.
 public struct BVPhoto: BVSubmissionable {
   
   private static var MaxImageBytes: UInt =  (5 * 1024 * 1024)

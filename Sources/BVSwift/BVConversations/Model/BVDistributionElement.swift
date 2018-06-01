@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVDistributionElement: Codable {
+/// The definition for the BVDistributionElement type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVDistributionElement: BVAuxiliaryable {
   let distibutionElementId: String?
   let label: String?
   let values: [BVDistributionValue]?

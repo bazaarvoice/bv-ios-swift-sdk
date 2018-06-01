@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVRatingDistribution: Codable {
+/// The definition for the BVRatingDistribution type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVRatingDistribution: BVAuxiliaryable {
   
   let fiveStarCount: Int?
   let fourStarCount: Int?

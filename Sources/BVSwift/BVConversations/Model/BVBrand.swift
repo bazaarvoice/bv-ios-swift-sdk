@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVBrand: Codable {
+/// The definition for the BVBrand type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVBrand: BVAuxiliaryable {
   let brandId: String?
   let name: String?
   
