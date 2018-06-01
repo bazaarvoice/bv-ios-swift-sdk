@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// An enum that represents a sorting mechanism that allows for sorting by
+/// increasing or decreasing order
 public enum BVMonotonicSortOrder: BVConversationsQuerySortOrder {
   case ascending
   case descending

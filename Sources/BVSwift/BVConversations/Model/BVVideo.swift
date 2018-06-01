@@ -7,7 +7,25 @@
 
 import Foundation
 
-public struct BVVideo: Codable {
+/// The definition for the BVVideo type
+/// - Note:
+/// \
+/// It conforms to BVSubmissionable and, therefore, it is used only for
+/// BVSubmission.
+public struct BVVideo: BVSubmissionable {
+  
+  public static var singularKey: String {
+    get {
+      return BVConversationsConstants.BVVideo.singularKey
+    }
+  }
+  
+  public static var pluralKey: String {
+    get {
+      return BVConversationsConstants.BVVideo.pluralKey
+    }
+  }
+  
   let caption: String?
   let videoHost: String?
   let videoId: String?
