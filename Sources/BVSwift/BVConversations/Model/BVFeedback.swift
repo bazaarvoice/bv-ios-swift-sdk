@@ -8,6 +8,11 @@
 
 import Foundation
 
+/// The definition for the BVFeedback type
+/// - Note:
+/// \
+/// It conforms to BVSubmissionable and, therefore, it is used only for
+/// BVSubmission.
 public enum BVFeedback: BVSubmissionable {
   
   public static var singularKey: String {

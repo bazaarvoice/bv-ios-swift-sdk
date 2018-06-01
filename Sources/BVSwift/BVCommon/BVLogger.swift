@@ -9,6 +9,7 @@
 import Foundation
 import os.log
 
+/// The logging redirect closure signature for proxying logs to another output.
 public typealias BVLoggerRedirectClosure = ((_ msg: String) -> Swift.Void)
 
 /// The global logger packaged with this module

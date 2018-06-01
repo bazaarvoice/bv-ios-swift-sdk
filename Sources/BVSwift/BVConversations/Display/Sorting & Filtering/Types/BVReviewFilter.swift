@@ -7,6 +7,11 @@
 
 import Foundation
 
+/// An enum that represents the possible filtering comparators to filter on for
+/// the BVReview[s|Search]Query
+/// - Note:
+/// \
+/// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVReviewFilter: BVConversationsQueryFilter {
   
   case authorId

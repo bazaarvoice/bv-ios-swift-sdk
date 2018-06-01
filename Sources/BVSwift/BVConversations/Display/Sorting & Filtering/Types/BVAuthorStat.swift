@@ -9,6 +9,11 @@
 
 import Foundation
 
+/// An enum that represents the possible representatble statistics for
+/// BVQueryable objects with a relation to the target BVAuthor object.
+/// - Note:
+/// \
+/// Used for conformance with the BVConversationsQueryStatable protocol.
 public enum BVAuthorStat: BVConversationsQueryStat {
   
   case answers

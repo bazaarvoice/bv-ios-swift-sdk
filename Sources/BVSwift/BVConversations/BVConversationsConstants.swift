@@ -341,4 +341,9 @@ internal struct BVConversationsConstants {
     static let pluralKey: String = "Authentications"
     static let postResource: String = "authenticateuser.json"
   }
+  
+  internal struct BVVideo {
+    static let singularKey: String = "Video"
+    static let pluralKey: String = "Videos"
+  }
 }

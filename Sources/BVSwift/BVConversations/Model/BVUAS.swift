@@ -8,6 +8,11 @@
 
 import Foundation
 
+/// The definition for the BVUAS type
+/// - Note:
+/// \
+/// It conforms to BVSubmissionable and, therefore, it is used only for
+/// BVSubmission.
 public struct BVUAS: BVSubmissionable {
   
   public static var singularKey: String {
