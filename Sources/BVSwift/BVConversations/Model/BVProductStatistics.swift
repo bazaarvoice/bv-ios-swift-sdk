@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVProductStatistics type
+/// - Note:
+/// \
+/// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
 public struct BVProductStatistics: BVQueryable {
   
   public static var singularKey: String {

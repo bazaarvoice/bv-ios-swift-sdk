@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVSecondaryRating: Codable {
+/// The definition for the BVSecondaryRating type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVSecondaryRating: BVAuxiliaryable {
   let displayType: String?
   let label: String?
   let maxLabel: String?

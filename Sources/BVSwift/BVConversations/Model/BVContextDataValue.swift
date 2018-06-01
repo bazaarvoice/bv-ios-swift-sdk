@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct BVContextDataValue: Codable {
+/// The definition for the BVContextDataValue type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
+public struct BVContextDataValue: BVAuxiliaryable {
   let value: String?
   let valueLabel: String?
   let contextDataValueId: String?

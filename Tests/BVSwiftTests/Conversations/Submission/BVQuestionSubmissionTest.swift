@@ -132,10 +132,10 @@ class BVQuestionSubmissionTest: XCTestCase {
     
     let question: BVQuestion =
       BVQuestion(
-        isUserAnonymous: false,
         productId: "1000001",
         questionDetails: "",
-        questionSummary: "")
+        questionSummary: "",
+        isUserAnonymous: false)
     
     guard let questionSubmission = BVQuestionSubmission(question) else {
       XCTFail()
@@ -198,10 +198,10 @@ class BVQuestionSubmissionTest: XCTestCase {
     
     let question: BVQuestion =
       BVQuestion(
-        isUserAnonymous: false,
         productId: "1000001",
         questionDetails: questionDetails,
-        questionSummary: "Question title question title?")
+        questionSummary: "Question title question title?",
+        isUserAnonymous: false)
     
     guard let questionSubmission = BVQuestionSubmission(question),
       let png = BVPhotoSubmissionTest.createPNG() else {
