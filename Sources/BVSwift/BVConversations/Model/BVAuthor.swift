@@ -30,61 +30,61 @@ public struct BVAuthor: BVQueryable {
   public private(set) var questions: [BVQuestion]? = nil
   public private(set) var reviews: [BVReview]? = nil
   
-  let authorId: String?
-  var badges: [BVBadge]? {
+  public let authorId: String?
+  public var badges: [BVBadge]? {
     get {
       return badgesArray?.array
     }
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
-  let contentLocale: String?
-  var contextDataValues: [BVContextDataValue]? {
+  public let contentLocale: String?
+  public var contextDataValues: [BVContextDataValue]? {
     get {
       return contextDataValuesArray?.array
     }
   }
   private let contextDataValuesArray:
   BVCodableDictionary<BVContextDataValue>?
-  var lastModeratedTime: Date? {
+  public var lastModeratedTime: Date? {
     get {
       return lastModeratedTimeString?.toBVDate()
     }
   }
   private let lastModeratedTimeString: String?
-  var lastModificationTime: Date? {
+  public var lastModificationTime: Date? {
     get {
       return lastModificationTimeString?.toBVDate()
     }
   }
   private let lastModificationTimeString: String?
-  let photos: [BVPhoto]?
-  let qaStatistics: BVQAStatistics?
-  let reviewStatistics: BVReviewStatistics?
-  var secondaryRatings: [BVSecondaryRating]? {
+  public let photos: [BVPhoto]?
+  public let qaStatistics: BVQAStatistics?
+  public let reviewStatistics: BVReviewStatistics?
+  public var secondaryRatings: [BVSecondaryRating]? {
     get {
       return secondaryRatingsArray?.array
     }
   }
   private let secondaryRatingsArray:
   BVCodableDictionary<BVSecondaryRating>?
-  let submissionId: String?
-  var submissionTime: Date? {
+  public let submissionId: String?
+  public var submissionTime: Date? {
     get {
       return submissionTimeString?.toBVDate()
     }
   }
   private let submissionTimeString: String?
-  let syndicationSource: BVSyndicationSource?
-  var tagDimensions: [BVDimensionElement]? {
+  public let syndicationSource: BVSyndicationSource?
+  public var tagDimensions: [BVDimensionElement]? {
     get {
       return tagDimensionsArray?.array
     }
   }
   private let tagDimensionsArray:
   BVCodableDictionary<BVDimensionElement>?
-  let userLocation: String?
-  let userNickname: String?
-  let videos: [BVVideo]?
+  public let userLocation: String?
+  public let userNickname: String?
+  public let videos: [BVVideo]?
   
   private enum CodingKeys: String, CodingKey {
     case authorId = "Id"

@@ -14,19 +14,19 @@ import Foundation
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVFormField: BVAuxiliaryable {
   private let type: String?
-  var formInputType: BVFormInputType {
+  public var formInputType: BVFormInputType {
     get {
       return BVFormInputType(rawValue: type)
     }
   }
-  let identifier: String?
-  let isDefault: Bool?
-  let label: String?
-  let maxLength: Int?
-  let minLength: Int?
-  let options: [BVFormFieldOption]?
-  let required: Bool?
-  let value: String?
+  public let identifier: String?
+  public let isDefault: Bool?
+  public let label: String?
+  public let maxLength: Int?
+  public let minLength: Int?
+  public let options: [BVFormFieldOption]?
+  public let required: Bool?
+  public let value: String?
   
   private enum CodingKeys: String, CodingKey {
     case identifier = "Id"
@@ -42,9 +42,9 @@ public struct BVFormField: BVAuxiliaryable {
 }
 
 public struct BVFormFieldError: Codable {
-  let codeString: String?
-  let messageString: String?
-  let name: String?
+  public let codeString: String?
+  public let messageString: String?
+  public let name: String?
   
   private enum CodingKeys: String, CodingKey {
     case codeString = "Code"
@@ -81,9 +81,9 @@ extension BVFormFieldError: BVError {
 }
 
 public struct BVFormFieldOption: Codable {
-  let label: String?
-  let selected: Bool?
-  let value: String?
+  public let label: String?
+  public let selected: Bool?
+  public let value: String?
   
   private enum CodingKeys: String, CodingKey {
     case label = "Label"

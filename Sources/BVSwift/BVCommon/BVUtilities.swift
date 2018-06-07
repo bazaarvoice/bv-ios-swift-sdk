@@ -163,63 +163,6 @@ internal extension UnkeyedDecodingContainer {
   }
 }
 
-internal extension Bundle {
-  
-  class internal var mainBundleIdentifier: String {
-    get {
-      return Bundle.main.bundleIdentifier ?? "unknown"
-    }
-  }
-  
-  class internal var releaseVersionNumber: String {
-    get {
-      let error: String = "x.x.x"
-      guard let infoDict = self.main.infoDictionary else {
-        return error
-      }
-      
-      guard let releaseNumber: String =
-        infoDict["CFBundleShortVersionString"] as? String else {
-          return error
-      }
-      
-      return releaseNumber
-    }
-  }
-  
-  class internal var buildVersionNumber: String {
-    get {
-      let error: String = "-1"
-      guard let infoDict = self.main.infoDictionary else {
-        return error
-      }
-      
-      guard let versionString = kCFBundleVersionKey as String?,
-        let buildNumber: String =
-        infoDict[versionString] as? String else {
-          return error
-      }
-      
-      return buildNumber
-    }
-  }
-  
-  class internal func loadJSONFileFromMain(
-    name: String, fileExtension: String) -> [String : Any]? {
-    if let path =
-      Bundle.main.url(
-        forResource: name,
-        withExtension: fileExtension),
-      let data = try? Data(contentsOf: path),
-      let representation =
-      try? JSONSerialization.jsonObject(with: data, options: []),
-      let json = representation as? [String : Any] {
-      return json
-    }
-    return nil
-  }
-}
-
 internal extension URLRequest {
   static var defaultBoundary: String =
   "----------------------------f3a1ba9c57bd"
@@ -314,6 +257,109 @@ internal extension UIDevice {
         return identifier
       }
       return identifier + String(UnicodeScalar(UInt8(value)))
+    }
+  }
+}
+
+internal extension Bundle {
+  
+  class internal var mainBundleIdentifier: String {
+    get {
+      return Bundle.main.bundleIdentifier ?? "unknown"
+    }
+  }
+  
+  class internal var releaseVersionNumber: String {
+    get {
+      let error: String = "x.x.x"
+      guard let infoDict = self.main.infoDictionary else {
+        return error
+      }
+      
+      guard let releaseNumber: String =
+        infoDict["CFBundleShortVersionString"] as? String else {
+          return error
+      }
+      
+      return releaseNumber
+    }
+  }
+  
+  class internal var buildVersionNumber: String {
+    get {
+      let error: String = "-1"
+      guard let infoDict = self.main.infoDictionary else {
+        return error
+      }
+      
+      guard let versionString = kCFBundleVersionKey as String?,
+        let buildNumber: String =
+        infoDict[versionString] as? String else {
+          return error
+      }
+      
+      return buildNumber
+    }
+  }
+  
+  class internal func loadJSONFileFromMain(
+    name: String, fileExtension: String) -> [String : Any]? {
+    if let path =
+      Bundle.main.url(
+        forResource: name,
+        withExtension: fileExtension),
+      let data = try? Data(contentsOf: path),
+      let representation =
+      try? JSONSerialization.jsonObject(with: data, options: []),
+      let json = representation as? [String : Any] {
+      return json
+    }
+    return nil
+  }
+}
+
+internal extension UIView {
+  func walkViewHierarchy<T: UIControl>(
+    _ forAll: T,
+    addTarget: Any?,
+    addTargetSelector: Selector,
+    forControlEvents: UIControlEvents = .touchUpInside) {
+    
+    var subviewQueue: [UIView] = self.subviews
+    
+    while !subviewQueue.isEmpty {
+      let subview = subviewQueue.removeFirst()
+      
+      if let control = subview as? T {
+        control.addTarget(
+          addTarget, action: addTargetSelector, for: forControlEvents)
+      }
+      
+      subviewQueue += subview.subviews
+    }
+  }
+}
+
+internal extension UIView {
+  func bvGestureRecognizerCheck() {
+    guard let gestureRecognizers = gestureRecognizers else {
+      return
+    }
+    
+    for recognizer in gestureRecognizers {
+      guard recognizer.cancelsTouchesInView else {
+        continue
+      }
+      assert(false, "UIGestureRecognizer must have \"cancelsTouchesInView\" " +
+        "set to false for the BVSDK to properly function.")
+    }
+  }
+}
+
+internal extension IndexPath {
+  var bvKey: String {
+    get {
+      return "\(section):\(row)"
     }
   }
 }

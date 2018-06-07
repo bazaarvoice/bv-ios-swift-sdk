@@ -29,6 +29,9 @@ extension BVInternalQuery: BVURLRequestable {
         return nil
       }
       
+      BVLogger
+        .sharedLogger.debug("Issuing Query Request to: \(url.absoluteString)")
+      
       return URLRequest(url: url)
     }
   }

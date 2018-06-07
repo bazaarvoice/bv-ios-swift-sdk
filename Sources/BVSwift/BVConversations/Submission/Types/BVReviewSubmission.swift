@@ -62,8 +62,8 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   ///   - reviewRating: The Review rating value to submit
   public convenience init?(
     productId: String,
-    reviewTitle: String,
     reviewText: String,
+    reviewTitle: String,
     reviewRating: Int) {
     self.init(
       BVReview(

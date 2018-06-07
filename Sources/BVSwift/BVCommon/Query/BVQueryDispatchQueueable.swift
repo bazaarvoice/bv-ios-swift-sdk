@@ -10,7 +10,8 @@ import Foundation
 // MARK: - BVQuery: BVDispatchQueueable
 extension BVQuery: BVDispatchQueueable {
   
-  @discardableResult final public func sync(
+  @discardableResult
+  final public func sync(
     on queue: DispatchQueue = DispatchQueue.main,
     qos: DispatchQoS = .default,
     flags: DispatchWorkItemFlags = [],
@@ -27,7 +28,8 @@ extension BVQuery: BVDispatchQueueable {
     return self
   }
   
-  @discardableResult final public func async(
+  @discardableResult
+  final public func async(
     on queue: DispatchQueue = DispatchQueue.main,
     qos: DispatchQoS = .default,
     flags: DispatchWorkItemFlags = [],
@@ -44,7 +46,8 @@ extension BVQuery: BVDispatchQueueable {
     return self
   }
   
-  @discardableResult final public func async(
+  @discardableResult
+  final public func async(
     on queue: DispatchQueue = DispatchQueue.main,
     group: DispatchGroup,
     qos: DispatchQoS = .default,
@@ -62,7 +65,8 @@ extension BVQuery: BVDispatchQueueable {
     return self
   }
   
-  @discardableResult final public func asyncAfter(
+  @discardableResult
+  final public func asyncAfter(
     on queue: DispatchQueue = DispatchQueue.main,
     deadline: DispatchTime,
     qos: DispatchQoS = .default,
@@ -80,7 +84,8 @@ extension BVQuery: BVDispatchQueueable {
     return self
   }
   
-  @discardableResult final public func asyncAfter(
+  @discardableResult
+  final public func asyncAfter(
     on queue: DispatchQueue = DispatchQueue.main,
     wallDeadline: DispatchWallTime,
     qos: DispatchQoS = .default,
