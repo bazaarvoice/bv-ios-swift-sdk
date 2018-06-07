@@ -12,9 +12,9 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVSyndicationSource: BVAuxiliaryable {
-  let contentLink: URL?
-  let logoImageUrl: String?
-  let name: String?
+  public let contentLink: URL?
+  public let logoImageUrl: String?
+  public let name: String?
   
   private enum CodingKeys: String, CodingKey {
     case contentLink = "ContentLink"

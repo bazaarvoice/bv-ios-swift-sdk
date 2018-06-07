@@ -30,75 +30,75 @@ public struct BVQuestion: BVQueryable, BVSubmissionable {
   public private(set) var authors: [BVAuthor]? = nil
   public private(set) var products: [BVProduct]? = nil
   
-  var additionalFields: Decoder? {
+  public var additionalFields: Decoder? {
     get {
       return additionalFieldsDecoder?.decoder
     }
   }
   private let additionalFieldsDecoder: BVCodableRawDecoder?
-  let answerIds: [String]?
-  let authorId: String?
-  var badges: [BVBadge]? {
+  public let answerIds: [String]?
+  public let authorId: String?
+  public var badges: [BVBadge]? {
     get {
       return badgesArray?.array
     }
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
-  let campaignId: String?
-  let categoryId: String?
-  let contentLocale: String?
-  var contextDataValues: [BVContextDataValue]? {
+  public let campaignId: String?
+  public let categoryId: String?
+  public let contentLocale: String?
+  public var contextDataValues: [BVContextDataValue]? {
     get {
       return contextDataValuesArray?.array
     }
   }
   private let contextDataValuesArray:
   BVCodableDictionary<BVContextDataValue>?
-  let isFeatured: Bool?
-  let isSyndicated: Bool?
-  let isUserAnonymous: Bool?
-  var lastModeratedTime: Date? {
+  public let isFeatured: Bool?
+  public let isSyndicated: Bool?
+  public let isUserAnonymous: Bool?
+  public var lastModeratedTime: Date? {
     get {
       return lastModeratedTimeString?.toBVDate()
     }
   }
   private let lastModeratedTimeString: String?
-  var lastModificationTime: Date? {
+  public var lastModificationTime: Date? {
     get {
       return lastModificationTimeString?.toBVDate()
     }
   }
   private let lastModificationTimeString: String?
-  let moderationStatus: String?
-  let photos: [BVPhoto]?
-  let productId: String?
-  let productRecommendationIds: [String]?
-  let questionDetails: String?
-  let questionId: String?
-  let questionSummary: String?
-  let submissionId: String?
-  var submissionTime: Date? {
+  public let moderationStatus: String?
+  public let photos: [BVPhoto]?
+  public let productId: String?
+  public let productRecommendationIds: [String]?
+  public let questionDetails: String?
+  public let questionId: String?
+  public let questionSummary: String?
+  public let submissionId: String?
+  public var submissionTime: Date? {
     get {
       return submissionTimeString?.toBVDate()
     }
   }
   private let submissionTimeString: String?
-  let syndicationSource: BVSyndicationSource?
-  var tagDimensions: [BVDimensionElement]? {
+  public let syndicationSource: BVSyndicationSource?
+  public var tagDimensions: [BVDimensionElement]? {
     get {
       return tagDimensionsArray?.array
     }
   }
   private let tagDimensionsArray:
   BVCodableDictionary<BVDimensionElement>?
-  let totalAnswerCount: Int?
-  let totalFeedbackCount: Int?
-  let totalInappropriateFeedbackCount: Int?
-  let totalNegativeFeedbackCount: Int?
-  let totalPositiveFeedbackCount: Int?
-  let userLocation: String?
-  let userNickname: String?
-  let videos: [BVVideo]?
+  public let totalAnswerCount: Int?
+  public let totalFeedbackCount: Int?
+  public let totalInappropriateFeedbackCount: Int?
+  public let totalNegativeFeedbackCount: Int?
+  public let totalPositiveFeedbackCount: Int?
+  public let userLocation: String?
+  public let userNickname: String?
+  public let videos: [BVVideo]?
   
   private enum CodingKeys: String, CodingKey {
     case additionalFieldsDecoder = "AdditionalFields"

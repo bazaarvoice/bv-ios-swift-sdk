@@ -138,7 +138,7 @@ internal class BVAnalyticsManager {
           let batchAttempt = UInt(batch.count)
           
           BVLogger.sharedLogger
-            .info(
+            .analytics(
               "Enqueing BVAnalyticsEventBatch: " +
               "(\"event\", \(batchAttempt), \(thisBatch))")
           
@@ -153,7 +153,7 @@ internal class BVAnalyticsManager {
               }
               
               BVLogger.sharedLogger
-                .info(
+                .analytics(
                   "Failed BVAnalyticsEventBatch: " +
                   "(\"event\", \(batchAttempt), \(thisBatch))")
               
@@ -163,7 +163,7 @@ internal class BVAnalyticsManager {
               }
               
               BVLogger.sharedLogger
-                .info(
+                .analytics(
                   "Succeeded BVAnalyticsEventBatch: " +
                   "(\"event\", \(batchAttempt), \(thisBatch))")
             }
@@ -184,7 +184,7 @@ internal class BVAnalyticsManager {
           let batchAttempt = UInt(batch.count)
           
           BVLogger.sharedLogger
-            .info(
+            .analytics(
               "Enqueing BVAnalyticsEventBatch: " +
               "(\"pageView\", \(batchAttempt), \(thisBatch))")
           
@@ -198,7 +198,7 @@ internal class BVAnalyticsManager {
               }
               
               BVLogger.sharedLogger
-                .info(
+                .analytics(
                   "Failed BVAnalyticsEventBatch: " +
                   "(\"pageView\", \(batchAttempt), \(thisBatch))")
               
@@ -208,7 +208,7 @@ internal class BVAnalyticsManager {
               }
               
               BVLogger.sharedLogger
-                .info(
+                .analytics(
                   "Succeeded BVAnalyticsEventBatch: " +
                   "(\"pageView\", \(batchAttempt), \(thisBatch))")
             }

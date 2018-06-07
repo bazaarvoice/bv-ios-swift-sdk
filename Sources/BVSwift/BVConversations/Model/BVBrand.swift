@@ -12,8 +12,8 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVBrand: BVAuxiliaryable {
-  let brandId: String?
-  let name: String?
+  public let brandId: String?
+  public let name: String?
   
   private enum CodingKeys: String, CodingKey {
     case brandId = "Id"

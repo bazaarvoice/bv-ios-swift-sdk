@@ -12,8 +12,8 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVSecondaryRatingsAverage: BVAuxiliaryable {
-  let averageRating: Double?
-  let secondaryRatingsId: String?
+  public let averageRating: Double?
+  public let secondaryRatingsId: String?
   
   private enum CodingKeys: String, CodingKey {
     case averageRating = "AverageRating"
