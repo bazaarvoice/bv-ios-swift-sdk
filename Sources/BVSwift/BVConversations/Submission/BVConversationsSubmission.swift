@@ -149,6 +149,16 @@ extension BVConversationsSubmission: BVSubmissionActionable {
       switch $0 {
       case let .success(_, jsonData):
         
+        #if DEBUG
+          do {
+            let jsonObject =
+              try JSONSerialization.jsonObject(with: jsonData, options: [])
+            BVLogger.sharedLogger.debug("RAW JSON: \(jsonObject)")
+          } catch {
+            BVLogger.sharedLogger.error("Error: \(error)")
+          }
+        #endif
+        
         guard let response =
           try? JSONDecoder()
             .decode(
@@ -156,7 +166,6 @@ extension BVConversationsSubmission: BVSubmissionActionable {
               from: jsonData) else {
                 
                 #if DEBUG
-                  
                   do {
                     let _ = try JSONDecoder()
                       .decode(
@@ -166,7 +175,6 @@ extension BVConversationsSubmission: BVSubmissionActionable {
                   } catch {
                     BVLogger.sharedLogger.error("Error: \(error)")
                   }
-                  
                 #endif
                 
                 completion(
@@ -184,16 +192,6 @@ extension BVConversationsSubmission: BVSubmissionActionable {
             completion(.failure(errors))
             return
         }
-        
-        /*
-         do {
-         let jsonObject =
-         try JSONSerialization.jsonObject(with: jsonData, options: [])
-         print(jsonObject)
-         } catch {
-         BVLogger.sharedLogger.error("Error: \(error)")
-         }
-         */
         
         completion(.success(response, result))
         self.conversationsPostflight([result])

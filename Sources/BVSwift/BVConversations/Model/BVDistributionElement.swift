@@ -12,9 +12,9 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVDistributionElement: BVAuxiliaryable {
-  let distibutionElementId: String?
-  let label: String?
-  let values: [BVDistributionValue]?
+  public let distibutionElementId: String?
+  public let label: String?
+  public let values: [BVDistributionValue]?
   
   private enum CodingKeys: String, CodingKey {
     case distibutionElementId = "Id"

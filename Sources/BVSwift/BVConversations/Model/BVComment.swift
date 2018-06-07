@@ -30,45 +30,45 @@ public struct BVComment: BVQueryable, BVSubmissionable {
   public private(set) var products: [BVProduct]? = nil
   public private(set) var reviews: [BVReview]? = nil
   
-  let authorId: String?
-  var badges: [BVBadge]? {
+  public let authorId: String?
+  public var badges: [BVBadge]? {
     get {
       return badgesArray?.array
     }
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
-  let campaignId: String?
-  let commentId: String?
-  let commentText: String?
-  let contentLocale: String?
-  let isSyndicated: Bool?
-  var lastModeratedTime: Date? {
+  public let campaignId: String?
+  public let commentId: String?
+  public let commentText: String?
+  public let contentLocale: String?
+  public let isSyndicated: Bool?
+  public var lastModeratedTime: Date? {
     get {
       return lastModeratedTimeString?.toBVDate()
     }
   }
   private let lastModeratedTimeString: String?
-  var lastModificationTime: Date? {
+  public var lastModificationTime: Date? {
     get {
       return lastModificationTimeString?.toBVDate()
     }
   }
   private let lastModificationTimeString: String?
-  let reviewId: String?
-  let submissionId: String?
-  var submissionTime: Date? {
+  public let reviewId: String?
+  public let submissionId: String?
+  public var submissionTime: Date? {
     get {
       return submissionTimeString?.toBVDate()
     }
   }
   private let submissionTimeString: String?
-  let syndicationSource: BVSyndicationSource?
-  let title: String?
-  let totalFeedbackCount: UInt?
-  let totalNegativeFeedbackCount: UInt?
-  let totalPositiveFeedbackCount: UInt?
-  let userLocation: String?
-  let userNickname: String?
+  public let syndicationSource: BVSyndicationSource?
+  public let title: String?
+  public let totalFeedbackCount: UInt?
+  public let totalNegativeFeedbackCount: UInt?
+  public let totalPositiveFeedbackCount: UInt?
+  public let userLocation: String?
+  public let userNickname: String?
   
   private enum CodingKeys: String, CodingKey {
     case authorId = "AuthorId"

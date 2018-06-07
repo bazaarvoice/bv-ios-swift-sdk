@@ -36,10 +36,14 @@ class BVCommonTest: XCTestCase {
     let expectation =
       self.expectation(description: "testAnalyticsEventAppStateSubmission")
     
+    var dispatchOnce: Bool = false
     BVLogger.sharedLogger.logLevel = .debug
     BVLogger.sharedLogger.loggerRedirect = { (msg: String) in
       print(msg)
-      expectation.fulfill()
+      if !dispatchOnce {
+        dispatchOnce = true
+        expectation.fulfill()
+      }
     }
     
     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {

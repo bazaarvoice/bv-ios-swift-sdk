@@ -126,7 +126,7 @@ extension BVManager: BVConversationsSubmissionGenerator {
   public func submission(
     reviewId: String,
     commentText: String,
-    commentTitle: String?) -> BVCommentSubmission? {
+    commentTitle: String? = nil) -> BVCommentSubmission? {
     guard let config = BVManager.conversationsConfiguration else {
       return nil
     }
@@ -188,8 +188,8 @@ extension BVManager: BVConversationsSubmissionGenerator {
     
     return BVReviewSubmission(
       productId: productId,
-      reviewTitle: reviewTitle,
       reviewText: reviewText,
+      reviewTitle: reviewTitle,
       reviewRating: reviewRating)?.configure(config)
   }
   

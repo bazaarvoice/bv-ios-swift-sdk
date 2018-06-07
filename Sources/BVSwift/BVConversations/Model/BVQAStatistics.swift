@@ -12,60 +12,60 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVQAStatistics: BVAuxiliaryable {
-  let answerHelpfulVoteCount: Int?
-  let answerNotHelpfulVoteCount: Int?
-  let bestAnswerCount: Int?
-  var contextDataDistribution: [BVDistributionElement]? {
+  public let answerHelpfulVoteCount: Int?
+  public let answerNotHelpfulVoteCount: Int?
+  public let bestAnswerCount: Int?
+  public var contextDataDistribution: [BVDistributionElement]? {
     get {
       return contextDataDistributionArray?.array
     }
   }
   private let contextDataDistributionArray:
   BVCodableDictionary<BVDistributionElement>?
-  let featuredAnswerCount: Int?
-  let featuredQuestionCount: Int?
-  var firstAnswerTime: Date? {
+  public let featuredAnswerCount: Int?
+  public let featuredQuestionCount: Int?
+  public var firstAnswerTime: Date? {
     get {
       return firstAnswerTimeString?.toBVDate()
     }
   }
   private let firstAnswerTimeString: String?
-  var firstQuestionTime: Date? {
+  public var firstQuestionTime: Date? {
     get {
       return firstQuestionTimeString?.toBVDate()
     }
   }
   private let firstQuestionTimeString: String?
-  let helpfulVoteCount: Int?
-  var lastAnswerTime: Date? {
+  public let helpfulVoteCount: Int?
+  public var lastAnswerTime: Date? {
     get {
       return lastAnswerTimeString?.toBVDate()
     }
   }
   private let lastAnswerTimeString: String?
-  var lastQuestionAnswerTime: Date? {
+  public var lastQuestionAnswerTime: Date? {
     get {
       return lastQuestionAnswerTimeString?.toBVDate()
     }
   }
   private let lastQuestionAnswerTimeString: String?
-  var lastQuestionTime: Date? {
+  public var lastQuestionTime: Date? {
     get {
       return lastQuestionTimeString?.toBVDate()
     }
   }
   private let lastQuestionTimeString: String?
-  let questionHelpfulVoteCount: Int?
-  let questionNotHelpfulVoteCount: Int?
-  var tagDistribution: [BVDistributionElement]? {
+  public let questionHelpfulVoteCount: Int?
+  public let questionNotHelpfulVoteCount: Int?
+  public var tagDistribution: [BVDistributionElement]? {
     get {
       return contextDataDistributionArray?.array
     }
   }
   private let tagDistributionArray:
   BVCodableDictionary<BVDistributionElement>?
-  let totalAnswerCount: Int?
-  let totalQuestionCount: Int?
+  public let totalAnswerCount: Int?
+  public let totalQuestionCount: Int?
   
   private enum CodingKeys: String, CodingKey {
     case answerHelpfulVoteCount = "AnswerHelpfulVoteCount"

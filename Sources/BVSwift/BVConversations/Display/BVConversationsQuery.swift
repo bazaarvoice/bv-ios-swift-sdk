@@ -72,13 +72,23 @@ extension BVConversationsQuery: BVQueryActionable {
       }
       
       switch $0 {
-      case let .success(_, data):
+      case let .success(_, jsonData):
+        
+        #if DEBUG
+          do {
+            let jsonObject =
+              try JSONSerialization.jsonObject(with: jsonData, options: [])
+            BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
+          } catch {
+            BVLogger.sharedLogger.error("Error: \(error)")
+          }
+        #endif
         
         guard let response: BVConversationsQueryResponseInternal<BVType> =
           try? JSONDecoder()
             .decode(
               BVConversationsQueryResponseInternal<BVType>.self,
-              from: data) else {
+              from: jsonData) else {
                 var err = BVCommonError.unknown("N/A")
                 
                 #if DEBUG
@@ -86,7 +96,7 @@ extension BVConversationsQuery: BVQueryActionable {
                     let _ = try JSONDecoder()
                       .decode(
                         BVConversationsQueryResponseInternal<BVType>.self,
-                        from: data)
+                        from: jsonData)
                   } catch {
                     err = BVCommonError.parse(error)
                   }

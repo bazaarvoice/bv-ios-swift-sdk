@@ -12,8 +12,8 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVDistributionValue: BVAuxiliaryable {
-  let count: Int?
-  let value: String?
+  public let count: Int?
+  public let value: String?
   
   private enum CodingKeys: String, CodingKey {
     case count = "Count"
