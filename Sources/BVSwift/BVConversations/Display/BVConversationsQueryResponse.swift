@@ -174,45 +174,51 @@ internal struct BVConversationsQueryResponseInternal
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
-    // The main suspects...
+    /// The main suspects...
     errors =
-      try container.decode([BVConversationsError].self, forKey: .errors)
-    hasErrors = try container.decode(Bool.self, forKey: .hasErrors)
+      try container.decodeIfPresent(
+        [BVConversationsError].self, forKey: .errors)
+    hasErrors = try container.decodeIfPresent(Bool.self, forKey: .hasErrors)
     includes =
-      try container.decode(BVIncludesDictionaries.self, forKey: .includes)
-    limit = try container.decode(UInt16.self, forKey: .limit)
-    locale = try container.decode(String.self, forKey: .locale)
-    offset = try container.decode(UInt16.self, forKey: .offset)
-    totalResults = try container.decode(UInt16.self, forKey: .totalResults)
+      try container.decodeIfPresent(
+        BVIncludesDictionaries.self, forKey: .includes)
+    limit = try container.decodeIfPresent(UInt16.self, forKey: .limit)
+    locale = try container.decodeIfPresent(String.self, forKey: .locale)
+    offset = try container.decodeIfPresent(UInt16.self, forKey: .offset)
+    totalResults =
+      try container.decodeIfPresent(UInt16.self, forKey: .totalResults)
     
-    // Let's start the main object hydration dance by grabbing a nested
-    // unkeyed container.
-    var resultsContainer: UnkeyedDecodingContainer =
-      try container.nestedUnkeyedContainer(forKey: .results)
+    /// Let's start the main object hydration dance by grabbing a nested
+    /// unkeyed container.
+    guard var resultsContainer: UnkeyedDecodingContainer =
+      try? container.nestedUnkeyedContainer(forKey: .results) else {
+        results = nil
+        return
+    }
     
     var resultsArray: [BVType] = []
     
-    // This next line is critical. Apparently decoders (and their child objects)
-    // are copy on write/mutation (probably structs but I don't want to jump to
-    // conclusions) and therefore this allows for us to walk the same tree
-    // twice:
-    //
-    // 1.)  To have the BVQueryable Codable protocol hydrate the object.
-    // 2.)  To have the below code walk the tree to pick out the pertinent
-    //      include objects.
-    //
-    // Otherwise if it were referencing the same buffers we'd deplete the tree
-    // before we got a chance to re-walk the members.
+    /// This next line is critical. Apparently decoders (and their child
+    /// objects) are copy on write/mutation (probably structs but I don't want
+    /// to jump to conclusions) and therefore this allows for us to walk the
+    /// same tree twice:
+    ///
+    /// 1.)  To have the BVQueryable Codable protocol hydrate the object.
+    /// 2.)  To have the below code walk the tree to pick out the pertinent
+    ///      include objects.
+    ///
+    /// Otherwise if it were referencing the same buffers we'd deplete the tree
+    /// before we got a chance to re-walk the members.
     var includesContainer: UnkeyedDecodingContainer = resultsContainer
     
     while !resultsContainer.isAtEnd {
       
-      // Grab a decoder to toss over to the initializer
+      /// Grab a decoder to toss over to the initializer
       let result: BVType =
         try BVType(from: try resultsContainer.superDecoder())
       
-      // If we don't have any includes or an object that doesn't follow the
-      // protocol, then what's the point of continuing?
+      /// If we don't have any includes or an object that doesn't follow the
+      /// protocol, then what's the point of continuing?
       guard var resultUpdateIncludable: BVConversationsUpdateIncludable =
         result as? BVConversationsUpdateIncludable,
         let resultIncludes: BVIncludesDictionaries = includes else {
@@ -222,16 +228,16 @@ internal struct BVConversationsQueryResponseInternal
       
       var internalIncludes: BVIncludes = BVIncludes()
       
-      // Let us grab each nested container object, i.e., BVQueryable and jump
-      // over their keys that we expose and tear out the included key values
-      // that we're keeping private.
+      /// Let us grab each nested container object, i.e., BVQueryable and jump
+      /// over their keys that we expose and tear out the included key values
+      /// that we're keeping private.
       let includeContainer: KeyedDecodingContainer =
         try includesContainer.nestedContainer(keyedBy: IncludeCodingKeys.self)
       
-      // We could really do with some preprocessor macros here...
-      // although, I will not apologize for: `type(of: self)`
+      /// We could really do with some preprocessor macros here...
+      /// although, I will not apologize for: `type(of: self)`
       
-      // BVAnswerIncludable
+      /// BVAnswerIncludable
       if let answers: [String : BVAnswer] =
         resultIncludes.answers?.dictionary {
         internalIncludes.answers = try
@@ -242,7 +248,7 @@ internal struct BVConversationsQueryResponseInternal
             singular: .answerId)
       }
       
-      // BVAuthorIncludableInternal
+      /// BVAuthorIncludableInternal
       if let authors: [String : BVAuthor] =
         resultIncludes.authors?.dictionary {
         internalIncludes.authors = try
@@ -253,7 +259,7 @@ internal struct BVConversationsQueryResponseInternal
             singular: .authorId)
       }
       
-      // BVCommentIncludableInternal
+      /// BVCommentIncludableInternal
       if let comments: [String : BVComment] =
         resultIncludes.comments?.dictionary {
         internalIncludes.comments = try
@@ -264,7 +270,7 @@ internal struct BVConversationsQueryResponseInternal
             singular: .commentId)
       }
       
-      // BVProductIncludableInternal
+      /// BVProductIncludableInternal
       if let products: [String : BVProduct] =
         resultIncludes.products?.dictionary {
         internalIncludes.products = try
@@ -275,7 +281,7 @@ internal struct BVConversationsQueryResponseInternal
             singular: .productId)
       }
       
-      // BVQuestionIncludableInternal
+      /// BVQuestionIncludableInternal
       if let questions: [String : BVQuestion] =
         resultIncludes.questions?.dictionary {
         internalIncludes.questions = try
@@ -286,7 +292,7 @@ internal struct BVConversationsQueryResponseInternal
             singular: .questionId)
       }
       
-      // BVReviewIncludableInternal
+      /// BVReviewIncludableInternal
       if let reviews: [String : BVReview] =
         resultIncludes.reviews?.dictionary {
         internalIncludes.reviews = try
@@ -299,18 +305,18 @@ internal struct BVConversationsQueryResponseInternal
       
       resultUpdateIncludable.update(internalIncludes)
       
-      // This is kind of gross. We're attempting to obfuscate the fact that we
-      // have an internal protocol that we're following. This causes a copy to
-      // happen. However, let's hope the compiler is smart enough to not do
-      // deep copies as nothing changes with respect to the roots, i.e., it only
-      // does delta copies.
-      //
-      // If this becomes a problem in the future we'll just make the protocol
-      // public and include it within the BVQueryable's definition.
+      /// This is kind of gross. We're attempting to obfuscate the fact that we
+      /// have an internal protocol that we're following. This causes a copy to
+      /// happen. However, let's hope the compiler is smart enough to not do
+      /// deep copies as nothing changes with respect to the roots, i.e., it
+      /// only does delta copies.
+      ///
+      /// If this becomes a problem in the future we'll just make the protocol
+      /// public and include it within the BVQueryable's definition.
       guard let backToQueryableType: BVType =
         resultUpdateIncludable as? BVType else {
-          // Should never ever get here but we'll just add the original result
-          // object
+          /// Should never ever get here but we'll just add the original result
+          /// object
           resultsArray.append(result)
           continue
       }

@@ -26,12 +26,12 @@ public struct BVVideo: BVSubmissionable {
     }
   }
   
-  let caption: String?
-  let videoHost: String?
-  let videoId: String?
-  let videoIframeUrl: URL?
-  let videoThumbnailUrl: URL?
-  let videoUrl: URL?
+  public let caption: String?
+  public let videoHost: String?
+  public let videoId: String?
+  public let videoIframeUrl: URL?
+  public let videoThumbnailUrl: URL?
+  public let videoUrl: URL?
   
   private enum CodingKeys: String, CodingKey {
     case caption = "Caption"

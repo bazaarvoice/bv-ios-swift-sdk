@@ -190,12 +190,13 @@ extension BVConversationsConfiguration: BVConfigurationInternal {
         return nil
     }
     
-    guard let clientId: String =
-      conversationsKeyValues[BVConstants.clientKey] as? String else {
+    guard let clientKey: String =
+      conversationsKeyValues[BVConstants.BVConversations.apiKey] as? String
+      else {
         return nil
     }
     
-    self = .all(clientKey: clientId,
+    self = .all(clientKey: clientKey,
                 configType: config,
                 analyticsConfig: analytics)
   }
