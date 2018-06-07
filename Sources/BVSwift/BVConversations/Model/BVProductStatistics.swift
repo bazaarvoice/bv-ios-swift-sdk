@@ -26,19 +26,19 @@ public struct BVProductStatistics: BVQueryable {
     }
   }
   
-  var productId: String? {
+  public var productId: String? {
     get {
       return productStatisticsInternal?.productId
     }
   }
   
-  var reviewStatistics: BVReviewStatistics? {
+  public var reviewStatistics: BVReviewStatistics? {
     get {
       return productStatisticsInternal?.reviewStatistics
     }
   }
   
-  var nativeReviewStatistics: BVReviewStatistics? {
+  public var nativeReviewStatistics: BVReviewStatistics? {
     get {
       return productStatisticsInternal?.nativeReviewStatistics
     }

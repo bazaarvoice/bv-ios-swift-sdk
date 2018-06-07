@@ -29,92 +29,92 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   public private(set) var comments: [BVComment]? = nil
   public private(set) var products: [BVProduct]? = nil
   
-  var additionalFields: Decoder? {
+  public var additionalFields: Decoder? {
     get {
       return additionalFieldsDecoder?.decoder
     }
   }
   private let additionalFieldsDecoder: BVCodableRawDecoder?
-  let authorId: String?
-  var badges: [BVBadge]? {
+  public let authorId: String?
+  public var badges: [BVBadge]? {
     get {
       return badgesArray?.array
     }
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
-  let campaignId: String?
-  var clientResponses: Decoder? {
+  public let campaignId: String?
+  public var clientResponses: Decoder? {
     get {
       return clientResponsesDecoder?.decoder
     }
   }
   private let clientResponsesDecoder: BVCodableRawDecoder?
-  let commentIds: [String]?
-  let cons: String?
-  let contentLocale: String?
-  var contextDataValues: [BVContextDataValue]? {
+  public let commentIds: [String]?
+  public let cons: String?
+  public let contentLocale: String?
+  public var contextDataValues: [BVContextDataValue]? {
     get {
       return contextDataValuesArray?.array
     }
   }
   private let contextDataValuesArray:
   BVCodableDictionary<BVContextDataValue>?
-  let helpfulness: Double?
-  let isFeatured: Bool?
-  let isRatingsOnly: Bool?
-  let isRecommended: Bool?
-  let isSyndicated: Bool?
-  var lastModeratedTime: Date? {
+  public let helpfulness: Double?
+  public let isFeatured: Bool?
+  public let isRatingsOnly: Bool?
+  public let isRecommended: Bool?
+  public let isSyndicated: Bool?
+  public var lastModeratedTime: Date? {
     get {
       return lastModeratedTimeString?.toBVDate()
     }
   }
   private let lastModeratedTimeString: String?
-  var lastModificationTime: Date? {
+  public var lastModificationTime: Date? {
     get {
       return lastModificationTimeString?.toBVDate()
     }
   }
   private let lastModificationTimeString: String?
-  let moderationStatus: String?
-  let photos: [BVPhoto]?
-  let productId: String?
-  let productRecommendationIds: [String]?
-  let pros: String?
-  let rating: Int?
-  let ratingRange: Int?
-  let reviewId: String?
-  let reviewText: String?
-  var secondaryRatings: [BVSecondaryRating]? {
+  public let moderationStatus: String?
+  public let photos: [BVPhoto]?
+  public let productId: String?
+  public let productRecommendationIds: [String]?
+  public let pros: String?
+  public let rating: Int?
+  public let ratingRange: Int?
+  public let reviewId: String?
+  public let reviewText: String?
+  public var secondaryRatings: [BVSecondaryRating]? {
     get {
       return secondaryRatingsArray?.array
     }
   }
   private let secondaryRatingsArray:
   BVCodableDictionary<BVSecondaryRating>?
-  let submissionId: String?
-  var submissionTime: Date? {
+  public let submissionId: String?
+  public var submissionTime: Date? {
     get {
       return submissionTimeString?.toBVDate()
     }
   }
   private let submissionTimeString: String?
-  let syndicationSource: BVSyndicationSource?
-  var tagDimensions: [BVDimensionElement]? {
+  public let syndicationSource: BVSyndicationSource?
+  public var tagDimensions: [BVDimensionElement]? {
     get {
       return tagDimensionsArray?.array
     }
   }
   private let tagDimensionsArray:
   BVCodableDictionary<BVDimensionElement>?
-  let title: String?
-  let totalCommentCount: Int?
-  let totalFeedbackCount: Int?
-  let totalNegativeFeedbackCount: Int?
-  let totalPositiveFeedbackCount: Int?
-  let userLocation: String?
-  let userNickname: String?
-  let videos: [BVVideo]?
+  public let title: String?
+  public let totalCommentCount: Int?
+  public let totalFeedbackCount: Int?
+  public let totalNegativeFeedbackCount: Int?
+  public let totalPositiveFeedbackCount: Int?
+  public let userLocation: String?
+  public let userNickname: String?
+  public let videos: [BVVideo]?
   
   private enum CodingKeys: String, CodingKey {
     case additionalFieldsDecoder = "AdditionalFields"

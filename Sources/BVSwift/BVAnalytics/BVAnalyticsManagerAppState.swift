@@ -106,7 +106,7 @@ extension BVAnalyticsManager {
     
     guard let config: BVAnalyticsConfiguration =
       BVManager.sharedManager.getConfiguration() else {
-        BVLogger.sharedLogger.info(
+        BVLogger.sharedLogger.analytics(
           "No default BVAnalytics configuration was found, skipping app " +
           "state event logging.")
         return

@@ -87,6 +87,7 @@ extension BVMediaSubmission: BVConversationsSubmissionActionable {
 
 // MARK: - BVMediaSubmission: BVConversationsSubmissionMediable
 extension BVMediaSubmission: BVConversationsSubmissionMediable {
+  @discardableResult
   public func add(_ media: BVConversationsSubmissionMedia) -> Self {
     
     switch media {

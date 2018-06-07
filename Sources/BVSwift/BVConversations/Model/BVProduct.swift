@@ -31,30 +31,30 @@ public struct BVProduct: BVQueryable {
   public private(set) var questions: [BVQuestion]? = nil
   public private(set) var reviews: [BVReview]? = nil
   
-  var attributes: Decoder? {
+  public var attributes: Decoder? {
     get {
       return attributesDecoder?.decoder
     }
   }
   private let attributesDecoder: BVCodableRawDecoder?
-  let brand: BVBrand?
-  let brandExternalId: String?
-  let categoryId: String?
-  let eans: [String]?
-  let familyIds: [String]?
-  let filteredQAStatistics: BVReviewStatistics?
-  let filteredReviewStatistics: BVReviewStatistics?
-  let imageUrl: URL?
-  let isbns: [String]?
-  let manufacturerPartNumbers: [String]?
-  let modelNumbers: [String]?
-  let name: String?
-  let productDescription: String?
-  let productId: String?
-  let productPageUrl: URL?
-  let qaStatistics: BVQAStatistics?
-  let reviewStatistics: BVReviewStatistics?
-  let upcs: [String]?
+  public let brand: BVBrand?
+  public let brandExternalId: String?
+  public let categoryId: String?
+  public let eans: [String]?
+  public let familyIds: [String]?
+  public let filteredQAStatistics: BVReviewStatistics?
+  public let filteredReviewStatistics: BVReviewStatistics?
+  public let imageUrl: URL?
+  public let isbns: [String]?
+  public let manufacturerPartNumbers: [String]?
+  public let modelNumbers: [String]?
+  public let name: String?
+  public let productDescription: String?
+  public let productId: String?
+  public let productPageUrl: URL?
+  public let qaStatistics: BVQAStatistics?
+  public let reviewStatistics: BVReviewStatistics?
+  public let upcs: [String]?
   
   private enum CodingKeys: String, CodingKey {
     case attributesDecoder = "Attributes"

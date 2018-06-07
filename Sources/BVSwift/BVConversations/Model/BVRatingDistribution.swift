@@ -13,11 +13,11 @@ import Foundation
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVRatingDistribution: BVAuxiliaryable {
   
-  let fiveStarCount: Int?
-  let fourStarCount: Int?
-  let oneStarCount: Int?
-  let threeStarCount: Int?
-  let twoStarCount: Int?
+  public let fiveStarCount: Int?
+  public let fourStarCount: Int?
+  public let oneStarCount: Int?
+  public let threeStarCount: Int?
+  public let twoStarCount: Int?
   
   private struct BVRating: Codable {
     let ratingValue: Int?

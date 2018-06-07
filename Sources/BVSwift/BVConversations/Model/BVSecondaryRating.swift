@@ -12,14 +12,14 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVSecondaryRating: BVAuxiliaryable {
-  let displayType: String?
-  let label: String?
-  let maxLabel: String?
-  let minLabel: String?
-  let secondaryRatingId: String?
-  let value: Int?
-  let valueLabel: String?
-  let valueRange: Int?
+  public let displayType: String?
+  public let label: String?
+  public let maxLabel: String?
+  public let minLabel: String?
+  public let secondaryRatingId: String?
+  public let value: Int?
+  public let valueLabel: String?
+  public let valueRange: Int?
   
   private enum CodingKeys: String, CodingKey {
     case displayType = "DisplayType"

@@ -27,8 +27,8 @@ public struct BVUAS: BVSubmissionable {
     }
   }
   
-  let bvAuthToken: String?
-  let uas: String?
+  public let bvAuthToken: String?
+  public let uas: String?
   
   private enum CodingKeys: String, CodingKey {
     case uas = "User"
