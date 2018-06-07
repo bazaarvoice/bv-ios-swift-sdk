@@ -131,11 +131,15 @@ internal struct BVConversationsSubmissionResponseInternal
     typicalHoursToPost =
       try container.decodeIfPresent(Int.self, forKey: .typicalHoursToPost)
     
-    let formFieldErrorsContainer: KeyedDecodingContainer =
-      try container.nestedContainer(
-        keyedBy: FormFieldErrorCodingKeys.self, forKey: .formFieldErrors)
-    
-    if let formFieldErrorDict: BVCodableDictionary<BVFormFieldError> =
+    /// So currently the conversations api behavior is such that if there is an
+    /// authentication error then these values will not be present and it will
+    /// default to a Display request/response. Therefore, we have to first
+    /// check if we have an existence of these nested containers otherwise
+    /// we'll end up asserting/faulting on the thrown parsing errors.
+    if let formFieldErrorsContainer: KeyedDecodingContainer =
+      try? container.nestedContainer(
+        keyedBy: FormFieldErrorCodingKeys.self, forKey: .formFieldErrors),
+      let formFieldErrorDict: BVCodableDictionary<BVFormFieldError> =
       try formFieldErrorsContainer
         .decodeIfPresent(
           BVCodableDictionary<BVFormFieldError>.self,
@@ -145,11 +149,11 @@ internal struct BVConversationsSubmissionResponseInternal
       formFieldErrors = nil
     }
     
-    let formFieldContainer: KeyedDecodingContainer =
-      try container.nestedContainer(
-        keyedBy: FormFieldCodingKeys.self, forKey: .data)
-    
-    if let formFieldDict: BVCodableDictionary<BVFormField> =
+    /// See above comment, samezies.
+    if let formFieldContainer: KeyedDecodingContainer =
+      try? container.nestedContainer(
+        keyedBy: FormFieldCodingKeys.self, forKey: .data),
+      let formFieldDict: BVCodableDictionary<BVFormField> =
       try formFieldContainer
         .decodeIfPresent(
           BVCodableDictionary<BVFormField>.self,

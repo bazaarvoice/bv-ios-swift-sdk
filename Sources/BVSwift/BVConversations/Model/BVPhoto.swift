@@ -30,11 +30,11 @@ public struct BVPhoto: BVSubmissionable {
     }
   }
   
-  let caption: String?
-  let contentType: ContentType?
-  let image: UIImage?
-  let photoId: String?
-  var photoSizes: [BVPhotoSize]? {
+  public let caption: String?
+  public let contentType: ContentType?
+  public let image: UIImage?
+  public let photoId: String?
+  public var photoSizes: [BVPhotoSize]? {
     get {
       return photoSizesArray?.array
     }
@@ -132,8 +132,8 @@ public struct BVPhoto: BVSubmissionable {
 }
 
 public struct BVPhotoSize: Codable {
-  let sizeId: String?
-  let url: URL?
+  public let sizeId: String?
+  public let url: URL?
   
   private enum CodingKeys: String, CodingKey {
     case sizeId = "Id"

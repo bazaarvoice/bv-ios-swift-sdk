@@ -24,9 +24,9 @@ public class BVLogger {
   
   /// Supported log levels
   public enum BVLogLevel: UInt {
-    case analytics = 0
-    case info = 1
-    case debug = 2
+    case analytics = 16
+    case debug = 1
+    case info = 2
     case error = 3
     case fault = 4
   }
@@ -209,20 +209,17 @@ public class BVLogger {
     loggerQueue.async {
       
       switch (self.internalLogLevel, logLevel) {
-      case (.analytics, .analytics):
-        break
-      case (.analytics, _):
+      case (.analytics, let level) where .analytics != level:
         return
-      case (_, _) where self.internalLogLevel.rawValue <= logLevel.rawValue:
-        break
+      case (_, _) where self.internalLogLevel.rawValue > logLevel.rawValue:
+        return
       default:
-        return
+        break
       }
       
       let closure: BVLoggerRedirectClosure =
         self.internalLoggerRedirect ?? self.defaultLogClosure
       closure(msg)
-      
     }
   }
 }

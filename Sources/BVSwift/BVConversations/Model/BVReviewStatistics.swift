@@ -12,49 +12,49 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVReviewStatistics: BVAuxiliaryable {
-  let averageOverallRating: Double?
-  var contextDataDistribution: [BVDistributionElement]? {
+  public let averageOverallRating: Double?
+  public var contextDataDistribution: [BVDistributionElement]? {
     get {
       return contextDataDistributionArray?.array
     }
   }
   private let contextDataDistributionArray:
   BVCodableDictionary<BVDistributionElement>?
-  let featuredReviewCount: Int?
-  var firstSubmissionTime: Date? {
+  public let featuredReviewCount: Int?
+  public var firstSubmissionTime: Date? {
     get {
       return firstSubmissionTimeString?.toBVDate()
     }
   }
   private let firstSubmissionTimeString: String?
-  let helpfulVoteCount: Int?
-  var lastSubmissionTime: Date? {
+  public let helpfulVoteCount: Int?
+  public var lastSubmissionTime: Date? {
     get {
       return lastSubmissionTimeString?.toBVDate()
     }
   }
   private let lastSubmissionTimeString: String?
-  let notHelpfulVoteCount: Int?
-  let notRecommendedCount: Int?
-  let overallRatingRange: Int?
-  let ratingDistribution: BVRatingDistribution?
-  let ratingsOnlyReviewCount: Int?
-  let recommendedCount: Int?
-  var secondaryRatingsAverages: [BVSecondaryRatingsAverage]? {
+  public let notHelpfulVoteCount: Int?
+  public let notRecommendedCount: Int?
+  public let overallRatingRange: Int?
+  public let ratingDistribution: BVRatingDistribution?
+  public let ratingsOnlyReviewCount: Int?
+  public let recommendedCount: Int?
+  public var secondaryRatingsAverages: [BVSecondaryRatingsAverage]? {
     get {
       return secondaryRatingsAveragesArray?.array
     }
   }
-  let secondaryRatingsAveragesArray:
+  private let secondaryRatingsAveragesArray:
   BVCodableDictionary<BVSecondaryRatingsAverage>?
-  var tagDistribution: [BVDistributionElement]? {
+  public var tagDistribution: [BVDistributionElement]? {
     get {
       return contextDataDistributionArray?.array
     }
   }
   private let tagDistributionArray:
   BVCodableDictionary<BVDistributionElement>?
-  let totalReviewCount: Int?
+  public let totalReviewCount: Int?
   
   private enum CodingKeys: String, CodingKey {
     case averageOverallRating = "AverageOverallRating"

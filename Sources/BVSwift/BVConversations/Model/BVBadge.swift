@@ -13,10 +13,10 @@ import Foundation
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVBadge: BVAuxiliaryable {
   private let badgeTypeString: String?
-  let contentType: String?
-  let badgeId: String?
+  public let contentType: String?
+  public let badgeId: String?
   
-  var badgeType: BVBadgeType? {
+  public var badgeType: BVBadgeType? {
     get {
       return BVBadgeType(value: badgeTypeString)
     }

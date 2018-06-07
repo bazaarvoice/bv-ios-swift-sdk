@@ -12,10 +12,10 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVContextDataValue: BVAuxiliaryable {
-  let value: String?
-  let valueLabel: String?
-  let contextDataValueId: String?
-  let dimensionLabel: String?
+  public let value: String?
+  public let valueLabel: String?
+  public let contextDataValueId: String?
+  public let dimensionLabel: String?
   
   private enum CodingKeys: String, CodingKey {
     case value = "Value"
