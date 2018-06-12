@@ -384,7 +384,7 @@ BVConversationsSubmissionParameterable {
                 return false
               }
               return "normal" == sizeId.lowercased()
-            }).first?.url?.absoluteString.urlEncode() {
+            }).first?.url?.value?.absoluteString.urlEncode() {
             
             items += [
               URLQueryItem(name: "photourl_\(index)", value: url),
@@ -403,7 +403,7 @@ BVConversationsSubmissionParameterable {
           { (result: [URLQueryItem], video: BVVideo) -> [URLQueryItem] in
             var items = result
             
-            if let url = video.videoUrl?.absoluteString.urlEncode(),
+            if let url = video.videoUrl?.value?.absoluteString.urlEncode(),
               let caption = video.caption {
               
               items += [

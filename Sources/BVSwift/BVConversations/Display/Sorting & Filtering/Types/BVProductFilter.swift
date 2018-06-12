@@ -16,28 +16,77 @@ public enum BVProductFilter: BVConversationsQueryFilter {
   
   case answers(BVAnswerFilter)
   case authors(BVAuthorFilter)
-  case averageOverallRating
-  case categoryAncestorId
-  case categoryId
+  case averageOverallRating(Double)
+  case categoryAncestorId(String)
+  case categoryId(String)
   case comments(BVCommentFilter)
-  case isActive
-  case isDisabled
-  case lastAnswerTime
-  case lastQuestionTime
-  case lastReviewTime
-  case lastStoryTime
-  case name
-  case productId
+  case isActive(Bool)
+  case isDisabled(Bool)
+  case lastAnswerTime(Date)
+  case lastQuestionTime(Date)
+  case lastReviewTime(Date)
+  case lastStoryTime(Date)
+  case name(String)
+  case productId(String)
   case questions(BVQuestionFilter)
-  case ratingsOnlyReviewCount
+  case ratingsOnlyReviewCount(Int)
   case reviews(BVReviewFilter)
-  case totalAnswerCount
-  case totalQuestionCount
-  case totalReviewCount
-  case totalStoryCount
+  case totalAnswerCount(Int)
+  case totalQuestionCount(Int)
+  case totalReviewCount(Int)
+  case totalStoryCount(Int)
   
   public var description: String {
     return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    get {
+      switch self {
+      case let .answers(filter):
+        return filter.representedValue
+      case let .authors(filter):
+        return filter.representedValue
+      case let .averageOverallRating(filter):
+        return filter
+      case let .categoryAncestorId(filter):
+        return filter
+      case let .categoryId(filter):
+        return filter
+      case let .comments(filter):
+        return filter
+      case let .isActive(filter):
+        return filter
+      case let .isDisabled(filter):
+        return filter
+      case let .lastAnswerTime(filter):
+        return filter.toBVFormat
+      case let .lastQuestionTime(filter):
+        return filter.toBVFormat
+      case let .lastReviewTime(filter):
+        return filter.toBVFormat
+      case let .lastStoryTime(filter):
+        return filter.toBVFormat
+      case let .name(filter):
+        return filter
+      case let .productId(filter):
+        return filter
+      case let .questions(filter):
+        return filter.representedValue
+      case let .ratingsOnlyReviewCount(filter):
+        return filter
+      case let .reviews(filter):
+        return filter.representedValue
+      case let .totalAnswerCount(filter):
+        return filter
+      case let .totalQuestionCount(filter):
+        return filter
+      case let .totalReviewCount(filter):
+        return filter
+      case let .totalStoryCount(filter):
+        return filter
+      }
+    }
   }
 }
 

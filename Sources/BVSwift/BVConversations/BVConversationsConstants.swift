@@ -9,6 +9,14 @@ import Foundation
 
 internal struct BVConversationsConstants {
   
+  static let apiKey: String = "apiKeyConversations"
+  static let clientKey: String = "clientId"
+  static let parameterKey: String = "passkey"
+  static let stagingEndpoint: String =
+  "https://stg.api.bazaarvoice.com/data/"
+  static let productionEndpoint: String =
+  "https://api.bazaarvoice.com/data/"
+  
   internal struct BVConversationsErrorInternal {
     static let key: String = "Errors"
     static let message: String = "Message"

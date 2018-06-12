@@ -40,12 +40,12 @@ public class BVManager {
     = {
       
       if let stg = BVManager.staging,
-        let clientId: String = stg[BVConstants.clientKey] as? String {
+        let clientId: String = stg[apiClientId] as? String {
         return .staging(clientId: clientId)
       }
       
       if let prd = BVManager.production,
-        let clientId: String = prd[BVConstants.clientKey] as? String {
+        let clientId: String = prd[apiClientId] as? String {
         return .production(clientId: clientId)
       }
       
@@ -98,8 +98,7 @@ public class BVManager {
   /// so that it's easier to fluidly and dynamically move from staging to
   /// production and to do so with the granularity of each submodule of BVSwift.
   @discardableResult
-  public func addConfiguration(
-    _ configuration: BVConfiguration) -> Self {
+  public func addConfiguration(_ configuration: BVConfiguration) -> Self {
     
     guard let internalConfig = configuration as? BVConfigurationInternal else {
       return self

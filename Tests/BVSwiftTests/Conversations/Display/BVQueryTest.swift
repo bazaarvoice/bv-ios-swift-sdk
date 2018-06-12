@@ -87,7 +87,7 @@ class BVQueryTest: XCTestCase {
           "Machine wash. Imported.")
         XCTAssertEqual(product.brandExternalId, "cskg0snv1x3chrqlde0zklodb")
         XCTAssertEqual(
-          product.imageUrl?.absoluteString,
+          product.imageUrl?.value?.absoluteString,
           "http://myshco.com/productImages/shirt.jpg")
         XCTAssertEqual(product.name, "Dress Shirt")
         XCTAssertEqual(product.categoryId, "testCategory1031")
@@ -119,8 +119,8 @@ class BVQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
       .sort(.rating, order: .ascending)
-      .filter(.hasPhotos, op: .equalTo, value: "true")
-      .filter(.hasComments, op: .equalTo, value: "false")
+      .filter(.hasPhotos(true))
+      .filter(.hasComments(false))
       .configure(BVQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         
@@ -207,7 +207,7 @@ class BVQueryTest: XCTestCase {
         
         let regexPhotoList =
           firstPhoto.photoSizes?.filter { (size: BVPhotoSize) -> Bool in
-            guard let url = size.url else {
+            guard let url = size.url?.value else {
               return false
             }
             return (url.absoluteString
@@ -257,7 +257,7 @@ class BVQueryTest: XCTestCase {
     let questionQuery =
       BVQuestionQuery(productId: "test1", limit: 10, offset: 0)
         .include(.answers)
-        .filter(.hasAnswers, op: .equalTo, value: "true")
+        .filter(.hasAnswers(true))
         .configure(BVQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
           
@@ -344,7 +344,7 @@ class BVQueryTest: XCTestCase {
     
     let productStatisticsQuery =
       BVProductStatisticsQuery(productIds: ["test3"])
-        .filter(.contentLocale, op: .equalTo, value: "en_US")
+        .filter(.contentLocale("en_US"))
         .stats(.nativeReviews)
         .stats(.reviews)
         .configure(BVQueryTest.config)
@@ -409,7 +409,7 @@ class BVQueryTest: XCTestCase {
       BVProductStatisticsQuery(productIds: ["test1", "test2", "test3"])
         .stats(.nativeReviews)
         .stats(.reviews)
-        .filter(.contentLocale, op: .equalTo, value: "en_US")
+        .filter(.contentLocale("en_US"))
         .configure(BVQueryTest.config)
         .handler {
           (response: BVConversationsQueryResponse<BVProductStatistics>) in

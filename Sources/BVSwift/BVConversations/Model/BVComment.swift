@@ -134,7 +134,7 @@ extension BVComment: BVReviewIncludable { }
 extension BVComment: BVConversationsUpdateIncludable {
   
   internal mutating
-  func updateIncludable(_ includable: BVConversationsIncludable) {
+  func update(_ includable: BVConversationsIncludable) {
     
     if let authors: [BVAuthor] = includable.authors {
       self.authors = authors
@@ -157,9 +157,12 @@ extension BVComment: BVQueryableInternal {
 }
 
 extension BVComment: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return BVConversationsConstants.BVComments.postResource
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

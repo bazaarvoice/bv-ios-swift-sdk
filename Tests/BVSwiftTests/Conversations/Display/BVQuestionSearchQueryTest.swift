@@ -50,7 +50,7 @@ class BVQuestionSearchQueryTest: XCTestCase {
       BVQuestionSearchQuery(
         productId: "test1", searchQuery: "Pellentesque", limit: 10, offset: 0)
         .include(.answers)
-        .filter(.hasAnswers, op: .equalTo, value: "true")
+        .filter(.hasAnswers(true))
         .configure(BVQuestionSearchQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
           

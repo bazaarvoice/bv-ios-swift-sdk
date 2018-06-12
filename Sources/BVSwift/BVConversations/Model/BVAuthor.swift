@@ -123,7 +123,7 @@ extension BVAuthor: BVReviewIncludable { }
 extension BVAuthor: BVConversationsUpdateIncludable {
   
   internal mutating
-  func updateIncludable(_ includable: BVConversationsIncludable) {
+  func update(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
       self.answers = answers

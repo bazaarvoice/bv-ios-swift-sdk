@@ -1,7 +1,7 @@
 //
 //
 //  BVQuestionInclude.swift
-//  BVSDK
+//  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
 // 
