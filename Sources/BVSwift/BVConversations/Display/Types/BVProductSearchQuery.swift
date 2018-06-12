@@ -29,7 +29,7 @@ public class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
     let searchField: BVConversationsQueryParameter =
       .customField(queryField, nil)
     
-    add(parameter: searchField)
+    add(searchField)
   }
 }
 
@@ -38,37 +38,28 @@ extension BVProductSearchQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVProductFilter
   public typealias Operator = BVRelationalFilterOperator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     
     /// I think we can let everything pass...
     let internalFilter:BVConversationsQueryParameter = {
       switch filter {
       case let .answers(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .authors(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .comments(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .questions(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .reviews(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       default:
-        return .filter(filter, op, values, nil)
+        return .filter(filter, op, nil)
       }
     }()
     
-    add(parameter: internalFilter)
+    add(internalFilter)
     return self
   }
 }
@@ -77,14 +68,15 @@ extension BVProductSearchQuery: BVConversationsQueryFilterable {
 extension BVProductSearchQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVProductInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 10) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+    let internalInclude:BVConversationsQueryParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit:BVConversationsQueryParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
@@ -94,10 +86,10 @@ extension BVProductSearchQuery: BVConversationsQueryIncludeable {
 extension BVProductSearchQuery: BVConversationsQueryStatable {
   public typealias Stat = BVProductStat
   
-  @discardableResult public func stats(
-    _ for: Stat) -> Self {
+  @discardableResult
+  public func stats(_ for: Stat) -> Self {
     let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
-    add(parameter: internalStat)
+    add(internalStat)
     return self
   }
 }

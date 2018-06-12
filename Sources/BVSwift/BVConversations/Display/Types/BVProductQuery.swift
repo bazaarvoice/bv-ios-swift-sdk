@@ -27,12 +27,11 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
     
     let productFilter:BVConversationsQueryParameter =
       .filter(
-        BVProductFilter.productId,
+        BVProductFilter.productId(productId),
         BVRelationalFilterOperator.equalTo,
-        [productId],
         nil)
     
-    add(parameter: productFilter)
+    add(productFilter)
   }
   
   /// Internal
@@ -119,39 +118,30 @@ extension BVProductQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVProductFilter
   public typealias Operator = BVRelationalFilterOperator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     
     /// We don't allow regular product filters since that wouldn't make sense
     /// for a product display request.
     let internalFilter:BVConversationsQueryParameter? = {
       switch filter {
       case let .answers(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .authors(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .comments(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .questions(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .reviews(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       default:
         return nil
       }
     }()
     
     if let subFilter = internalFilter {
-      add(parameter: subFilter)
+      add(subFilter)
     }
     
     return self
@@ -162,14 +152,15 @@ extension BVProductQuery: BVConversationsQueryFilterable {
 extension BVProductQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVProductInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 10) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+    let internalInclude:BVConversationsQueryParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit:BVConversationsQueryParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
@@ -180,8 +171,8 @@ extension BVProductQuery: BVConversationsQuerySortable {
   public typealias Sort = BVProductSort
   public typealias Order = BVMonotonicSortOrder
   
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
+  @discardableResult
+  public func sort(_ sort: Sort, order: Order) -> Self {
     let internalSort: BVConversationsQueryParameter = {
       switch sort {
       case let .answers(by):
@@ -199,7 +190,7 @@ extension BVProductQuery: BVConversationsQuerySortable {
       }
     }()
     
-    add(parameter: internalSort)
+    add(internalSort)
     return self
   }
 }
@@ -208,10 +199,10 @@ extension BVProductQuery: BVConversationsQuerySortable {
 extension BVProductQuery: BVConversationsQueryStatable {
   public typealias Stat = BVProductStat
   
-  @discardableResult public func stats(
-    _ for: Stat) -> Self {
+  @discardableResult
+  public func stats(_ for: Stat) -> Self {
     let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
-    add(parameter: internalStat)
+    add(internalStat)
     return self
   }
 }

@@ -20,7 +20,17 @@ extension BVInternalSubmission: BVURLRequestableWithBodyData {
       }
       
       let urlString: String = "\(commonEndpoint)\(bvPath)"
-      guard let url: URL = URL(string: urlString) else {
+      guard var urlComponents: URLComponents =
+        URLComponents(string: urlString) else {
+          return nil
+      }
+      
+      if let items = urlQueryItems,
+        !items.isEmpty {
+        urlComponents.queryItems = items
+      }
+      
+      guard let url: URL = urlComponents.url else {
         return nil
       }
       
@@ -30,6 +40,10 @@ extension BVInternalSubmission: BVURLRequestableWithBodyData {
       if let contentType: String = submissionBodyable?.requestContentType {
         request.setValue(contentType, forHTTPHeaderField: "Content-Type")
       }
+      
+      BVLogger
+        .sharedLogger.debug(
+          "Issuing Submission Request to: \(url.absoluteString)")
       
       return request
     }

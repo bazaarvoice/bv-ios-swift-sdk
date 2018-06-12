@@ -54,8 +54,8 @@ extension BVAnalyticsSubmission: BVSubmissionActionable {
     }
   }
   
-  @discardableResult func handler(
-    completion: @escaping ((Response) -> Void)) -> Self {
+  @discardableResult
+  func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
     responseHandler = {
       

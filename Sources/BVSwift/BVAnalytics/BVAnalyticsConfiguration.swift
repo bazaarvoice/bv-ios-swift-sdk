@@ -123,14 +123,14 @@ extension BVAnalyticsConfiguration: BVConfigurationInternal {
     }
     
     if let dryRun: Bool =
-      analyticKeyValues[BVConstants.BVAnalytics.dryRunKey] as? Bool,
+      analyticKeyValues[BVAnalyticsConstants.dryRunKey] as? Bool,
       dryRun {
       self = .dryRun(configType: config)
       return
     }
     
     guard let localeIdentifier: String =
-      analyticKeyValues[BVConstants.BVAnalytics.localeKey] as? String else {
+      analyticKeyValues[BVAnalyticsConstants.localeKey] as? String else {
         self =
           .configuration(locale: nil, configType: config)
         return

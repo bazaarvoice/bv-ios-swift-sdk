@@ -88,7 +88,7 @@ class BVProductQueryTest: XCTestCase {
           "Machine wash. Imported.")
         XCTAssertEqual(product.brandExternalId, "cskg0snv1x3chrqlde0zklodb")
         XCTAssertEqual(
-          product.imageUrl?.absoluteString,
+          product.imageUrl?.value?.absoluteString,
           "http://myshco.com/productImages/shirt.jpg")
         XCTAssertEqual(product.name, "Dress Shirt")
         XCTAssertEqual(product.categoryId, "testCategory1031")
@@ -124,9 +124,9 @@ class BVProductQueryTest: XCTestCase {
       .include(.reviews, limit: 10)
       .include(.questions, limit: 5)
       // only include reviews where isRatingsOnly is false
-      .filter(.reviews(.isRatingsOnly), op: .equalTo, value: "false")
+      .filter(.reviews(.isRatingsOnly(false)))
       // only include questions where isFeatured is not equal to true
-      .filter(.questions(.isFeatured), op: .notEqualTo, value: "true")
+      .filter(.questions(.isFeatured(true)), op: .notEqualTo)
       .stats(.reviews)
       .configure(BVProductQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVProduct>) in

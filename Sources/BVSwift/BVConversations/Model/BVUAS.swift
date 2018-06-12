@@ -54,9 +54,12 @@ extension BVUAS {
 }
 
 extension BVUAS: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return BVConversationsConstants.BVUAS.postResource
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

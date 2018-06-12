@@ -12,7 +12,7 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVSyndicationSource: BVAuxiliaryable {
-  public let contentLink: URL?
+  public let contentLink: BVCodableSafe<URL>?
   public let logoImageUrl: String?
   public let name: String?
   

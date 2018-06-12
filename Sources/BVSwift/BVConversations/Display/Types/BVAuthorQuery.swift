@@ -26,12 +26,11 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
     
     let authorFilter:BVConversationsQueryParameter =
       .filter(
-        BVAuthorFilter.authorId,
+        BVAuthorFilter.authorId(authorId),
         BVRelationalFilterOperator.equalTo,
-        [authorId],
         nil)
     
-    add(parameter: authorFilter)
+    add(authorFilter)
   }
   
   /// Internal
@@ -61,14 +60,15 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
 extension BVAuthorQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVAuthorInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 0) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+    let internalInclude:BVConversationsQueryParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit:BVConversationsQueryParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
@@ -79,8 +79,8 @@ extension BVAuthorQuery: BVConversationsQuerySortable {
   public typealias Sort = BVAuthorSort
   public typealias Order = BVMonotonicSortOrder
   
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
+  @discardableResult
+  public func sort(_ sort: Sort, order: Order) -> Self {
     let internalSort: BVConversationsQueryParameter = {
       switch sort {
       case let .answers(by):
@@ -94,7 +94,7 @@ extension BVAuthorQuery: BVConversationsQuerySortable {
       }
     }()
     
-    add(parameter: internalSort)
+    add(internalSort)
     return self
   }
 }
@@ -103,10 +103,10 @@ extension BVAuthorQuery: BVConversationsQuerySortable {
 extension BVAuthorQuery: BVConversationsQueryStatable {
   public typealias Stat = BVAuthorStat
   
-  @discardableResult public func stats(
-    _ for: Stat) -> Self {
+  @discardableResult
+  public func stats(_ for: Stat) -> Self {
     let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
-    add(parameter: internalStat)
+    add(internalStat)
     return self
   }
 }

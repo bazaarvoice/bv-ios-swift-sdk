@@ -99,11 +99,11 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
       
       let contentTypePhoto: BVPhoto = BVPhoto(contentType: type)
       let actualPhotos: [BVPhoto] =
-        value.reduce([]) { (result: [BVPhoto], photo: BVPhoto) -> [BVPhoto] in
-          guard let _ = photo.image else {
-            return result
+        value.compactMap {
+          guard let _ = $0.image else {
+            return nil
           }
-          return result + [contentTypePhoto.merge(photo)]
+          return contentTypePhoto.merge($0)
       }
       
       photos += actualPhotos

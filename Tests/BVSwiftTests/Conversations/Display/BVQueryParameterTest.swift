@@ -14,20 +14,43 @@ import XCTest
 class BVQueryParameterTest: XCTestCase {
   
   private enum BVQueryParameterTestValue:
-    String,
     BVConversationsQueryFilter,
     BVConversationsQueryInclude,
     BVConversationsQuerySort,
   BVConversationsQueryStat {
     
-    case un = "Un"
-    case deux = "Deux"
-    case trois = "Trois"
-    case quatre = "Quatre"
+    case un(String)
+    case deux(String)
+    case trois(String)
+    case quatre(String)
     
     var description: String {
       get {
-        return rawValue
+        switch self {
+        case .un:
+          return "Un"
+        case .deux:
+          return "Deux"
+        case .trois:
+          return "Trois"
+        case .quatre:
+          return "Quatre"
+        }
+      }
+    }
+    
+    var representedValue: CustomStringConvertible {
+      get {
+        switch self {
+        case let .un(value):
+          return value
+        case let .deux(value):
+          return value
+        case let .trois(value):
+          return value
+        case let .quatre(value):
+          return value
+        }
       }
     }
   }
@@ -51,22 +74,22 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterCustom() {
     
     let un: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.un,
+      .custom(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.plus,
               nil)
     
     let deux: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.deux,
+      .custom(BVQueryParameterTestValue.deux("2"),
               BVQueryParameterTestOperator.moins,
               nil)
     
     let trois: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.trois,
+      .custom(BVQueryParameterTestValue.trois("3"),
               BVQueryParameterTestOperator.egale,
               nil)
     
     let quatre: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.quatre,
+      .custom(BVQueryParameterTestValue.quatre("4"),
               BVQueryParameterTestOperator.non,
               nil)
     
@@ -84,22 +107,22 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterCustomCoalesce() {
     
     let un: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.un,
+      .custom(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.plus,
               nil)
     
     let deux: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.un,
+      .custom(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.moins,
               nil)
     
     let trois: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.un,
+      .custom(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.egale,
               nil)
     
     let quatre: BVConversationsQueryParameter =
-      .custom(BVQueryParameterTestValue.un,
+      .custom(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.non,
               nil)
     
@@ -114,27 +137,23 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterFilter() {
     
     let un: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.un,
+      .filter(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.egale,
-              ["1"],
               nil)
     
     let deux: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.deux,
+      .filter(BVQueryParameterTestValue.deux("2"),
               BVQueryParameterTestOperator.egale,
-              ["2"],
               nil)
     
     let trois: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.trois,
+      .filter(BVQueryParameterTestValue.trois("3"),
               BVQueryParameterTestOperator.egale,
-              ["3"],
               nil)
     
     let quatre: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.quatre,
+      .filter(BVQueryParameterTestValue.quatre("4"),
               BVQueryParameterTestOperator.egale,
-              ["4"],
               nil)
     
     XCTAssertEqual(un.name, "Filter")
@@ -151,27 +170,23 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterFilterCoalesce() {
     
     let un: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.un,
+      .filter(BVQueryParameterTestValue.un("1"),
               BVQueryParameterTestOperator.egale,
-              ["1"],
               nil)
     
     let deux: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.deux,
+      .filter(BVQueryParameterTestValue.deux("2"),
               BVQueryParameterTestOperator.egale,
-              ["2"],
               nil)
     
     let trois: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.trois,
+      .filter(BVQueryParameterTestValue.trois("3"),
               BVQueryParameterTestOperator.egale,
-              ["3"],
               nil)
     
     let quatre: BVConversationsQueryParameter =
-      .filter(BVQueryParameterTestValue.quatre,
+      .filter(BVQueryParameterTestValue.quatre("4"),
               BVQueryParameterTestOperator.egale,
-              ["4"],
               nil)
     
     
@@ -185,17 +200,15 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterFilterType() {
     
     let filterTypeUnDeux: BVConversationsQueryParameter =
-      .filterType(BVQueryParameterTestValue.un,
-                  BVQueryParameterTestValue.deux,
+      .filterType(BVQueryParameterTestValue.un("1"),
+                  BVQueryParameterTestValue.deux("2"),
                   BVQueryParameterTestOperator.egale,
-                  ["2"],
                   nil)
     
     let filterTypeTroisQuatre: BVConversationsQueryParameter =
-      .filterType(BVQueryParameterTestValue.trois,
-                  BVQueryParameterTestValue.quatre,
+      .filterType(BVQueryParameterTestValue.trois("3"),
+                  BVQueryParameterTestValue.quatre("4"),
                   BVQueryParameterTestOperator.egale,
-                  ["4"],
                   nil)
     
     XCTAssertEqual(filterTypeUnDeux.name, "Filter_Un")
@@ -207,24 +220,21 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterFilterTypeCoalesce() {
     
     let filterTypeUnDeux: BVConversationsQueryParameter =
-      .filterType(BVQueryParameterTestValue.un,
-                  BVQueryParameterTestValue.deux,
+      .filterType(BVQueryParameterTestValue.un("1"),
+                  BVQueryParameterTestValue.deux("2"),
                   BVQueryParameterTestOperator.egale,
-                  ["2"],
                   nil)
     
     let filterTypeUnTrois: BVConversationsQueryParameter =
-      .filterType(BVQueryParameterTestValue.un,
-                  BVQueryParameterTestValue.trois,
+      .filterType(BVQueryParameterTestValue.un("1"),
+                  BVQueryParameterTestValue.trois("3"),
                   BVQueryParameterTestOperator.egale,
-                  ["3"],
                   nil)
     
     let filterTypeUnQuatre: BVConversationsQueryParameter =
-      .filterType(BVQueryParameterTestValue.un,
-                  BVQueryParameterTestValue.quatre,
+      .filterType(BVQueryParameterTestValue.un("1"),
+                  BVQueryParameterTestValue.quatre("4"),
                   BVQueryParameterTestOperator.egale,
-                  ["4"],
                   nil)
     
     let coalesced: BVConversationsQueryParameter =
@@ -238,28 +248,28 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterInclude() {
     
     let un: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.un, nil)
+      .include(BVQueryParameterTestValue.un("1"), nil)
     
     let unLimit: BVConversationsQueryParameter =
-      .includeLimit(BVQueryParameterTestValue.un, 10, nil)
+      .includeLimit(BVQueryParameterTestValue.un("1"), 10, nil)
     
     let deux: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.deux, nil)
+      .include(BVQueryParameterTestValue.deux("2"), nil)
     
     let deuxLimit: BVConversationsQueryParameter =
-      .includeLimit(BVQueryParameterTestValue.deux, 10, nil)
+      .includeLimit(BVQueryParameterTestValue.deux("2"), 10, nil)
     
     let trois: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.trois, nil)
+      .include(BVQueryParameterTestValue.trois("3"), nil)
     
     let troisLimit: BVConversationsQueryParameter =
-      .includeLimit(BVQueryParameterTestValue.trois, 10, nil)
+      .includeLimit(BVQueryParameterTestValue.trois("3"), 10, nil)
     
     let quatre: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.quatre, nil)
+      .include(BVQueryParameterTestValue.quatre("4"), nil)
     
     let quatreLimit: BVConversationsQueryParameter =
-      .includeLimit(BVQueryParameterTestValue.quatre, 10, nil)
+      .includeLimit(BVQueryParameterTestValue.quatre("4"), 10, nil)
     
     XCTAssertEqual(un.name, "Include")
     XCTAssertEqual(deux.name, "Include")
@@ -285,16 +295,16 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterIncludeCoalesce() {
     
     let un: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.un, nil)
+      .include(BVQueryParameterTestValue.un("1"), nil)
     
     let deux: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.deux, nil)
+      .include(BVQueryParameterTestValue.deux("2"), nil)
     
     let trois: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.trois, nil)
+      .include(BVQueryParameterTestValue.trois("3"), nil)
     
     let quatre: BVConversationsQueryParameter =
-      .include(BVQueryParameterTestValue.quatre, nil)
+      .include(BVQueryParameterTestValue.quatre("4"), nil)
     
     let coalesced: BVConversationsQueryParameter = un + deux + trois + quatre
     
@@ -305,22 +315,22 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterSort() {
     
     let un: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.un,
+      .sort(BVQueryParameterTestValue.un("1"),
             BVQueryParameterTestOperator.egale,
             nil)
     
     let deux: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.deux,
+      .sort(BVQueryParameterTestValue.deux("2"),
             BVQueryParameterTestOperator.egale,
             nil)
     
     let trois: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.trois,
+      .sort(BVQueryParameterTestValue.trois("3"),
             BVQueryParameterTestOperator.egale,
             nil)
     
     let quatre: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.quatre,
+      .sort(BVQueryParameterTestValue.quatre("4"),
             BVQueryParameterTestOperator.egale,
             nil)
     
@@ -338,22 +348,22 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterSortCoalesce() {
     
     let un: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.un,
+      .sort(BVQueryParameterTestValue.un("1"),
             BVQueryParameterTestOperator.egale,
             nil)
     
     let deux: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.deux,
+      .sort(BVQueryParameterTestValue.deux("2"),
             BVQueryParameterTestOperator.egale,
             nil)
     
     let trois: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.trois,
+      .sort(BVQueryParameterTestValue.trois("3"),
             BVQueryParameterTestOperator.egale,
             nil)
     
     let quatre: BVConversationsQueryParameter =
-      .sort(BVQueryParameterTestValue.quatre,
+      .sort(BVQueryParameterTestValue.quatre("4"),
             BVQueryParameterTestOperator.egale,
             nil)
     
@@ -368,14 +378,14 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterSortType() {
     
     let sortTypeUnDeux: BVConversationsQueryParameter =
-      .sortType(BVQueryParameterTestValue.un,
-                BVQueryParameterTestValue.deux,
+      .sortType(BVQueryParameterTestValue.un("1"),
+                BVQueryParameterTestValue.deux("2"),
                 BVQueryParameterTestOperator.egale,
                 nil)
     
     let sortTypeTroisQuatre: BVConversationsQueryParameter =
-      .sortType(BVQueryParameterTestValue.trois,
-                BVQueryParameterTestValue.quatre,
+      .sortType(BVQueryParameterTestValue.trois("3"),
+                BVQueryParameterTestValue.quatre("4"),
                 BVQueryParameterTestOperator.egale,
                 nil)
     
@@ -388,20 +398,20 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterSortTypeCoalesce() {
     
     let sortTypeUnDeux: BVConversationsQueryParameter =
-      .sortType(BVQueryParameterTestValue.un,
-                BVQueryParameterTestValue.deux,
+      .sortType(BVQueryParameterTestValue.un("1"),
+                BVQueryParameterTestValue.deux("2"),
                 BVQueryParameterTestOperator.egale,
                 nil)
     
     let sortTypeUnTrois: BVConversationsQueryParameter =
-      .sortType(BVQueryParameterTestValue.un,
-                BVQueryParameterTestValue.trois,
+      .sortType(BVQueryParameterTestValue.un("1"),
+                BVQueryParameterTestValue.trois("3"),
                 BVQueryParameterTestOperator.egale,
                 nil)
     
     let sortTypeUnQuatre: BVConversationsQueryParameter =
-      .sortType(BVQueryParameterTestValue.un,
-                BVQueryParameterTestValue.quatre,
+      .sortType(BVQueryParameterTestValue.un("1"),
+                BVQueryParameterTestValue.quatre("4"),
                 BVQueryParameterTestOperator.egale,
                 nil)
     
@@ -416,16 +426,16 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterStat() {
     
     let un: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.un, nil)
+      .stats(BVQueryParameterTestValue.un("1"), nil)
     
     let deux: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.deux, nil)
+      .stats(BVQueryParameterTestValue.deux("2"), nil)
     
     let trois: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.trois, nil)
+      .stats(BVQueryParameterTestValue.trois("3"), nil)
     
     let quatre: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.quatre, nil)
+      .stats(BVQueryParameterTestValue.quatre("4"), nil)
     
     XCTAssertEqual(un.name, "Stats")
     XCTAssertEqual(deux.name, "Stats")
@@ -441,16 +451,16 @@ class BVQueryParameterTest: XCTestCase {
   func testQueryParameterStatCoalesce() {
     
     let un: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.un, nil)
+      .stats(BVQueryParameterTestValue.un("1"), nil)
     
     let deux: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.deux, nil)
+      .stats(BVQueryParameterTestValue.deux("2"), nil)
     
     let trois: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.trois, nil)
+      .stats(BVQueryParameterTestValue.trois("3"), nil)
     
     let quatre: BVConversationsQueryParameter =
-      .stats(BVQueryParameterTestValue.quatre, nil)
+      .stats(BVQueryParameterTestValue.quatre("4"), nil)
     
     let coalesced: BVConversationsQueryParameter = un + deux + trois + quatre
     

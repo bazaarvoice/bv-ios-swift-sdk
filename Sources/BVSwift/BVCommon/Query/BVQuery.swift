@@ -31,10 +31,9 @@ public class BVQuery<BVType: BVQueryable> {
   internal var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
     get {
       #if DEBUG
-        fatalError("This needs to be overriden.")
-      #else
-        return nil
+      BVLogger.sharedLogger.error("This needs to be overriden.")
       #endif
+      return nil
     }
   }
   
@@ -101,10 +100,9 @@ extension BVQuery: BVQueryActionableInternal {
 // MARK: - BVQuery: BVInternalQueryDelegate
 extension BVQuery: BVInternalQueryDelegate {
   internal var urlQueryItems: [URLQueryItem]? {
-    guard let queryItems = urlQueryItemsClosure else {
-      return nil
+    get {
+      return urlQueryItemsClosure?()
     }
-    return queryItems()
   }
 }
 
@@ -113,6 +111,21 @@ extension BVQuery: BVConfigureExistentially {
   @discardableResult
   final func configureExistentially(_ config: BVConfiguration) -> Self {
     box.configureExistentially(config)
+    return self
+  }
+}
+
+// MARK: - BVQuery: BVConfigureRaw
+extension BVQuery: BVConfigureRaw {
+  var rawConfiguration: BVRawConfiguration? {
+    get {
+      return box.rawConfiguration
+    }
+  }
+  
+  @discardableResult
+  func configureRaw(_ config: BVRawConfiguration) -> Self {
+    box.configureRaw(config)
     return self
   }
 }

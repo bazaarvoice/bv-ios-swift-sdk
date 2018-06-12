@@ -1,7 +1,7 @@
 //
 //
 //  BVAuthorFilter.swift
-//  BVSDK
+//  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
 // 
@@ -15,22 +15,55 @@ import Foundation
 /// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVAuthorFilter: BVConversationsQueryFilter {
   
-  case additionalField(String)
-  case authorId
-  case contentLocale
-  case contextDataValue(String)
-  case hasPhotos
-  case hasVideos
-  case lastModeratedTime
-  case moderatorCode
-  case submissionTime
-  case totalAnswerCount
-  case totalQuestionCount
-  case totalReviewCount
-  case userLocation
+  case additionalField(name: String, value: String)
+  case authorId(String)
+  case contentLocale(String)
+  case contextDataValue(name: String, value: String)
+  case hasPhotos(Bool)
+  case hasVideos(Bool)
+  case lastModeratedTime(Date)
+  case moderatorCode(String)
+  case submissionTime(Date)
+  case totalAnswerCount(Int)
+  case totalQuestionCount(Int)
+  case totalReviewCount(Int)
+  case userLocation(String)
   
   public var description: String {
     return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    get {
+      switch self {
+      case let .additionalField(_, filter):
+        return filter
+      case let .authorId(filter):
+        return filter
+      case let .contentLocale(filter):
+        return filter
+      case let .contextDataValue(_, filter):
+        return filter
+      case let .hasPhotos(filter):
+        return filter
+      case let .hasVideos(filter):
+        return filter
+      case let .lastModeratedTime(filter):
+        return filter.toBVFormat
+      case let .moderatorCode(filter):
+        return filter
+      case let .submissionTime(filter):
+        return filter.toBVFormat
+      case let .totalAnswerCount(filter):
+        return filter
+      case let .totalQuestionCount(filter):
+        return filter
+      case let .totalReviewCount(filter):
+        return filter
+      case let .userLocation(filter):
+        return filter
+      }
+    }
   }
 }
 
@@ -38,16 +71,16 @@ extension BVAuthorFilter: BVConversationsQueryValue {
   internal var internalDescription: String {
     get {
       switch self {
-      case let .additionalField(field):
+      case let .additionalField(field, _):
         return BVConversationsConstants
           .BVAuthors.Keys.additionalField + "_" + field
       case .authorId:
         return BVConversationsConstants.BVAuthors.Keys.authorId
       case .contentLocale:
         return BVConversationsConstants.BVAuthors.Keys.contentLocale
-      case let .contextDataValue(value):
+      case let .contextDataValue(field, _):
         return BVConversationsConstants
-          .BVAuthors.Keys.contextDataValue + "_" + value
+          .BVAuthors.Keys.contextDataValue + "_" + field
       case .hasPhotos:
         return BVConversationsConstants.BVAuthors.Keys.hasPhotos
       case .hasVideos:

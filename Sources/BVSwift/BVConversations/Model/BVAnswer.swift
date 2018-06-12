@@ -41,7 +41,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
     }
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
-  public let brandImageLogoURL: URL?
+  public let brandImageLogoURL: BVCodableSafe<URL>?
   public let campaignId: String?
   public let contentLocale: String?
   public var contextDataValues: [BVContextDataValue]? {
@@ -154,9 +154,12 @@ extension BVAnswer: BVQueryableInternal {
 }
 
 extension BVAnswer: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return BVConversationsConstants.BVAnswers.postResource
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

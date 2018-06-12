@@ -10,24 +10,50 @@ import Foundation
 
 typealias EncodingClosure = (Encodable?) -> Data?
 
-internal protocol BVInternalSubmissionDelegate: class, BVURLRequestBodyable { }
+internal protocol BVInternalSubmissionDelegate: class,
+BVURLRequestBodyable, BVURLQueryItemable { }
 
 internal class BVInternalSubmission {  
   
   /// Private
+  final private var rawConfig: BVRawConfiguration?
+  final private var configuration: BVConfiguration?
   private var preflightClosure: BVURLRequestablePreflightHandler?
   private var baseResponseCompletion: BVURLRequestableHandler?
   private let postResource: String
   
   /// Internal
   final internal let submissionableType: BVSubmissionableInternal?
-  final internal var configurationType: BVConfiguration?
   internal weak var submissionBodyable: BVInternalSubmissionDelegate?
   
   internal init(_ internalType: BVSubmissionableInternal) {
     postResource =
       type(of: internalType).postResource ?? String.empty
     submissionableType = internalType
+  }
+}
+
+// MARK: - BVInternalSubmission: BVConfigureExistentially
+extension BVInternalSubmission: BVConfigureExistentially {
+  @discardableResult
+  final func configureExistentially(_ config: BVConfiguration) -> Self {
+    configuration = config
+    return self
+  }
+}
+
+// MARK: - BVInternalSubmission: BVConfigureRaw
+extension BVInternalSubmission: BVConfigureRaw {
+  var rawConfiguration: BVRawConfiguration? {
+    get {
+      return rawConfig
+    }
+  }
+  
+  @discardableResult
+  final func configureRaw(_ config: BVRawConfiguration) -> Self {
+    rawConfig = config
+    return self
   }
 }
 
@@ -72,7 +98,17 @@ extension BVInternalSubmission: BVURLRequestableInternal {
   
   final internal var commonEndpoint: String {
     get {
-      return configurationType?.endpoint ?? String.empty
+      if let raw = rawConfiguration {
+        return raw.endpoint
+      }
+      return configuration?.endpoint ?? String.empty
     }
+  }
+}
+
+// MARK: - BVInternalSubmission: BVURLQueryItemable
+extension BVInternalSubmission: BVURLQueryItemable {
+  var urlQueryItems: [URLQueryItem]? {
+    return submissionBodyable?.urlQueryItems
   }
 }

@@ -49,8 +49,8 @@ class BVReviewSearchQueryTest: XCTestCase {
     let reviewSearchQuery =
       BVReviewSearchQuery(
         productId: "test1", searchQuery: "volutpat")
-        .filter(.hasPhotos, op: .equalTo, value: "true")
-        .filter(.hasComments, op: .equalTo, value: "false")
+        .filter(.hasPhotos(true))
+        .filter(.hasComments(false))
         .configure(BVReviewSearchQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVReview>) in
           
@@ -104,7 +104,7 @@ class BVReviewSearchQueryTest: XCTestCase {
           
           let regexPhotoList =
             firstPhoto.photoSizes?.filter { (size: BVPhotoSize) -> Bool in
-              guard let url = size.url else {
+              guard let url = size.url?.value else {
                 return false
               }
               return (url

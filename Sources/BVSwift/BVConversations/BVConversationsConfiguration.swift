@@ -87,10 +87,10 @@ public enum BVConversationsConfiguration: BVConfiguration {
     get {
       guard case .staging(_) = self.type else {
         return
-          BVConstants.BVConversations.productionEndpoint
+          BVConversationsConstants.productionEndpoint
       }
       
-      return BVConstants.BVConversations.stagingEndpoint
+      return BVConversationsConstants.stagingEndpoint
     }
   }
   
@@ -191,7 +191,7 @@ extension BVConversationsConfiguration: BVConfigurationInternal {
     }
     
     guard let clientKey: String =
-      conversationsKeyValues[BVConstants.BVConversations.apiKey] as? String
+      conversationsKeyValues[BVConversationsConstants.apiKey] as? String
       else {
         return nil
     }

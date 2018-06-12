@@ -349,11 +349,11 @@ extension BVAnalyticsEvent {
     let align = MemoryLayout<UInt8>.alignment
     let buffer: UnsafeMutableRawPointer =
       UnsafeMutableRawPointer.allocate(
-        bytes: byteCount,
-        alignedTo: align)
+        byteCount: byteCount,
+        alignment: align)
     
     defer {
-      buffer.deallocate(bytes: byteCount, alignedTo: align)
+      buffer.deallocate()
     }
     
     guard errSecSuccess ==

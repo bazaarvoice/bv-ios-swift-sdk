@@ -193,7 +193,7 @@ extension BVQuestion: BVProductIncludable { }
 extension BVQuestion: BVConversationsUpdateIncludable {
   
   internal mutating
-  func updateIncludable(_ includable: BVConversationsIncludable) {
+  func update(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
       self.answers = answers
@@ -216,9 +216,12 @@ extension BVQuestion: BVQueryableInternal {
 }
 
 extension BVQuestion: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return BVConversationsConstants.BVQuestions.postResource
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

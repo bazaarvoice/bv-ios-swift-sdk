@@ -14,35 +14,94 @@ import Foundation
 /// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVReviewFilter: BVConversationsQueryFilter {
   
-  case authorId
-  case campaignId
-  case categoryAncestorId
-  case contentLocale
-  case hasComments
-  case hasPhotos
-  case hasTags
-  case hasVideos
-  case isFeatured
-  case isRatingsOnly
-  case isRecommended
-  case isSubjectActive
-  case isSyndicated
-  case lastModeratedTime
-  case lastModificationTime
-  case moderatorCode
-  case productId
-  case rating
-  case reviewId
-  case submissionId
-  case submissionTime
-  case totalCommentCount
-  case totalFeedbackCount
-  case totalNegativeFeedbackCount
-  case totalPositiveFeedbackCount
-  case userLocation
+  case authorId(String)
+  case campaignId(String)
+  case categoryAncestorId(String)
+  case contentLocale(String)
+  case hasComments(Bool)
+  case hasPhotos(Bool)
+  case hasTags(Bool)
+  case hasVideos(Bool)
+  case isFeatured(Bool)
+  case isRatingsOnly(Bool)
+  case isRecommended(Bool)
+  case isSubjectActive(Bool)
+  case isSyndicated(Bool)
+  case lastModeratedTime(Date)
+  case lastModificationTime(Date)
+  case moderatorCode(String)
+  case productId(String)
+  case rating(Int)
+  case reviewId(String)
+  case submissionId(String)
+  case submissionTime(Date)
+  case totalCommentCount(Int)
+  case totalFeedbackCount(Int)
+  case totalNegativeFeedbackCount(Int)
+  case totalPositiveFeedbackCount(Int)
+  case userLocation(String)
   
   public var description: String {
     return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    get {
+      switch self {
+      case let .authorId(filter):
+        return filter
+      case let .campaignId(filter):
+        return filter
+      case let .categoryAncestorId(filter):
+        return filter
+      case let .contentLocale(filter):
+        return filter
+      case let .hasComments(filter):
+        return filter
+      case let .hasPhotos(filter):
+        return filter
+      case let .hasTags(filter):
+        return filter
+      case let .hasVideos(filter):
+        return filter
+      case let .isFeatured(filter):
+        return filter
+      case let .isRatingsOnly(filter):
+        return filter
+      case let .isRecommended(filter):
+        return filter
+      case let .isSubjectActive(filter):
+        return filter
+      case let .isSyndicated(filter):
+        return filter
+      case let .lastModeratedTime(filter):
+        return filter.toBVFormat
+      case let .lastModificationTime(filter):
+        return filter.toBVFormat
+      case let .moderatorCode(filter):
+        return filter
+      case let .productId(filter):
+        return filter
+      case let .rating(filter):
+        return filter
+      case let .reviewId(filter):
+        return filter
+      case let .submissionId(filter):
+        return filter
+      case let .submissionTime(filter):
+        return filter.toBVFormat
+      case let .totalCommentCount(filter):
+        return filter
+      case let .totalFeedbackCount(filter):
+        return filter
+      case let .totalNegativeFeedbackCount(filter):
+        return filter
+      case let .totalPositiveFeedbackCount(filter):
+        return filter
+      case let .userLocation(filter):
+        return filter
+      }
+    }
   }
 }
 

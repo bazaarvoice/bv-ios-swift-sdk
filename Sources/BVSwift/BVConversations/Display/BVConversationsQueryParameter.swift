@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - BVConversationsQueryParameter
-internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
+internal indirect enum BVConversationsQueryParameter: BVParameter {
   case custom(
     CustomStringConvertible,
     CustomStringConvertible,
@@ -19,13 +19,11 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
   case filter(
     BVConversationsQueryFilter,
     BVConversationsQueryFilterOperator,
-    [CustomStringConvertible],
     BVConversationsQueryParameter?)
   case filterType(
     BVConversationsQueryFilter,
     BVConversationsQueryFilter,
     BVConversationsQueryFilterOperator,
-    [CustomStringConvertible],
     BVConversationsQueryParameter?)
   case include(BVConversationsQueryInclude, BVConversationsQueryParameter?)
   case includeLimit(
@@ -45,29 +43,32 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
     get {
       switch self {
       case .custom(let field, _, _):
-        return field.description
+        return field.description.escaping()
       case .customField(let field, _):
-        return type(of: field).fieldPrefix
-      case .filter(let filter, _, _, _):
-        return type(of: filter).filterPrefix
-      case .filterType(let filter, _, _, _, _):
+        return type(of: field).fieldPrefix.escaping()
+      case .filter(let filter, _, _):
+        return type(of: filter).filterPrefix.escaping()
+      case .filterType(let filter, _, _, _):
         return
-          [type(of: filter).filterPrefix, filter.description]
+          [type(of: filter).filterPrefix.escaping(),
+           filter.description.escaping()]
             .joined(separator: "_")
       case .include(let include, _):
-        return type(of: include).includePrefix
+        return type(of: include).includePrefix.escaping()
       case .includeLimit(let include, _, _):
         let limitKey:String =
-          BVConversationsConstants.BVQueryType.Keys.limit
-        return [limitKey, include.description].joined(separator: "_")
+          BVConversationsConstants.BVQueryType.Keys.limit.escaping()
+        return [limitKey,
+                include.description.escaping()].joined(separator: "_")
       case .sort(let sort, _, _):
-        return type(of: sort).sortPrefix
+        return type(of: sort).sortPrefix.escaping()
       case .sortType(let sort, _, _, _):
         return
-          [type(of: sort).sortPrefix, sort.description]
+          [type(of: sort).sortPrefix.escaping(),
+           sort.description.escaping()]
             .joined(separator: "_")
       case .stats(let stats, _):
-        return type(of: stats).statPrefix
+        return type(of: stats).statPrefix.escaping()
       }
     }
   }
@@ -84,29 +85,17 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
       case .customField(let field, _):
         final = field.description
         break
-      case .filter(let filter, let op, let values, _):
-        let regex:String =
-          values
-            .map({ $0.description.escaping() })
-            .sorted()
-            .joined(separator: ",")
-        
+      case .filter(let filter, let op, _):
         final =
-          [filter.description,
-           op.description,
-           regex].joined(separator: ":")
+          [filter.description.escaping(),
+           op.description.escaping(),
+           "\(filter.representedValue)".escaping()].joined(separator: ":")
         break
-      case .filterType(_, let filter, let op, let values, _):
-        let regex:String =
-          values
-            .map({ $0.description.escaping() })
-            .sorted()
-            .joined(separator: ",")
-        
+      case .filterType(_, let filter, let op, _):
         final =
           [filter.description,
            op.description,
-           regex].joined(separator: ":")
+           "\(filter.representedValue)".escaping()].joined(separator: ":")
         break
       case .include(let include, _):
         final = include.description
@@ -156,11 +145,11 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
     case let .customField(field, _):
       self = .customField(field, child)
       break
-    case let .filter(filter, op, values, _):
-      self = .filter(filter, op, values, child)
+    case let .filter(filter, op, _):
+      self = .filter(filter, op, child)
       break
-    case let .filterType(typefilter, filter, op, values, _):
-      self = .filterType(typefilter, filter, op, values, child)
+    case let .filterType(typefilter, filter, op, _):
+      self = .filterType(typefilter, filter, op, child)
       break
     case let .include(inc, _):
       self = .include(inc, child)
@@ -186,28 +175,16 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
       return value.description.escaping()
     case .customField(let value, _):
       return value.description.escaping()
-    case .filter(let filter, let op, let values, _):
-      let regex:String =
-        values
-          .map({ $0.description.escaping() })
-          .sorted()
-          .joined(separator: ",")
-      
+    case .filter(let filter, let op, _):
       return
         [filter.description,
          op.description,
-         regex].joined(separator: ":")
-    case .filterType(_, let filter, let op, let values, _):
-      let regex:String =
-        values
-          .map({ $0.description.escaping() })
-          .sorted()
-          .joined(separator: ",")
-      
+         "\(filter.representedValue)".escaping()].joined(separator: ":")
+    case .filterType(_, let filter, let op, _):
       return
         [filter.description,
          op.description,
-         regex].joined(separator: ":")
+         "\(filter.representedValue)".escaping()].joined(separator: ":")
     case .include(let include, _):
       return include.description
     case .includeLimit(_, let limit, _):
@@ -230,9 +207,9 @@ internal indirect enum BVConversationsQueryParameter: BVParameter, Equatable {
         return child
       case .customField(_, let child):
         return child
-      case .filter(_, _, _, let child):
+      case .filter(_, _, let child):
         return child
-      case .filterType(_, _, _, _, let child):
+      case .filterType(_, _, _, let child):
         return child
       case .include(_, let child):
         return child
@@ -272,7 +249,7 @@ infix operator ~~ : AdditionPrecedence
 infix operator %% : ComparisonPrecedence
 infix operator !%% : ComparisonPrecedence
 
-extension BVConversationsQueryParameter {
+extension BVConversationsQueryParameter: Equatable {
   
   /*
    * `%%` runs off of the logic of comparing only genus of enum.
@@ -421,6 +398,12 @@ extension BVConversationsQueryParameter {
       next: BVConversationsQueryParameter) -> BVConversationsQueryParameter in
       return BVConversationsQueryParameter(parent: next, child: previous)
     }
+  }
+}
+
+extension BVConversationsQueryParameter: Hashable {
+  var hashValue: Int {
+    return name.djb2hash ^ value.hashValue
   }
 }
 

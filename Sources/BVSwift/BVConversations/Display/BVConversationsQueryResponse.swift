@@ -156,12 +156,7 @@ internal struct BVConversationsQueryResponseInternal
     if let ids: [String] =
       try container
         .decodeIfPresent([String].self, forKey: plural) {
-      extraction = ids.reduce([]) { (result: [T], id: String) -> [T] in
-        guard let obj = lookup[id] else {
-          return result
-        }
-        return result + [obj]
-      }
+      extraction = ids.compactMap { return lookup[$0] }
     } else if let id: String =
       try container
         .decodeIfPresent(String.self, forKey: singular),
@@ -211,7 +206,13 @@ internal struct BVConversationsQueryResponseInternal
     /// before we got a chance to re-walk the members.
     var includesContainer: UnkeyedDecodingContainer = resultsContainer
     
-    while !resultsContainer.isAtEnd {
+    /// This is how much I trust any language...
+    var ceiling: Int = resultsContainer.count ?? 0
+    ceiling = 0 > ceiling ? 0 : ceiling
+    
+    while !resultsContainer.isAtEnd && 0 < ceiling {
+      
+      ceiling -= 1
       
       /// Grab a decoder to toss over to the initializer
       let result: BVType =
