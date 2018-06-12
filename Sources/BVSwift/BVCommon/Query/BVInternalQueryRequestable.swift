@@ -18,12 +18,15 @@ extension BVInternalQuery: BVURLRequestable {
       }
       
       let urlString: String = "\(commonEndpoint)\(bvPath)"
-      guard var urlComponents:URLComponents =
+      guard var urlComponents: URLComponents =
         URLComponents(string: urlString) else {
           return nil
       }
       
-      urlComponents.queryItems = urlQueryItems
+      if let items = urlQueryItems,
+        !items.isEmpty {
+        urlComponents.queryItems = items
+      }
       
       guard let url: URL = urlComponents.url else {
         return nil

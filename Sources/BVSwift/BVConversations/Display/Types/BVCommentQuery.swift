@@ -31,19 +31,17 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
     
     let productFilter:BVConversationsQueryParameter =
       .filter(
-        BVCommentFilter.productId,
+        BVCommentFilter.productId(productId),
         BVRelationalFilterOperator.equalTo,
-        [productId],
         nil)
     
     let commentFilter:BVConversationsQueryParameter =
-      .filter(BVCommentFilter.commentId,
+      .filter(BVCommentFilter.commentId(commentId),
               BVRelationalFilterOperator.equalTo,
-              [commentId],
               nil)
     
-    add(parameter: productFilter)
-    add(parameter: commentFilter)
+    add(productFilter)
+    add(commentFilter)
   }
   
   /// Internal
@@ -82,20 +80,11 @@ extension BVCommentQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVCommentFilter
   public typealias Operator = BVRelationalFilterOperator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     let internalFilter:BVConversationsQueryParameter =
-      .filter(filter, op, values, nil)
-    add(parameter: internalFilter)
+      .filter(filter, op, nil)
+    add(internalFilter)
     return self
   }
 }
@@ -104,14 +93,15 @@ extension BVCommentQuery: BVConversationsQueryFilterable {
 extension BVCommentQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVCommentInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 0) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+    let internalInclude:BVConversationsQueryParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit:BVConversationsQueryParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
@@ -122,10 +112,11 @@ extension BVCommentQuery: BVConversationsQuerySortable {
   public typealias Sort = BVCommentSort
   public typealias Order = BVMonotonicSortOrder
   
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = .sort(sort, order, nil)
-    add(parameter: internalSort)
+  @discardableResult
+  public func sort(_ sort: Sort, order: Order) -> Self {
+    let internalSort: BVConversationsQueryParameter =
+      .sort(sort, order, nil)
+    add(internalSort)
     return self
   }
 }

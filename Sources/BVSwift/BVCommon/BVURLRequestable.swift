@@ -94,8 +94,8 @@ internal protocol BVURLRequestableWithHandlerInternal {
 
 internal protocol BVURLParameterable {
   associatedtype ParameterType: BVParameter
-  func add(parameter: ParameterType, coalesce: Bool)
-  func update(parameter: ParameterType)
+  func add(_ parameter: ParameterType, coalesce: Bool)
+  func update(_ parameter: ParameterType)
 }
 
 internal protocol BVURLQueryItemable {

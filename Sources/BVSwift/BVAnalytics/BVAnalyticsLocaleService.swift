@@ -92,13 +92,13 @@ internal enum BVAnalyticsLocaleService {
     get {
       switch (self) {
       case .eu(.production):
-        return BVConstants.BVAnalytics.productionEndpointEU
+        return BVAnalyticsConstants.productionEndpointEU
       case .eu(.staging):
-        return BVConstants.BVAnalytics.stagingEndpointEU
+        return BVAnalyticsConstants.stagingEndpointEU
       case .default(.production):
-        return BVConstants.BVAnalytics.productionEndpoint
+        return BVAnalyticsConstants.productionEndpoint
       case .default(.staging):
-        return BVConstants.BVAnalytics.stagingEndpoint
+        return BVAnalyticsConstants.stagingEndpoint
       }
     }
   }

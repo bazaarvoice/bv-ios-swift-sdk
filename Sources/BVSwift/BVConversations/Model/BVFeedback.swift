@@ -223,9 +223,12 @@ public enum BVFeedback: BVSubmissionable {
 }
 
 extension BVFeedback: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return BVConversationsConstants.BVFeedback.postResource
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

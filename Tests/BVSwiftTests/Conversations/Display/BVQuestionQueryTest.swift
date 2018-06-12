@@ -50,7 +50,7 @@ class BVQuestionQueryTest: XCTestCase {
     let questionQuery =
       BVQuestionQuery(productId: "test1", limit: 10, offset: 0)
         .include(.answers)
-        .filter(.hasAnswers, op: .equalTo, value: "true")
+        .filter(.hasAnswers(true))
         .configure(BVQuestionQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
           

@@ -26,14 +26,15 @@ BVProductStatisticsQuery: BVConversationsQuery<BVProductStatistics> {
     
     super.init(BVProductStatistics.self)
     
-    let productIdFilter: BVConversationsQueryParameter =
-      .filter(
-        BVProductStatisticsFilter.productId,
-        BVRelationalFilterOperator.equalTo,
-        productIds,
-        nil)
-    
-    add(parameter: productIdFilter)
+    for id in productIds {
+      let productIdFilter: BVConversationsQueryParameter =
+        .filter(
+          BVProductStatisticsFilter.productId(id),
+          BVRelationalFilterOperator.equalTo,
+          nil)
+      
+      add(productIdFilter)
+    }
   }
 }
 
@@ -42,20 +43,11 @@ extension BVProductStatisticsQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVProductStatisticsFilter
   public typealias Operator = BVRelationalFilterOperator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
-    let internalFilter:BVConversationsQueryParameter =
-      .filter(filter, op, values, nil)
-    add(parameter: internalFilter)
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+    let internalFilter: BVConversationsQueryParameter =
+      .filter(filter, op, nil)
+    add(internalFilter)
     return self
   }
 }
@@ -64,10 +56,10 @@ extension BVProductStatisticsQuery: BVConversationsQueryFilterable {
 extension BVProductStatisticsQuery: BVConversationsQueryStatable {
   public typealias Stat = BVProductStatisticsStat
   
-  @discardableResult public func stats(
-    _ for: Stat) -> Self {
+  @discardableResult
+  public func stats(_ for: Stat) -> Self {
     let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
-    add(parameter: internalStat, coalesce: true)
+    add(internalStat, coalesce: true)
     return self
   }
 }

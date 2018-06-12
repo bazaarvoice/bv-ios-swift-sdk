@@ -1,5 +1,5 @@
 //
-//  BVQueryable.swift
+//  BVConversationsQueryable.swift
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
@@ -8,7 +8,9 @@
 import Foundation
 
 /// Protocol defining the primitive query filter types
-public protocol BVConversationsQueryFilter: CustomStringConvertible { }
+public protocol BVConversationsQueryFilter: CustomStringConvertible {
+  var representedValue: CustomStringConvertible { get }
+}
 
 /// Protocol defining the primitive query filter operator types
 public protocol BVConversationsQueryFilterOperator: CustomStringConvertible { }
@@ -35,14 +37,7 @@ public protocol BVConversationsQueryCustomizable {
 public protocol BVConversationsQueryFilterable {
   associatedtype Filter: BVConversationsQueryFilter
   associatedtype Operator: BVConversationsQueryFilterOperator
-  func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self
-  func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self
+  func filter(_ filter: Filter, op: Operator) -> Self
 }
 
 /// Protocol definition for the behavior of adding included filters
@@ -100,7 +95,7 @@ extension BVConversationsUpdateIncludable {
   internal mutating func update(_ any: Any?) {
     if let includable: BVConversationsIncludable =
       any as? BVConversationsIncludable {
-      updateIncludable(includable)
+      update(includable)
     }
   }
 }
@@ -115,12 +110,14 @@ BVInternalCustomStringConvertible {
 internal protocol BVConversationsQueryValue:
 BVInternalCustomStringConvertible { }
 
+// MARK: - BVConversationsUpdateable
 internal protocol BVConversationsUpdateable: BVQueryable {
   mutating func update(_ any: Any?)
 }
 
+// MARK: - BVConversationsUpdateIncludable
 internal protocol BVConversationsUpdateIncludable: BVConversationsUpdateable {
-  mutating func updateIncludable(_ includable: BVConversationsIncludable)
+  mutating func update(_ includable: BVConversationsIncludable)
 }
 
 // MARK: - BVConversationsQueryPostflightable

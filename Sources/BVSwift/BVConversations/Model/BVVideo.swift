@@ -29,9 +29,9 @@ public struct BVVideo: BVSubmissionable {
   public let caption: String?
   public let videoHost: String?
   public let videoId: String?
-  public let videoIframeUrl: URL?
-  public let videoThumbnailUrl: URL?
-  public let videoUrl: URL?
+  public let videoIframeUrl: BVCodableSafe<URL>?
+  public let videoThumbnailUrl: BVCodableSafe<URL>?
+  public let videoUrl: BVCodableSafe<URL>?
   
   private enum CodingKeys: String, CodingKey {
     case caption = "Caption"
@@ -45,7 +45,7 @@ public struct BVVideo: BVSubmissionable {
 
 extension BVVideo {
   public init(_ url: URL, caption: String) {
-    self.videoUrl = url
+    self.videoUrl = BVCodableSafe<URL>(url)
     self.caption = caption
     self.videoHost = nil
     self.videoId = nil

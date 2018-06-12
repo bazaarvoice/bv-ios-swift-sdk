@@ -48,8 +48,8 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
       .sort(.rating, order: .ascending)
-      .filter(.hasPhotos, op: .equalTo, value: "true")
-      .filter(.hasComments, op: .equalTo, value: "false")
+      .filter(.hasPhotos(true))
+      .filter(.hasComments(false))
       .configure(BVReviewQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         
@@ -136,7 +136,7 @@ class BVReviewQueryTest: XCTestCase {
         
         let regexPhotoList =
           firstPhoto.photoSizes?.filter { (size: BVPhotoSize) -> Bool in
-            guard let url = size.url else {
+            guard let url = size.url?.value else {
               return false
             }
             return (url
@@ -241,8 +241,8 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
       .sort(.rating, order: .ascending)
-      .filter(.hasPhotos, op: .equalTo, value: "true")
-      .filter(.hasComments, op: .equalTo, value: "false")
+      .filter(.hasPhotos(true))
+      .filter(.hasComments(false))
       .include(.products)
       .custom("filteredstats", value: "reviews,questions")
       .configure(BVReviewQueryTest.config)
@@ -350,7 +350,7 @@ class BVReviewQueryTest: XCTestCase {
             }
             return id == "normal"
           }).first,
-          let normalURL: URL = normal.url else {
+          let normalURL: URL = normal.url?.value else {
             XCTFail()
             return
         }
@@ -437,7 +437,7 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 0)
       .include(.comments)
-      .filter(.reviewId, op: .equalTo, value: "192463")
+      .filter(.reviewId("192463"))
       // This review is know to have a comment
       .configure(BVReviewQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in

@@ -14,26 +14,67 @@ import Foundation
 /// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVCommentFilter: BVConversationsQueryFilter {
   
-  case authorId
-  case campaignId
-  case categoryAncestorId
-  case commentId
-  case contentLocale
-  case isFeatured
-  case lastModeratedTime
-  case lastModificationTime
-  case moderatorCode
-  case productId
-  case reviewId
-  case submissionId
-  case submissionTime
-  case totalFeedbackCount
-  case totalNegativeFeedbackCount
-  case totalPositiveFeedbackCount
-  case userLocation
+  case authorId(String)
+  case campaignId(String)
+  case categoryAncestorId(String)
+  case commentId(String)
+  case contentLocale(String)
+  case isFeatured(Bool)
+  case lastModeratedTime(Date)
+  case lastModificationTime(Date)
+  case moderatorCode(String)
+  case productId(String)
+  case reviewId(String)
+  case submissionId(String)
+  case submissionTime(Date)
+  case totalFeedbackCount(Int)
+  case totalNegativeFeedbackCount(Int)
+  case totalPositiveFeedbackCount(Int)
+  case userLocation(String)
   
   public var description: String {
     return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    get {
+      switch self {
+      case let .authorId(filter):
+        return filter
+      case let .campaignId(filter):
+        return filter
+      case let .categoryAncestorId(filter):
+        return filter
+      case let .commentId(filter):
+        return filter
+      case let .contentLocale(filter):
+        return filter
+      case let .isFeatured(filter):
+        return filter
+      case let .lastModeratedTime(filter):
+        return filter.toBVFormat
+      case let .lastModificationTime(filter):
+        return filter.toBVFormat
+      case let .moderatorCode(filter):
+        return filter
+      case let .productId(filter):
+        return filter
+      case let .reviewId(filter):
+        return filter
+      case let .submissionId(filter):
+        return filter
+      case let .submissionTime(filter):
+        return filter.toBVFormat
+      case let .totalFeedbackCount(filter):
+        return filter
+      case let .totalNegativeFeedbackCount(filter):
+        return filter
+      case let .totalPositiveFeedbackCount(filter):
+        return filter
+      case let .userLocation(filter):
+        return filter
+      }
+    }
   }
 }
 

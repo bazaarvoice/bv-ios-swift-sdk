@@ -31,12 +31,12 @@ public struct BVProduct: BVQueryable {
   public private(set) var questions: [BVQuestion]? = nil
   public private(set) var reviews: [BVReview]? = nil
   
-  public var attributes: Decoder? {
+  public var attributes: [BVProductAttribute]? {
     get {
-      return attributesDecoder?.decoder
+      return attributesDictionary?.array
     }
   }
-  private let attributesDecoder: BVCodableRawDecoder?
+  private let attributesDictionary: BVCodableDictionary<BVProductAttribute>?
   public let brand: BVBrand?
   public let brandExternalId: String?
   public let categoryId: String?
@@ -44,20 +44,20 @@ public struct BVProduct: BVQueryable {
   public let familyIds: [String]?
   public let filteredQAStatistics: BVReviewStatistics?
   public let filteredReviewStatistics: BVReviewStatistics?
-  public let imageUrl: URL?
+  public let imageUrl: BVCodableSafe<URL>?
   public let isbns: [String]?
   public let manufacturerPartNumbers: [String]?
   public let modelNumbers: [String]?
   public let name: String?
   public let productDescription: String?
   public let productId: String?
-  public let productPageUrl: URL?
+  public let productPageUrl: BVCodableSafe<URL>?
   public let qaStatistics: BVQAStatistics?
   public let reviewStatistics: BVReviewStatistics?
   public let upcs: [String]?
   
   private enum CodingKeys: String, CodingKey {
-    case attributesDecoder = "Attributes"
+    case attributesDictionary = "Attributes"
     case brand = "Brand"
     case brandExternalId = "BrandExternalId"
     case categoryId = "CategoryId"
@@ -98,7 +98,7 @@ extension BVProduct: BVReviewIncludable { }
 extension BVProduct: BVConversationsUpdateIncludable {
   
   internal mutating
-  func updateIncludable(_ includable: BVConversationsIncludable) {
+  func update(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
       self.answers = answers

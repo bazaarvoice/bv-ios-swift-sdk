@@ -174,7 +174,7 @@ public enum BVAnalyticsProductType: Encodable {
 /// BVAnalyticsEvent transaction type.
 public struct BVAnalyticsTransactionItem: Codable {
   let category: String
-  let imageURL: URL?
+  let imageURL: BVCodableSafe<URL>?
   let name: String?
   let price: Double
   let quantity: Int
