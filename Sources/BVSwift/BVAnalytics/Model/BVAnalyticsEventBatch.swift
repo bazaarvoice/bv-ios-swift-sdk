@@ -47,9 +47,12 @@ internal struct BVAnalyticsEventBatch: BVSubmissionable {
 }
 
 extension BVAnalyticsEventBatch: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return "event"
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

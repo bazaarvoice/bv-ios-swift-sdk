@@ -62,8 +62,8 @@ extension BVConversationsQuery: BVQueryActionable {
     }
   }
   
-  @discardableResult public func handler(
-    completion: @escaping ((Response) -> Void)) -> Self {
+  @discardableResult
+  public func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
     responseHandler = {
       
@@ -75,13 +75,13 @@ extension BVConversationsQuery: BVQueryActionable {
       case let .success(_, jsonData):
         
         #if DEBUG
-          do {
-            let jsonObject =
-              try JSONSerialization.jsonObject(with: jsonData, options: [])
-            BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
-          } catch {
-            BVLogger.sharedLogger.error("Error: \(error)")
-          }
+        do {
+          let jsonObject =
+            try JSONSerialization.jsonObject(with: jsonData, options: [])
+          BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
+        } catch {
+          BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+        }
         #endif
         
         guard let response: BVConversationsQueryResponseInternal<BVType> =
@@ -89,20 +89,10 @@ extension BVConversationsQuery: BVQueryActionable {
             .decode(
               BVConversationsQueryResponseInternal<BVType>.self,
               from: jsonData) else {
-                var err = BVCommonError.unknown("N/A")
-                
-                #if DEBUG
-                  do {
-                    let _ = try JSONDecoder()
-                      .decode(
-                        BVConversationsQueryResponseInternal<BVType>.self,
-                        from: jsonData)
-                  } catch {
-                    err = BVCommonError.parse(error)
-                  }
-                #endif
-                
-                completion(.failure([err]))
+                completion(
+                  .failure(
+                    [BVCommonError.unknown(
+                      "An Unknown parse error occurred")]))
                 return
         }
         
@@ -134,8 +124,8 @@ extension BVConversationsQuery: BVQueryActionable {
 extension BVConversationsQuery: BVConfigurable {
   public typealias Configuration = BVConversationsConfiguration
   
-  @discardableResult final public func configure(
-    _ config: Configuration) -> Self {
+  @discardableResult
+  final public func configure(_ config: Configuration) -> Self {
     
     assert(nil == conversationsConfiguration)
     conversationsConfiguration = config
@@ -143,11 +133,14 @@ extension BVConversationsQuery: BVConfigurable {
     /// We update here just in case various things step on top of each
     /// other. We may want to revisit this if this becomes a pain
     /// point
-    update(parameter: .custom(
-      BVConstants.BVConversations.parameterKey, config.configurationKey, nil))
-    update(parameter:
+    update(
       .custom(
-        BVConfigurationType.clientKey, config.type.clientId, nil))
+        BVConversationsConstants.parameterKey,
+        config.configurationKey, nil))
+    update(
+      .custom(
+        BVConversationsConstants.clientKey,
+        config.type.clientId, nil))
     
     /// Make sure we call through to the superclass
     configureExistentially(config)
@@ -159,10 +152,11 @@ extension BVConversationsQuery: BVConfigurable {
 //// Conformance with BVConversationsQueryCustomizable. Please see protocol
 /// definition for more information.
 extension BVConversationsQuery: BVConversationsQueryCustomizable {
-  @discardableResult final public func custom(
+  @discardableResult
+  final public func custom(
     _ field: CustomStringConvertible, value: CustomStringConvertible) -> Self {
     let custom:BVConversationsQueryParameter = .custom(field, value, nil)
-    add(parameter: custom)
+    add(custom)
     return self
   }
 }
@@ -179,19 +173,23 @@ extension BVConversationsQuery: BVConversationsQueryPostflightable {
 // MARK: - BVConversationsQuery: BVConfigurableInternal
 extension BVConversationsQuery: BVConfigurableInternal {
   var configuration: BVConversationsConfiguration? {
-    return conversationsConfiguration
+    get {
+      return conversationsConfiguration
+    }
   }
 }
 
-// MARK: - BVQuery: BVURLParameterableInternal
+// MARK: - BVConversationsQuery: BVURLParameterableInternal
 extension BVConversationsQuery: BVURLParameterableInternal {
   
   final internal var parameters: [BVConversationsQueryParameter] {
-    return paramsPriv
+    get {
+      return paramsPriv
+    }
   }
   
   final internal func add(
-    parameter: BVConversationsQueryParameter, coalesce: Bool = false) {
+    _ parameter: BVConversationsQueryParameter, coalesce: Bool = false) {
     
     guard coalesce else {
       if 0 == paramsPriv.filter({ $0 === parameter }).count {
@@ -217,7 +215,7 @@ extension BVConversationsQuery: BVURLParameterableInternal {
     paramsPriv = otherList
   }
   
-  final internal func update(parameter: BVConversationsQueryParameter) {
+  final internal func update(_ parameter: BVConversationsQueryParameter) {
     var paramsTemp:[BVConversationsQueryParameter] =
       paramsPriv.filter { $0 != parameter }
     paramsTemp.append(parameter)

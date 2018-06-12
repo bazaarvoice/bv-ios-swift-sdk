@@ -14,37 +14,100 @@ import Foundation
 /// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVQuestionFilter: BVConversationsQueryFilter {
   
-  case authorId
-  case campaignId
-  case categoryAncestorId
-  case categoryId
-  case contentLocale
-  case hasAnswers
-  case hasBestAnswer
-  case hasBrandAnswers
-  case hasPhotos
-  case hasStaffAnswers
-  case hasTags
-  case hasVideos
-  case isFeatured
-  case isSubjectActive
-  case lastApprovedAnswerSubmissionTime
-  case lastModeratedTime
-  case lastModificationTime
-  case moderatorCode
-  case productId
-  case questionId
-  case submissionId
-  case submissionTime
-  case summary
-  case totalAnswerCount
-  case totalFeedbackCount
-  case totalNegativeFeedbackCount
-  case totalPositiveFeedbackCount
-  case userLocation
+  case authorId(String)
+  case campaignId(String)
+  case categoryAncestorId(String)
+  case categoryId(String)
+  case contentLocale(String)
+  case hasAnswers(Bool)
+  case hasBestAnswer(Bool)
+  case hasBrandAnswers(Bool)
+  case hasPhotos(Bool)
+  case hasStaffAnswers(Bool)
+  case hasTags(Bool)
+  case hasVideos(Bool)
+  case isFeatured(Bool)
+  case isSubjectActive(Bool)
+  case lastApprovedAnswerSubmissionTime(Date)
+  case lastModeratedTime(Date)
+  case lastModificationTime(Date)
+  case moderatorCode(String)
+  case productId(String)
+  case questionId(String)
+  case submissionId(String)
+  case submissionTime(Date)
+  case summary(String)
+  case totalAnswerCount(Int)
+  case totalFeedbackCount(Int)
+  case totalNegativeFeedbackCount(Int)
+  case totalPositiveFeedbackCount(Int)
+  case userLocation(String)
   
   public var description: String {
     return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    get {
+      switch self {
+      case let .authorId(filter):
+        return filter
+      case let .campaignId(filter):
+        return filter
+      case let .categoryAncestorId(filter):
+        return filter
+      case let .categoryId(filter):
+        return filter
+      case let .contentLocale(filter):
+        return filter
+      case let .hasAnswers(filter):
+        return filter
+      case let .hasBestAnswer(filter):
+        return filter
+      case let .hasBrandAnswers(filter):
+        return filter
+      case let .hasPhotos(filter):
+        return filter
+      case let .hasStaffAnswers(filter):
+        return filter
+      case let .hasTags(filter):
+        return filter
+      case let .hasVideos(filter):
+        return filter
+      case let .isFeatured(filter):
+        return filter
+      case let .isSubjectActive(filter):
+        return filter
+      case let .lastApprovedAnswerSubmissionTime(filter):
+        return filter.toBVFormat
+      case let .lastModeratedTime(filter):
+        return filter.toBVFormat
+      case let .lastModificationTime(filter):
+        return filter.toBVFormat
+      case let .moderatorCode(filter):
+        return filter
+      case let .productId(filter):
+        return filter
+      case let .questionId(filter):
+        return filter
+      case let .submissionId(filter):
+        return filter
+      case let .submissionTime(filter):
+        return filter.toBVFormat
+      case let .summary(filter):
+        return filter
+      case let .totalAnswerCount(filter):
+        return filter
+      case let .totalFeedbackCount(filter):
+        return filter
+      case let .totalNegativeFeedbackCount(filter):
+        return filter
+      case let .totalPositiveFeedbackCount(filter):
+        return filter
+      case let .userLocation(filter):
+        return filter
+      }
+    }
   }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 //MARK: - Extensions
 
 internal func +<Key, Value>
-  (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key : Value] {
+  (lhs: [Key : Value], rhs: [Key : Value]?) -> [Key : Value] {
   guard let right = rhs else {
     return lhs
   }
@@ -20,7 +20,7 @@ internal func +<Key, Value>
   return union
 }
 
-internal func +=<Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]?) {
+internal func +=<Key, Value>(lhs: inout [Key : Value], rhs: [Key : Value]?) {
   lhs = (lhs + rhs)
 }
 
@@ -66,6 +66,16 @@ internal func +(lhs: Data, rhs: Data?) -> Data {
 
 internal func +=(lhs: inout Data, rhs: Data?) {
   lhs = (lhs + rhs)
+}
+
+internal extension Date {
+  var toBVFormat: String {
+    get {
+      let df:DateFormatter = DateFormatter()
+      df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+      return df.string(from: self)
+    }
+  }
 }
 
 internal extension String {
@@ -351,7 +361,7 @@ internal extension UIView {
         continue
       }
       assert(false, "UIGestureRecognizer must have \"cancelsTouchesInView\" " +
-        "set to false for the BVSDK to properly function.")
+        "set to false for the BVSwift to properly function.")
     }
   }
 }

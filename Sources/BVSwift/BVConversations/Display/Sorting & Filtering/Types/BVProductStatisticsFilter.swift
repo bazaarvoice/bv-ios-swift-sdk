@@ -14,11 +14,23 @@ import Foundation
 /// \
 /// Used for conformance with the BVConversationsQueryFilterable protocol.
 public enum BVProductStatisticsFilter: BVConversationsQueryFilter {
-  case contentLocale
-  case productId
+  
+  case contentLocale(String)
+  case productId(String)
   
   public var description: String {
     return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    get {
+      switch self {
+      case let .contentLocale(filter):
+        return filter
+      case let .productId(filter):
+        return filter
+      }
+    }
   }
 }
 

@@ -44,4 +44,9 @@ Pod::Spec.new do |s|
     conversationsui.dependency 'BVSwift/BVAnalytics'
     conversationsui.dependency 'BVSwift/BVConversations'
   end
+
+  s.subspec 'BVCurations' do |curations|
+    curations.source_files = 'Sources/BVSwift/BVCurations/**/*.swift'
+    curations.dependency 'BVSwift/BVCommon'
+  end
 end

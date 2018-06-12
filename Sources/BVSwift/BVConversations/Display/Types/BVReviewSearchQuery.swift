@@ -46,27 +46,26 @@ public class BVReviewSearchQuery: BVConversationsQuery<BVReview> {
     
     let productFilter:BVConversationsQueryParameter =
       .filter(
-        BVCommentFilter.productId,
+        BVCommentFilter.productId(productId),
         BVRelationalFilterOperator.equalTo,
-        [productId],
         nil)
     
-    add(parameter: productFilter)
+    add(productFilter)
     
     let queryField: BVSearchQueryField = BVSearchQueryField(searchQuery)
     let searchField: BVConversationsQueryParameter =
       .customField(queryField, nil)
     
-    add(parameter: searchField)
+    add(searchField)
     
     if 0 < limit {
       let limitField: BVLimitQueryField = BVLimitQueryField(limit)
-      add(parameter: .customField(limitField, nil))
+      add(.customField(limitField, nil))
     }
     
     if 0 < offset {
       let offsetField: BVOffsetQueryField = BVOffsetQueryField(offset)
-      add(parameter: .customField(offsetField, nil))
+      add(.customField(offsetField, nil))
     }
   }
   
@@ -139,20 +138,11 @@ extension BVReviewSearchQuery: BVConversationsQueryFilterable {
   public typealias Filter = BVReviewFilter
   public typealias Operator = BVRelationalFilterOperator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     let internalFilter:BVConversationsQueryParameter =
-      .filter(filter, op, values, nil)
-    add(parameter: internalFilter)
+      .filter(filter, op, nil)
+    add(internalFilter)
     return self
   }
 }
@@ -161,14 +151,15 @@ extension BVReviewSearchQuery: BVConversationsQueryFilterable {
 extension BVReviewSearchQuery: BVConversationsQueryIncludeable {
   public typealias Include = BVReviewInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 0) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+    let internalInclude:BVConversationsQueryParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit:BVConversationsQueryParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }

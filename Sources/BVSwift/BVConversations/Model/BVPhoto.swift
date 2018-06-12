@@ -133,7 +133,7 @@ public struct BVPhoto: BVSubmissionable {
 
 public struct BVPhotoSize: Codable {
   public let sizeId: String?
-  public let url: URL?
+  public let url: BVCodableSafe<URL>?
   
   private enum CodingKeys: String, CodingKey {
     case sizeId = "Id"
@@ -183,9 +183,12 @@ extension BVPhoto: BVMergeable {
 }
 
 extension BVPhoto: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
     get {
       return "uploadphoto.json"
     }
   }
+  
+  internal func update(_ values: [String : Encodable]?) { }
 }

@@ -28,6 +28,15 @@ public class BVSubmission {
     box.submissionBodyable = self
   }
   
+  internal var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
+    get {
+      #if DEBUG
+      BVLogger.sharedLogger.error("This needs to be overriden.")
+      #endif
+      return nil
+    }
+  }
+  
   internal var contentBodyClosure:
     ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
     get {
@@ -38,15 +47,15 @@ public class BVSubmission {
         guard let data: Data = try? JSONEncoder().encode(encodable) else {
           
           #if DEBUG
-            do {
-              let _ = try JSONEncoder().encode(encodable)
-            } catch {
-              BVLogger.sharedLogger.error("Error: \(error)")
-            }
-            
-            return nil
+          do {
+            let _ = try JSONEncoder().encode(encodable)
+          } catch {
+            BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+          }
+          
+          return nil
           #else
-            fatalError()
+          fatalError()
           #endif
         }
         
@@ -72,18 +81,21 @@ public class BVSubmission {
 
 // MARK: - BVSubmission: BVInternalSubmissionDelegate
 extension BVSubmission : BVInternalSubmissionDelegate {
-  var requestContentType: String? {
-    guard let contentType = contentTypeClosure else {
-      return nil
+  
+  var urlQueryItems: [URLQueryItem]? {
+    get {
+      return urlQueryItemsClosure?()
     }
-    return contentType()
+  }
+  
+  var requestContentType: String? {
+    get {
+      return contentTypeClosure?()
+    }
   }
   
   func requestBody(_ type: BVSubmissionableInternal) -> BVURLRequestBody? {
-    guard let body = contentBodyClosure else {
-      return nil
-    }
-    return body(type)
+    return contentBodyClosure?(type)
   }
 }
 
@@ -161,7 +173,22 @@ extension BVSubmission: BVSubmissionActionableInternal {
 extension BVSubmission: BVConfigureExistentially {
   @discardableResult
   final public func configureExistentially(_ config: BVConfiguration) -> Self {
-    box.configurationType = config
+    box.configureExistentially(config)
+    return self
+  }
+}
+
+// MARK: - BVSubmission: BVConfigureRaw
+extension BVSubmission: BVConfigureRaw {
+  var rawConfiguration: BVRawConfiguration? {
+    get {
+      return box.rawConfiguration
+    }
+  }
+  
+  @discardableResult
+  func configureRaw(_ config: BVRawConfiguration) -> Self {
+    box.configureRaw(config)
     return self
   }
 }
