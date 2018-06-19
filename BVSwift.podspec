@@ -49,4 +49,10 @@ Pod::Spec.new do |s|
     curations.source_files = 'Sources/BVSwift/BVCurations/**/*.swift'
     curations.dependency 'BVSwift/BVCommon'
   end
+
+  s.subspec 'BVRecommendations' do |recommendations|
+    recommendations.source_files = 'Sources/BVSwift/BVRecommendations/**/*.swift'
+    recommendations.dependency 'BVSwift/BVCommon'
+    recommendations.dependency 'BVSwift/BVAnalytics'
+  end
 end

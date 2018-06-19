@@ -11,21 +11,17 @@ import Foundation
 internal struct BVAnalyticsEventBatch: BVSubmissionable {
   
   static var singularKey: String {
-    get {
-      return "batch"
-    }
+    return "batch"
   }
   
   static var pluralKey: String {
-    get {
-      return "batches"
-    }
+    return "batches"
   }
   
   private let encodedEvents: [BVAnalyticsEventInstance]
   
   private enum CodingKeys: String, CodingKey {
-    case batch = "batch"
+    case batch
   }
   
   internal init(_ encodedEvents: [BVAnalyticsEventInstance]) {
@@ -39,20 +35,31 @@ internal struct BVAnalyticsEventBatch: BVSubmissionable {
   public func encode(to encoder: Encoder) throws {
     
     var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(
+    
+    let events: [BVAnyEncodable] =
       encodedEvents.map {
-        BVAnyEncodable(
-          $0.event.serialize($0.anonymous)) }, forKey: .batch)
+        
+        let event =
+          ($0.event.serialize($0.anonymous) +
+            /// First we will override values that exist in the analytic
+            /// events.
+            $0.overrides)
+            /// Finally, we remove any values that have been overriden as nil
+            /// via our encodable nil represented type; BVNil.
+            .filter({ return !($0.value.value is BVNil) })
+        
+        return BVAnyEncodable(event)
+    }
+    
+    try container.encode(events, forKey: .batch)
   }
 }
 
 extension BVAnalyticsEventBatch: BVSubmissionableInternal {
   
   internal static var postResource: String? {
-    get {
-      return "event"
-    }
+    return "event"
   }
   
-  internal func update(_ values: [String : Encodable]?) { }
+  internal func update(_ values: [String: Encodable]?) { }
 }

@@ -7,8 +7,11 @@
 // 
 
 import Foundation
-import CoreLocation
 
+/// The definition for the BVCurationsCoordinates type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVCurationsCoordinates: BVAuxiliaryable {
   
   public let latitude: Double?

@@ -15,6 +15,7 @@ internal class BVInternalQuery<T: BVQueryable> {
   /// Private
   final private var rawConfig: BVRawConfiguration?
   final private var configuration: BVConfiguration?
+  final private var cacheable: Bool = false
   private var preflightClosure: BVURLRequestablePreflightHandler?
   private var baseResponseCompletion: BVURLRequestableHandler?
   private let getResource: String
@@ -39,9 +40,7 @@ extension BVInternalQuery: BVConfigureExistentially {
 // MARK: - BVInternalQuery: BVConfigureRaw
 extension BVInternalQuery: BVConfigureRaw {
   var rawConfiguration: BVRawConfiguration? {
-    get {
-      return rawConfig
-    }
+    return rawConfig
   }
   
   @discardableResult
@@ -73,21 +72,29 @@ extension BVInternalQuery: BVQueryActionableInternal {
   }
 }
 
+// MARK: - BVInternalQuery: BVURLRequestableCacheable
+extension BVInternalQuery: BVURLRequestableCacheable {
+  var usesURLCache: Bool {
+    get {
+      return cacheable
+    }
+    set(newValue) {
+      cacheable = newValue
+    }
+  }
+}
+
 // MARK: - BVInternalQuery: BVURLRequestableInternal
 extension BVInternalQuery: BVURLRequestableInternal {
   final internal var bvPath: String {
-    get {
-      return getResource
-    }
+    return getResource
   }
   
   final internal var commonEndpoint: String {
-    get {
-      if let raw = rawConfiguration {
-        return raw.endpoint
-      }
-      return configuration?.endpoint ?? String.empty
+    if let raw = rawConfiguration {
+      return raw.endpoint
     }
+    return configuration?.endpoint ?? String.empty
   }
 }
 

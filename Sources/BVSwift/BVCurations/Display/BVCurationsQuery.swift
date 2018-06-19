@@ -8,55 +8,30 @@
 
 import Foundation
 
+/// Base public class for handling Curations Queries
+/// - Note:
+/// \
+/// This really only exists publicly as a convenience to the actual type
+/// specific queries. There shouldn't be any need to subclass this if you're an
+/// external developer; unless of course you're fixing bugs or extending
+/// something that you want to see being made public :)
 public class BVCurationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var ignoreCompletion: Bool = false
-  private var paramsPriv: [BVCurationsQueryParameter] = []
   private var curationsConfiguration: BVCurationsConfiguration?
   
-  internal override init<BVTypeInternal : BVQueryableInternal>(
+  internal override init<BVTypeInternal: BVQueryableInternal>(
     _ type: BVTypeInternal.Type) {
     super.init(type)
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    get {
-      return {
-        return self.queryItems
-      }
+    return {
+      return self.queryItems
     }
   }
   
-  internal var curationsPostflightResultsClosure:
-    (([CurationsPostflightResult]?) -> Swift.Void)? {
-    get {
-      return nil
-    }
-  }
-}
-
-// MARK: - BVCurationsQuery: BVURLParameterableInternal
-extension BVCurationsQuery: BVURLParameterableInternal {
-  
-  final internal var parameters: [BVCurationsQueryParameter] {
-    get {
-      return paramsPriv
-    }
-  }
-  
-  func add(_ parameter: BVCurationsQueryParameter, coalesce: Bool = false) {
-    if coalesce {
-      BVLogger.sharedLogger.debug(
-        "BVCurationsQuery.add() doesn't support coalescing")
-    }
-    paramsPriv += [parameter]
-  }
-  
-  func update(_ parameter: BVCurationsQueryParameter) {
-    var paramsTemp:[BVCurationsQueryParameter] =
-      paramsPriv.filter { $0 != parameter }
-    paramsTemp.append(parameter)
-    
-    paramsPriv = paramsTemp
+  internal var curationsPostflightResultsClosure: (([CurationsPostflightResult]?) -> Swift.Void)? {
+    return nil
   }
 }
 
@@ -75,9 +50,9 @@ extension BVCurationsQuery: BVConfigurable {
     /// other. We may want to revisit this if this becomes a pain
     /// point
     update(
-      .custom(BVCurationsConstants.parameterKey, config.configurationKey))
+      .unsafe(BVCurationsConstants.parameterKey, config.configurationKey, nil))
     update(
-      .custom(BVCurationsConstants.clientKey, config.type.clientId))
+      .unsafe(BVCurationsConstants.clientKey, config.type.clientId, nil))
     
     /// Make sure we call through to the superclass
     configureExistentially(config)
@@ -89,9 +64,7 @@ extension BVCurationsQuery: BVConfigurable {
 // MARK: - BVCurationsQuery: BVConfigurableInternal
 extension BVCurationsQuery: BVConfigurableInternal {
   var configuration: BVCurationsConfiguration? {
-    get {
-      return curationsConfiguration
-    }
+    return curationsConfiguration
   }
 }
 
@@ -140,7 +113,7 @@ extension BVCurationsQuery: BVQueryActionable {
                 BVCurationsQueryResponseInternal<BVType>.self,
                 from: jsonData)
           
-          if let errors:[Error] = response.errors,
+          if let errors: [Error] = response.errors,
             !errors.isEmpty {
             completion(.failure(errors))
             return
@@ -173,7 +146,7 @@ extension BVCurationsQuery: BVQueryActionable {
           }
           
           /// Check to see if we're dealing with XML
-          guard let _ = BVXMLParser().parse(jsonData) else {
+          guard nil != BVXMLParser().parse(jsonData) else {
             
             var errMessage = "An Unknown parse error occurred"
             if let msg = String(bytes: jsonData, encoding: .utf8),
@@ -201,8 +174,6 @@ extension BVCurationsQuery: BVQueryActionable {
               [BVCurationsError.query(invalidPasskey)]))
           return
         }
-        
-        break
       case let .failure(errors):
         completion(.failure(errors))
       }

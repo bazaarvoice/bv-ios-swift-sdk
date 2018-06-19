@@ -11,7 +11,8 @@ import Foundation
 /// Public class for handling BVProducts Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
 public class BVProductsQuery: BVConversationsQuery<BVProduct> {
   
   /// The initializer for BVProductSearchQuery
@@ -27,7 +28,7 @@ public class BVProductsQuery: BVConversationsQuery<BVProduct> {
         let productFilters: [String] =
           self.parameters.reduce([]) {
             (result: [String],
-            next: BVConversationsQueryParameter) -> [String] in
+            next: BVURLParameter) -> [String] in
             guard case let .filter(filter, _, _) = next,
               let productFilter: BVProductFilter =
               filter as? BVProductFilter,
@@ -54,16 +55,16 @@ public class BVProductsQuery: BVConversationsQuery<BVProduct> {
   }
 }
 
-// MARK: - BVProductsQuery: BVConversationsQueryFilterable
-extension BVProductsQuery: BVConversationsQueryFilterable {
+// MARK: - BVProductsQuery: BVQueryFilterable
+extension BVProductsQuery: BVQueryFilterable {
   public typealias Filter = BVProductFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
   public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     
     /// We have to do *almost* the inverse of BVProductQuery
-    let internalFilter: BVConversationsQueryParameter? = {
+    let internalFilter: BVURLParameter? = {
       switch filter {
       case .productId:
         return .filter(filter, op, nil)
@@ -90,17 +91,17 @@ extension BVProductsQuery: BVConversationsQueryFilterable {
   }
 }
 
-// MARK: - BVProductsQuery: BVConversationsQueryIncludeable
-extension BVProductsQuery: BVConversationsQueryIncludeable {
+// MARK: - BVProductsQuery: BVQueryIncludeable
+extension BVProductsQuery: BVQueryIncludeable {
   public typealias Include = BVProductInclude
   
   @discardableResult
   public func include(_ include: Include, limit: UInt16 = 10) -> Self {
-    let internalInclude:BVConversationsQueryParameter =
+    let internalInclude: BVURLParameter =
       .include(include, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
       add(internalIncludeLimit)
     }
@@ -108,14 +109,14 @@ extension BVProductsQuery: BVConversationsQueryIncludeable {
   }
 }
 
-// MARK: - BVProductsQuery: BVConversationsQuerySortable
-extension BVProductsQuery: BVConversationsQuerySortable {
+// MARK: - BVProductsQuery: BVQuerySortable
+extension BVProductsQuery: BVQuerySortable {
   public typealias Sort = BVProductSort
-  public typealias Order = BVMonotonicSortOrder
+  public typealias Order = BVConversationsSortOrder
   
   @discardableResult
   public func sort(_ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = {
+    let internalSort: BVURLParameter = {
       switch sort {
       case let .answers(by):
         return .sortType(sort, by, order, nil)
@@ -137,13 +138,13 @@ extension BVProductsQuery: BVConversationsQuerySortable {
   }
 }
 
-// MARK: - BVProductsQuery: BVConversationsQueryStatable
-extension BVProductsQuery: BVConversationsQueryStatable {
+// MARK: - BVProductsQuery: BVQueryStatable
+extension BVProductsQuery: BVQueryStatable {
   public typealias Stat = BVProductStat
   
   @discardableResult
   public func stats(_ for: Stat) -> Self {
-    let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
+    let internalStat: BVURLParameter = .stats(`for`, nil)
     add(internalStat)
     return self
   }

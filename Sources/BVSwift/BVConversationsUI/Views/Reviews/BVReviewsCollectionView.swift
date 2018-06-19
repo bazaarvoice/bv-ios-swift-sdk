@@ -11,29 +11,25 @@ import UIKit
 @objc
 public class BVReviewsCollectionView: BVConversationsCollectionView {
   
-  private var cellToProductMap: [String : BVReview] = [:]
+  private var cellToProductMap: [String: BVReview] = [:]
   public var productId: String = "none"
   
   internal override var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return .feature(
-        bvProduct: .reviews,
-        name: .scrolled,
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .feature(
+      bvProduct: .reviews,
+      name: .scrolled,
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
   
   internal override var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return .inView(
-        bvProduct: .reviews,
-        component: "ReviewsCollectionView",
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .inView(
+      bvProduct: .reviews,
+      component: "ReviewsCollectionView",
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
   
   // MARK: - UICollectionViewDataSource

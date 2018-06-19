@@ -15,58 +15,43 @@ import Foundation
 public struct BVQuestion: BVQueryable, BVSubmissionable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVQuestions.singularKey
-    }
+    return BVConversationsConstants.BVQuestions.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVQuestions.pluralKey
-    }
+    return BVConversationsConstants.BVQuestions.pluralKey
   }
   
-  public private(set) var answers: [BVAnswer]? = nil
-  public private(set) var authors: [BVAuthor]? = nil
-  public private(set) var products: [BVProduct]? = nil
+  private var includedAnswers: [BVAnswer]?
+  private var includedAuthors: [BVAuthor]?
+  private var includedProducts: [BVProduct]?
   
   public var additionalFields: Decoder? {
-    get {
-      return additionalFieldsDecoder?.decoder
-    }
+    return additionalFieldsDecoder?.decoder
   }
   private let additionalFieldsDecoder: BVCodableRawDecoder?
   public let answerIds: [String]?
   public let authorId: String?
   public var badges: [BVBadge]? {
-    get {
-      return badgesArray?.array
-    }
+    return badgesArray?.array
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
   public let campaignId: String?
   public let categoryId: String?
   public let contentLocale: String?
   public var contextDataValues: [BVContextDataValue]? {
-    get {
-      return contextDataValuesArray?.array
-    }
+    return contextDataValuesArray?.array
   }
-  private let contextDataValuesArray:
-  BVCodableDictionary<BVContextDataValue>?
+  private let contextDataValuesArray: BVCodableDictionary<BVContextDataValue>?
   public let isFeatured: Bool?
   public let isSyndicated: Bool?
   public let isUserAnonymous: Bool?
   public var lastModeratedTime: Date? {
-    get {
-      return lastModeratedTimeString?.toBVDate()
-    }
+    return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
   public var lastModificationTime: Date? {
-    get {
-      return lastModificationTimeString?.toBVDate()
-    }
+    return lastModificationTimeString?.toBVDate()
   }
   private let lastModificationTimeString: String?
   public let moderationStatus: String?
@@ -78,19 +63,14 @@ public struct BVQuestion: BVQueryable, BVSubmissionable {
   public let questionSummary: String?
   public let submissionId: String?
   public var submissionTime: Date? {
-    get {
-      return submissionTimeString?.toBVDate()
-    }
+    return submissionTimeString?.toBVDate()
   }
   private let submissionTimeString: String?
   public let syndicationSource: BVSyndicationSource?
   public var tagDimensions: [BVDimensionElement]? {
-    get {
-      return tagDimensionsArray?.array
-    }
+    return tagDimensionsArray?.array
   }
-  private let tagDimensionsArray:
-  BVCodableDictionary<BVDimensionElement>?
+  private let tagDimensionsArray: BVCodableDictionary<BVDimensionElement>?
   public let totalAnswerCount: Int?
   public let totalFeedbackCount: Int?
   public let totalInappropriateFeedbackCount: Int?
@@ -146,9 +126,9 @@ extension BVQuestion {
     self.questionDetails = questionDetails
     self.questionSummary = questionSummary
     self.isUserAnonymous = isUserAnonymous
-    self.answers = nil
-    self.authors = nil
-    self.products = nil
+    self.includedAnswers = nil
+    self.includedAuthors = nil
+    self.includedProducts = nil
     self.additionalFieldsDecoder = nil
     self.answerIds = nil
     self.authorId = nil
@@ -181,13 +161,25 @@ extension BVQuestion {
 }
 
 // MARK: - BVQuestion: BVAnswerIncludable
-extension BVQuestion: BVAnswerIncludable { }
+extension BVQuestion: BVAnswerIncludable {
+  public var answers: [BVAnswer]? {
+    return includedAnswers
+  }
+}
 
 // MARK: - BVQuestion: BVAuthorIncludable
-extension BVQuestion: BVAuthorIncludable { }
+extension BVQuestion: BVAuthorIncludable {
+  public var authors: [BVAuthor]? {
+    return includedAuthors
+  }
+}
 
 // MARK: - BVQuestion: BVProductIncludable
-extension BVQuestion: BVProductIncludable { }
+extension BVQuestion: BVProductIncludable {
+  public var products: [BVProduct]? {
+    return includedProducts
+  }
+}
 
 // MARK: - BVQuestion: BVConversationsUpdateIncludable
 extension BVQuestion: BVConversationsUpdateIncludable {
@@ -196,32 +188,28 @@ extension BVQuestion: BVConversationsUpdateIncludable {
   func update(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
-      self.answers = answers
+      self.includedAnswers = answers
     }
     if let authors: [BVAuthor] = includable.authors {
-      self.authors = authors
+      self.includedAuthors = authors
     }
     if let products: [BVProduct] = includable.products {
-      self.products = products
+      self.includedProducts = products
     }
   }
 }
 
 extension BVQuestion: BVQueryableInternal {
   internal static var getResource: String? {
-    get {
-      return BVConversationsConstants.BVQuestions.getResource
-    }
+    return BVConversationsConstants.BVQuestions.getResource
   }
 }
 
 extension BVQuestion: BVSubmissionableInternal {
   
   internal static var postResource: String? {
-    get {
-      return BVConversationsConstants.BVQuestions.postResource
-    }
+    return BVConversationsConstants.BVQuestions.postResource
   }
   
-  internal func update(_ values: [String : Encodable]?) { }
+  internal func update(_ values: [String: Encodable]?) { }
 }

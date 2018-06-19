@@ -16,15 +16,11 @@ import Foundation
 public struct BVUAS: BVSubmissionable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVUAS.singularKey
-    }
+    return BVConversationsConstants.BVUAS.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVUAS.pluralKey
-    }
+    return BVConversationsConstants.BVUAS.pluralKey
   }
   
   public let bvAuthToken: String?
@@ -56,10 +52,8 @@ extension BVUAS {
 extension BVUAS: BVSubmissionableInternal {
   
   internal static var postResource: String? {
-    get {
-      return BVConversationsConstants.BVUAS.postResource
-    }
+    return BVConversationsConstants.BVUAS.postResource
   }
   
-  internal func update(_ values: [String : Encodable]?) { }
+  internal func update(_ values: [String: Encodable]?) { }
 }

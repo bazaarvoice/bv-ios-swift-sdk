@@ -30,7 +30,7 @@ internal class BVXMLParser: NSObject, XMLParserDelegate {
     didStartElement elementName: String,
     namespaceURI: String?,
     qualifiedName qName: String?,
-    attributes attributeDict: [String : String]) {
+    attributes attributeDict: [String: String]) {
     
     let node = BVXMLElement(elementName)
     if !attributeDict.isEmpty {
@@ -67,7 +67,7 @@ internal class BVXMLParser: NSObject, XMLParserDelegate {
 internal class BVXMLElement {
   var name: String?
   var text: String?
-  var attributes: [String : String]?
+  var attributes: [String: String]?
   var childElements: [BVXMLElement]?
   
   public init(_ name: String) {
@@ -76,24 +76,22 @@ internal class BVXMLElement {
 }
 
 extension BVXMLElement {
-  var dictionary: [String : Any]? {
-    get {
-      var insideDictionary: [String : Any] = [:]
-      guard let thisName = name else {
-          return nil
-      }
-      guard let children = childElements else {
-        guard let thisText = text else {
-          return nil
-        }
-        return [thisName : thisText]
-      }
-      
-      children.forEach {
-        insideDictionary += $0.dictionary
-      }
-      
-      return [thisName : insideDictionary]
+  var dictionary: [String: Any]? {
+    var insideDictionary: [String: Any] = [:]
+    guard let thisName = name else {
+      return nil
     }
+    guard let children = childElements else {
+      guard let thisText = text else {
+        return nil
+      }
+      return [thisName: thisText]
+    }
+    
+    children.forEach {
+      insideDictionary += $0.dictionary
+    }
+    
+    return [thisName: insideDictionary]
   }
 }

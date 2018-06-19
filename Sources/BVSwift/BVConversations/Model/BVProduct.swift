@@ -14,27 +14,21 @@ import Foundation
 public struct BVProduct: BVQueryable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVProducts.singularKey
-    }
+    return BVConversationsConstants.BVProducts.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVProducts.pluralKey
-    }
+    return BVConversationsConstants.BVProducts.pluralKey
   }
   
-  public private(set) var answers: [BVAnswer]? = nil
-  public private(set) var authors: [BVAuthor]? = nil
-  public private(set) var comments: [BVComment]? = nil
-  public private(set) var questions: [BVQuestion]? = nil
-  public private(set) var reviews: [BVReview]? = nil
+  private var includedAnswers: [BVAnswer]?
+  private var includedAuthors: [BVAuthor]?
+  private var includedComments: [BVComment]?
+  private var includedQuestions: [BVQuestion]?
+  private var includedReviews: [BVReview]?
   
   public var attributes: [BVProductAttribute]? {
-    get {
-      return attributesDictionary?.array
-    }
+    return attributesDictionary?.array
   }
   private let attributesDictionary: BVCodableDictionary<BVProductAttribute>?
   public let brand: BVBrand?
@@ -42,7 +36,7 @@ public struct BVProduct: BVQueryable {
   public let categoryId: String?
   public let eans: [String]?
   public let familyIds: [String]?
-  public let filteredQAStatistics: BVReviewStatistics?
+  public let filteredQAStatistics: BVQAStatistics?
   public let filteredReviewStatistics: BVReviewStatistics?
   public let imageUrl: BVCodableSafe<URL>?
   public let isbns: [String]?
@@ -80,19 +74,39 @@ public struct BVProduct: BVQueryable {
 }
 
 // MARK: - BVProduct: BVAnswerIncludable
-extension BVProduct: BVAnswerIncludable { }
+extension BVProduct: BVAnswerIncludable {
+  public var answers: [BVAnswer]? {
+    return includedAnswers
+  }
+}
 
 // MARK: - BVProduct: BVAuthorIncludable
-extension BVProduct: BVAuthorIncludable { }
+extension BVProduct: BVAuthorIncludable {
+  public var authors: [BVAuthor]? {
+    return includedAuthors
+  }
+}
 
 // MARK: - BVProduct: BVCommentIncludable
-extension BVProduct: BVCommentIncludable { }
+extension BVProduct: BVCommentIncludable {
+  public var comments: [BVComment]? {
+    return includedComments
+  }
+}
 
 // MARK: - BVProduct: BVQuestionIncludable
-extension BVProduct: BVQuestionIncludable { }
+extension BVProduct: BVQuestionIncludable {
+  public var questions: [BVQuestion]? {
+    return includedQuestions
+  }
+}
 
 // MARK: - BVProduct: BVReviewIncludable
-extension BVProduct: BVReviewIncludable { }
+extension BVProduct: BVReviewIncludable {
+  public var reviews: [BVReview]? {
+    return includedReviews
+  }
+}
 
 // MARK: - BVProduct: BVConversationsUpdateIncludable
 extension BVProduct: BVConversationsUpdateIncludable {
@@ -101,27 +115,25 @@ extension BVProduct: BVConversationsUpdateIncludable {
   func update(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
-      self.answers = answers
+      self.includedAnswers = answers
     }
     if let authors: [BVAuthor] = includable.authors {
-      self.authors = authors
+      self.includedAuthors = authors
     }
     if let comments: [BVComment] = includable.comments {
-      self.comments = comments
+      self.includedComments = comments
     }
     if let questions: [BVQuestion] = includable.questions {
-      self.questions = questions
+      self.includedQuestions = questions
     }
     if let reviews: [BVReview] = includable.reviews {
-      self.reviews = reviews
+      self.includedReviews = reviews
     }
   }
 }
 
 extension BVProduct: BVQueryableInternal {
   internal static var getResource: String? {
-    get {
-      return BVConversationsConstants.BVProducts.getResource
-    }
+    return BVConversationsConstants.BVProducts.getResource
   }
 }

@@ -56,63 +56,54 @@ public enum BVConversationsConfiguration: BVConfiguration {
   
   /// See Protocol Definition for more info
   public var configurationKey: String {
-    get {
-      switch self {
-      case let .all(clientKey, _, _):
-        return clientKey
-      case let .display(clientKey, _, _):
-        return clientKey
-      case let .submission(clientKey, _, _):
-        return clientKey
-      }
+    switch self {
+    case let .all(clientKey, _, _):
+      return clientKey
+    case let .display(clientKey, _, _):
+      return clientKey
+    case let .submission(clientKey, _, _):
+      return clientKey
     }
   }
   
   /// See Protocol Definition for more info
   public var type: BVConfigurationType {
-    get {
-      switch self {
-      case let .all(_, configType, _):
-        return configType
-      case let .display(_, configType, _):
-        return configType
-      case let .submission(_, configType, _):
-        return configType
-      }
+    switch self {
+    case let .all(_, configType, _):
+      return configType
+    case let .display(_, configType, _):
+      return configType
+    case let .submission(_, configType, _):
+      return configType
     }
   }
   
   /// See Protocol Definition for more info
   public var endpoint: String {
-    get {
-      guard case .staging(_) = self.type else {
-        return
-          BVConversationsConstants.productionEndpoint
-      }
-      
-      return BVConversationsConstants.stagingEndpoint
+    guard case .staging(_) = self.type else {
+      return
+        BVConversationsConstants.productionEndpoint
     }
+    
+    return BVConversationsConstants.stagingEndpoint
   }
   
   internal var analyticsConfiguration: BVAnalyticsConfiguration {
-    get {
-      switch self {
-      case let .all(_, _, analyticsConfig):
-        return analyticsConfig
-      case let .display(_, _, analyticsConfig):
-        return analyticsConfig
-      case let .submission(_, _, analyticsConfig):
-        return analyticsConfig
-      }
+    switch self {
+    case let .all(_, _, analyticsConfig):
+      return analyticsConfig
+    case let .display(_, _, analyticsConfig):
+      return analyticsConfig
+    case let .submission(_, _, analyticsConfig):
+      return analyticsConfig
     }
   }
 }
 
 /// Conformance to Equatable
 extension BVConversationsConfiguration: Equatable {
-  public static func ==
-    (lhs: BVConversationsConfiguration,
-     rhs: BVConversationsConfiguration) -> Bool {
+  public static func == (lhs: BVConversationsConfiguration,
+                         rhs: BVConversationsConfiguration) -> Bool {
     
     if lhs.hashValue != rhs.hashValue {
       return false
@@ -174,12 +165,10 @@ extension BVConversationsConfiguration: BVConfigurationInternal {
   /// The only sub-configuration that exists for converrsations is the
   /// BVAnalyticsConfiguration.
   internal var subConfigurations: [BVConfigurationInternal]? {
-    get {
-      return [analyticsConfiguration]
-    }
+    return [analyticsConfiguration]
   }
   
-  internal init?(_ config: BVConfigurationType, keyValues: [String : Any]?) {
+  internal init?(_ config: BVConfigurationType, keyValues: [String: Any]?) {
     
     guard let conversationsKeyValues = keyValues else {
       return nil

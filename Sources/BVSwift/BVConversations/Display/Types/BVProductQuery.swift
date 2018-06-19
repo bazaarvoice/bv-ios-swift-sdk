@@ -11,7 +11,8 @@ import Foundation
 /// Public class for handling BVProduct Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
 public class BVProductQuery: BVConversationsQuery<BVProduct> {
   
   /// The Product identifier to query
@@ -25,105 +26,102 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
     
     super.init(BVProduct.self)
     
-    let productFilter:BVConversationsQueryParameter =
+    let productFilter: BVURLParameter =
       .filter(
         BVProductFilter.productId(productId),
-        BVRelationalFilterOperator.equalTo,
+        BVConversationsfiltererator.equalTo,
         nil)
     
     add(productFilter)
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure:
-    (([BVProduct]?) -> Swift.Void)? {
-    get {
-      return { (results: [BVProduct]?) in
-        if let product = results?.first,
-          let productId = self.productId {
-          
-          if let reviews = product.reviews {
-            for review in reviews {
-              if let productId = review.productId,
-                let reviewId = review.reviewId,
-                let product = review.products?.filter({
-                  guard let id = $0.productId else {
-                    return false
-                  }
-                  return productId == id
-                }).first {
-                
-                let reviewImpressionEvent: BVAnalyticsEvent =
-                  .impression(
-                    bvProduct: .reviews,
-                    contentId: reviewId,
-                    contentType: .review,
-                    productId: productId,
-                    brand: product.brand?.brandId,
-                    categoryId: product.categoryId,
-                    additional: nil)
-                
-                BVPixel.track(
-                  reviewImpressionEvent,
-                  analyticConfiguration:
-                  self.configuration?.analyticsConfiguration)
-              }
+  internal override var conversationsPostflightResultsClosure: (([BVProduct]?) -> Swift.Void)? {
+    return { (results: [BVProduct]?) in
+      if let product = results?.first,
+        let productId = self.productId {
+        
+        if let reviews = product.reviews {
+          for review in reviews {
+            if let productId = review.productId,
+              let reviewId = review.reviewId,
+              let product = review.products?.filter({
+                guard let id = $0.productId else {
+                  return false
+                }
+                return productId == id
+              }).first {
+              
+              let reviewImpressionEvent: BVAnalyticsEvent =
+                .impression(
+                  bvProduct: .reviews,
+                  contentId: reviewId,
+                  contentType: .review,
+                  productId: productId,
+                  brand: product.brand?.brandId,
+                  categoryId: product.categoryId,
+                  additional: nil)
+              
+              BVPixel.track(
+                reviewImpressionEvent,
+                analyticConfiguration:
+                self.configuration?.analyticsConfiguration)
             }
           }
-          
-          if let questions = product.questions {
-            for question in questions {
-              if let productId = question.productId,
-                let questionId = question.questionId,
-                let categoryId = question.categoryId {
-                
-                let questionImpressionEvent: BVAnalyticsEvent =
-                  .impression(
-                    bvProduct: .question,
-                    contentId: questionId,
-                    contentType: .question,
-                    productId: productId,
-                    brand: nil,
-                    categoryId: categoryId,
-                    additional: nil)
-                
-                BVPixel.track(
-                  questionImpressionEvent,
-                  analyticConfiguration:
-                  self.configuration?.analyticsConfiguration)
-              }
-            }
-          }
-          
-          let productPageView: BVAnalyticsEvent =
-            .pageView(
-              bvProduct: .reviews,
-              productId: productId,
-              brand: product.brand?.brandId,
-              categoryId: nil,
-              rootCategoryId: nil,
-              additional: nil)
-          
-          BVPixel.track(
-            productPageView,
-            analyticConfiguration: self.configuration?.analyticsConfiguration)
         }
+        
+        if let questions = product.questions {
+          for question in questions {
+            if let productId = question.productId,
+              let questionId = question.questionId,
+              let categoryId = question.categoryId {
+              
+              let questionImpressionEvent: BVAnalyticsEvent =
+                .impression(
+                  bvProduct: .question,
+                  contentId: questionId,
+                  contentType: .question,
+                  productId: productId,
+                  brand: nil,
+                  categoryId: categoryId,
+                  additional: nil)
+              
+              BVPixel.track(
+                questionImpressionEvent,
+                analyticConfiguration:
+                self.configuration?.analyticsConfiguration)
+            }
+          }
+        }
+        
+        let productPageView: BVAnalyticsEvent =
+          .pageView(
+            bvProduct: .reviews,
+            productId: productId,
+            brand: product.brand?.brandId,
+            categoryId: nil,
+            rootCategoryId: nil,
+            additional: nil)
+        
+        BVPixel.track(
+          productPageView,
+          analyticConfiguration: self.configuration?.analyticsConfiguration)
       }
     }
   }
 }
 
-// MARK: - BVProductQuery: BVConversationsQueryFilterable
-extension BVProductQuery: BVConversationsQueryFilterable {
+// MARK: - BVProductQuery: BVQueryFilterable
+extension BVProductQuery: BVQueryFilterable {
   public typealias Filter = BVProductFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
   public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     
     /// We don't allow regular product filters since that wouldn't make sense
     /// for a product display request.
-    let internalFilter:BVConversationsQueryParameter? = {
+    let internalFilter: BVURLParameter? = {
       switch filter {
       case let .answers(typeFilter):
         return .filterType(filter, typeFilter, op, nil)
@@ -148,17 +146,17 @@ extension BVProductQuery: BVConversationsQueryFilterable {
   }
 }
 
-// MARK: - BVProductQuery: BVConversationsQueryIncludeable
-extension BVProductQuery: BVConversationsQueryIncludeable {
+// MARK: - BVProductQuery: BVQueryIncludeable
+extension BVProductQuery: BVQueryIncludeable {
   public typealias Include = BVProductInclude
   
   @discardableResult
   public func include(_ include: Include, limit: UInt16 = 10) -> Self {
-    let internalInclude:BVConversationsQueryParameter =
+    let internalInclude: BVURLParameter =
       .include(include, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
       add(internalIncludeLimit)
     }
@@ -166,14 +164,14 @@ extension BVProductQuery: BVConversationsQueryIncludeable {
   }
 }
 
-// MARK: - BVProductQuery: BVConversationsQuerySortable
-extension BVProductQuery: BVConversationsQuerySortable {
+// MARK: - BVProductQuery: BVQuerySortable
+extension BVProductQuery: BVQuerySortable {
   public typealias Sort = BVProductSort
-  public typealias Order = BVMonotonicSortOrder
+  public typealias Order = BVConversationsSortOrder
   
   @discardableResult
   public func sort(_ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = {
+    let internalSort: BVURLParameter = {
       switch sort {
       case let .answers(by):
         return .sortType(sort, by, order, nil)
@@ -195,15 +193,14 @@ extension BVProductQuery: BVConversationsQuerySortable {
   }
 }
 
-// MARK: - BVProductQuery: BVConversationsQueryStatable
-extension BVProductQuery: BVConversationsQueryStatable {
+// MARK: - BVProductQuery: BVQueryStatable
+extension BVProductQuery: BVQueryStatable {
   public typealias Stat = BVProductStat
   
   @discardableResult
   public func stats(_ for: Stat) -> Self {
-    let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
+    let internalStat: BVURLParameter = .stats(`for`, nil)
     add(internalStat)
     return self
   }
 }
-

@@ -9,17 +9,6 @@
 import Foundation
 import CoreLocation
 
-/// Protocol defining the primitive query filter types
-public protocol BVCurationsQueryFilter: CustomStringConvertible {
-  var representedValue: CustomStringConvertible { get }
-}
-
-/// Protocol definition for the behavior of adding filters
-public protocol BVCurationsQueryFilterable {
-  associatedtype Filter: BVCurationsQueryFilter
-  func filter(_ filter: Filter) -> Self
-}
-
 /// Protocol definition for the behavior of formatting media
 internal protocol BVCurationsQueryMediaOverridable {
   func override(_ media: BVCurationsMedia) -> Self
@@ -34,17 +23,17 @@ internal protocol BVCurationsQueryPostflightable: BVQueryActionable {
   func curationsPostflight(_ results: [CurationsPostflightResult]?)
 }
 
-// MARK: - BVCurationsUpdateable
-internal protocol BVCurationsUpdateable: BVQueryable {
+// MARK: - BVCurationsQueryUpdateable
+internal protocol BVCurationsQueryUpdateable: BVQueryable {
   mutating func update(_ any: Any?)
 }
 
-// MARK: - BVCurationsProductUpdatable
-internal protocol BVCurationsProductUpdatable: BVCurationsUpdateable {
+// MARK: - BVCurationsQueryProductUpdatable
+internal protocol BVCurationsQueryProductUpdatable: BVCurationsQueryUpdateable {
   mutating func update(_ product: [BVCurationsProduct])
 }
 
-extension BVCurationsProductUpdatable {
+extension BVCurationsQueryProductUpdatable {
   internal mutating func update(_ any: Any?) {
     if let product: [BVCurationsProduct] =
       any as? [BVCurationsProduct] {

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Protocol defining the meta-data header for submissions
-public protocol BVCurationsSubmissionMetaData {
+internal protocol BVCurationsSubmissionMetaData {
   
   /// The code for the result of the submission
   var code: Int? { get }
@@ -22,29 +22,25 @@ public protocol BVCurationsSubmissionMetaData {
 /// - Note:
 /// \
 /// The result type is empty unless it's an unknown result.
-public enum
+internal enum
 BVCurationsSubmissionResponse: BVURLRequestableResponse {
   public typealias ResponseType = Data
   public typealias MetaType = BVCurationsSubmissionMetaData
   
   /// Success state of the query, a.k.a, no errors.
   public var success: Bool {
-    get {
-      guard case .success = self else {
-        return false
-      }
-      return true
+    guard case .success = self else {
+      return false
     }
+    return true
   }
   
   /// Failure case returned errors.
   public var errors: [Error]? {
-    get {
-      guard case let .failure(errors) = self else {
-        return nil
-      }
-      return errors
+    guard case let .failure(errors) = self else {
+      return nil
     }
+    return errors
   }
   
   case success(MetaType, ResponseType)

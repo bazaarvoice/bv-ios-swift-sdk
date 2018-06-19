@@ -7,81 +7,60 @@
 
 import Foundation
 
-/// The definition for the BVAnswer type
+/// The definition for the BVAuthor type
 /// - Note:
 /// \
 /// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
 public struct BVAuthor: BVQueryable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVAuthors.singularKey
-    }
+    return BVConversationsConstants.BVAuthors.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVAuthors.pluralKey
-    }
+    return BVConversationsConstants.BVAuthors.pluralKey
   }
   
-  public private(set) var answers: [BVAnswer]? = nil
-  public private(set) var comments: [BVComment]? = nil
-  public private(set) var questions: [BVQuestion]? = nil
-  public private(set) var reviews: [BVReview]? = nil
+  private var includedAnswers: [BVAnswer]?
+  private var includedComments: [BVComment]?
+  private var includedQuestions: [BVQuestion]?
+  private var includedReviews: [BVReview]?
   
   public let authorId: String?
   public var badges: [BVBadge]? {
-    get {
-      return badgesArray?.array
-    }
+    return badgesArray?.array
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
   public let contentLocale: String?
   public var contextDataValues: [BVContextDataValue]? {
-    get {
-      return contextDataValuesArray?.array
-    }
+    return contextDataValuesArray?.array
   }
-  private let contextDataValuesArray:
-  BVCodableDictionary<BVContextDataValue>?
+  private let contextDataValuesArray: BVCodableDictionary<BVContextDataValue>?
   public var lastModeratedTime: Date? {
-    get {
-      return lastModeratedTimeString?.toBVDate()
-    }
+    return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
   public var lastModificationTime: Date? {
-    get {
-      return lastModificationTimeString?.toBVDate()
-    }
+    return lastModificationTimeString?.toBVDate()
   }
   private let lastModificationTimeString: String?
   public let photos: [BVPhoto]?
   public let qaStatistics: BVQAStatistics?
   public let reviewStatistics: BVReviewStatistics?
   public var secondaryRatings: [BVSecondaryRating]? {
-    get {
-      return secondaryRatingsArray?.array
-    }
+    return secondaryRatingsArray?.array
   }
-  private let secondaryRatingsArray:
-  BVCodableDictionary<BVSecondaryRating>?
+  private let secondaryRatingsArray: BVCodableDictionary<BVSecondaryRating>?
   public let submissionId: String?
   public var submissionTime: Date? {
-    get {
-      return submissionTimeString?.toBVDate()
-    }
+    return submissionTimeString?.toBVDate()
   }
   private let submissionTimeString: String?
   public let syndicationSource: BVSyndicationSource?
   public var tagDimensions: [BVDimensionElement]? {
-    get {
-      return tagDimensionsArray?.array
-    }
+    return tagDimensionsArray?.array
   }
-  private let tagDimensionsArray:
-  BVCodableDictionary<BVDimensionElement>?
+  private let tagDimensionsArray: BVCodableDictionary<BVDimensionElement>?
   public let userLocation: String?
   public let userNickname: String?
   public let videos: [BVVideo]?
@@ -108,16 +87,32 @@ public struct BVAuthor: BVQueryable {
 }
 
 // MARK: - BVAuthor: BVAnswerIncludable
-extension BVAuthor: BVAnswerIncludable { }
+extension BVAuthor: BVAnswerIncludable {
+  public var answers: [BVAnswer]? {
+    return includedAnswers
+  }
+}
 
 // MARK: - BVAuthor: BVCommentIncludable
-extension BVAuthor: BVCommentIncludable { }
+extension BVAuthor: BVCommentIncludable {
+  public var comments: [BVComment]? {
+    return includedComments
+  }
+}
 
 // MARK: - BVAuthor: BVQuestionIncludable
-extension BVAuthor: BVQuestionIncludable { }
+extension BVAuthor: BVQuestionIncludable {
+  public var questions: [BVQuestion]? {
+    return includedQuestions
+  }
+}
 
 // MARK: - BVAuthor: BVReviewIncludable
-extension BVAuthor: BVReviewIncludable { }
+extension BVAuthor: BVReviewIncludable {
+  public var reviews: [BVReview]? {
+    return includedReviews
+  }
+}
 
 // MARK: - BVAuthor: BVConversationsUpdateIncludable
 extension BVAuthor: BVConversationsUpdateIncludable {
@@ -126,16 +121,16 @@ extension BVAuthor: BVConversationsUpdateIncludable {
   func update(_ includable: BVConversationsIncludable) {
     
     if let answers: [BVAnswer] = includable.answers {
-      self.answers = answers
+      self.includedAnswers = answers
     }
     if let comments: [BVComment] = includable.comments {
-      self.comments = comments
+      self.includedComments = comments
     }
     if let questions: [BVQuestion] = includable.questions {
-      self.questions = questions
+      self.includedQuestions = questions
     }
     if let reviews: [BVReview] = includable.reviews {
-      self.reviews = reviews
+      self.includedReviews = reviews
     }
   }
 }
@@ -143,8 +138,6 @@ extension BVAuthor: BVConversationsUpdateIncludable {
 // MARK: - BVAuthor: BVQueryableInternal
 extension BVAuthor: BVQueryableInternal {
   internal static var getResource: String? {
-    get {
-      return BVConversationsConstants.BVAuthors.getResource
-    }
+    return BVConversationsConstants.BVAuthors.getResource
   }
 }
