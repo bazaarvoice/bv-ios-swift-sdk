@@ -7,58 +7,6 @@
 
 import Foundation
 
-/// Protocol defining the primitive query filter types
-public protocol BVConversationsQueryFilter: CustomStringConvertible {
-  var representedValue: CustomStringConvertible { get }
-}
-
-/// Protocol defining the primitive query filter operator types
-public protocol BVConversationsQueryFilterOperator: CustomStringConvertible { }
-
-/// Protocol defining the primitive query include types
-public protocol BVConversationsQueryInclude: CustomStringConvertible { }
-
-/// Protocol defining the primitive query sort types
-public protocol BVConversationsQuerySort: CustomStringConvertible { }
-
-/// Protocol defining the primitive query sort order types
-public protocol BVConversationsQuerySortOrder: CustomStringConvertible { }
-
-/// Protocol defining the primitive query stat types
-public protocol BVConversationsQueryStat: CustomStringConvertible { }
-
-/// Protocol definition for the behavior of adding custom query fields
-public protocol BVConversationsQueryCustomizable {
-  func custom(_ field: CustomStringConvertible,
-              value: CustomStringConvertible) -> Self
-}
-
-/// Protocol definition for the behavior of adding filters
-public protocol BVConversationsQueryFilterable {
-  associatedtype Filter: BVConversationsQueryFilter
-  associatedtype Operator: BVConversationsQueryFilterOperator
-  func filter(_ filter: Filter, op: Operator) -> Self
-}
-
-/// Protocol definition for the behavior of adding included filters
-public protocol BVConversationsQueryIncludeable {
-  associatedtype Include: BVConversationsQueryInclude
-  func include(_ include: Include, limit: UInt16) -> Self
-}
-
-/// Protocol definition for the behavior of adding sort filters
-public protocol BVConversationsQuerySortable {
-  associatedtype Sort: BVConversationsQuerySort
-  associatedtype Order: BVConversationsQuerySortOrder
-  func sort(_ sort: Sort, order: Order) -> Self
-}
-
-/// Protocol definition for the behavior of adding stat filters
-public protocol BVConversationsQueryStatable {
-  associatedtype Stat: BVConversationsQueryStat
-  func stats(_ for: Stat) -> Self
-}
-
 /// Protocol definition for the answer includable instances
 public protocol BVAnswerIncludable: BVQueryable {
   var answers: [BVAnswer]? { get }
@@ -91,6 +39,15 @@ public protocol BVReviewIncludable: BVQueryable {
 
 /// Internal
 
+internal protocol BVConversationsIncludable {
+  var answers: [BVAnswer]? { get }
+  var authors: [BVAuthor]? { get }
+  var comments: [BVComment]? { get }
+  var products: [BVProduct]? { get }
+  var questions: [BVQuestion]? { get }
+  var reviews: [BVReview]? { get }
+}
+
 extension BVConversationsUpdateIncludable {
   internal mutating func update(_ any: Any?) {
     if let includable: BVConversationsIncludable =
@@ -98,12 +55,6 @@ extension BVConversationsUpdateIncludable {
       update(includable)
     }
   }
-}
-
-// MARK: - BVConversationsQueryField
-internal protocol BVConversationsQueryField:
-BVInternalCustomStringConvertible {
-  static var fieldPrefix: String { get }
 }
 
 // MARK: - BVConversationsQueryValue
@@ -126,34 +77,65 @@ internal protocol BVConversationsQueryPostflightable: BVQueryActionable {
   func conversationsPostflight(_ results: [ConversationsPostflightResult]?)
 }
 
-internal extension BVConversationsQueryFilter {
-  static var filterPrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQueryFilter.defaultField
-    }
+// MARK: - BVConversationsSearchQueryField
+internal struct BVConversationsSearchQueryField: BVQueryField {
+  private let value: CustomStringConvertible
+  
+  var internalDescription: String {
+    return BVConversationsConstants.BVQueryType.Keys.search
+  }
+  
+  var representedValue: CustomStringConvertible {
+    return value
+  }
+  
+  var description: String {
+    return internalDescription
+  }
+  
+  init(_ searchQuery: String) {
+    value = searchQuery
   }
 }
 
-internal extension BVConversationsQueryInclude {
-  static var includePrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQueryInclude.defaultField
-    }
+// MARK: - BVConversationsLimitQueryField
+internal struct BVConversationsLimitQueryField: BVQueryField {
+  private let value: CustomStringConvertible
+  
+  var internalDescription: String {
+    return BVConversationsConstants.BVQueryType.Keys.limit
+  }
+  
+  var representedValue: CustomStringConvertible {
+    return value
+  }
+  
+  var description: String {
+    return internalDescription
+  }
+  
+  init(_ limit: UInt16) {
+    value = "\(limit)"
   }
 }
 
-internal extension BVConversationsQuerySort {
-  static var sortPrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQuerySort.defaultField
-    }
+// MARK: - BVConversationsOffsetQueryField
+internal struct BVConversationsOffsetQueryField: BVQueryField {
+  private let value: CustomStringConvertible
+  
+  var internalDescription: String {
+    return BVConversationsConstants.BVQueryType.Keys.offset
   }
-}
-
-internal extension BVConversationsQueryStat {
-  static var statPrefix: String {
-    get {
-      return BVConversationsConstants.BVConversationsQueryStat.defaultField
-    }
+  
+  var representedValue: CustomStringConvertible {
+    return value
+  }
+  
+  var description: String {
+    return internalDescription
+  }
+  
+  init(_ offset: UInt16) {
+    value = "\(offset)"
   }
 }

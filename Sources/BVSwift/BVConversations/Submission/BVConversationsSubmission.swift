@@ -19,10 +19,9 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   
   /// Private
   private var ignoreCompletion: Bool = false
-  internal private(set) var conversationsConfiguration:
-  BVConversationsConfiguration?
+  internal private(set) var conversationsConfiguration: BVConversationsConfiguration?
   private var submissionParameters: [URLQueryItem] =
-    [URLQueryItem(name: "apiversion", value: "5.4")]
+    [URLQueryItem(name: apiVersionField, value: apiVersion)]
   private var customSubmissionParameters: [URLQueryItem]?
   
   /// Internal
@@ -38,55 +37,43 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   }
   
   override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    get {
-      return {
-        /// Unused for now...
-        return nil
-      }
-    }
-  }
-  
-  override var contentBodyClosure:
-    ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
-    get {
-      return { (_) -> BVURLRequestBody? in
-        
-        guard var container: URLComponents =
-          URLComponents(string: "http://bazaarvoice.com") else {
-            return nil
-        }
-        
-        container.queryItems =
-          (self.conversationsParameters ∪ self.customConversationsParameters)
-        
-        guard let query: Data = container.query?.data(using: .utf8) else {
-          return nil
-        }
-        
-        return .raw(query)
-      }
-    }
-  }
-  
-  override var contentTypeClosure: (() -> String?)? {
-    get {
-      return {
-        return "application/x-www-form-urlencoded"
-      }
-    }
-  }
-  
-  internal var conversationsPostflightResultsClosure:
-    (([ConversationsPostflightResult]?) -> Swift.Void)? {
-    get {
+    return {
+      /// Unused for now...
       return nil
     }
   }
   
-  internal var submissionable: BVType? {
-    get {
-      return submissionableInternal as? BVType
+  override var contentBodyClosure: ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
+    return { (_) -> BVURLRequestBody? in
+      
+      guard var container: URLComponents =
+        URLComponents(string: "http://bazaarvoice.com") else {
+          return nil
+      }
+      
+      container.queryItems =
+        (self.conversationsParameters ∪ self.customConversationsParameters)
+      
+      guard let query: Data = container.query?.data(using: .utf8) else {
+        return nil
+      }
+      
+      return .raw(query)
     }
+  }
+  
+  override var contentTypeClosure: (() -> String?)? {
+    return {
+      return "application/x-www-form-urlencoded"
+    }
+  }
+  
+  internal var conversationsPostflightResultsClosure: (([ConversationsPostflightResult]?) -> Swift.Void)? {
+    return nil
+  }
+  
+  internal var submissionable: BVType? {
+    return submissionableInternal as? BVType
   }
 }
 
@@ -128,21 +115,19 @@ extension BVConversationsSubmission: BVConfigurable {
 // MARK: - BVConversationsSubmission: BVConfigurableInternal
 extension BVConversationsSubmission: BVConfigurableInternal {
   var configuration: BVConversationsConfiguration? {
-    get {
-      return conversationsConfiguration
-    }
+    return conversationsConfiguration
   }
 }
 
 // MARK: - BVConversationsSubmission: BVConversationsSubmissionCustomizeable
 extension BVConversationsSubmission: BVConversationsSubmissionCustomizeable {
   @discardableResult
-  public func add(_ customFields: [String : String]) -> Self {
+  public func add(_ fields: [String: String]) -> Self {
     guard var customParams = customConversationsParameters else {
-      customConversationsParameters = customFields.toBVURLQueryItems()
+      customConversationsParameters = fields.toBVURLQueryItems()
       return self
     }
-    customParams ∪= customFields.toBVURLQueryItems()
+    customParams ∪= fields.toBVURLQueryItems()
     customConversationsParameters = customParams
     return self
   }
@@ -236,10 +221,8 @@ extension BVConversationsSubmission: BVSubmissionActionable {
         
         completion(.success(response, result))
         self.conversationsPostflight([result])
-        break
       case let .failure(errors):
         completion(.failure(errors))
-        break
       }
     }
     return self

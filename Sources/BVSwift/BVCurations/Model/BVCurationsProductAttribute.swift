@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The definition for the BVProductAttribute type
+/// The definition for the BVCurationsProductAttribute type
 /// - Note:
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
@@ -22,7 +22,7 @@ public struct BVCurationsProductAttribute: BVAuxiliaryable {
   }
 }
 
-/// The definition for the BVProductAttributeValue type
+/// The definition for the BVCurationsProductAttributeValue type
 /// - Note:
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).

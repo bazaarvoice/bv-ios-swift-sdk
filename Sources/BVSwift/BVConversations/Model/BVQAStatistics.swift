@@ -16,54 +16,38 @@ public struct BVQAStatistics: BVAuxiliaryable {
   public let answerNotHelpfulVoteCount: Int?
   public let bestAnswerCount: Int?
   public var contextDataDistribution: [BVDistributionElement]? {
-    get {
-      return contextDataDistributionArray?.array
-    }
+    return contextDataDistributionArray?.array
   }
-  private let contextDataDistributionArray:
-  BVCodableDictionary<BVDistributionElement>?
+  private let contextDataDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let featuredAnswerCount: Int?
   public let featuredQuestionCount: Int?
   public var firstAnswerTime: Date? {
-    get {
-      return firstAnswerTimeString?.toBVDate()
-    }
+    return firstAnswerTimeString?.toBVDate()
   }
   private let firstAnswerTimeString: String?
   public var firstQuestionTime: Date? {
-    get {
-      return firstQuestionTimeString?.toBVDate()
-    }
+    return firstQuestionTimeString?.toBVDate()
   }
   private let firstQuestionTimeString: String?
   public let helpfulVoteCount: Int?
   public var lastAnswerTime: Date? {
-    get {
-      return lastAnswerTimeString?.toBVDate()
-    }
+    return lastAnswerTimeString?.toBVDate()
   }
   private let lastAnswerTimeString: String?
   public var lastQuestionAnswerTime: Date? {
-    get {
-      return lastQuestionAnswerTimeString?.toBVDate()
-    }
+    return lastQuestionAnswerTimeString?.toBVDate()
   }
   private let lastQuestionAnswerTimeString: String?
   public var lastQuestionTime: Date? {
-    get {
-      return lastQuestionTimeString?.toBVDate()
-    }
+    return lastQuestionTimeString?.toBVDate()
   }
   private let lastQuestionTimeString: String?
   public let questionHelpfulVoteCount: Int?
   public let questionNotHelpfulVoteCount: Int?
   public var tagDistribution: [BVDistributionElement]? {
-    get {
-      return contextDataDistributionArray?.array
-    }
+    return tagDistributionArray?.array
   }
-  private let tagDistributionArray:
-  BVCodableDictionary<BVDistributionElement>?
+  private let tagDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let totalAnswerCount: Int?
   public let totalQuestionCount: Int?
   

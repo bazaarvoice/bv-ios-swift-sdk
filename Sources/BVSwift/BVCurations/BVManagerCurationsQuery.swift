@@ -12,11 +12,10 @@ import Foundation
 /// generate types which are likely generative of all of the query types.
 public protocol BVCurationsQueryGenerator {
   
-  /// Generator for BVAuthorQuery
+  /// Generator for BVCurationsFeedItemQuery
   /// - Parameters:
-  ///   - authorId: Author id to query against
-  func query(
-    _ displayTags: [String]?, limit: UInt16) -> BVCurationsFeedItemQuery?
+  ///   - limit: The max amout of results to return
+  func query(_ limit: UInt16) -> BVCurationsFeedItemQuery?
 }
 
 
@@ -28,14 +27,12 @@ public protocol BVCurationsQueryGenerator {
 /// integration with any future advamcements made in the configuration layer
 /// instead of having to manually configure each type.
 extension BVManager: BVCurationsQueryGenerator {
-  public func query(
-    _ displayTags: [String]? = nil,
-    limit: UInt16 = 10) -> BVCurationsFeedItemQuery? {
+  public func query(_ limit: UInt16 = 10) -> BVCurationsFeedItemQuery? {
     guard let config: BVCurationsConfiguration =
       BVManager.curationsConfiguration else {
         return nil
     }
-    return BVCurationsFeedItemQuery(displayTags, limit: limit)
+    return BVCurationsFeedItemQuery(limit)
       .configure(config)
   }
 }

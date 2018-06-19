@@ -10,7 +10,7 @@ import Foundation
 
 extension BVAnalyticsEvent {
   internal func serializeImpression(
-    _ nonPII: Bool = false) -> [String : BVAnyEncodable] {
+    _ nonPII: Bool = false) -> [String: BVAnyEncodable] {
     
     guard case .impression = self else {
       fatalError()

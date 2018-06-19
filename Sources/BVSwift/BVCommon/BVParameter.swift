@@ -17,7 +17,7 @@ internal protocol BVInternalCustomStringConvertible: CustomStringConvertible {
 }
 
 internal extension URLQueryItem {
-  internal init(_ bvParameter : BVParameter) {
+  internal init(_ bvParameter: BVParameter) {
     self.init(name: bvParameter.name, value: bvParameter.value)
   }
 }

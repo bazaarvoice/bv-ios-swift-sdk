@@ -10,7 +10,8 @@ import Foundation
 /// Public class for handling BVComment Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-display)
 public class BVCommentsQuery: BVConversationsQuery<BVComment> {
   
   /// The Product identifier to query
@@ -43,55 +44,52 @@ public class BVCommentsQuery: BVConversationsQuery<BVComment> {
     
     super.init(BVComment.self)
     
-    let productFilter:BVConversationsQueryParameter =
+    let productFilter: BVURLParameter =
       .filter(
         BVCommentFilter.productId(productId),
-        BVRelationalFilterOperator.equalTo,
+        BVConversationsfiltererator.equalTo,
         nil)
     
-    let reviewFilter:BVConversationsQueryParameter =
+    let reviewFilter: BVURLParameter =
       .filter(BVCommentFilter.reviewId(reviewId),
-              BVRelationalFilterOperator.equalTo,
+              BVConversationsfiltererator.equalTo,
               nil)
     
     add(productFilter)
     add(reviewFilter)
     
     if 0 < limit {
-      let limitField: BVLimitQueryField = BVLimitQueryField(limit)
-      add(.customField(limitField, nil))
+      let limitField: BVConversationsLimitQueryField = BVConversationsLimitQueryField(limit)
+      add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVOffsetQueryField = BVOffsetQueryField(offset)
-      add(.customField(offsetField, nil))
+      let offsetField: BVConversationsOffsetQueryField = BVConversationsOffsetQueryField(offset)
+      add(.field(offsetField, nil))
     }
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure:
-    (([BVComment]?) -> Swift.Void)? {
-    get {
-      return { (results: [BVComment]?) in
-        if let comments = results {
-          for comment in comments {
-            if let contentId: String = comment.commentId,
-              let productId: String = comment.reviewId {
-              let commentImpressionEvent: BVAnalyticsEvent =
-                .impression(
-                  bvProduct: .reviews,
-                  contentId: contentId,
-                  contentType: .comment,
-                  productId: productId,
-                  brand: nil,
-                  categoryId: nil,
-                  additional: nil)
-              
-              BVPixel.track(
-                commentImpressionEvent,
-                analyticConfiguration:
-                self.configuration?.analyticsConfiguration)
-            }
+  internal override var conversationsPostflightResultsClosure: (([BVComment]?) -> Swift.Void)? {
+    return { (results: [BVComment]?) in
+      if let comments = results {
+        for comment in comments {
+          if let contentId: String = comment.commentId,
+            let productId: String = comment.reviewId {
+            let commentImpressionEvent: BVAnalyticsEvent =
+              .impression(
+                bvProduct: .reviews,
+                contentId: contentId,
+                contentType: .comment,
+                productId: productId,
+                brand: nil,
+                categoryId: nil,
+                additional: nil)
+            
+            BVPixel.track(
+              commentImpressionEvent,
+              analyticConfiguration:
+              self.configuration?.analyticsConfiguration)
           }
         }
       }
@@ -99,31 +97,31 @@ public class BVCommentsQuery: BVConversationsQuery<BVComment> {
   }
 }
 
-// MARK: - BVCommentsQuery: BVConversationsQueryFilterable
-extension BVCommentsQuery: BVConversationsQueryFilterable {
+// MARK: - BVCommentsQuery: BVQueryFilterable
+extension BVCommentsQuery: BVQueryFilterable {
   public typealias Filter = BVCommentFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
   public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
-    let internalFilter:BVConversationsQueryParameter =
+    let internalFilter: BVURLParameter =
       .filter(filter, op, nil)
     add(internalFilter)
     return self
   }
 }
 
-// MARK: - BVCommentsQuery: BVConversationsQueryIncludeable
-extension BVCommentsQuery: BVConversationsQueryIncludeable {
+// MARK: - BVCommentsQuery: BVQueryIncludeable
+extension BVCommentsQuery: BVQueryIncludeable {
   public typealias Include = BVCommentInclude
   
   @discardableResult
   public func include(_ include: Include, limit: UInt16 = 0) -> Self {
-    let internalInclude:BVConversationsQueryParameter =
+    let internalInclude: BVURLParameter =
       .include(include, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
       add(internalIncludeLimit)
     }
@@ -131,14 +129,14 @@ extension BVCommentsQuery: BVConversationsQueryIncludeable {
   }
 }
 
-// MARK: - BVCommentsQuery: BVConversationsQuerySortable
-extension BVCommentsQuery: BVConversationsQuerySortable {
+// MARK: - BVCommentsQuery: BVQuerySortable
+extension BVCommentsQuery: BVQuerySortable {
   public typealias Sort = BVCommentSort
-  public typealias Order = BVMonotonicSortOrder
+  public typealias Order = BVConversationsSortOrder
   
   @discardableResult
   public func sort(_ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter =
+    let internalSort: BVURLParameter =
       .sort(sort, order, nil)
     add(internalSort)
     return self

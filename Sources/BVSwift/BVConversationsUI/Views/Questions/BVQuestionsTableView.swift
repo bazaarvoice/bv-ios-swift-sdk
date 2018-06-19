@@ -11,29 +11,25 @@ import UIKit
 @objc
 public class BVQuestionsTableView: BVConversationsTableView {
   
-  private var cellToProductMap: [String : BVQuestion] = [:]
+  private var cellToProductMap: [String: BVQuestion] = [:]
   public var productId: String = "none"
   
   internal override var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return .feature(
-        bvProduct: .question,
-        name: .scrolled,
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .feature(
+      bvProduct: .question,
+      name: .scrolled,
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
   
   internal override var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return .inView(
-        bvProduct: .question,
-        component: "QuestionsTableView",
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .inView(
+      bvProduct: .question,
+      component: "QuestionsTableView",
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
   
   // MARK: - UITableViewDataSource

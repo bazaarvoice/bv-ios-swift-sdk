@@ -10,7 +10,8 @@ import Foundation
 /// Public class for handling BVQuestion Search Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/questions/question-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/questions/question-display)
 public class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
   
   /// The Product identifier to query
@@ -44,57 +45,57 @@ public class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
     
     super.init(BVQuestion.self)
     
-    let productFilter:BVConversationsQueryParameter =
+    let productFilter: BVURLParameter =
       .filter(
         BVCommentFilter.productId(productId),
-        BVRelationalFilterOperator.equalTo,
+        BVConversationsfiltererator.equalTo,
         nil)
     
     add(productFilter)
     
-    let queryField: BVSearchQueryField = BVSearchQueryField(searchQuery)
-    let searchField: BVConversationsQueryParameter =
-      .customField(queryField, nil)
+    let queryField: BVConversationsSearchQueryField = BVConversationsSearchQueryField(searchQuery)
+    let searchField: BVURLParameter =
+      .field(queryField, nil)
     
     add(searchField)
     
     if 0 < limit {
-      let limitField: BVLimitQueryField = BVLimitQueryField(limit)
-      add(.customField(limitField, nil))
+      let limitField: BVConversationsLimitQueryField = BVConversationsLimitQueryField(limit)
+      add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVOffsetQueryField = BVOffsetQueryField(offset)
-      add(.customField(offsetField, nil))
+      let offsetField: BVConversationsOffsetQueryField = BVConversationsOffsetQueryField(offset)
+      add(.field(offsetField, nil))
     }
   }
 }
 
-// MARK: - BVQuestionSearchQuery: BVConversationsQueryFilterable
-extension BVQuestionSearchQuery: BVConversationsQueryFilterable {
+// MARK: - BVQuestionSearchQuery: BVQueryFilterable
+extension BVQuestionSearchQuery: BVQueryFilterable {
   public typealias Filter = BVQuestionFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
   public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
-    let internalFilter:BVConversationsQueryParameter =
+    let internalFilter: BVURLParameter =
       .filter(filter, op, nil)
     add(internalFilter)
     return self
   }
 }
 
-// MARK: - BVQuestionSearchQuery: BVConversationsQueryIncludeable
-extension BVQuestionSearchQuery: BVConversationsQueryIncludeable {
+// MARK: - BVQuestionSearchQuery: BVQueryIncludeable
+extension BVQuestionSearchQuery: BVQueryIncludeable {
   public typealias Include = BVQuestionInclude
   
   @discardableResult
   public func include(_ include: Include, limit: UInt16 = 10) -> Self {
-    let internalInclude:BVConversationsQueryParameter =
+    let internalInclude: BVURLParameter =
       .include(include, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
       add(internalIncludeLimit)
     }

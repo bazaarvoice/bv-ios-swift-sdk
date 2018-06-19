@@ -31,21 +31,15 @@ UITableView, UITableViewDataSource, UITableViewDelegate {
   }
   
   internal var dataSourceReceiver: UITableViewDataSource? {
-    get {
-      return dataSource
-    }
+    return dataSource
   }
   
   internal var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return nil
-    }
+    return nil
   }
   
   internal var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return nil
-    }
+    return nil
   }
   
   public final override var dataSource: UITableViewDataSource? {

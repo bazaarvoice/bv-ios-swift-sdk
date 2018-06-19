@@ -59,14 +59,12 @@ public class BVPixel {
     case .conversion:
       BVAnalyticsManager.sharedManager
         .enqueue(analyticsEvent: analyticsEvent, configuration: config)
-      break
     case .pageView:
       fallthrough
     case .personalization:
       BVAnalyticsManager.sharedManager
         .enqueue(analyticsEvent: analyticsEvent, configuration: config)
       BVAnalyticsManager.sharedManager.flush()
-      break
     case .transaction where analyticsEvent.hasPII:
       BVAnalyticsManager.sharedManager
         .enqueue(
@@ -77,7 +75,6 @@ public class BVPixel {
     case .transaction:
       BVAnalyticsManager.sharedManager
         .enqueue(analyticsEvent: analyticsEvent, configuration: config)
-      break
     default:
       BVAnalyticsManager.sharedManager
         .enqueue(analyticsEvent: analyticsEvent, configuration: config)

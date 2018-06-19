@@ -11,7 +11,8 @@ import Foundation
 /// Public class for handling BVProductStatistics Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/statistics/statistics-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/statistics/statistics-display)
 public class
 BVProductStatisticsQuery: BVConversationsQuery<BVProductStatistics> {
   
@@ -27,10 +28,10 @@ BVProductStatisticsQuery: BVConversationsQuery<BVProductStatistics> {
     super.init(BVProductStatistics.self)
     
     for id in productIds {
-      let productIdFilter: BVConversationsQueryParameter =
+      let productIdFilter: BVURLParameter =
         .filter(
           BVProductStatisticsFilter.productId(id),
-          BVRelationalFilterOperator.equalTo,
+          BVConversationsfiltererator.equalTo,
           nil)
       
       add(productIdFilter)
@@ -38,27 +39,27 @@ BVProductStatisticsQuery: BVConversationsQuery<BVProductStatistics> {
   }
 }
 
-// MARK: - BVProductStatisticsQuery: BVConversationsQueryFilterable
-extension BVProductStatisticsQuery: BVConversationsQueryFilterable {
+// MARK: - BVProductStatisticsQuery: BVQueryFilterable
+extension BVProductStatisticsQuery: BVQueryFilterable {
   public typealias Filter = BVProductStatisticsFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
   public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
-    let internalFilter: BVConversationsQueryParameter =
+    let internalFilter: BVURLParameter =
       .filter(filter, op, nil)
     add(internalFilter)
     return self
   }
 }
 
-// MARK: - BVProductStatisticsQuery: BVConversationsQueryStatable
-extension BVProductStatisticsQuery: BVConversationsQueryStatable {
+// MARK: - BVProductStatisticsQuery: BVQueryStatable
+extension BVProductStatisticsQuery: BVQueryStatable {
   public typealias Stat = BVProductStatisticsStat
   
   @discardableResult
   public func stats(_ for: Stat) -> Self {
-    let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
+    let internalStat: BVURLParameter = .stats(`for`, nil)
     add(internalStat, coalesce: true)
     return self
   }

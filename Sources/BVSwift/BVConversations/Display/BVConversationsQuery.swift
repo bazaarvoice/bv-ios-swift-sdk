@@ -17,32 +17,23 @@ import Foundation
 /// something that you want to see being made public :)
 public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var ignoreCompletion: Bool = false
-  private var paramsPriv: [BVConversationsQueryParameter]
   private var conversationsConfiguration: BVConversationsConfiguration?
   
-  internal override init<BVTypeInternal : BVQueryableInternal>(
+  internal override init<BVTypeInternal: BVQueryableInternal>(
     _ type: BVTypeInternal.Type) {
-    
-    paramsPriv =
-      BVConversationsConstants.BVQueryable.defaultParameters
-        .map { .custom($0.0, $0.1, nil) }
-    
     super.init(type)
+    
+    defaultSDKParameters.forEach { add(.unsafe($0.0, $0.1, nil)) }
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    get {
-      return {
-        return self.queryItems
-      }
+    return {
+      return self.queryItems
     }
   }
   
-  internal var conversationsPostflightResultsClosure:
-    (([ConversationsPostflightResult]?) -> Swift.Void)? {
-    get {
-      return nil
-    }
+  internal var conversationsPostflightResultsClosure: (([ConversationsPostflightResult]?) -> Swift.Void)? {
+    return nil
   }
 }
 
@@ -96,20 +87,19 @@ extension BVConversationsQuery: BVQueryActionable {
                 return
         }
         
-        if let errors:[Error] = response.errors,
+        if let errors: [Error] = response.errors,
           !errors.isEmpty {
           completion(.failure(errors))
           return
         }
         
-        if let hasErrors:Bool = response.hasErrors {
+        if let hasErrors: Bool = response.hasErrors {
           assert(!hasErrors, "Weird, we have an error flag set but no errors?")
         }
         
         completion(.success(response, response.results ?? []))
         self.conversationsPostflight(response.results)
         
-        break
       case let .failure(errors):
         completion(.failure(errors))
       }
@@ -134,11 +124,11 @@ extension BVConversationsQuery: BVConfigurable {
     /// other. We may want to revisit this if this becomes a pain
     /// point
     update(
-      .custom(
+      .unsafe(
         BVConversationsConstants.parameterKey,
         config.configurationKey, nil))
     update(
-      .custom(
+      .unsafe(
         BVConversationsConstants.clientKey,
         config.type.clientId, nil))
     
@@ -149,13 +139,13 @@ extension BVConversationsQuery: BVConfigurable {
   }
 }
 
-//// Conformance with BVConversationsQueryCustomizable. Please see protocol
+//// Conformance with BVQueryUnsafeField. Please see protocol
 /// definition for more information.
-extension BVConversationsQuery: BVConversationsQueryCustomizable {
+extension BVConversationsQuery: BVQueryUnsafeField {
   @discardableResult
-  final public func custom(
+  final public func unsafeField(
     _ field: CustomStringConvertible, value: CustomStringConvertible) -> Self {
-    let custom:BVConversationsQueryParameter = .custom(field, value, nil)
+    let custom: BVURLParameter = .unsafe(field, value, nil)
     add(custom)
     return self
   }
@@ -173,53 +163,6 @@ extension BVConversationsQuery: BVConversationsQueryPostflightable {
 // MARK: - BVConversationsQuery: BVConfigurableInternal
 extension BVConversationsQuery: BVConfigurableInternal {
   var configuration: BVConversationsConfiguration? {
-    get {
-      return conversationsConfiguration
-    }
-  }
-}
-
-// MARK: - BVConversationsQuery: BVURLParameterableInternal
-extension BVConversationsQuery: BVURLParameterableInternal {
-  
-  final internal var parameters: [BVConversationsQueryParameter] {
-    get {
-      return paramsPriv
-    }
-  }
-  
-  final internal func add(
-    _ parameter: BVConversationsQueryParameter, coalesce: Bool = false) {
-    
-    guard coalesce else {
-      if 0 == paramsPriv.filter({ $0 === parameter }).count {
-        paramsPriv.append(parameter)
-      }
-      return
-    }
-    
-    var coalesceList:[BVConversationsQueryParameter] = []
-    var otherList:[BVConversationsQueryParameter] = []
-    paramsPriv.forEach { (param: BVConversationsQueryParameter) in
-      if param %% parameter {
-        coalesceList.append(param)
-      } else {
-        otherList.append(param)
-      }
-    }
-    
-    let coalesce:BVConversationsQueryParameter =
-      coalesceList.reduce(parameter, +)
-    otherList.append(coalesce)
-    
-    paramsPriv = otherList
-  }
-  
-  final internal func update(_ parameter: BVConversationsQueryParameter) {
-    var paramsTemp:[BVConversationsQueryParameter] =
-      paramsPriv.filter { $0 != parameter }
-    paramsTemp.append(parameter)
-    
-    paramsPriv = paramsTemp
+    return conversationsConfiguration
   }
 }

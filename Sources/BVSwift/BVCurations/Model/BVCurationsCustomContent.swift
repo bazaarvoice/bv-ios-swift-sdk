@@ -8,20 +8,21 @@
 
 import Foundation
 
+/// The definition for the BVCurationsCustomContent type
+/// - Note:
+/// \
+/// It conforms to BVSubmissionable and, therefore, it is used only for
+/// BVSubmission.
 internal struct BVCurationsCustomContent: BVSubmissionable {
   public static var singularKey: String {
-    get {
-      return BVCurationsConstants.BVCurationsCustomContent.singularKey
-    }
+    return BVCurationsConstants.BVCurationsCustomContent.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVCurationsConstants.BVCurationsCustomContent.pluralKey
-    }
+    return BVCurationsConstants.BVCurationsCustomContent.pluralKey
   }
   
-  private var encodableDictionary: [String : Encodable]?
+  private var encodableDictionary: [String: Encodable]?
   public let author: BVCurationsAuthorSubmission?
   public let photos: [BVCurationsPhotoSubmission]?
   public let text: String?
@@ -39,19 +40,17 @@ internal struct BVCurationsCustomContent: BVSubmissionable {
     case custom(String)
     
     var stringValue: String {
-      get {
-        switch self {
-        case .author:
-          return "author"
-        case .photos:
-          return "photos"
-        case .text:
-          return "text"
-        case .videos:
-          return "videos"
-        case let .custom(value):
-          return value
-        }
+      switch self {
+      case .author:
+        return "author"
+      case .photos:
+        return "photos"
+      case .text:
+        return "text"
+      case .videos:
+        return "videos"
+      case let .custom(value):
+        return value
       }
     }
     
@@ -130,12 +129,10 @@ internal struct BVCurationsCustomContent: BVSubmissionable {
 
 extension BVCurationsCustomContent: BVSubmissionableInternal {
   static var postResource: String? {
-    get {
-      return BVCurationsConstants.BVCurationsCustomContent.postResource
-    }
+    return BVCurationsConstants.BVCurationsCustomContent.postResource
   }
   
-  internal mutating func update(_ values: [String : Encodable]?) {
+  internal mutating func update(_ values: [String: Encodable]?) {
     encodableDictionary = values
   }
 }

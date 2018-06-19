@@ -8,30 +8,28 @@
 
 import Foundation
 
+/// The definition for the BVCurationsFeedItem type
+/// - Note:
+/// \
+/// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
 public struct BVCurationsFeedItem: BVQueryable {
   
   public static var singularKey: String {
-    get {
-      return BVCurationsConstants.BVCurationsFeedItem.singularKey
-    }
+    return BVCurationsConstants.BVCurationsFeedItem.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVCurationsConstants.BVCurationsFeedItem.pluralKey
-    }
+    return BVCurationsConstants.BVCurationsFeedItem.pluralKey
   }
   
-  public private(set) var referencedProducts: [BVCurationsProduct]? = nil
+  public private(set) var referencedProducts: [BVCurationsProduct]?
   
   public let author: BVCurationsAuthor?
   public let channel: String?
   public let classification: String?
   public let coordinates: BVCurationsCoordinates?
   public var contentId: BVIdentifier? {
-    get {
-      return identifier
-    }
+    return identifier
   }
   public let explicitPermissionStatus: String?
   public let externalId: BVIdentifier?
@@ -86,13 +84,11 @@ public struct BVCurationsFeedItem: BVQueryable {
 
 extension BVCurationsFeedItem: BVQueryableInternal {
   internal static var getResource: String? {
-    get {
-      return BVCurationsConstants.BVCurationsFeedItem.getResource
-    }
+    return BVCurationsConstants.BVCurationsFeedItem.getResource
   }
 }
 
-extension BVCurationsFeedItem: BVCurationsProductUpdatable {
+extension BVCurationsFeedItem: BVCurationsQueryProductUpdatable {
   internal mutating
   func update(_ product: [BVCurationsProduct]) {
     
@@ -112,4 +108,3 @@ extension BVCurationsFeedItem: BVCurationsProductUpdatable {
     }
   }
 }
-

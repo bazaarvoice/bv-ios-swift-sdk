@@ -8,22 +8,23 @@
 
 import Foundation
 
+/// The definition for the BVCurationsProduct type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVCurationsProduct: BVAuxiliaryable {
   
   public var attributes: [BVCurationsProductAttribute]? {
-    get {
-      return attributesDictionary?.array
-    }
+    return attributesDictionary?.array
   }
-  private let attributesDictionary:
-  BVCodableDictionary<BVCurationsProductAttribute>?
+  private let attributesDictionary: BVCodableDictionary<BVCurationsProductAttribute>?
   public let brand: BVBrand?
   public let brandExternalId: String?
   public let categoryId: String?
   public let eans: [String]?
   public let familyIds: [String]?
-  public let filteredQAStatistics: BVReviewStatistics?
-  public let filteredReviewStatistics: BVReviewStatistics?
+  public let filteredQAStatistics: BVCurationsQAStatistics?
+  public let filteredReviewStatistics: BVCurationsReviewStatistics?
   public let imageUrl: BVCodableSafe<URL>?
   public let isbns: [String]?
   public let manufacturerPartNumbers: [String]?
@@ -32,8 +33,8 @@ public struct BVCurationsProduct: BVAuxiliaryable {
   public let productDescription: String?
   public let productId: String?
   public let productPageUrl: BVCodableSafe<URL>?
-  public let qaStatistics: BVQAStatistics?
-  public let reviewStatistics: BVReviewStatistics?
+  public let qaStatistics: BVCurationsQAStatistics?
+  public let reviewStatistics: BVCurationsReviewStatistics?
   public let upcs: [String]?
   
   private enum CodingKeys: String, CodingKey {

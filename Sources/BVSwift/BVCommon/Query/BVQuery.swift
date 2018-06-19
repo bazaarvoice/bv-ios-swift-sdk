@@ -21,48 +21,112 @@ import Foundation
 /// with relative ease.
 public class BVQuery<BVType: BVQueryable> {
   private var box: BVInternalQuery<BVType>
+  private var paramsPriv: [BVURLParameter] = []
   
-  internal init<BVTypeInternal : BVQueryableInternal>(
+  internal init<BVTypeInternal: BVQueryableInternal>(
     _ type: BVTypeInternal.Type) {
     box = BVInternalQuery<BVType>(type)
     box.queryItemable = self
   }
   
   internal var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    get {
-      #if DEBUG
-      BVLogger.sharedLogger.error("This needs to be overriden.")
-      #endif
-      return nil
-    }
+    #if DEBUG
+    BVLogger.sharedLogger.error("This needs to be overriden.")
+    #endif
+    return nil
   }
   
   internal var postflightClosure: BVURLRequestableHandler? {
-    get {
-      return nil
-    }
+    return nil
   }
 }
 
 // MARK: - BVQuery: BVURLRequestable
-extension BVQuery : BVURLRequestable {
+extension BVQuery: BVURLRequestable {
   
   public var request: URLRequest? {
-    get {
-      return box.request
-    }
+    return box.request
+  }
+  
+  public func cached(_ request: URLRequest) -> CachedURLResponse? {
+    return box.cached(request)
   }
   
   public func preflight(_ completion: BVCompletionWithErrorsHandler?) -> Bool {
     return box.preflight(completion)
   }
   
-  public func process(data: Data?, urlResponse: URLResponse?, error: Error?) {
-    box.process(data: data, urlResponse: urlResponse, error: error)
+  public func process(
+    request: URLRequest?,
+    data: Data?,
+    urlResponse: URLResponse?,
+    error: Error?) {
+    box.process(
+      request: request, data: data, urlResponse: urlResponse, error: error)
   }
   
-  public func process(url: URL?, urlResponse: URLResponse?, error: Error?) {
-    box.process(url: url, urlResponse: urlResponse, error: error)
+  public func process(
+    request: URLRequest?,
+    url: URL?,
+    urlResponse: URLResponse?,
+    error: Error?) {
+    box.process(
+      request: request, url: url, urlResponse: urlResponse, error: error)
+  }
+}
+
+// MARK: - BVQuery: BVURLRequestableCacheable
+extension BVQuery: BVURLRequestableCacheable {
+  var usesURLCache: Bool {
+    get {
+      return box.usesURLCache
+    }
+    set(newValue) {
+      box.usesURLCache = newValue
+    }
+  }
+}
+
+// MARK: - BVQuery: BVURLParameterableInternal
+extension BVQuery: BVURLParameterableInternal {
+  
+  final internal var parameters: [BVURLParameter] {
+    return paramsPriv
+  }
+  
+  final internal func add(
+    _ parameter: BVURLParameter, coalesce: Bool = false) {
+    
+    guard coalesce else {
+      if 0 == paramsPriv.filter({ $0 === parameter }).count {
+        paramsPriv.append(parameter)
+      }
+      return
+    }
+    
+    var coalesceList: [BVURLParameter] = []
+    var otherList: [BVURLParameter] = []
+    paramsPriv.forEach { (param: BVURLParameter) in
+      if param %% parameter {
+        coalesceList.append(param)
+      } else {
+        otherList.append(param)
+      }
+    }
+    
+    let coalesce: BVURLParameter =
+      coalesceList.reduce(parameter, +~)
+    otherList.append(coalesce)
+    
+    paramsPriv = otherList
+  }
+  
+  final internal func update(_ parameter: BVURLParameter) {
+    var paramsTemp: [BVURLParameter] =
+      paramsPriv.filter { $0 != parameter }
+    paramsTemp.append(parameter)
+    
+    paramsPriv = paramsTemp
   }
 }
 
@@ -97,15 +161,6 @@ extension BVQuery: BVQueryActionableInternal {
   }
 }
 
-// MARK: - BVQuery: BVInternalQueryDelegate
-extension BVQuery: BVInternalQueryDelegate {
-  internal var urlQueryItems: [URLQueryItem]? {
-    get {
-      return urlQueryItemsClosure?()
-    }
-  }
-}
-
 // MARK: - BVQuery: BVConfigureExistentially
 extension BVQuery: BVConfigureExistentially {
   @discardableResult
@@ -118,9 +173,7 @@ extension BVQuery: BVConfigureExistentially {
 // MARK: - BVQuery: BVConfigureRaw
 extension BVQuery: BVConfigureRaw {
   var rawConfiguration: BVRawConfiguration? {
-    get {
-      return box.rawConfiguration
-    }
+    return box.rawConfiguration
   }
   
   @discardableResult
@@ -134,5 +187,12 @@ extension BVQuery: BVConfigureRaw {
 extension BVQuery: BVQueryPostflightable {
   internal func postflight(_ response: BVURLRequestableResponseInternal) {
     postflightClosure?(response)
+  }
+}
+
+// MARK: - BVQuery: BVInternalQueryDelegate
+extension BVQuery: BVInternalQueryDelegate {
+  internal var urlQueryItems: [URLQueryItem]? {
+    return urlQueryItemsClosure?()
   }
 }

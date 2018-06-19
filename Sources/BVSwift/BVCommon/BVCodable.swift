@@ -71,13 +71,11 @@ public enum BVIdentifier: Codable {
 
 extension BVIdentifier: CustomStringConvertible {
   public var description: String {
-    get {
-      switch self {
-      case let .int(value):
-        return "\(value)"
-      case let .string(value):
-        return value
-      }
+    switch self {
+    case let .int(value):
+      return "\(value)"
+    case let .string(value):
+      return value
     }
   }
 }
@@ -123,12 +121,10 @@ internal protocol BVMergeable: Codable {
 
 /// Type erasure because Encoders and Decoders need concrete types defined when
 /// inside various container types.
-internal struct BVAnyCodable<T : Codable>: Codable {
+internal struct BVAnyCodable<T: Codable>: Codable {
   private var box: T?
   var value: T? {
-    get {
-      return box
-    }
+    return box
   }
   
   init(_ codable: T) {
@@ -147,12 +143,19 @@ internal struct BVAnyCodable<T : Codable>: Codable {
   }
 }
 
+internal struct BVNil: Encodable {
+  init() { }
+  
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encodeNil()
+  }
+}
+
 internal struct BVAnyEncodable: Encodable {
   private var box: Encodable?
   var value: Encodable? {
-    get {
-      return box
-    }
+    return box
   }
   
   init(_ encodable: Encodable) {
@@ -167,12 +170,10 @@ internal struct BVAnyEncodable: Encodable {
   }
 }
 
-internal struct BVAnyDecodable<T : Decodable>: Decodable {
+internal struct BVAnyDecodable<T: Decodable>: Decodable {
   private var box: Decodable?
   var value: Decodable? {
-    get {
-      return box
-    }
+    return box
   }
   
   public init(from decoder: Decoder) throws {
@@ -195,13 +196,13 @@ internal struct BVCodingKey: CodingKey {
 
 /// So far this only does decoding
 internal struct BVCodableDictionary<T: Codable>: Codable {
-  let array:[T]?
-  let dictionary: [String : T]?
+  let array: [T]?
+  let dictionary: [String: T]?
   
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: BVCodingKey.self)
     
-    var foundDict: [String : T] = [:]
+    var foundDict: [String: T] = [:]
     var foundArray: [T] = []
     for key in container.allKeys {
       let object: T = try container.decode(T.self, forKey: key)
@@ -215,7 +216,7 @@ internal struct BVCodableDictionary<T: Codable>: Codable {
 
 /// So far this only does decoding
 internal struct BVCodableRawDecoder: Codable {
-  let decoder:Decoder?
+  let decoder: Decoder?
   
   public init(from decoder: Decoder) throws {
     self.decoder = decoder
@@ -228,14 +229,14 @@ internal struct BVCodableRawDecoder: Codable {
 
 /// So far this only does decoding
 internal struct BVCodableWrapper<T: Codable>: Codable {
-  let unwrapped:T?
+  let unwrapped: T?
   
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: BVCodingKey.self)
     
     var found: T? = nil
     if let key = container.allKeys.first {
-      let object:T = try container.decode(T.self, forKey: key)
+      let object: T = try container.decode(T.self, forKey: key)
       found = object
     }
     unwrapped = found

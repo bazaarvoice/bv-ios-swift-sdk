@@ -61,9 +61,11 @@ internal struct BVCurationsConstants {
       static let hasVideo: String = "has_video"
       static let includeComments: String = "include_comments"
       static let includeProductData: String = "withProductData"
+      static let langauge: String = "languages"
       static let limit: String = "limit"
       static let media: String = "media"
       static let productId: String = "productId"
+      static let rating: String = "rating"
       static let tag: String = "tags"
     }
   }

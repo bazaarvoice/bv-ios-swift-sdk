@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVCurationsAuthor type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVCurationsAuthor: BVAuxiliaryable {
   
   public let alias: String?
