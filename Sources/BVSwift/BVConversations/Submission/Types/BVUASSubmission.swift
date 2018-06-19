@@ -11,17 +11,16 @@ import Foundation
 /// Public class for handling BVQuestion Submissions
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/tutorials/submission/authentication)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/tutorials/submission/authentication)
 public class BVUASSubmission: BVConversationsSubmission<BVUAS> {
   
   /// The BVAuth Token to submit against
   public var bvAuthToken: String? {
-    get {
-      guard let uas = submissionable else {
-        return nil
-      }
-      return uas.bvAuthToken
+    guard let uas = submissionable else {
+      return nil
     }
+    return uas.bvAuthToken
   }
   
   /// The initializer for BVUASSubmission
@@ -41,7 +40,7 @@ public class BVUASSubmission: BVConversationsSubmission<BVUAS> {
     super.init(uas)
     
     conversationsParameters ∪= [
-      URLQueryItem(name: "authtoken", value: bvAuthToken),
+      URLQueryItem(name: "authtoken", value: bvAuthToken)
     ]
   }
 }

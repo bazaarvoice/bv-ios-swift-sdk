@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVCurationsVideo type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVCurationsVideo: BVAuxiliaryable {
   
   public let code: String?

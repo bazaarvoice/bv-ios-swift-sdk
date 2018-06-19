@@ -11,27 +11,24 @@ import Foundation
 /// Public class for handling BVAnswer Submissions
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/answers/answer-submission)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/answers/answer-submission)
 public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
   
   /// The Question identifier to submit against
   public var questionId: String? {
-    get {
-      guard let answer = submissionable else {
-        return nil
-      }
-      return answer.questionId
+    guard let answer = submissionable else {
+      return nil
     }
+    return answer.questionId
   }
   
   /// The Answer Text to submit against
   public var answerText: String? {
-    get {
-      guard let answer = submissionable else {
-        return nil
-      }
-      return answer.answerText
+    guard let answer = submissionable else {
+      return nil
     }
+    return answer.answerText
   }
   
   /// The initializer for BVAnswerSubmission
@@ -61,7 +58,7 @@ public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
   
   /// Internal
   override func conversationsPostflightDidSubmit(_ results: [BVAnswer]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.questionId else {
         return
     }
@@ -80,7 +77,7 @@ public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
   
   override func conversationsPostflightDidSubmitPhotoUpload(
     _ results: [BVAnswer]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.questionId else {
         return
     }
@@ -91,7 +88,7 @@ public class BVAnswerSubmission: BVMediaSubmission<BVAnswer> {
         name: .photo,
         productId: id,
         brand: nil,
-        additional: ["detail1" : "Answer"])
+        additional: ["detail1": "Answer"])
     BVPixel.track(
       analyticsEvent,
       analyticConfiguration: self.configuration?.analyticsConfiguration)

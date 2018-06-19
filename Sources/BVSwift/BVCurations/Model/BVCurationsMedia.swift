@@ -19,8 +19,8 @@ internal struct BVCurationsMedia: BVAuxiliaryable {
   public let width: UInt16?
   
   private enum CodingKeys: String, CodingKey {
-    case height = "height"
-    case width = "width"
+    case height
+    case width
   }
   
   public init(
@@ -63,10 +63,10 @@ internal struct BVCurationsMedia: BVAuxiliaryable {
 }
 
 public enum BVCurationsMediaType: String, BVAuxiliaryable {
-  case icon = "icon"
-  case photo = "photo"
-  case video = "video"
-  case unknown = "unknown"
+  case icon
+  case photo
+  case video
+  case unknown
   
   internal init(_ stringValue: String) {
     switch stringValue {

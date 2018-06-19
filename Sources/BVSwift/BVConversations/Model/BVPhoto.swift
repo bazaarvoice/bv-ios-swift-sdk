@@ -19,15 +19,11 @@ public struct BVPhoto: BVSubmissionable {
   private static var MaxImageBytes: UInt =  (5 * 1024 * 1024)
   
   public static var singularKey: String {
-    get {
-      return "Photo"
-    }
+    return "Photo"
   }
   
   public static var pluralKey: String {
-    get {
-      return "Photos"
-    }
+    return "Photos"
   }
   
   public let caption: String?
@@ -35,9 +31,7 @@ public struct BVPhoto: BVSubmissionable {
   public let image: UIImage?
   public let photoId: String?
   public var photoSizes: [BVPhotoSize]? {
-    get {
-      return photoSizesArray?.array
-    }
+    return photoSizesArray?.array
   }
   private let photoSizesArray: BVCodableDictionary<BVPhotoSize>?
   
@@ -185,10 +179,8 @@ extension BVPhoto: BVMergeable {
 extension BVPhoto: BVSubmissionableInternal {
   
   internal static var postResource: String? {
-    get {
-      return "uploadphoto.json"
-    }
+    return "uploadphoto.json"
   }
   
-  internal func update(_ values: [String : Encodable]?) { }
+  internal func update(_ values: [String: Encodable]?) { }
 }

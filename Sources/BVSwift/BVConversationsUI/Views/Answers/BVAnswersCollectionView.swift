@@ -11,28 +11,24 @@ import UIKit
 @objc
 public class BVAnswersCollectionView: BVConversationsCollectionView {
   
-  private var cellToProductMap: [String : BVAnswer] = [:]
+  private var cellToProductMap: [String: BVAnswer] = [:]
   
   internal override var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return .feature(
-        bvProduct: .question,
-        name: .scrolled,
-        productId: "none",
-        brand: nil,
-        additional: nil)
-    }
+    return .feature(
+      bvProduct: .question,
+      name: .scrolled,
+      productId: "none",
+      brand: nil,
+      additional: nil)
   }
   
   internal override var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return .inView(
-        bvProduct: .question,
-        component: "AnswersCollectionView",
-        productId: "none",
-        brand: nil,
-        additional: nil)
-    }
+    return .inView(
+      bvProduct: .question,
+      component: "AnswersCollectionView",
+      productId: "none",
+      brand: nil,
+      additional: nil)
   }
   
   // MARK: - UICollectionViewDataSource

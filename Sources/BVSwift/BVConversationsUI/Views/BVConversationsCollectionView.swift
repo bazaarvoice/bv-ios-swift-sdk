@@ -31,21 +31,15 @@ UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
   }
   
   internal var dataSourceReceiver: UICollectionViewDataSource? {
-    get {
-      return dataSource
-    }
+    return dataSource
   }
   
   internal var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return nil
-    }
+    return nil
   }
   
   internal var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return nil
-    }
+    return nil
   }
   
   public final override var dataSource: UICollectionViewDataSource? {

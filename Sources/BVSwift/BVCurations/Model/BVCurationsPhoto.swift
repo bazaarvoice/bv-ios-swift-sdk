@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVCurationsPhoto type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVCurationsPhoto: BVAuxiliaryable {
   
   public let displayURL: BVCodableSafe<URL>?

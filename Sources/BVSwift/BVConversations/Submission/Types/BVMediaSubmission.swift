@@ -11,25 +11,24 @@ import Foundation
 /// Public utility class for handling Submissions with attached media
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/media)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/media)
 public class
 BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
   
   /// Private
   private var contentType: BVPhoto.ContentType? {
-    get {
-      switch BVType.self {
-      case is BVAnswer.Type:
-        return .answer
-      case is BVComment.Type:
-        return .comment
-      case is BVQuestion.Type:
-        return .question
-      case is BVReview.Type:
-        return .review
-      default:
-        return nil
-      }
+    switch BVType.self {
+    case is BVAnswer.Type:
+      return .answer
+    case is BVComment.Type:
+      return .comment
+    case is BVQuestion.Type:
+      return .question
+    case is BVReview.Type:
+      return .review
+    default:
+      return nil
     }
   }
   
@@ -52,13 +51,10 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
   }
   
   /// Internal
-  final internal override var conversationsPostflightResultsClosure:
-    (([BVType]?) -> Swift.Void)? {
-    get {
-      return { (results: [BVType]?) in
-        self.conversationsPostflightDidSubmitPhotoUpload(results)
-        self.conversationsPostflightDidSubmit(results)
-      }
+  final internal override var conversationsPostflightResultsClosure: (([BVType]?) -> Swift.Void)? {
+    return { (results: [BVType]?) in
+      self.conversationsPostflightDidSubmitPhotoUpload(results)
+      self.conversationsPostflightDidSubmit(results)
     }
   }
   
@@ -100,18 +96,15 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
       let contentTypePhoto: BVPhoto = BVPhoto(contentType: type)
       let actualPhotos: [BVPhoto] =
         value.compactMap {
-          guard let _ = $0.image else {
+          guard nil != $0.image else {
             return nil
           }
           return contentTypePhoto.merge($0)
       }
       
       photos += actualPhotos
-      
-      break
     case let .videos(value):
       videos += value
-      break
     }
     
     return self
@@ -227,4 +220,3 @@ extension BVMediaSubmission {
       }
   }
 }
-

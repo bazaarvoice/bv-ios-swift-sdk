@@ -34,35 +34,22 @@ BVConversationsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
   
   /// Success state of the query, a.k.a, no errors.
   public var success: Bool {
-    get {
-      guard case .success = self else {
-        return false
-      }
-      return true
+    guard case .success = self else {
+      return false
     }
+    return true
   }
   
   /// Failure case returned errors.
   public var errors: [Error]? {
-    get {
-      guard case let .failure(errors) = self else {
-        return nil
-      }
-      return errors
+    guard case let .failure(errors) = self else {
+      return nil
     }
+    return errors
   }
   
   case success(MetaType, ResponseType)
   case failure([Error])
-}
-
-internal protocol BVConversationsIncludable {
-  var answers: [BVAnswer]? { get }
-  var authors: [BVAuthor]? { get }
-  var comments: [BVComment]? { get }
-  var products: [BVProduct]? { get }
-  var questions: [BVQuestion]? { get }
-  var reviews: [BVReview]? { get }
 }
 
 internal struct BVIncludes: BVConversationsIncludable {
@@ -146,9 +133,9 @@ internal struct BVConversationsQueryResponseInternal
   /// The use of singular and plural keys may be overkill but we're just
   /// protecting against that possibility of having only one singular object as
   /// part of the includes.
-  private static func extractInclude<T : BVQueryable, Key>(
+  private static func extractInclude<T: BVQueryable, Key>(
     container: KeyedDecodingContainer<Key>,
-    lookup: [String : T],
+    lookup: [String: T],
     plural: Key,
     singular: Key) throws -> [T] {
     
@@ -239,7 +226,7 @@ internal struct BVConversationsQueryResponseInternal
       /// although, I will not apologize for: `type(of: self)`
       
       /// BVAnswerIncludable
-      if let answers: [String : BVAnswer] =
+      if let answers: [String: BVAnswer] =
         resultIncludes.answers?.dictionary {
         internalIncludes.answers = try
           type(of: self).extractInclude(
@@ -250,7 +237,7 @@ internal struct BVConversationsQueryResponseInternal
       }
       
       /// BVAuthorIncludableInternal
-      if let authors: [String : BVAuthor] =
+      if let authors: [String: BVAuthor] =
         resultIncludes.authors?.dictionary {
         internalIncludes.authors = try
           type(of: self).extractInclude(
@@ -261,7 +248,7 @@ internal struct BVConversationsQueryResponseInternal
       }
       
       /// BVCommentIncludableInternal
-      if let comments: [String : BVComment] =
+      if let comments: [String: BVComment] =
         resultIncludes.comments?.dictionary {
         internalIncludes.comments = try
           type(of: self).extractInclude(
@@ -272,7 +259,7 @@ internal struct BVConversationsQueryResponseInternal
       }
       
       /// BVProductIncludableInternal
-      if let products: [String : BVProduct] =
+      if let products: [String: BVProduct] =
         resultIncludes.products?.dictionary {
         internalIncludes.products = try
           type(of: self).extractInclude(
@@ -283,7 +270,7 @@ internal struct BVConversationsQueryResponseInternal
       }
       
       /// BVQuestionIncludableInternal
-      if let questions: [String : BVQuestion] =
+      if let questions: [String: BVQuestion] =
         resultIncludes.questions?.dictionary {
         internalIncludes.questions = try
           type(of: self).extractInclude(
@@ -294,7 +281,7 @@ internal struct BVConversationsQueryResponseInternal
       }
       
       /// BVReviewIncludableInternal
-      if let reviews: [String : BVReview] =
+      if let reviews: [String: BVReview] =
         resultIncludes.reviews?.dictionary {
         internalIncludes.reviews = try
           type(of: self).extractInclude(

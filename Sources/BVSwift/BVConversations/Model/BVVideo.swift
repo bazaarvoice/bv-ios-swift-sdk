@@ -15,15 +15,11 @@ import Foundation
 public struct BVVideo: BVSubmissionable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVVideo.singularKey
-    }
+    return BVConversationsConstants.BVVideo.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVVideo.pluralKey
-    }
+    return BVConversationsConstants.BVVideo.pluralKey
   }
   
   public let caption: String?

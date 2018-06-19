@@ -41,22 +41,18 @@ BVCurationsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
   
   /// Success state of the query, a.k.a, no errors.
   public var success: Bool {
-    get {
-      guard case .success = self else {
-        return false
-      }
-      return true
+    guard case .success = self else {
+      return false
     }
+    return true
   }
   
   /// Failure case returned errors.
   public var errors: [Error]? {
-    get {
-      guard case let .failure(errors) = self else {
-        return nil
-      }
-      return errors
+    guard case let .failure(errors) = self else {
+      return nil
     }
+    return errors
   }
   
   case success(MetaType, ResponseType)
@@ -88,12 +84,12 @@ internal struct BVCurationsQueryResponseInternal
   }
   
   private enum OptionCodingKeys: String, CodingKey {
-    case limit = "limit"
-    case offset = "offset"
+    case limit
+    case offset
   }
   
   private enum ResultCodingKeys: String, CodingKey {
-    case data = "data"
+    case data
   }
   
   func encode(to encoder: Encoder) throws {
@@ -163,8 +159,8 @@ internal struct BVCurationsQueryResponseInternal
       
       /// If we don't have any product details or an object that doesn't follow
       /// the protocol, then we bail
-      if var resultUpdateProductDetails: BVCurationsProductUpdatable =
-        result as? BVCurationsProductUpdatable,
+      if var resultUpdateProductDetails: BVCurationsQueryProductUpdatable =
+        result as? BVCurationsQueryProductUpdatable,
         let product = productData?.array {
         
         resultUpdateProductDetails.update(product)

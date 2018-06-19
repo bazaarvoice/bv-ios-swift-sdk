@@ -24,13 +24,13 @@ public class BVManager {
   private static var configFileStaging: String = "bvsdk_config_staging"
   private static var configFileExtension: String = "json"
   
-  private static var production: [String : Any]? = {
+  private static var production: [String: Any]? = {
     return Bundle.loadJSONFileFromMain(
       name: BVManager.configFileProduction,
       fileExtension: BVManager.configFileExtension)
   }()
   
-  private static var staging: [String : Any]? = {
+  private static var staging: [String: Any]? = {
     return Bundle.loadJSONFileFromMain(
       name: BVManager.configFileStaging,
       fileExtension: BVManager.configFileExtension)
@@ -150,7 +150,7 @@ internal extension BVManager {
       return nil
     }
     
-    let keyValues = { () -> [String : Any]? in
+    let keyValues = { () -> [String: Any]? in
       switch active {
       case .production:
         return BVManager.production

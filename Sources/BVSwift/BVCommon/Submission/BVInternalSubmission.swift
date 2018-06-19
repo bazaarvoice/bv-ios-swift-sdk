@@ -18,6 +18,7 @@ internal class BVInternalSubmission {
   /// Private
   final private var rawConfig: BVRawConfiguration?
   final private var configuration: BVConfiguration?
+  final private var cacheable: Bool = false
   private var preflightClosure: BVURLRequestablePreflightHandler?
   private var baseResponseCompletion: BVURLRequestableHandler?
   private let postResource: String
@@ -45,9 +46,7 @@ extension BVInternalSubmission: BVConfigureExistentially {
 // MARK: - BVInternalSubmission: BVConfigureRaw
 extension BVInternalSubmission: BVConfigureRaw {
   var rawConfiguration: BVRawConfiguration? {
-    get {
-      return rawConfig
-    }
+    return rawConfig
   }
   
   @discardableResult
@@ -60,9 +59,7 @@ extension BVInternalSubmission: BVConfigureRaw {
 // MARK: - BVSubmissionableConsumable: BVSubmissionableConsumable
 extension BVInternalSubmission: BVSubmissionableConsumable {
   var submissionableInternal: BVSubmissionableInternal? {
-    get {
-      return submissionableType
-    }
+    return submissionableType
   }
 }
 
@@ -88,21 +85,29 @@ extension BVInternalSubmission: BVSubmissionActionableInternal {
   }
 }
 
+// MARK: - BVInternalSubmission: BVURLRequestableCacheable
+extension BVInternalSubmission: BVURLRequestableCacheable {
+  var usesURLCache: Bool {
+    get {
+      return cacheable
+    }
+    set(newValue) {
+      cacheable = newValue
+    }
+  }
+}
+
 // MARK: - BVInternalSubmission: BVURLRequestableInternal
 extension BVInternalSubmission: BVURLRequestableInternal {
   final internal var bvPath: String {
-    get {
-      return postResource
-    }
+    return postResource
   }
   
   final internal var commonEndpoint: String {
-    get {
-      if let raw = rawConfiguration {
-        return raw.endpoint
-      }
-      return configuration?.endpoint ?? String.empty
+    if let raw = rawConfiguration {
+      return raw.endpoint
     }
+    return configuration?.endpoint ?? String.empty
   }
 }
 
