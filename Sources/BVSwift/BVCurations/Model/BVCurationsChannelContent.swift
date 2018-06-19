@@ -8,20 +8,21 @@
 
 import Foundation
 
+/// The definition for the BVCurationsChannelContent type
+/// - Note:
+/// \
+/// It conforms to BVSubmissionable and, therefore, it is used only for
+/// BVSubmission.
 internal struct BVCurationsChannelContent: BVSubmissionable {
   public static var singularKey: String {
-    get {
-      return BVCurationsConstants.BVCurationsChannelContent.singularKey
-    }
+    return BVCurationsConstants.BVCurationsChannelContent.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVCurationsConstants.BVCurationsChannelContent.pluralKey
-    }
+    return BVCurationsConstants.BVCurationsChannelContent.pluralKey
   }
   
-  private var encodableDictionary: [String : Encodable]?
+  private var encodableDictionary: [String: Encodable]?
   public let approve: Bool?
   public let bypass: Bool?
   public let url: URL?
@@ -33,17 +34,15 @@ internal struct BVCurationsChannelContent: BVSubmissionable {
     case custom(String)
     
     var stringValue: String {
-      get {
-        switch self {
-        case .approve:
-          return "approve"
-        case .bypass:
-          return "bypass"
-        case .url:
-          return "url"
-        case let .custom(value):
-          return value
-        }
+      switch self {
+      case .approve:
+        return "approve"
+      case .bypass:
+        return "bypass"
+      case .url:
+        return "url"
+      case let .custom(value):
+        return value
       }
     }
     
@@ -98,12 +97,10 @@ internal struct BVCurationsChannelContent: BVSubmissionable {
 
 extension BVCurationsChannelContent: BVSubmissionableInternal {
   static var postResource: String? {
-    get {
-      return BVCurationsConstants.BVCurationsChannelContent.postResource
-    }
+    return BVCurationsConstants.BVCurationsChannelContent.postResource
   }
   
-  internal mutating func update(_ values: [String : Encodable]?) {
+  internal mutating func update(_ values: [String: Encodable]?) {
     encodableDictionary = values
   }
 }

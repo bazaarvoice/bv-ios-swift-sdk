@@ -49,37 +49,26 @@ public enum BVAnalyticsFeatureType: Encodable {
     switch self {
     case .answerQuestion:
       try "Answer".encode(to: encoder)
-      break
     case .askQuestion:
       try "Question".encode(to: encoder)
-      break
     case .contentClick:
       try "Click".encode(to: encoder)
-      break
     case .feedback:
       try "Helpfulness".encode(to: encoder)
-      break
     case .inappropriate:
       try "Inappropriate".encode(to: encoder)
-      break
     case .inView:
       try "InView".encode(to: encoder)
-      break
     case .photo:
       try "Photo".encode(to: encoder)
-      break
     case .profile:
       try "Profile".encode(to: encoder)
-      break
     case .reviewComment:
       try "Comment".encode(to: encoder)
-      break
     case .scrolled:
       try "Scrolled".encode(to: encoder)
-      break
     case .writeReview:
       try "Write".encode(to: encoder)
-      break
     }
   }
 }
@@ -110,22 +99,16 @@ public enum BVAnalyticsImpressionType: Encodable {
     switch self {
     case .answer:
       try "Answer".encode(to: encoder)
-      break
     case .comment:
       try "Comment".encode(to: encoder)
-      break
     case .feedItem:
       try "SocialPost".encode(to: encoder)
-      break
     case .productRecommendation:
       try "Recommendation".encode(to: encoder)
-      break
     case .question:
       try "Question".encode(to: encoder)
-      break
     case .review:
       try "Review".encode(to: encoder)
-      break
     }
   }
 }
@@ -153,19 +136,14 @@ public enum BVAnalyticsProductType: Encodable {
     switch self {
     case .curations:
       try "Curations".encode(to: encoder)
-      break
     case .profile:
       try "Profiles".encode(to: encoder)
-      break
     case .question:
       try "AskAndAnswer".encode(to: encoder)
-      break
     case .recommendations:
-      try "Curations".encode(to: encoder)
-      break
+      try "Personalization".encode(to: encoder)
     case .reviews:
-      try "Curations".encode(to: encoder)
-      break
+      try "RatingsAndReviews".encode(to: encoder)
     }
   }
 }

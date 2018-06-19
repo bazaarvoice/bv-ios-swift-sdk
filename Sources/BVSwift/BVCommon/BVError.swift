@@ -28,55 +28,45 @@ public enum BVCommonError: BVError {
   case unknown(String)
   
   var localizedDescription: String {
-    get {
-      return description
-    }
+    return description
   }
   
   public var description: String {
-    get {
-      switch self {
-      case .limit(let limit):
-        return "Invalid `limit` value: Parameter 'limit' has invalid value:" +
-        "\(limit) - must be between 1 and 100."
-      case .network(let code, let msg):
-        return "HTTP response status code: \(code) with error: \(msg)"
-      case .noData:
-        return "No JSON data body found from response."
-      case .parse(let suberr):
-        return "An unknown parsing error occurred: \(suberr)"
-      case .unknown(let msg):
-        return "An unknown error has occurred: \(msg)"
-      }
+    switch self {
+    case .limit(let limit):
+      return "Invalid `limit` value: Parameter 'limit' has invalid value:" +
+      "\(limit) - must be between 1 and 100."
+    case .network(let code, let msg):
+      return "HTTP response status code: \(code) with error: \(msg)"
+    case .noData:
+      return "No JSON data body found from response."
+    case .parse(let suberr):
+      return "An unknown parsing error occurred: \(suberr)"
+    case .unknown(let msg):
+      return "An unknown error has occurred: \(msg)"
     }
   }
   
   public var debugDescription: String {
-    get {
-      return self.description
-    }
+    return self.description
   }
   
   public var code: String {
-    get {
-      switch self {
-      case .limit:
-        return "LIMIT"
-      case .network:
-        return "NETWORK"
-      case .noData:
-        return "NO_DATA"
-      case .parse:
-        return "PARSE"
-      case .unknown:
-        return "UNKNOWN"
-      }
+    switch self {
+    case .limit:
+      return "LIMIT"
+    case .network:
+      return "NETWORK"
+    case .noData:
+      return "NO_DATA"
+    case .parse:
+      return "PARSE"
+    case .unknown:
+      return "UNKNOWN"
     }
   }
   
   public var message: String {
-    get {
-      return description
-    }
+    return description
   }
 }

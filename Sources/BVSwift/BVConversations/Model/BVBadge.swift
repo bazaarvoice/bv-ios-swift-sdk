@@ -17,9 +17,7 @@ public struct BVBadge: BVAuxiliaryable {
   public let badgeId: String?
   
   public var badgeType: BVBadgeType? {
-    get {
-      return BVBadgeType(value: badgeTypeString)
-    }
+    return BVBadgeType(value: badgeTypeString)
   }
   
   public enum BVBadgeType {

@@ -8,34 +8,44 @@
 
 import Foundation
 
+/// Public class for handling BVCurationsFeedItem Queries
+/// - Note:
+/// \
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/curations-api/reference/curations-3)
 public class BVCurationsFeedItemQuery: BVCurationsQuery<BVCurationsFeedItem> {
+  private let limit: UInt16?
   
-  public let displayTags: [String]?
-  
-  init(_ displayTags: [String]? = nil, limit: UInt16 = 10) {
-    self.displayTags = displayTags
-    
+  init(_ limit: UInt16 = 10) {
+    self.limit = limit
     super.init(BVCurationsFeedItem.self)
-    
-    if let tags = displayTags {
-      for tag in tags {
-        add(.filter(BVCurationsFeedItemFilter.display(tag)))
-      }
-    }
-    
-    add(.filter(BVCurationsFeedItemFilter.limit(limit)))
+    add(
+      .unsafe(BVCurationsConstants.BVCurationsFeedItem.Keys.limit, limit, nil))
   }
 }
 
-// MARK: - BVCurationsFeedItemQuery: BVCurationsQueryFilterable
-extension BVCurationsFeedItemQuery: BVCurationsQueryFilterable {
-  public typealias Filter = BVCurationsFeedItemFilter
+// MARK: - BVCurationsFeedItemQuery: BVQueryFieldable
+extension BVCurationsFeedItemQuery: BVQueryFieldable {
+  public typealias Field = BVCurationsFeedItemField
   
   @discardableResult
-  public func filter(_ filter: BVCurationsFeedItemFilter) -> Self {
-    let internalFilter: BVCurationsQueryParameter =
-      .filter(filter)
-    add(internalFilter)
+  public func field(_ field: Field) -> Self {
+    
+    switch field {
+    case .display:
+      fallthrough
+    case .language:
+      fallthrough
+    case .tag:
+      add(.field(field, nil), coalesce: true)
+    case let .featured(count):
+      let currentLimit = limit ?? 10
+      let newCount = count <= currentLimit ? count : currentLimit
+      add(.field(BVCurationsFeedItemField.featured(newCount), nil))
+    default:
+      add(.field(field, nil))
+    }
+    
     return self
   }
 }
@@ -46,10 +56,8 @@ extension BVCurationsFeedItemQuery: BVCurationsQueryMediaOverridable {
   internal func override(_ media: BVCurationsMedia) -> Self {
     if let jsonMedia = try? JSONEncoder().encode(media),
       let jsonString = String(data: jsonMedia, encoding: .utf8) {
-      let internalFilter: BVCurationsQueryParameter =
-        .custom(
-          BVCurationsConstants.BVCurationsFeedItem.Keys.media, jsonString)
-      update(internalFilter)
+      update(.unsafe(
+        BVCurationsConstants.BVCurationsFeedItem.Keys.media, jsonString, nil))
     }
     return self
   }

@@ -15,9 +15,7 @@ import Foundation
 public struct BVFormField: BVAuxiliaryable {
   private let type: String?
   public var formInputType: BVFormInputType {
-    get {
-      return BVFormInputType(rawValue: type)
-    }
+    return BVFormInputType(rawValue: type)
   }
   public let identifier: String?
   public let isDefault: Bool?
@@ -55,28 +53,20 @@ public struct BVFormFieldError: Codable {
 
 extension BVFormFieldError: BVError {
   public var code: String {
-    get {
-      return codeString ?? "Unknown Form Field Error Code"
-    }
+    return codeString ?? "Unknown Form Field Error Code"
   }
   
   public var message: String {
-    get {
-      return messageString ?? "Unknown Form Field Error Message"
-    }
+    return messageString ?? "Unknown Form Field Error Message"
   }
   
   public var description: String {
-    get {
-      return "Code: \(code) Message: \(message)"
-    }
+    return "Code: \(code) Message: \(message)"
   }
   
   public var debugDescription: String {
-    get {
-      return "Name: \(name ?? "Unknown"), " +
-      "Code: \(code), Message: \(message)"
-    }
+    return "Name: \(name ?? "Unknown"), " +
+    "Code: \(code), Message: \(message)"
   }
 }
 
@@ -122,4 +112,3 @@ internal extension BVFormInputType {
     }
   }
 }
-

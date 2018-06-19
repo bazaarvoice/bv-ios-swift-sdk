@@ -15,13 +15,12 @@ import Foundation
 /// specific submissions. There shouldn't be any need to subclass this if
 /// you're an external developer; unless of course you're fixing bugs or
 /// extending something that you want to see being made public :)
-public class
+internal class
 BVCurationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   
   /// Private
   private var ignoreCompletion: Bool = false
   private var curationsConfiguration: BVCurationsConfiguration?
-  private var paramsPriv: [BVCurationsQueryParameter] = []
   
   /// Internal
   internal init(_ submissionableInternal: BVSubmissionableInternal) {
@@ -36,103 +35,66 @@ BVCurationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    get {
-      return {
-        return self.queryItems
-      }
+    return {
+      return self.queryItems
     }
   }
   
-  override var contentBodyClosure:
-    ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
-    get {
-      return { (_) -> BVURLRequestBody? in
-        guard var submissionableType = self.submissionableInternal else {
-            return nil
-        }
-        
-        var id: String?
-        if let config = self.configuration {
-          id = config.type.clientId
-        }
-        
-        if let raw = self.rawConfiguration {
-          id = raw.type.clientId
-        }
-        
-        guard let clientId = id else {
-          return nil
-        }
-        
-        let updateDictionary: [String : String] =
-          [BVCurationsConstants.clientKey : clientId]
-        submissionableType.update(updateDictionary)
-        
-        guard let body: Data =
-          try? JSONEncoder().encode(submissionableType as? BVType) else {
-            return nil
-        }
-        
-        #if DEBUG
-        do {
-          let jsonObject =
-            try JSONSerialization.jsonObject(with: body, options: [])
-          print(jsonObject)
-        } catch {
-          fatalError()
-        }
-        #endif
-        
-        
-        return .raw(body)
+  override var contentBodyClosure: ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
+    return { (_) -> BVURLRequestBody? in
+      guard var submissionableType = self.submissionableInternal else {
+        return nil
       }
+      
+      var id: String?
+      if let config = self.configuration {
+        id = config.type.clientId
+      }
+      
+      if let raw = self.rawConfiguration {
+        id = raw.type.clientId
+      }
+      
+      guard let clientId = id else {
+        return nil
+      }
+      
+      let updateDictionary: [String: String] =
+        [BVCurationsConstants.clientKey: clientId]
+      submissionableType.update(updateDictionary)
+      
+      guard let body: Data =
+        try? JSONEncoder().encode(submissionableType as? BVType) else {
+          return nil
+      }
+      
+      #if DEBUG
+      do {
+        let jsonObject =
+          try JSONSerialization.jsonObject(with: body, options: [])
+        print(jsonObject)
+      } catch {
+        fatalError()
+      }
+      #endif
+      
+      
+      return .raw(body)
     }
   }
   
   override var contentTypeClosure: (() -> String?)? {
-    get {
-      return {
-        return "application/json"
-      }
+    return {
+      return "application/json"
     }
   }
   
-  internal var curationsPostflightResultsClosure:
-    (([CurationsPostflightResult]?) -> Swift.Void)? {
-    get {
-      return nil
-    }
+  internal var curationsPostflightResultsClosure: (([CurationsPostflightResult]?) -> Swift.Void)? {
+    return nil
   }
   
   internal var submissionable: BVType? {
-    get {
-      return submissionableInternal as? BVType
-    }
-  }
-}
-
-// MARK: - BVCurationsSubmission: BVURLParameterableInternal
-extension BVCurationsSubmission: BVURLParameterableInternal {
-  
-  final internal var parameters: [BVCurationsQueryParameter] {
-    get {
-      return paramsPriv
-    }
-  }
-  
-  func add(_ parameter: BVCurationsQueryParameter, coalesce: Bool = false) {
-    if coalesce {
-      BVLogger.sharedLogger.debug(
-        "BVCurationsQuery.add() doesn't support coalescing")
-    }
-    paramsPriv += [parameter]
-  }
-  
-  func update(_ parameter: BVCurationsQueryParameter) {
-    var paramsTemp:[BVCurationsQueryParameter] =
-      paramsPriv.filter { $0 != parameter }
-    paramsTemp.append(parameter)
-    paramsPriv = paramsTemp
+    return submissionableInternal as? BVType
   }
 }
 
@@ -163,8 +125,8 @@ extension BVCurationsSubmission: BVConfigurable {
     /// point
     if let passKey = checkConfigurationForSubmission() {
       update(
-        .custom(
-          BVCurationsConstants.parameterKey, passKey))
+        .unsafe(
+          BVCurationsConstants.parameterKey, passKey, nil))
     }
     
     /// Make sure we call through to the superclass
@@ -177,9 +139,7 @@ extension BVCurationsSubmission: BVConfigurable {
 // MARK: - BVCurationsSubmission: BVConfigurableInternal
 extension BVCurationsSubmission: BVConfigurableInternal {
   var configuration: BVCurationsConfiguration? {
-    get {
-      return curationsConfiguration
-    }
+    return curationsConfiguration
   }
 }
 
@@ -246,11 +206,11 @@ extension BVCurationsSubmission: BVSubmissionActionable {
           
           #if DEBUG
           do {
-            let _ =
-            try JSONDecoder()
-              .decode(
-                BVCurationsSubmissionResponseInternal.self,
-                from: jsonData)
+            _ =
+              try JSONDecoder()
+                .decode(
+                  BVCurationsSubmissionResponseInternal.self,
+                  from: jsonData)
           } catch {
             BVLogger.sharedLogger.error("JSON ERROR: \(error)")
           }
@@ -269,7 +229,7 @@ extension BVCurationsSubmission: BVSubmissionActionable {
           }
           
           /// Check to see if we're dealing with XML
-          guard let _ = BVXMLParser().parse(jsonData) else {
+          guard nil != BVXMLParser().parse(jsonData) else {
             
             var errMessage = "An Unknown parse error occurred"
             if let msg = String(bytes: jsonData, encoding: .utf8),
@@ -297,11 +257,8 @@ extension BVCurationsSubmission: BVSubmissionActionable {
               [BVCurationsError.submission(invalidPasskey)]))
           return
         }
-        
-        break
       case let .failure(errors):
         completion(.failure(errors))
-        break
       }
     }
     return self

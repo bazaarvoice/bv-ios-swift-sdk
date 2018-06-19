@@ -12,8 +12,6 @@ import Foundation
 extension BVManager {
   internal static
   var curationsConfiguration: BVCurationsConfiguration? {
-    get {
-      return BVManager.sharedManager.getConfiguration()
-    }
+    return BVManager.sharedManager.getConfiguration()
   }
 }

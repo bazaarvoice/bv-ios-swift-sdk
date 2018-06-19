@@ -9,28 +9,24 @@
 import Foundation
 
 typealias BVAnalyticsEventInstanceMap =
-  [BVAnalyticsConfiguration : [BVAnalyticsEventInstance]]
+  [BVAnalyticsConfiguration: [BVAnalyticsEventInstance]]
 
 internal class BVAnalyticsManager {
   
   private static var analyticsConfiguration: BVAnalyticsConfiguration? {
-    get {
-      guard let analyticsConfig: BVAnalyticsConfiguration =
-        BVManager.sharedManager.getConfiguration() else {
-          return nil
-      }
-      return analyticsConfig
+    guard let analyticsConfig: BVAnalyticsConfiguration =
+      BVManager.sharedManager.getConfiguration() else {
+        return nil
     }
+    return analyticsConfig
   }
   
   private static var clientId: String? {
-    get {
-      guard let analyticsConfig =
-        BVAnalyticsManager.analyticsConfiguration else {
-          return nil
-      }
-      return analyticsConfig.configurationKey
+    guard let analyticsConfig =
+      BVAnalyticsManager.analyticsConfiguration else {
+        return nil
     }
+    return analyticsConfig.configurationKey
   }
   
   private var concurrentEventDispatchQueue: DispatchQueue =
@@ -57,7 +53,8 @@ internal class BVAnalyticsManager {
   internal func enqueue(
     analyticsEvent: BVAnalyticsEvent,
     configuration: BVAnalyticsConfiguration,
-    anonymous: Bool = false) {
+    anonymous: Bool = false,
+    overrides: [String: BVAnyEncodable]? = nil) {
     
     guard let event =
       augmentEventWithClientData(
@@ -68,15 +65,13 @@ internal class BVAnalyticsManager {
     concurrentEventDispatchQueue.async(flags: .barrier) {
       
       let instance: BVAnalyticsEventInstance =
-        (event, configuration, anonymous)
+        (event, configuration, anonymous, overrides)
       
       switch analyticsEvent {
       case .pageView:
         self.pageViewQueue.append(instance)
-        break
       default:
         self.eventQueue.append(instance)
-        break
       }
       self.scheduleEventQueueFlush()
     }
@@ -85,7 +80,8 @@ internal class BVAnalyticsManager {
   internal func enqueue(
     analyticsEventable: BVAnalyticsEventable,
     configuration: BVAnalyticsConfiguration,
-    anonymous: Bool = false) {
+    anonymous: Bool = false,
+    overrides: [String: BVAnyEncodable]? = nil) {
     
     guard let event =
       augmentEventWithClientData(
@@ -96,7 +92,7 @@ internal class BVAnalyticsManager {
     concurrentEventDispatchQueue.async(flags: .barrier) {
       
       let instance: BVAnalyticsEventInstance =
-        (event, configuration, anonymous)
+        (event, configuration, anonymous, overrides)
       
       self.eventQueue.append(instance)
       self.scheduleEventQueueFlush()
@@ -241,8 +237,8 @@ internal class BVAnalyticsManager {
         return event
     }
     
-    let clientData: [String : String] =
-      ["client" : analyticsConfig.configurationKey]
+    let clientData: [String: BVAnyEncodable] =
+      ["client": BVAnyEncodable(analyticsConfig.configurationKey)]
     mutate.augment(clientData)
     return mutate
   }
@@ -251,7 +247,7 @@ internal class BVAnalyticsManager {
     timerDispatchQueue.sync {
       
       /// Bail if we've already set up the timer
-      if let _ = queueFlushTimer {
+      if nil != queueFlushTimer {
         return
       }
       

@@ -15,33 +15,23 @@ import Foundation
 public struct BVProductStatistics: BVQueryable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVProductStatistics.singularKey
-    }
+    return BVConversationsConstants.BVProductStatistics.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVProductStatistics.pluralKey
-    }
+    return BVConversationsConstants.BVProductStatistics.pluralKey
   }
   
   public var productId: String? {
-    get {
-      return productStatisticsInternal?.productId
-    }
+    return productStatisticsInternal?.productId
   }
   
   public var reviewStatistics: BVReviewStatistics? {
-    get {
-      return productStatisticsInternal?.reviewStatistics
-    }
+    return productStatisticsInternal?.reviewStatistics
   }
   
   public var nativeReviewStatistics: BVReviewStatistics? {
-    get {
-      return productStatisticsInternal?.nativeReviewStatistics
-    }
+    return productStatisticsInternal?.nativeReviewStatistics
   }
   
   private let productStatisticsInternal: BVProductStatisticsInternal?
@@ -75,8 +65,6 @@ public struct BVProductStatistics: BVQueryable {
 
 extension BVProductStatistics: BVQueryableInternal {
   public static var getResource: String? {
-    get {
-      return BVConversationsConstants.BVProductStatistics.getResource
-    }
+    return BVConversationsConstants.BVProductStatistics.getResource
   }
 }

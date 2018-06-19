@@ -8,13 +8,34 @@
 
 import Foundation
 
+/// The return errors for Curations
+///
+/// - Note:
+/// \
+/// The query and submission indirect enum cases are only ever one level deep
+/// in recursion. They're merely a wrapper for mirrored errors coming from two
+/// different paths.
 public indirect enum BVCurationsError: Error {
   
+  /// A parameter is missing/erroneous or the value is missing/erroneous
   case invalidParameter(String)
+  
+  /// An invalid key was used for this client
   case invalidPasskey
+  
+  /// Wrapper case for errors eminating from a query request
   case query(BVCurationsError)
+  
+  /// Status for a request
   case status(UInt16?, String)
+  
+  /// Wrapper case for errors eminating from a submission request
+  /// - Note:
+  /// \
+  /// Currently unused, saving for potential future usage
   case submission(BVCurationsError)
+  
+  /// Catch-all for any unknown or undocumented errors
   case unknown(String?)
   
   private enum CodingKeys: String, CodingKey {

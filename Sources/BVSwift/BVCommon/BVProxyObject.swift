@@ -39,7 +39,7 @@ extension BVProxyObject {
   }
   
   override func responds(to aSelector: Selector!) -> Bool {
-    guard let _ = target(for: aSelector) else {
+    guard nil != target(for: aSelector) else {
       return super.responds(to: aSelector)
     }
     return true

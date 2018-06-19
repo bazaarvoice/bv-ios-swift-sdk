@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVCurationsLink type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVCurationsLink: BVAuxiliaryable {
   
   public let domain: String?
