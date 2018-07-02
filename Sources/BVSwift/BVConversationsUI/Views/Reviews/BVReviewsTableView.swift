@@ -4,38 +4,34 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import UIKit
 
 @objc
 public class BVReviewsTableView: BVConversationsTableView {
-  
-  private var cellToProductMap: [String : BVReview] = [:]
+
+  private var cellToProductMap: [String: BVReview] = [:]
   public var productId: String = "none"
-  
+
   internal override var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return .feature(
-        bvProduct: .reviews,
-        name: .scrolled,
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .feature(
+      bvProduct: .reviews,
+      name: .scrolled,
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
-  
+
   internal override var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return .inView(
-        bvProduct: .reviews,
-        component: "ReviewsTableView",
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .inView(
+      bvProduct: .reviews,
+      component: "ReviewsTableView",
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
-  
+
   // MARK: - UITableViewDataSource
   public override func tableView(
     _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,7 +41,7 @@ public class BVReviewsTableView: BVConversationsTableView {
     }
     return receiver.tableView(tableView, numberOfRowsInSection: section)
   }
-  
+
   public override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -53,12 +49,12 @@ public class BVReviewsTableView: BVConversationsTableView {
       BVLogger.sharedLogger.error("BVReviewsTableView receiver is nil")
       return BVTableViewCell<BVReview>()
     }
-    
+
     let cell = receiver.tableView(tableView, cellForRowAt: indexPath)
-    
+
     if let bvTableViewCell: BVTableViewCell<BVReview> =
       cell as? BVTableViewCell<BVReview> {
-      
+
       if let bvType: BVReview = bvTableViewCell.bvType {
         cellToProductMap[indexPath.bvKey] = bvType
       } else {

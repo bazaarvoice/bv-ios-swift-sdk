@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -15,9 +15,7 @@ import Foundation
 public struct BVFormField: BVAuxiliaryable {
   private let type: String?
   public var formInputType: BVFormInputType {
-    get {
-      return BVFormInputType(rawValue: type)
-    }
+    return BVFormInputType(rawValue: type)
   }
   public let identifier: String?
   public let isDefault: Bool?
@@ -27,7 +25,7 @@ public struct BVFormField: BVAuxiliaryable {
   public let options: [BVFormFieldOption]?
   public let required: Bool?
   public let value: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case identifier = "Id"
     case isDefault = "Default"
@@ -45,7 +43,7 @@ public struct BVFormFieldError: Codable {
   public let codeString: String?
   public let messageString: String?
   public let name: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case codeString = "Code"
     case messageString = "Message"
@@ -55,28 +53,20 @@ public struct BVFormFieldError: Codable {
 
 extension BVFormFieldError: BVError {
   public var code: String {
-    get {
-      return codeString ?? "Unknown Form Field Error Code"
-    }
+    return codeString ?? "Unknown Form Field Error Code"
   }
-  
+
   public var message: String {
-    get {
-      return messageString ?? "Unknown Form Field Error Message"
-    }
+    return messageString ?? "Unknown Form Field Error Message"
   }
-  
+
   public var description: String {
-    get {
-      return "Code: \(code) Message: \(message)"
-    }
+    return "Code: \(code) Message: \(message)"
   }
-  
+
   public var debugDescription: String {
-    get {
-      return "Name: \(name ?? "Unknown"), " +
-      "Code: \(code), Message: \(message)"
-    }
+    return "Name: \(name ?? "Unknown"), " +
+    "Code: \(code), Message: \(message)"
   }
 }
 
@@ -84,7 +74,7 @@ public struct BVFormFieldOption: Codable {
   public let label: String?
   public let selected: Bool?
   public let value: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case label = "Label"
     case selected = "Selected"
@@ -122,4 +112,3 @@ internal extension BVFormInputType {
     }
   }
 }
-

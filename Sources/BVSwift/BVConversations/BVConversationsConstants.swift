@@ -9,61 +9,55 @@ import Foundation
 
 internal struct BVConversationsConstants {
   
+  static let apiKey: String = "apiKeyConversations"
+  static let clientKey: String = "clientId"
+  static let parameterKey: String = "passkey"
+  static let stagingEndpoint: String =
+  "https://stg.api.bazaarvoice.com/data/"
+  static let productionEndpoint: String =
+  "https://api.bazaarvoice.com/data/"
+  
   internal struct BVConversationsErrorInternal {
     static let key: String = "Errors"
     static let message: String = "Message"
     static let code: String = "Code"
   }
   
-  internal struct BVConversationsQueryFilter {
+  internal struct BVQueryFilter {
     static let defaultField: String = "Filter"
+    static let typeSeparatorField: String = "_"
+    static let valueSeparatorField: String = ":"
   }
   
-  internal struct BVConversationsQueryInclude {
+  internal struct BVQueryInclude {
     static let defaultField: String = "Include"
+    static let limitSeparatorField: String = "_"
   }
   
   internal struct BVQuerySearch {
     static let defaultField: String = "Search"
   }
   
-  internal struct BVConversationsQuerySort {
+  internal struct BVQuerySort {
     static let defaultField: String = "Sort"
+    static let typeSeparatorField: String = "_"
+    static let valueSeparatorField: String = ":"
   }
   
-  internal struct BVConversationsQueryStat {
+  internal struct BVQueryStat {
     static let defaultField: String = "Stats"
-  }
-  
-  internal struct BVQueryable {
-    static let apiVersionField: String = "apiversion"
-    static let appIdField: String = "_appId"
-    static let appVersionField: String = "_appVersion"
-    static let buildNumberField: String = "_buildNumber"
-    static let sdkVersionField: String = "_bvIosSdkVersion"
-    
-    static let defaultParameters: BVURLParameters =
-      [
-        BVConversationsConstants.BVQueryable.apiVersionField : apiVersion,
-        BVConversationsConstants.BVQueryable.appIdField :
-          Bundle.mainBundleIdentifier,
-        BVConversationsConstants.BVQueryable.appVersionField :
-          Bundle.releaseVersionNumber,
-        BVConversationsConstants.BVQueryable.buildNumberField :
-          Bundle.buildVersionNumber,
-        BVConversationsConstants.BVQueryable.sdkVersionField : sdkVersion
-    ]
   }
   
   internal struct BVQueryType {
     internal struct Keys {
+      static let errors: String = "HasErrors"
+      static let includes: String = "Includes"
       static let limit: String = "Limit"
-      static let totalResults: String = "TotalResults"
       static let locale: String = "Locale"
       static let offset: String = "Offset"
       static let results: String = "Results"
-      static let includes: String = "Includes"
-      static let errors: String = "HasErrors"
+      static let search: String = "Search"
+      static let totalResults: String = "TotalResults"
     }
   }
   
@@ -187,7 +181,7 @@ internal struct BVConversationsConstants {
     static let postResource: String = "submitfeedback.json"
   }
   
-  internal struct BVMonotonicSortOrder {
+  internal struct BVConversationsSortOrder {
     static let ascending: String = "asc"
     static let descending: String = "desc"
   }
@@ -276,7 +270,7 @@ internal struct BVConversationsConstants {
     }
   }
   
-  internal struct BVRelationalFilterOperator {
+  internal struct BVConversationsfiltererator {
     
     internal struct Keys {
       static let greaterThan: String = "gt"

@@ -10,7 +10,7 @@ import Foundation
 
 extension BVAnalyticsEvent {
   internal func serializePersonalization(
-    _ nonPII: Bool = false) -> [String : BVAnyEncodable] {
+    _ nonPII: Bool = false) -> [String: BVAnyEncodable] {
     
     guard case .personalization = self else {
       fatalError()
