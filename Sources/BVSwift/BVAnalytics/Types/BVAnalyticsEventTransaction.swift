@@ -10,7 +10,7 @@ import Foundation
 
 extension BVAnalyticsEvent {
   internal func serializeTransaction(
-    _ nonPII: Bool = false) -> [String : BVAnyEncodable] {
+    _ nonPII: Bool = false) -> [String: BVAnyEncodable] {
     
     guard case .transaction = self else {
       fatalError()

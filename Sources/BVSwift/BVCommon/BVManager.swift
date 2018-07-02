@@ -24,13 +24,13 @@ public class BVManager {
   private static var configFileStaging: String = "bvsdk_config_staging"
   private static var configFileExtension: String = "json"
   
-  private static var production: [String : Any]? = {
+  private static var production: [String: Any]? = {
     return Bundle.loadJSONFileFromMain(
       name: BVManager.configFileProduction,
       fileExtension: BVManager.configFileExtension)
   }()
   
-  private static var staging: [String : Any]? = {
+  private static var staging: [String: Any]? = {
     return Bundle.loadJSONFileFromMain(
       name: BVManager.configFileStaging,
       fileExtension: BVManager.configFileExtension)
@@ -40,12 +40,12 @@ public class BVManager {
     = {
       
       if let stg = BVManager.staging,
-        let clientId: String = stg[BVConstants.clientKey] as? String {
+        let clientId: String = stg[apiClientId] as? String {
         return .staging(clientId: clientId)
       }
       
       if let prd = BVManager.production,
-        let clientId: String = prd[BVConstants.clientKey] as? String {
+        let clientId: String = prd[apiClientId] as? String {
         return .production(clientId: clientId)
       }
       
@@ -98,8 +98,7 @@ public class BVManager {
   /// so that it's easier to fluidly and dynamically move from staging to
   /// production and to do so with the granularity of each submodule of BVSwift.
   @discardableResult
-  public func addConfiguration(
-    _ configuration: BVConfiguration) -> Self {
+  public func addConfiguration(_ configuration: BVConfiguration) -> Self {
     
     guard let internalConfig = configuration as? BVConfigurationInternal else {
       return self
@@ -151,7 +150,7 @@ internal extension BVManager {
       return nil
     }
     
-    let keyValues = { () -> [String : Any]? in
+    let keyValues = { () -> [String: Any]? in
       switch active {
       case .production:
         return BVManager.production

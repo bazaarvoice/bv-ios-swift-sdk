@@ -14,24 +14,17 @@ import Foundation
 public struct BVReviewStatistics: BVAuxiliaryable {
   public let averageOverallRating: Double?
   public var contextDataDistribution: [BVDistributionElement]? {
-    get {
-      return contextDataDistributionArray?.array
-    }
+    return contextDataDistributionArray?.array
   }
-  private let contextDataDistributionArray:
-  BVCodableDictionary<BVDistributionElement>?
+  private let contextDataDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let featuredReviewCount: Int?
   public var firstSubmissionTime: Date? {
-    get {
-      return firstSubmissionTimeString?.toBVDate()
-    }
+    return firstSubmissionTimeString?.toBVDate()
   }
   private let firstSubmissionTimeString: String?
   public let helpfulVoteCount: Int?
   public var lastSubmissionTime: Date? {
-    get {
-      return lastSubmissionTimeString?.toBVDate()
-    }
+    return lastSubmissionTimeString?.toBVDate()
   }
   private let lastSubmissionTimeString: String?
   public let notHelpfulVoteCount: Int?
@@ -41,21 +34,15 @@ public struct BVReviewStatistics: BVAuxiliaryable {
   public let ratingsOnlyReviewCount: Int?
   public let recommendedCount: Int?
   public var secondaryRatingsAverages: [BVSecondaryRatingsAverage]? {
-    get {
-      return secondaryRatingsAveragesArray?.array
-    }
+    return secondaryRatingsAveragesArray?.array
   }
-  private let secondaryRatingsAveragesArray:
-  BVCodableDictionary<BVSecondaryRatingsAverage>?
+  private let secondaryRatingsAveragesArray: BVCodableDictionary<BVSecondaryRatingsAverage>?
   public var tagDistribution: [BVDistributionElement]? {
-    get {
-      return contextDataDistributionArray?.array
-    }
+    return tagDistributionArray?.array
   }
-  private let tagDistributionArray:
-  BVCodableDictionary<BVDistributionElement>?
+  private let tagDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let totalReviewCount: Int?
-  
+
   private enum CodingKeys: String, CodingKey {
     case averageOverallRating = "AverageOverallRating"
     case contextDataDistributionArray = "ContextDataDistribution"

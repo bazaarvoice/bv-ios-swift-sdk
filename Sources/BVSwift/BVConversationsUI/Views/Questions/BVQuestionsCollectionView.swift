@@ -4,38 +4,34 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import UIKit
 
 @objc
 public class BVQuestionsCollectionView: BVConversationsCollectionView {
-  
-  private var cellToProductMap: [String : BVQuestion] = [:]
+
+  private var cellToProductMap: [String: BVQuestion] = [:]
   public var productId: String = "none"
-  
+
   internal override var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return .feature(
-        bvProduct: .question,
-        name: .scrolled,
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .feature(
+      bvProduct: .question,
+      name: .scrolled,
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
-  
+
   internal override var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return .inView(
-        bvProduct: .question,
-        component: "QuestionsCollectionView",
-        productId: productId,
-        brand: nil,
-        additional: nil)
-    }
+    return .inView(
+      bvProduct: .question,
+      component: "QuestionsCollectionView",
+      productId: productId,
+      brand: nil,
+      additional: nil)
   }
-  
+
   // MARK: - UICollectionViewDataSource
   public override func collectionView(
     _ collectionView: UICollectionView,
@@ -46,20 +42,20 @@ public class BVQuestionsCollectionView: BVConversationsCollectionView {
     return receiver.collectionView(
       collectionView, numberOfItemsInSection: section)
   }
-  
+
   public override func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let receiver = dataSourceReceiver else {
       return BVCollectionViewCell<BVQuestion>()
     }
-    
+
     let cell =
       receiver.collectionView(collectionView, cellForItemAt: indexPath)
-    
+
     if let bvCollectionViewCell: BVCollectionViewCell<BVQuestion> =
       cell as? BVCollectionViewCell<BVQuestion> {
-      
+
       if let bvType: BVQuestion = bvCollectionViewCell.bvType {
         cellToProductMap[indexPath.bvKey] = bvType
       } else {

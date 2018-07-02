@@ -11,47 +11,40 @@ import Foundation
 /// Public class for handling BVReview Submissions
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/reviews/review-submission)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/reviews/review-submission)
 public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   
   /// The Product identifier to submit against
   public var productId: String? {
-    get {
-      guard let review = submissionable else {
-        return nil
-      }
-      return review.productId
+    guard let review = submissionable else {
+      return nil
     }
+    return review.productId
   }
   
   /// The Product identifier to submit against
   public var reviewTitle: String? {
-    get {
-      guard let review = submissionable else {
-        return nil
-      }
-      return review.title
+    guard let review = submissionable else {
+      return nil
     }
+    return review.title
   }
   
   /// The Product identifier to submit against
   public var reviewText: String? {
-    get {
-      guard let review = submissionable else {
-        return nil
-      }
-      return review.reviewText
+    guard let review = submissionable else {
+      return nil
     }
+    return review.reviewText
   }
   
   /// The Product identifier to submit against
   public var reviewRating: Int? {
-    get {
-      guard let review = submissionable else {
-        return nil
-      }
-      return review.rating
+    guard let review = submissionable else {
+      return nil
     }
+    return review.rating
   }
   
   /// The initializer for BVReviewSubmission
@@ -95,7 +88,7 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   }
   
   override func conversationsPostflightDidSubmit(_ results: [BVReview]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.productId else {
         return
     }
@@ -114,7 +107,7 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
   
   override func conversationsPostflightDidSubmitPhotoUpload(
     _ results: [BVReview]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.productId else {
         return
     }

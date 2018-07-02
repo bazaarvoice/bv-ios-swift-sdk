@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -15,7 +15,7 @@ import Foundation
 /// The conversations configuration has a single sub-configuration dependency
 /// on BVAnalytics.
 public enum BVConversationsConfiguration: BVConfiguration {
-  
+
   /// This configuration allows for both submission and display request
   /// configurations. Consumers of this module will most likely just use this
   /// configuration value as they probably use both display AND submission.
@@ -29,7 +29,7 @@ public enum BVConversationsConfiguration: BVConfiguration {
     clientKey: String,
     configType: BVConfigurationType,
     analyticsConfig: BVAnalyticsConfiguration)
-  
+
   /// This configuration allows for ONLY display request configurations.
   /// - Parameters:
   ///   - clientKey: The client conversations API key
@@ -41,7 +41,7 @@ public enum BVConversationsConfiguration: BVConfiguration {
     clientKey: String,
     configType: BVConfigurationType,
     analyticsConfig: BVAnalyticsConfiguration)
-  
+
   /// This configuration allows for ONLY submission request configurations.
   /// - Parameters:
   ///   - clientKey: The client conversations API key
@@ -53,71 +53,62 @@ public enum BVConversationsConfiguration: BVConfiguration {
     clientKey: String,
     configType: BVConfigurationType,
     analyticsConfig: BVAnalyticsConfiguration)
-  
+
   /// See Protocol Definition for more info
   public var configurationKey: String {
-    get {
-      switch self {
-      case let .all(clientKey, _, _):
-        return clientKey
-      case let .display(clientKey, _, _):
-        return clientKey
-      case let .submission(clientKey, _, _):
-        return clientKey
-      }
+    switch self {
+    case let .all(clientKey, _, _):
+      return clientKey
+    case let .display(clientKey, _, _):
+      return clientKey
+    case let .submission(clientKey, _, _):
+      return clientKey
     }
   }
-  
+
   /// See Protocol Definition for more info
   public var type: BVConfigurationType {
-    get {
-      switch self {
-      case let .all(_, configType, _):
-        return configType
-      case let .display(_, configType, _):
-        return configType
-      case let .submission(_, configType, _):
-        return configType
-      }
+    switch self {
+    case let .all(_, configType, _):
+      return configType
+    case let .display(_, configType, _):
+      return configType
+    case let .submission(_, configType, _):
+      return configType
     }
   }
-  
+
   /// See Protocol Definition for more info
   public var endpoint: String {
-    get {
-      guard case .staging(_) = self.type else {
-        return
-          BVConstants.BVConversations.productionEndpoint
-      }
-      
-      return BVConstants.BVConversations.stagingEndpoint
+    guard case .staging(_) = self.type else {
+      return
+        BVConversationsConstants.productionEndpoint
     }
+
+    return BVConversationsConstants.stagingEndpoint
   }
-  
+
   internal var analyticsConfiguration: BVAnalyticsConfiguration {
-    get {
-      switch self {
-      case let .all(_, _, analyticsConfig):
-        return analyticsConfig
-      case let .display(_, _, analyticsConfig):
-        return analyticsConfig
-      case let .submission(_, _, analyticsConfig):
-        return analyticsConfig
-      }
+    switch self {
+    case let .all(_, _, analyticsConfig):
+      return analyticsConfig
+    case let .display(_, _, analyticsConfig):
+      return analyticsConfig
+    case let .submission(_, _, analyticsConfig):
+      return analyticsConfig
     }
   }
 }
 
 /// Conformance to Equatable
 extension BVConversationsConfiguration: Equatable {
-  public static func ==
-    (lhs: BVConversationsConfiguration,
-     rhs: BVConversationsConfiguration) -> Bool {
-    
+  public static func == (lhs: BVConversationsConfiguration,
+                         rhs: BVConversationsConfiguration) -> Bool {
+
     if lhs.hashValue != rhs.hashValue {
       return false
     }
-    
+
     switch (lhs, rhs) {
     case let (.all(lhsClientKey, lhsType, lhsAnalytics),
               .all(rhsClientKey, rhsType, rhsAnalytics)) where
@@ -170,37 +161,35 @@ extension BVConversationsConfiguration: Hashable {
 }
 
 extension BVConversationsConfiguration: BVConfigurationInternal {
-  
+
   /// The only sub-configuration that exists for converrsations is the
   /// BVAnalyticsConfiguration.
   internal var subConfigurations: [BVConfigurationInternal]? {
-    get {
-      return [analyticsConfiguration]
-    }
+    return [analyticsConfiguration]
   }
-  
-  internal init?(_ config: BVConfigurationType, keyValues: [String : Any]?) {
-    
+
+  internal init?(_ config: BVConfigurationType, keyValues: [String: Any]?) {
+
     guard let conversationsKeyValues = keyValues else {
       return nil
     }
-    
+
     guard let analytics =
       BVAnalyticsConfiguration(config, keyValues: keyValues) else {
         return nil
     }
-    
+
     guard let clientKey: String =
-      conversationsKeyValues[BVConstants.BVConversations.apiKey] as? String
+      conversationsKeyValues[BVConversationsConstants.apiKey] as? String
       else {
         return nil
     }
-    
+
     self = .all(clientKey: clientKey,
                 configType: config,
                 analyticsConfig: analytics)
   }
-  
+
   internal func isSameTypeAs(_ config: BVConfiguration) -> Bool {
     guard let conversationsConfig =
       config as? BVConversationsConfiguration else {

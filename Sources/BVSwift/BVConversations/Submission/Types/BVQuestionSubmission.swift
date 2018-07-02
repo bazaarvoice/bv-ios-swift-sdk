@@ -11,47 +11,40 @@ import Foundation
 /// Public class for handling BVQuestion Submissions
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/questions/question-submission)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/questions/question-submission)
 public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
   
   /// The Product identifier to submit against
   public var productId: String? {
-    get {
-      guard let question = submissionable else {
-        return nil
-      }
-      return question.productId
+    guard let question = submissionable else {
+      return nil
     }
+    return question.productId
   }
   
   /// The Question details content text to submit
   public var questionDetails: String? {
-    get {
-      guard let question = submissionable else {
-        return nil
-      }
-      return question.questionDetails
+    guard let question = submissionable else {
+      return nil
     }
+    return question.questionDetails
   }
   
   /// The Question summary content text to submit
   public var questionSummary: String? {
-    get {
-      guard let question = submissionable else {
-        return nil
-      }
-      return question.questionSummary
+    guard let question = submissionable else {
+      return nil
     }
+    return question.questionSummary
   }
   
   /// The user anonymity flag to submit
   public var isUserAnonymous: Bool? {
-    get {
-      guard let question = submissionable else {
-        return nil
-      }
-      return question.isUserAnonymous
+    guard let question = submissionable else {
+      return nil
     }
+    return question.isUserAnonymous
   }
   
   /// The initializer for BVQuestionSubmission
@@ -96,7 +89,7 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
   }
   
   override func conversationsPostflightDidSubmit(_ results: [BVQuestion]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.productId else {
         return
     }
@@ -115,7 +108,7 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
   
   override func conversationsPostflightDidSubmitPhotoUpload(
     _ results: [BVQuestion]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.productId else {
         return
     }
