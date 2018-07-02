@@ -13,28 +13,22 @@ import Foundation
 /// It conforms to BVQueryable and BVSubmissionable, therefore, it is used for
 /// both BVQuery and BVSubmission.
 public struct BVComment: BVQueryable, BVSubmissionable {
-  
+
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVComments.singularKey
-    }
+    return BVConversationsConstants.BVComments.singularKey
   }
-  
+
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVComments.pluralKey
-    }
+    return BVConversationsConstants.BVComments.pluralKey
   }
-  
-  public private(set) var authors: [BVAuthor]? = nil
-  public private(set) var products: [BVProduct]? = nil
-  public private(set) var reviews: [BVReview]? = nil
-  
+
+  private var includedAuthors: [BVAuthor]?
+  private var includedProducts: [BVProduct]?
+  private var includedReviews: [BVReview]?
+
   public let authorId: String?
   public var badges: [BVBadge]? {
-    get {
-      return badgesArray?.array
-    }
+    return badgesArray?.array
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
   public let campaignId: String?
@@ -43,23 +37,17 @@ public struct BVComment: BVQueryable, BVSubmissionable {
   public let contentLocale: String?
   public let isSyndicated: Bool?
   public var lastModeratedTime: Date? {
-    get {
-      return lastModeratedTimeString?.toBVDate()
-    }
+    return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
   public var lastModificationTime: Date? {
-    get {
-      return lastModificationTimeString?.toBVDate()
-    }
+    return lastModificationTimeString?.toBVDate()
   }
   private let lastModificationTimeString: String?
   public let reviewId: String?
   public let submissionId: String?
   public var submissionTime: Date? {
-    get {
-      return submissionTimeString?.toBVDate()
-    }
+    return submissionTimeString?.toBVDate()
   }
   private let submissionTimeString: String?
   public let syndicationSource: BVSyndicationSource?
@@ -69,7 +57,7 @@ public struct BVComment: BVQueryable, BVSubmissionable {
   public let totalPositiveFeedbackCount: UInt?
   public let userLocation: String?
   public let userNickname: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case authorId = "AuthorId"
     case badgesArray = "Badges"
@@ -99,9 +87,9 @@ extension BVComment {
     self.reviewId = reviewId
     self.commentText = commentText
     self.title = commentTitle
-    self.authors = nil
-    self.products = nil
-    self.reviews = nil
+    self.includedAuthors = nil
+    self.includedProducts = nil
+    self.includedReviews = nil
     self.authorId = nil
     self.badgesArray = nil
     self.campaignId = nil
@@ -122,44 +110,55 @@ extension BVComment {
 }
 
 // MARK: - BVComment: BVAuthorIncludable
-extension BVComment: BVAuthorIncludable { }
+extension BVComment: BVAuthorIncludable {
+  public var authors: [BVAuthor]? {
+    return includedAuthors
+  }
+}
 
 // MARK: - BVComment: BVProductIncludable
-extension BVComment: BVProductIncludable { }
+extension BVComment: BVProductIncludable {
+  public var products: [BVProduct]? {
+    return includedProducts
+  }
+}
 
 // MARK: - BVComment: BVReviewIncludable
-extension BVComment: BVReviewIncludable { }
+extension BVComment: BVReviewIncludable {
+  public var reviews: [BVReview]? {
+    return includedReviews
+  }
+}
 
 // MARK: - BVComment: BVConversationsUpdateIncludable
 extension BVComment: BVConversationsUpdateIncludable {
-  
+
   internal mutating
-  func updateIncludable(_ includable: BVConversationsIncludable) {
-    
+  func update(_ includable: BVConversationsIncludable) {
+
     if let authors: [BVAuthor] = includable.authors {
-      self.authors = authors
+      self.includedAuthors = authors
     }
     if let products: [BVProduct] = includable.products {
-      self.products = products
+      self.includedProducts = products
     }
     if let reviews: [BVReview] = includable.reviews {
-      self.reviews = reviews
+      self.includedReviews = reviews
     }
   }
 }
 
 extension BVComment: BVQueryableInternal {
   internal static var getResource: String? {
-    get {
-      return BVConversationsConstants.BVComments.getResource
-    }
+    return BVConversationsConstants.BVComments.getResource
   }
 }
 
 extension BVComment: BVSubmissionableInternal {
+
   internal static var postResource: String? {
-    get {
-      return BVConversationsConstants.BVComments.postResource
-    }
+    return BVConversationsConstants.BVComments.postResource
   }
+
+  internal func update(_ values: [String: Encodable]?) { }
 }

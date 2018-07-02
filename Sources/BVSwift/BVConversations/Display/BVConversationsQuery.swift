@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -17,32 +17,23 @@ import Foundation
 /// something that you want to see being made public :)
 public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var ignoreCompletion: Bool = false
-  private var paramsPriv: [BVConversationsQueryParameter]
   private var conversationsConfiguration: BVConversationsConfiguration?
-  
-  internal override init<BVTypeInternal : BVQueryableInternal>(
+
+  internal override init<BVTypeInternal: BVQueryableInternal>(
     _ type: BVTypeInternal.Type) {
-    
-    paramsPriv =
-      BVConversationsConstants.BVQueryable.defaultParameters
-        .map { .custom($0.0, $0.1, nil) }
-    
     super.init(type)
+
+    defaultSDKParameters.forEach { add(.unsafe($0.0, $0.1, nil)) }
   }
-  
+
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    get {
-      return {
-        return self.queryItems
-      }
+    return {
+      return self.queryItems
     }
   }
-  
-  internal var conversationsPostflightResultsClosure:
-    (([ConversationsPostflightResult]?) -> Swift.Void)? {
-    get {
-      return nil
-    }
+
+  internal var conversationsPostflightResultsClosure: (([ConversationsPostflightResult]?) -> Swift.Void)? {
+    return nil
   }
 }
 
@@ -52,7 +43,7 @@ extension BVConversationsQuery: BVQueryActionable {
   public typealias Kind = BVType
   public typealias Response =
     BVConversationsQueryResponse<Kind>
-  
+
   public var ignoringCompletion: Bool {
     get {
       return ignoreCompletion
@@ -61,70 +52,59 @@ extension BVConversationsQuery: BVQueryActionable {
       ignoreCompletion = newValue
     }
   }
-  
-  @discardableResult public func handler(
-    completion: @escaping ((Response) -> Void)) -> Self {
-    
+
+  @discardableResult
+  public func handler(completion: @escaping ((Response) -> Void)) -> Self {
+
     responseHandler = {
-      
+
       if self.ignoreCompletion {
         return
       }
-      
+
       switch $0 {
       case let .success(_, jsonData):
-        
+
         #if DEBUG
-          do {
-            let jsonObject =
-              try JSONSerialization.jsonObject(with: jsonData, options: [])
-            BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
-          } catch {
-            BVLogger.sharedLogger.error("Error: \(error)")
-          }
+        do {
+          let jsonObject =
+            try JSONSerialization.jsonObject(with: jsonData, options: [])
+          BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
+        } catch {
+          BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+        }
         #endif
-        
+
         guard let response: BVConversationsQueryResponseInternal<BVType> =
           try? JSONDecoder()
             .decode(
               BVConversationsQueryResponseInternal<BVType>.self,
               from: jsonData) else {
-                var err = BVCommonError.unknown("N/A")
-                
-                #if DEBUG
-                  do {
-                    let _ = try JSONDecoder()
-                      .decode(
-                        BVConversationsQueryResponseInternal<BVType>.self,
-                        from: jsonData)
-                  } catch {
-                    err = BVCommonError.parse(error)
-                  }
-                #endif
-                
-                completion(.failure([err]))
+                completion(
+                  .failure(
+                    [BVCommonError.unknown(
+                      "An Unknown parse error occurred")]))
                 return
         }
-        
-        if let errors:[Error] = response.errors,
+
+        if let errors: [Error] = response.errors,
           !errors.isEmpty {
           completion(.failure(errors))
           return
         }
-        
-        if let hasErrors:Bool = response.hasErrors {
+
+        if let hasErrors: Bool = response.hasErrors {
           assert(!hasErrors, "Weird, we have an error flag set but no errors?")
         }
-        
+
         completion(.success(response, response.results ?? []))
         self.conversationsPostflight(response.results)
-        
-        break
+
       case let .failure(errors):
         completion(.failure(errors))
       }
     }
-    
+
     return self
   }
 }
@@ -133,36 +113,40 @@ extension BVConversationsQuery: BVQueryActionable {
 /// information.
 extension BVConversationsQuery: BVConfigurable {
   public typealias Configuration = BVConversationsConfiguration
-  
-  @discardableResult final public func configure(
-    _ config: Configuration) -> Self {
-    
+
+  @discardableResult
+  final public func configure(_ config: Configuration) -> Self {
+
     assert(nil == conversationsConfiguration)
     conversationsConfiguration = config
-    
+
     /// We update here just in case various things step on top of each
     /// other. We may want to revisit this if this becomes a pain
     /// point
-    update(parameter: .custom(
-      BVConstants.BVConversations.parameterKey, config.configurationKey, nil))
-    update(parameter:
-      .custom(
-        BVConfigurationType.clientKey, config.type.clientId, nil))
-    
+    update(
+      .unsafe(
+        BVConversationsConstants.parameterKey,
+        config.configurationKey, nil))
+    update(
+      .unsafe(
+        BVConversationsConstants.clientKey,
+        config.type.clientId, nil))
+
     /// Make sure we call through to the superclass
     configureExistentially(config)
-    
+
     return self
   }
 }
 
-//// Conformance with BVConversationsQueryCustomizable. Please see protocol
+//// Conformance with BVQueryUnsafeField. Please see protocol
 /// definition for more information.
-extension BVConversationsQuery: BVConversationsQueryCustomizable {
-  @discardableResult final public func custom(
+extension BVConversationsQuery: BVQueryUnsafeField {
+  @discardableResult
+  final public func unsafeField(
     _ field: CustomStringConvertible, value: CustomStringConvertible) -> Self {
-    let custom:BVConversationsQueryParameter = .custom(field, value, nil)
-    add(parameter: custom)
+    let custom: BVURLParameter = .unsafe(field, value, nil)
+    add(custom)
     return self
   }
 }
@@ -170,7 +154,7 @@ extension BVConversationsQuery: BVConversationsQueryCustomizable {
 // MARK: - BVConversationsQuery: BVConversationsQueryPostflightable
 extension BVConversationsQuery: BVConversationsQueryPostflightable {
   internal typealias ConversationsPostflightResult = BVType
-  
+
   func conversationsPostflight(_ results: [BVType]?) {
     conversationsPostflightResultsClosure?(results)
   }
@@ -180,48 +164,5 @@ extension BVConversationsQuery: BVConversationsQueryPostflightable {
 extension BVConversationsQuery: BVConfigurableInternal {
   var configuration: BVConversationsConfiguration? {
     return conversationsConfiguration
-  }
-}
-
-// MARK: - BVQuery: BVURLParameterableInternal
-extension BVConversationsQuery: BVURLParameterableInternal {
-  
-  final internal var parameters: [BVConversationsQueryParameter] {
-    return paramsPriv
-  }
-  
-  final internal func add(
-    parameter: BVConversationsQueryParameter, coalesce: Bool = false) {
-    
-    guard coalesce else {
-      if 0 == paramsPriv.filter({ $0 === parameter }).count {
-        paramsPriv.append(parameter)
-      }
-      return
-    }
-    
-    var coalesceList:[BVConversationsQueryParameter] = []
-    var otherList:[BVConversationsQueryParameter] = []
-    paramsPriv.forEach { (param: BVConversationsQueryParameter) in
-      if param %% parameter {
-        coalesceList.append(param)
-      } else {
-        otherList.append(param)
-      }
-    }
-    
-    let coalesce:BVConversationsQueryParameter =
-      coalesceList.reduce(parameter, +)
-    otherList.append(coalesce)
-    
-    paramsPriv = otherList
-  }
-  
-  final internal func update(parameter: BVConversationsQueryParameter) {
-    var paramsTemp:[BVConversationsQueryParameter] =
-      paramsPriv.filter { $0 != parameter }
-    paramsTemp.append(parameter)
-    
-    paramsPriv = paramsTemp
   }
 }
