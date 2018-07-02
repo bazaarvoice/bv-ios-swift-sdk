@@ -10,7 +10,7 @@ import Foundation
 
 extension BVAnalyticsEvent {
   internal func serializeInView(
-    _ nonPII: Bool = false) -> [String : BVAnyEncodable] {
+    _ nonPII: Bool = false) -> [String: BVAnyEncodable] {
     
     guard case .inView = self else {
       fatalError()

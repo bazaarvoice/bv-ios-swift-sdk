@@ -439,107 +439,101 @@ extension BVConversationsError: Codable {
 extension BVConversationsError: BVError {
   
   public var code: String {
-    get {
-      switch self {
-      case .accessDenied: return "ERROR_ACCESS_DENIED"
-      case .badRequest: return "ERROR_BAD_REQUEST"
-      case .duplicate: return "ERROR_FORM_DUPLICATE"
-      case .duplicateNickname: return "ERROR_FORM_DUPLICATE_NICKNAME"
-      case .duplicateSubmission: return "ERROR_DUPLICATE_SUBMISSION"
-      case .invalidApiKey: return "ERROR_PARAM_INVALID_API_KEY"
-      case .invalidCallback: return "ERROR_PARAM_INVALID_CALLBACK"
-      case .invalidEmailAddress: return "ERROR_FORM_INVALID_EMAILADDRESS"
-      case .invalidFilterAttribute:
-        return "ERROR_PARAM_INVALID_FILTER_ATTRIBUTE"
-      case .invalidIncluded: return "ERROR_PARAM_INVALID_INCLUDED"
-      case .invalidIPAddress: return "ERROR_FORM_INVALID_IPADDRESS"
-      case .invalidLimit: return "ERROR_PARAM_INVALID_LIMIT"
-      case .invalidLocale: return "ERROR_PARAM_INVALID_LOCALE"
-      case .invalidOffset: return "ERROR_PARAM_INVALID_OFFSET"
-      case .invalidOption: return "ERROR_FORM_INVALID_OPTION"
-      case .invalidParameters: return "ERROR_PARAM_INVALID_PARAMETERS"
-      case .invalidSearchAttribute:
-        return "ERROR_PARAM_INVALID_SEARCH_ATTRIBUTE"
-      case .invalidSortAttribute: return "ERROR_PARAM_INVALID_SORT_ATTRIBUTE"
-      case .invalidSubjectId: return "ERROR_PARAM_INVALID_SUBJECT_ID"
-      case .missingSubjectId: return "ERROR_PARAM_MISSING_SUBJECT_ID"
-      case .missingUserId: return "ERROR_PARAM_MISSING_USER_ID"
-      case .patternMismatch: return "ERROR_FORM_PATTERN_MISMATCH"
-      case .profanity: return "ERROR_FORM_PROFANITY"
-      case .rejected: return "ERROR_FORM_REJECTED"
-      case .requestLimitReached: return "ERROR_REQUEST_LIMIT_REACHED"
-      case .required: return "ERROR_FORM_REQUIRED"
-      case .requiredEither: return "ERROR_FORM_REQUIRED_EITHER"
-      case .requiredNickname: return "ERROR_FORM_REQUIRED_NICKNAME"
-      case .requiresTrue: return "ERROR_FORM_REQUIRES_TRUE"
-      case .restricted: return "ERROR_FORM_RESTRICTED"
-      case .storageProviderFailed: return "ERROR_FORM_STORAGE_PROVIDER_FAILED"
-      case .submittedNickname: return "ERROR_FORM_SUBMITTED_NICKNAME"
-      case .tooFew: return "ERROR_FORM_TOO_FEW"
-      case .tooHigh: return "ERROR_FORM_TOO_HIGH"
-      case .tooLong: return "ERROR_FORM_TOO_LONG"
-      case .tooLow: return "ERROR_FORM_TOO_LOW"
-      case .tooShort: return "ERROR_FORM_TOO_SHORT"
-      case .uploadIO: return "ERROR_FORM_UPLOAD_IO"
-      case .unsupported: return "ERROR_UNSUPPORTED"
-      case .unknown: return "ERROR_UNKNOWN"
-      }
+    switch self {
+    case .accessDenied: return "ERROR_ACCESS_DENIED"
+    case .badRequest: return "ERROR_BAD_REQUEST"
+    case .duplicate: return "ERROR_FORM_DUPLICATE"
+    case .duplicateNickname: return "ERROR_FORM_DUPLICATE_NICKNAME"
+    case .duplicateSubmission: return "ERROR_DUPLICATE_SUBMISSION"
+    case .invalidApiKey: return "ERROR_PARAM_INVALID_API_KEY"
+    case .invalidCallback: return "ERROR_PARAM_INVALID_CALLBACK"
+    case .invalidEmailAddress: return "ERROR_FORM_INVALID_EMAILADDRESS"
+    case .invalidFilterAttribute:
+      return "ERROR_PARAM_INVALID_FILTER_ATTRIBUTE"
+    case .invalidIncluded: return "ERROR_PARAM_INVALID_INCLUDED"
+    case .invalidIPAddress: return "ERROR_FORM_INVALID_IPADDRESS"
+    case .invalidLimit: return "ERROR_PARAM_INVALID_LIMIT"
+    case .invalidLocale: return "ERROR_PARAM_INVALID_LOCALE"
+    case .invalidOffset: return "ERROR_PARAM_INVALID_OFFSET"
+    case .invalidOption: return "ERROR_FORM_INVALID_OPTION"
+    case .invalidParameters: return "ERROR_PARAM_INVALID_PARAMETERS"
+    case .invalidSearchAttribute:
+      return "ERROR_PARAM_INVALID_SEARCH_ATTRIBUTE"
+    case .invalidSortAttribute: return "ERROR_PARAM_INVALID_SORT_ATTRIBUTE"
+    case .invalidSubjectId: return "ERROR_PARAM_INVALID_SUBJECT_ID"
+    case .missingSubjectId: return "ERROR_PARAM_MISSING_SUBJECT_ID"
+    case .missingUserId: return "ERROR_PARAM_MISSING_USER_ID"
+    case .patternMismatch: return "ERROR_FORM_PATTERN_MISMATCH"
+    case .profanity: return "ERROR_FORM_PROFANITY"
+    case .rejected: return "ERROR_FORM_REJECTED"
+    case .requestLimitReached: return "ERROR_REQUEST_LIMIT_REACHED"
+    case .required: return "ERROR_FORM_REQUIRED"
+    case .requiredEither: return "ERROR_FORM_REQUIRED_EITHER"
+    case .requiredNickname: return "ERROR_FORM_REQUIRED_NICKNAME"
+    case .requiresTrue: return "ERROR_FORM_REQUIRES_TRUE"
+    case .restricted: return "ERROR_FORM_RESTRICTED"
+    case .storageProviderFailed: return "ERROR_FORM_STORAGE_PROVIDER_FAILED"
+    case .submittedNickname: return "ERROR_FORM_SUBMITTED_NICKNAME"
+    case .tooFew: return "ERROR_FORM_TOO_FEW"
+    case .tooHigh: return "ERROR_FORM_TOO_HIGH"
+    case .tooLong: return "ERROR_FORM_TOO_LONG"
+    case .tooLow: return "ERROR_FORM_TOO_LOW"
+    case .tooShort: return "ERROR_FORM_TOO_SHORT"
+    case .uploadIO: return "ERROR_FORM_UPLOAD_IO"
+    case .unsupported: return "ERROR_UNSUPPORTED"
+    case .unknown: return "ERROR_UNKNOWN"
     }
   }
   
   public var message: String {
-    get {
-      switch self {
-      case .accessDenied(.some(let message)): return message
-      case .badRequest(.some(let message)): return message
-      case .duplicate(.some(let message)): return message
-      case .duplicateNickname(.some(let message)): return message
-      case .duplicateSubmission(.some(let message)): return message
-      case .invalidApiKey(.some(let message)): return message
-      case .invalidCallback(.some(let message)): return message
-      case .invalidEmailAddress(.some(let message)): return message
-      case .invalidFilterAttribute(.some(let message)): return message
-      case .invalidIncluded(.some(let message)): return message
-      case .invalidIPAddress(.some(let message)): return message
-      case .invalidLimit(.some(let message)): return message
-      case .invalidLocale(.some(let message)): return message
-      case .invalidOffset(.some(let message)): return message
-      case .invalidOption(.some(let message)): return message
-      case .invalidParameters(.some(let message)): return message
-      case .invalidSearchAttribute(.some(let message)): return message
-      case .invalidSortAttribute(.some(let message)): return message
-      case .invalidSubjectId(.some(let message)): return message
-      case .missingSubjectId(.some(let message)): return message
-      case .missingUserId(.some(let message)): return message
-      case .patternMismatch(.some(let message)): return message
-      case .profanity(.some(let message)): return message
-      case .rejected(.some(let message)): return message
-      case .requestLimitReached(.some(let message)): return message
-      case .required(.some(let message)): return message
-      case .requiredEither(.some(let message)): return message
-      case .requiredNickname(.some(let message)): return message
-      case .requiresTrue(.some(let message)): return message
-      case .restricted(.some(let message)): return message
-      case .storageProviderFailed(.some(let message)): return message
-      case .submittedNickname(.some(let message)): return message
-      case .tooFew(.some(let message)): return message
-      case .tooHigh(.some(let message)): return message
-      case .tooLong(.some(let message)): return message
-      case .tooLow(.some(let message)): return message
-      case .tooShort(.some(let message)): return message
-      case .uploadIO(.some(let message)): return message
-      case .unsupported(.some(let message)): return message
-      case .unknown(.some(let message)): return message
-      default:
-        return "No error message."
-      }
+    switch self {
+    case .accessDenied(.some(let message)): return message
+    case .badRequest(.some(let message)): return message
+    case .duplicate(.some(let message)): return message
+    case .duplicateNickname(.some(let message)): return message
+    case .duplicateSubmission(.some(let message)): return message
+    case .invalidApiKey(.some(let message)): return message
+    case .invalidCallback(.some(let message)): return message
+    case .invalidEmailAddress(.some(let message)): return message
+    case .invalidFilterAttribute(.some(let message)): return message
+    case .invalidIncluded(.some(let message)): return message
+    case .invalidIPAddress(.some(let message)): return message
+    case .invalidLimit(.some(let message)): return message
+    case .invalidLocale(.some(let message)): return message
+    case .invalidOffset(.some(let message)): return message
+    case .invalidOption(.some(let message)): return message
+    case .invalidParameters(.some(let message)): return message
+    case .invalidSearchAttribute(.some(let message)): return message
+    case .invalidSortAttribute(.some(let message)): return message
+    case .invalidSubjectId(.some(let message)): return message
+    case .missingSubjectId(.some(let message)): return message
+    case .missingUserId(.some(let message)): return message
+    case .patternMismatch(.some(let message)): return message
+    case .profanity(.some(let message)): return message
+    case .rejected(.some(let message)): return message
+    case .requestLimitReached(.some(let message)): return message
+    case .required(.some(let message)): return message
+    case .requiredEither(.some(let message)): return message
+    case .requiredNickname(.some(let message)): return message
+    case .requiresTrue(.some(let message)): return message
+    case .restricted(.some(let message)): return message
+    case .storageProviderFailed(.some(let message)): return message
+    case .submittedNickname(.some(let message)): return message
+    case .tooFew(.some(let message)): return message
+    case .tooHigh(.some(let message)): return message
+    case .tooLong(.some(let message)): return message
+    case .tooLow(.some(let message)): return message
+    case .tooShort(.some(let message)): return message
+    case .uploadIO(.some(let message)): return message
+    case .unsupported(.some(let message)): return message
+    case .unknown(.some(let message)): return message
+    default:
+      return "No error message."
     }
   }
   
   var localizedDescription: String {
-    get {
-      return code
-    }
+    return code
   }
   
   public var description: String {
@@ -557,127 +551,87 @@ extension BVConversationsError {
     switch code {
     case "ERROR_ACCESS_DENIED":
       self = .accessDenied(message)
-      break
     case "ERROR_BAD_REQUEST":
       self = .badRequest(message)
-      break
     case "ERROR_FORM_DUPLICATE":
       self = .duplicate(message)
-      break
     case "ERROR_FORM_DUPLICATE_NICKNAME":
       self = .duplicateNickname(message)
-      break
     case "ERROR_DUPLICATE_SUBMISSION":
       fallthrough
     case "ERROR_PARAM_DUPLICATE_SUBMISSION":
       self = .duplicateSubmission(message)
-      break
     case "ERROR_PARAM_INVALID_API_KEY":
       self = .invalidApiKey(message)
-      break
     case "ERROR_PARAM_INVALID_CALLBACK":
       self = .invalidCallback(message)
-      break
     case "ERROR_FORM_INVALID_EMAILADDRESS":
       self = .invalidEmailAddress(message)
-      break
     case "ERROR_PARAM_INVALID_FILTER_ATTRIBUTE":
       self = .invalidFilterAttribute(message)
-      break
     case "ERROR_PARAM_INVALID_INCLUDED":
       self = .invalidIncluded(message)
-      break
     case "ERROR_FORM_INVALID_IPADDRESS":
       self = .invalidIPAddress(message)
-      break
     case "ERROR_PARAM_INVALID_LIMIT":
       self = .invalidLimit(message)
-      break
     case "ERROR_PARAM_INVALID_LOCALE":
       self = .invalidLocale(message)
-      break
     case "ERROR_PARAM_INVALID_OFFSET":
       self = .invalidOffset(message)
-      break
     case "ERROR_FORM_INVALID_OPTION":
       self = .invalidOption(message)
-      break
     case "ERROR_PARAM_INVALID_PARAMETERS":
       self = .invalidParameters(message)
-      break
     case "ERROR_PARAM_INVALID_SEARCH_ATTRIBUTE":
       self = .invalidSearchAttribute(message)
-      break
     case "ERROR_PARAM_INVALID_SORT_ATTRIBUTE":
       self = .invalidSortAttribute(message)
-      break
     case "ERROR_PARAM_INVALID_SUBJECT_ID":
       self = .invalidSubjectId(message)
-      break
     case "ERROR_PARAM_MISSING_SUBJECT_ID":
       self = .missingSubjectId(message)
-      break
     case "ERROR_PARAM_MISSING_USER_ID":
       self = .missingUserId(message)
-      break
     case "ERROR_FORM_PATTERN_MISMATCH":
       self = .patternMismatch(message)
-      break
     case "ERROR_FORM_PROFANITY":
       self = .profanity(message)
-      break
     case "ERROR_FORM_REJECTED":
       self = .rejected(message)
-      break
     case "ERROR_REQUEST_LIMIT_REACHED":
       self = .requestLimitReached(message)
-      break
     case "ERROR_FORM_REQUIRED":
       self = .required(message)
-      break
     case "ERROR_FORM_REQUIRED_EITHER":
       self = .requiredEither(message)
-      break
     case "ERROR_FORM_REQUIRED_NICKNAME":
       self = .requiredNickname(message)
-      break
     case "ERROR_FORM_REQUIRES_TRUE":
       self = .requiresTrue(message)
-      break
     case "ERROR_FORM_RESTRICTED":
       self = .restricted(message)
-      break
     case "ERROR_FORM_STORAGE_PROVIDER_FAILED":
       self = .storageProviderFailed(message)
-      break
     case "ERROR_FORM_SUBMITTED_NICKNAME":
       self = .submittedNickname(message)
-      break
     case "ERROR_FORM_TOO_FEW":
       self = .tooFew(message)
-      break
     case "ERROR_FORM_TOO_HIGH":
       self = .tooHigh(message)
-      break
     case "ERROR_FORM_TOO_LONG":
       self = .tooLong(message)
-      break
     case "ERROR_FORM_TOO_LOW":
       self = .tooLow(message)
-      break
     case "ERROR_FORM_TOO_SHORT":
       self = .tooShort(message)
-      break
     case "ERROR_FORM_UPLOAD_IO":
       self = .uploadIO(message)
-      break
     case "ERROR_UNSUPPORTED":
       self = .unsupported(message)
-      break
     /// Non-standard default "catch all" unknown errors
     default:
       self = .unknown(message)
-      break
     }
   }
 }

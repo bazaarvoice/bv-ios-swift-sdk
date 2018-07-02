@@ -13,26 +13,22 @@ import Foundation
 /// It conforms to BVSubmissionable and, therefore, it is used only for
 /// BVSubmission.
 public struct BVVideo: BVSubmissionable {
-  
+
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVVideo.singularKey
-    }
+    return BVConversationsConstants.BVVideo.singularKey
   }
-  
+
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVVideo.pluralKey
-    }
+    return BVConversationsConstants.BVVideo.pluralKey
   }
-  
+
   public let caption: String?
   public let videoHost: String?
   public let videoId: String?
-  public let videoIframeUrl: URL?
-  public let videoThumbnailUrl: URL?
-  public let videoUrl: URL?
-  
+  public let videoIframeUrl: BVCodableSafe<URL>?
+  public let videoThumbnailUrl: BVCodableSafe<URL>?
+  public let videoUrl: BVCodableSafe<URL>?
+
   private enum CodingKeys: String, CodingKey {
     case caption = "Caption"
     case videoHost = "VideoHost"
@@ -45,7 +41,7 @@ public struct BVVideo: BVSubmissionable {
 
 extension BVVideo {
   public init(_ url: URL, caption: String) {
-    self.videoUrl = url
+    self.videoUrl = BVCodableSafe<URL>(url)
     self.caption = caption
     self.videoHost = nil
     self.videoId = nil

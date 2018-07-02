@@ -31,6 +31,84 @@ public protocol BVResourceable: Codable {
   static var pluralKey: String { get }
 }
 
+/// A helper type for dealing with the situations where we may or may not know
+/// what type the indentifier may be, i.e., either Int or String.
+///
+/// - Note:
+/// \
+/// Most often than not the instances that this wraps are String but we keep
+/// this around to be forward/backward compatible between various modules.
+public enum BVIdentifier: Codable {
+  
+  case int(Int)
+  case string(String)
+  
+  public init(from decoder: Decoder) throws {
+    
+    if let int: Int = try? decoder.singleValueContainer().decode(Int.self) {
+      self = .int(int)
+      return
+    }
+    
+    if let string: String =
+      try? decoder.singleValueContainer().decode(String.self) {
+      self = .string(string)
+      return
+    }
+    
+    throw BVCommonError.unknown("Unknown type for identifier value")
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    switch self {
+    case let .int(value):
+      try value.encode(to: encoder)
+    case let .string(value):
+      try value.encode(to: encoder)
+    }
+  }
+}
+
+extension BVIdentifier: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case let .int(value):
+      return "\(value)"
+    case let .string(value):
+      return value
+    }
+  }
+}
+
+/// A helper type for dealing with the situations where we may or may not know
+/// what type the value may be, e.g., like a malformed URL string but not nil
+/// value.
+public struct BVCodableSafe<T: Codable>: Codable {
+  
+  public let value: T?
+  
+  public init(_ value: T?) {
+    self.value = value
+  }
+  
+  public init(from decoder: Decoder) throws {
+    
+    if let decodedValue: T =
+      try? decoder.singleValueContainer().decode(T.self) {
+      value = decodedValue
+      return
+    }
+    value = nil
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    guard let encodeValue = value else {
+      return
+    }
+    try encodeValue.encode(to: encoder)
+  }
+}
+
 /// We use this to consolidate BV Objects since most of them have a collection
 /// of let ivars. We do this to keep the door open to "immutability" if we ever
 /// want to go down the Rx route and to also protect against coding instability
@@ -43,12 +121,10 @@ internal protocol BVMergeable: Codable {
 
 /// Type erasure because Encoders and Decoders need concrete types defined when
 /// inside various container types.
-internal struct BVAnyCodable<T : Codable>: Codable {
+internal struct BVAnyCodable<T: Codable>: Codable {
   private var box: T?
   var value: T? {
-    get {
-      return box
-    }
+    return box
   }
   
   init(_ codable: T) {
@@ -67,12 +143,19 @@ internal struct BVAnyCodable<T : Codable>: Codable {
   }
 }
 
+internal struct BVNil: Encodable {
+  init() { }
+  
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encodeNil()
+  }
+}
+
 internal struct BVAnyEncodable: Encodable {
   private var box: Encodable?
   var value: Encodable? {
-    get {
-      return box
-    }
+    return box
   }
   
   init(_ encodable: Encodable) {
@@ -87,12 +170,10 @@ internal struct BVAnyEncodable: Encodable {
   }
 }
 
-internal struct BVAnyDecodable<T : Decodable>: Decodable {
+internal struct BVAnyDecodable<T: Decodable>: Decodable {
   private var box: Decodable?
   var value: Decodable? {
-    get {
-      return box
-    }
+    return box
   }
   
   public init(from decoder: Decoder) throws {
@@ -100,7 +181,7 @@ internal struct BVAnyDecodable<T : Decodable>: Decodable {
   }
 }
 
-internal struct BVCodingKey : CodingKey {
+internal struct BVCodingKey: CodingKey {
   var stringValue: String = String.empty
   var intValue: Int?
   
@@ -115,13 +196,13 @@ internal struct BVCodingKey : CodingKey {
 
 /// So far this only does decoding
 internal struct BVCodableDictionary<T: Codable>: Codable {
-  var array:[T]?
-  let dictionary: [String : T]?
+  let array: [T]?
+  let dictionary: [String: T]?
   
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: BVCodingKey.self)
     
-    var foundDict: [String : T] = [:]
+    var foundDict: [String: T] = [:]
     var foundArray: [T] = []
     for key in container.allKeys {
       let object: T = try container.decode(T.self, forKey: key)
@@ -135,7 +216,7 @@ internal struct BVCodableDictionary<T: Codable>: Codable {
 
 /// So far this only does decoding
 internal struct BVCodableRawDecoder: Codable {
-  let decoder:Decoder?
+  let decoder: Decoder?
   
   public init(from decoder: Decoder) throws {
     self.decoder = decoder
@@ -148,14 +229,14 @@ internal struct BVCodableRawDecoder: Codable {
 
 /// So far this only does decoding
 internal struct BVCodableWrapper<T: Codable>: Codable {
-  let unwrapped:T?
+  let unwrapped: T?
   
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: BVCodingKey.self)
     
     var found: T? = nil
     if let key = container.allKeys.first {
-      let object:T = try container.decode(T.self, forKey: key)
+      let object: T = try container.decode(T.self, forKey: key)
       found = object
     }
     unwrapped = found

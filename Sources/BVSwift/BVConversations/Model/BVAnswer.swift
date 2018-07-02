@@ -13,56 +13,41 @@ import Foundation
 /// It conforms to BVQueryable and BVSubmissionable, therefore, it is used for
 /// both BVQuery and BVSubmission.
 public struct BVAnswer: BVQueryable, BVSubmissionable {
-  
+
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVAnswers.singularKey
-    }
+    return BVConversationsConstants.BVAnswers.singularKey
   }
-  
+
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVAnswers.pluralKey
-    }
+    return BVConversationsConstants.BVAnswers.pluralKey
   }
-  
+
   public var additionalFields: Decoder? {
-    get {
-      return additionalFieldsDecoder?.decoder
-    }
+    return additionalFieldsDecoder?.decoder
   }
   private let additionalFieldsDecoder: BVCodableRawDecoder?
   public let answerId: String?
   public let answerText: String?
   public let authorId: String?
   public var badges: [BVBadge]? {
-    get {
-      return badgesArray?.array
-    }
+    return badgesArray?.array
   }
   private let badgesArray: BVCodableDictionary<BVBadge>?
-  public let brandImageLogoURL: URL?
+  public let brandImageLogoURL: BVCodableSafe<URL>?
   public let campaignId: String?
   public let contentLocale: String?
   public var contextDataValues: [BVContextDataValue]? {
-    get {
-      return contextDataValuesArray?.array
-    }
+    return contextDataValuesArray?.array
   }
-  private let contextDataValuesArray:
-  BVCodableDictionary<BVContextDataValue>?
+  private let contextDataValuesArray: BVCodableDictionary<BVContextDataValue>?
   public let isFeatured: Bool?
   public let isSyndicated: Bool?
   public var lastModeratedTime: Date? {
-    get {
-      return lastModeratedTimeString?.toBVDate()
-    }
+    return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
   public var lastModificationTime: Date? {
-    get {
-      return lastModificationTimeString?.toBVDate()
-    }
+    return lastModificationTimeString?.toBVDate()
   }
   private let lastModificationTimeString: String?
   public let moderationStatus: String?
@@ -71,9 +56,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
   public let questionId: String?
   public let submissionId: String?
   public var submissionTime: Date? {
-    get {
-      return submissionTimeString?.toBVDate()
-    }
+    return submissionTimeString?.toBVDate()
   }
   private let submissionTimeString: String?
   public let syndicationSource: BVSyndicationSource?
@@ -83,7 +66,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
   public let userLocation: String?
   public let userNickname: String?
   public let videos: [BVVideo]?
-  
+
   private enum CodingKeys: String, CodingKey {
     case additionalFieldsDecoder = "AdditionalFields"
     case answerId = "Id"
@@ -147,16 +130,15 @@ extension BVAnswer {
 
 extension BVAnswer: BVQueryableInternal {
   internal static var getResource: String? {
-    get {
-      return BVConversationsConstants.BVAnswers.getResource
-    }
+    return BVConversationsConstants.BVAnswers.getResource
   }
 }
 
 extension BVAnswer: BVSubmissionableInternal {
+
   internal static var postResource: String? {
-    get {
-      return BVConversationsConstants.BVAnswers.postResource
-    }
+    return BVConversationsConstants.BVAnswers.postResource
   }
+
+  internal func update(_ values: [String: Encodable]?) { }
 }

@@ -10,7 +10,8 @@ import Foundation
 /// Public class for handling BVAuthor Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/profiles/profile-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/profiles/profile-display)
 public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
   
   /// The Author identifier to query
@@ -24,64 +25,61 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
     
     super.init(BVAuthor.self)
     
-    let authorFilter:BVConversationsQueryParameter =
+    let authorFilter: BVURLParameter =
       .filter(
-        BVAuthorFilter.authorId,
-        BVRelationalFilterOperator.equalTo,
-        [authorId],
+        BVAuthorFilter.authorId(authorId),
+        BVConversationsfiltererator.equalTo,
         nil)
     
-    add(parameter: authorFilter)
+    add(authorFilter)
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure:
-    (([BVAuthor]?) -> Swift.Void)? {
-    get {
-      return { (results: [BVAuthor]?) in
-        if let _ = results,
-          let authorId = self.authorId {
-          let authorFeatureEvent: BVAnalyticsEvent =
-            .feature(
-              bvProduct: .profile,
-              name: .profile,
-              productId: "none",
-              brand: nil,
-              additional: ["page" : authorId, "interaction" : false])
-          BVPixel.track(
-            authorFeatureEvent,
-            analyticConfiguration: self.configuration?.analyticsConfiguration)
-        }
+  internal override var conversationsPostflightResultsClosure: (([BVAuthor]?) -> Swift.Void)? {
+    return { (results: [BVAuthor]?) in
+      if nil != results,
+        let authorId = self.authorId {
+        let authorFeatureEvent: BVAnalyticsEvent =
+          .feature(
+            bvProduct: .profile,
+            name: .profile,
+            productId: "none",
+            brand: nil,
+            additional: ["page": authorId, "interaction": false])
+        BVPixel.track(
+          authorFeatureEvent,
+          analyticConfiguration: self.configuration?.analyticsConfiguration)
       }
     }
   }
 }
 
-// MARK: - BVAuthorQuery: BVConversationsQueryIncludeable
-extension BVAuthorQuery: BVConversationsQueryIncludeable {
+// MARK: - BVAuthorQuery: BVQueryIncludeable
+extension BVAuthorQuery: BVQueryIncludeable {
   public typealias Include = BVAuthorInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 0) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+    let internalInclude: BVURLParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
 }
 
-// MARK: - BVAuthorQuery: BVConversationsQuerySortable
-extension BVAuthorQuery: BVConversationsQuerySortable {
+// MARK: - BVAuthorQuery: BVQuerySortable
+extension BVAuthorQuery: BVQuerySortable {
   public typealias Sort = BVAuthorSort
-  public typealias Order = BVMonotonicSortOrder
+  public typealias Order = BVConversationsSortOrder
   
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = {
+  @discardableResult
+  public func sort(_ sort: Sort, order: Order) -> Self {
+    let internalSort: BVURLParameter = {
       switch sort {
       case let .answers(by):
         return .sortType(sort, by, order, nil)
@@ -94,19 +92,19 @@ extension BVAuthorQuery: BVConversationsQuerySortable {
       }
     }()
     
-    add(parameter: internalSort)
+    add(internalSort)
     return self
   }
 }
 
-// MARK: - BVAuthorQuery: BVConversationsQueryStatable
-extension BVAuthorQuery: BVConversationsQueryStatable {
+// MARK: - BVAuthorQuery: BVQueryStatable
+extension BVAuthorQuery: BVQueryStatable {
   public typealias Stat = BVAuthorStat
   
-  @discardableResult public func stats(
-    _ for: Stat) -> Self {
-    let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
-    add(parameter: internalStat)
+  @discardableResult
+  public func stats(_ for: Stat) -> Self {
+    let internalStat: BVURLParameter = .stats(`for`, nil)
+    add(internalStat)
     return self
   }
 }

@@ -17,16 +17,18 @@ internal class BVAnalyticsSubmission: BVSubmission {
   
   internal enum BVAnalyticsEventResponse {
     public var success: Bool {
-      get {
-        guard case .success = self else {
-          return false
-        }
-        return true
+      guard case .success = self else {
+        return false
       }
+      return true
     }
     
     case success
     case failure([Error])
+  }
+  
+  override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
+    return nil
   }
 }
 
@@ -54,8 +56,8 @@ extension BVAnalyticsSubmission: BVSubmissionActionable {
     }
   }
   
-  @discardableResult func handler(
-    completion: @escaping ((Response) -> Void)) -> Self {
+  @discardableResult
+  func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
     responseHandler = {
       
@@ -64,12 +66,10 @@ extension BVAnalyticsSubmission: BVSubmissionActionable {
       }
       
       switch $0 {
-      case .success(_, _):
+      case .success:
         completion(.success)
-        break
       case let .failure(errors):
         completion(.failure(errors))
-        break
       }
     }
     
