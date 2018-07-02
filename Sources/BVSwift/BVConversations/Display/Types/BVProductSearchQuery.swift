@@ -11,7 +11,8 @@ import Foundation
 /// Public class for handling BVProduct Text Search Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
 public class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
   
   /// The Product text search query
@@ -25,79 +26,71 @@ public class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
     
     super.init(BVProduct.self)
     
-    let queryField: BVSearchQueryField = BVSearchQueryField(searchQuery)
-    let searchField: BVConversationsQueryParameter =
-      .customField(queryField, nil)
+    let queryField: BVConversationsSearchQueryField = BVConversationsSearchQueryField(searchQuery)
+    let searchField: BVURLParameter =
+      .field(queryField, nil)
     
-    add(parameter: searchField)
+    add(searchField)
   }
 }
 
-// MARK: - BVProductSearchQuery: BVConversationsQueryFilterable
-extension BVProductSearchQuery: BVConversationsQueryFilterable {
+// MARK: - BVProductSearchQuery: BVQueryFilterable
+extension BVProductSearchQuery: BVQueryFilterable {
   public typealias Filter = BVProductFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
     
     /// I think we can let everything pass...
-    let internalFilter:BVConversationsQueryParameter = {
+    let internalFilter: BVURLParameter = {
       switch filter {
       case let .answers(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .authors(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .comments(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .questions(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       case let .reviews(typeFilter):
-        return .filterType(filter, typeFilter, op, values, nil)
+        return .filterType(filter, typeFilter, op, nil)
       default:
-        return .filter(filter, op, values, nil)
+        return .filter(filter, op, nil)
       }
     }()
     
-    add(parameter: internalFilter)
+    add(internalFilter)
     return self
   }
 }
 
-// MARK: - BVProductSearchQuery: BVConversationsQueryIncludeable
-extension BVProductSearchQuery: BVConversationsQueryIncludeable {
+// MARK: - BVProductSearchQuery: BVQueryIncludeable
+extension BVProductSearchQuery: BVQueryIncludeable {
   public typealias Include = BVProductInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 10) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+    let internalInclude: BVURLParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
 }
 
-// MARK: - BVProductSearchQuery: BVConversationsQueryStatable
-extension BVProductSearchQuery: BVConversationsQueryStatable {
+// MARK: - BVProductSearchQuery: BVQueryStatable
+extension BVProductSearchQuery: BVQueryStatable {
   public typealias Stat = BVProductStat
   
-  @discardableResult public func stats(
-    _ for: Stat) -> Self {
-    let internalStat:BVConversationsQueryParameter = .stats(`for`, nil)
-    add(parameter: internalStat)
+  @discardableResult
+  public func stats(_ for: Stat) -> Self {
+    let internalStat: BVURLParameter = .stats(`for`, nil)
+    add(internalStat)
     return self
   }
 }

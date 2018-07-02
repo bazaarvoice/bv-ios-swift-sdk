@@ -27,48 +27,40 @@ public enum BVAnalyticsConfiguration: BVConfiguration {
   
   /// See Protocol Definition for more info
   public var configurationKey: String {
-    get {
-      return type.clientId
-    }
+    return type.clientId
   }
   
   /// See Protocol Definition for more info
   public var type: BVConfigurationType {
-    get {
-      switch self {
-      case let .configuration(_, configType):
-        return configType
-      case let .dryRun(configType):
-        return configType
-      }
+    switch self {
+    case let .configuration(_, configType):
+      return configType
+    case let .dryRun(configType):
+      return configType
     }
   }
   
   /// See Protocol Definition for more info
   public var endpoint: String {
-    get {
-      return BVAnalyticsLocaleService(
-        locale: locale, config: type).resource
-    }
+    return BVAnalyticsLocaleService(
+      locale: locale, config: type).resource
   }
   
   /// See above enum documentation
   internal var locale: Locale {
-    get {
-      switch self {
-      case let .configuration(.some(locale), _):
-        return locale
-      default:
-        return Locale.autoupdatingCurrent
-      }
+    switch self {
+    case let .configuration(.some(locale), _):
+      return locale
+    default:
+      return Locale.autoupdatingCurrent
     }
   }
 }
 
 /// Conformance to Equatable
 extension BVAnalyticsConfiguration: Equatable {
-  public static func ==
-    (lhs: BVAnalyticsConfiguration, rhs: BVAnalyticsConfiguration) -> Bool {
+  public static func == (lhs: BVAnalyticsConfiguration,
+                         rhs: BVAnalyticsConfiguration) -> Bool {
     
     if lhs.hashValue != rhs.hashValue {
       return false
@@ -110,12 +102,10 @@ extension BVAnalyticsConfiguration: BVConfigurationInternal {
   
   /// There is no sub-configuration for analytics.
   internal var subConfigurations: [BVConfigurationInternal]? {
-    get {
-      return nil
-    }
+    return nil
   }
   
-  internal init?(_ config: BVConfigurationType, keyValues: [String : Any]?) {
+  internal init?(_ config: BVConfigurationType, keyValues: [String: Any]?) {
     
     guard let analyticKeyValues = keyValues else {
       self = .dryRun(configType: config)
@@ -123,14 +113,14 @@ extension BVAnalyticsConfiguration: BVConfigurationInternal {
     }
     
     if let dryRun: Bool =
-      analyticKeyValues[BVConstants.BVAnalytics.dryRunKey] as? Bool,
+      analyticKeyValues[BVAnalyticsConstants.dryRunKey] as? Bool,
       dryRun {
       self = .dryRun(configType: config)
       return
     }
     
     guard let localeIdentifier: String =
-      analyticKeyValues[BVConstants.BVAnalytics.localeKey] as? String else {
+      analyticKeyValues[BVAnalyticsConstants.localeKey] as? String else {
         self =
           .configuration(locale: nil, configType: config)
         return
@@ -149,4 +139,3 @@ extension BVAnalyticsConfiguration: BVConfigurationInternal {
     return self == analyticsConfig
   }
 }
-

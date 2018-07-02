@@ -11,37 +11,32 @@ import Foundation
 /// Public class for handling BVComment Submissions
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-submission)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-submission)
 public class BVCommentSubmission: BVMediaSubmission<BVComment> {
   
   /// The Review identifier to submit against
   public var reviewId: String? {
-    get {
-      guard let comment = submissionable else {
-        return nil
-      }
-      return comment.reviewId
+    guard let comment = submissionable else {
+      return nil
     }
+    return comment.reviewId
   }
   
   /// The Comment content text to submit
   public var commentText: String? {
-    get {
-      guard let comment = submissionable else {
-        return nil
-      }
-      return comment.commentText
+    guard let comment = submissionable else {
+      return nil
     }
+    return comment.commentText
   }
   
   /// The Comment content title to submit
   public var commentTitle: String? {
-    get {
-      guard let comment = submissionable else {
-        return nil
-      }
-      return comment.title
+    guard let comment = submissionable else {
+      return nil
     }
+    return comment.title
   }
   
   /// The initializer for BVCommentSubmission
@@ -82,7 +77,7 @@ public class BVCommentSubmission: BVMediaSubmission<BVComment> {
   }
   
   override func conversationsPostflightDidSubmit(_ results: [BVComment]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.reviewId else {
         return
     }
@@ -101,7 +96,7 @@ public class BVCommentSubmission: BVMediaSubmission<BVComment> {
   
   override func conversationsPostflightDidSubmitPhotoUpload(
     _ results: [BVComment]?) {
-    guard let _ = results,
+    guard nil != results,
       let id = self.reviewId else {
         return
     }
@@ -112,7 +107,7 @@ public class BVCommentSubmission: BVMediaSubmission<BVComment> {
         name: .photo,
         productId: id,
         brand: nil,
-        additional: ["detail1" : "Comment"])
+        additional: ["detail1": "Comment"])
     BVPixel.track(
       analyticsEvent,
       analyticConfiguration: self.configuration?.analyticsConfiguration)

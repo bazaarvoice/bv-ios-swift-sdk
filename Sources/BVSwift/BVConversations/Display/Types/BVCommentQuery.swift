@@ -10,7 +10,8 @@ import Foundation
 /// Public class for handling BVComment Queries
 /// - Note:
 /// \
-/// For more information please see the [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-display)
+/// For more information please see the
+/// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/comments/comment-display)
 public class BVCommentQuery: BVConversationsQuery<BVComment> {
   
   /// The Product identifier to query
@@ -29,47 +30,42 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
     
     super.init(BVComment.self)
     
-    let productFilter:BVConversationsQueryParameter =
+    let productFilter: BVURLParameter =
       .filter(
-        BVCommentFilter.productId,
-        BVRelationalFilterOperator.equalTo,
-        [productId],
+        BVCommentFilter.productId(productId),
+        BVConversationsfiltererator.equalTo,
         nil)
     
-    let commentFilter:BVConversationsQueryParameter =
-      .filter(BVCommentFilter.commentId,
-              BVRelationalFilterOperator.equalTo,
-              [commentId],
+    let commentFilter: BVURLParameter =
+      .filter(BVCommentFilter.commentId(commentId),
+              BVConversationsfiltererator.equalTo,
               nil)
     
-    add(parameter: productFilter)
-    add(parameter: commentFilter)
+    add(productFilter)
+    add(commentFilter)
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure:
-    (([BVComment]?) -> Swift.Void)? {
-    get {
-      return { (results: [BVComment]?) in
-        if let comments = results {
-          for comment in comments {
-            if let contentId: String = comment.commentId,
-              let productId: String = comment.reviewId {
-              let commentImpressionEvent: BVAnalyticsEvent =
-                .impression(
-                  bvProduct: .reviews,
-                  contentId: contentId,
-                  contentType: .comment,
-                  productId: productId,
-                  brand: nil,
-                  categoryId: nil,
-                  additional: nil)
-              
-              BVPixel.track(
-                commentImpressionEvent,
-                analyticConfiguration:
-                self.configuration?.analyticsConfiguration)
-            }
+  internal override var conversationsPostflightResultsClosure: (([BVComment]?) -> Swift.Void)? {
+    return { (results: [BVComment]?) in
+      if let comments = results {
+        for comment in comments {
+          if let contentId: String = comment.commentId,
+            let productId: String = comment.reviewId {
+            let commentImpressionEvent: BVAnalyticsEvent =
+              .impression(
+                bvProduct: .reviews,
+                contentId: contentId,
+                contentType: .comment,
+                productId: productId,
+                brand: nil,
+                categoryId: nil,
+                additional: nil)
+            
+            BVPixel.track(
+              commentImpressionEvent,
+              analyticConfiguration:
+              self.configuration?.analyticsConfiguration)
           }
         }
       }
@@ -77,55 +73,48 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
   }
 }
 
-// MARK: - BVCommentQuery: BVConversationsQueryFilterable
-extension BVCommentQuery: BVConversationsQueryFilterable {
+// MARK: - BVCommentQuery: BVQueryFilterable
+extension BVCommentQuery: BVQueryFilterable {
   public typealias Filter = BVCommentFilter
-  public typealias Operator = BVRelationalFilterOperator
+  public typealias Operator = BVConversationsfiltererator
   
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    value: CustomStringConvertible) -> Self {
-    return self.filter(filter, op: op, values: [value])
-  }
-  
-  @discardableResult public func filter(
-    _ filter: Filter,
-    op: Operator,
-    values: [CustomStringConvertible]) -> Self {
-    let internalFilter:BVConversationsQueryParameter =
-      .filter(filter, op, values, nil)
-    add(parameter: internalFilter)
+  @discardableResult
+  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+    let internalFilter: BVURLParameter =
+      .filter(filter, op, nil)
+    add(internalFilter)
     return self
   }
 }
 
-// MARK: - BVCommentQuery: BVConversationsQueryIncludeable
-extension BVCommentQuery: BVConversationsQueryIncludeable {
+// MARK: - BVCommentQuery: BVQueryIncludeable
+extension BVCommentQuery: BVQueryIncludeable {
   public typealias Include = BVCommentInclude
   
-  @discardableResult public func include(
-    _ include: Include, limit: UInt16 = 0) -> Self {
-    let internalInclude:BVConversationsQueryParameter = .include(include, nil)
-    add(parameter: internalInclude, coalesce: true)
+  @discardableResult
+  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+    let internalInclude: BVURLParameter =
+      .include(include, nil)
+    add(internalInclude, coalesce: true)
     if limit > 0 {
-      let internalIncludeLimit:BVConversationsQueryParameter =
+      let internalIncludeLimit: BVURLParameter =
         .includeLimit(include, limit, nil)
-      add(parameter: internalIncludeLimit)
+      add(internalIncludeLimit)
     }
     return self
   }
 }
 
-// MARK: - BVCommentQuery: BVConversationsQuerySortable
-extension BVCommentQuery: BVConversationsQuerySortable {
+// MARK: - BVCommentQuery: BVQuerySortable
+extension BVCommentQuery: BVQuerySortable {
   public typealias Sort = BVCommentSort
-  public typealias Order = BVMonotonicSortOrder
+  public typealias Order = BVConversationsSortOrder
   
-  @discardableResult public func sort(
-    _ sort: Sort, order: Order) -> Self {
-    let internalSort: BVConversationsQueryParameter = .sort(sort, order, nil)
-    add(parameter: internalSort)
+  @discardableResult
+  public func sort(_ sort: Sort, order: Order) -> Self {
+    let internalSort: BVURLParameter =
+      .sort(sort, order, nil)
+    add(internalSort)
     return self
   }
 }

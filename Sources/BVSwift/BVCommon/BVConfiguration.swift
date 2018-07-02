@@ -23,7 +23,7 @@ public protocol BVConfiguration {
 
 /// The base configuration enum for all BVConfigurations
 public enum BVConfigurationType {
-  internal static let clientKey: String = BVConstants.clientKey
+  internal static let clientKey: String = apiClientId
   
   /// THe production configuration with BV client id
   case production(clientId: String)
@@ -32,13 +32,11 @@ public enum BVConfigurationType {
   case staging(clientId: String)
   
   internal var clientId: String {
-    get {
-      switch self {
-      case let .production(clientId):
-        return clientId
-      case let .staging(clientId):
-        return clientId
-      }
+    switch self {
+    case let .production(clientId):
+      return clientId
+    case let .staging(clientId):
+      return clientId
     }
   }
 }
@@ -52,7 +50,7 @@ public protocol BVConfigurable {
 
 extension BVConfigurationType: Equatable {
   public static 
-    func ==(lhs: BVConfigurationType, rhs: BVConfigurationType) -> Bool {
+    func == (lhs: BVConfigurationType, rhs: BVConfigurationType) -> Bool {
     switch (lhs, rhs) {
     case (.production, .production):
       fallthrough
@@ -66,15 +64,22 @@ extension BVConfigurationType: Equatable {
 
 extension  BVConfigurationType: Hashable {
   public var hashValue: Int {
-    get {
-      switch self {
-      case let .production(clientId):
-        return "production".djb2hash ^ clientId.hashValue
-      case let .staging(clientId):
-        return "staging".djb2hash ^ clientId.hashValue
-      }
+    switch self {
+    case let .production(clientId):
+      return "production".djb2hash ^ clientId.hashValue
+    case let .staging(clientId):
+      return "staging".djb2hash ^ clientId.hashValue
     }
   }
+}
+
+internal protocol BVConfigureExistentially {
+  func configureExistentially(_ config: BVConfiguration) -> Self
+}
+
+internal protocol BVConfigurableInternal {
+  associatedtype Configuration: BVConfiguration
+  var configuration: Configuration? { get }
 }
 
 internal protocol BVConfigurationInternal: BVConfiguration {
@@ -89,7 +94,7 @@ internal protocol BVConfigurationInternal: BVConfiguration {
   ///   - keyValues: The key values used in a configuration initialization that
   ///     will be needed to determine the type of configuration for this
   ///     instance.
-  init?(_ configType: BVConfigurationType, keyValues: [String : Any]?)
+  init?(_ configType: BVConfigurationType, keyValues: [String: Any]?)
   
   /// Comparitor of the type of the configuration used to help sort them out
   /// from a list, array, set, etc.
@@ -98,11 +103,46 @@ internal protocol BVConfigurationInternal: BVConfiguration {
   func isSameTypeAs(_ config: BVConfiguration) -> Bool
 }
 
-internal protocol BVConfigurableInternal {
-  associatedtype Configuration: BVConfiguration
-  var configuration: Configuration? { get }
+internal struct BVRawConfiguration: BVConfigurationInternal {
+  
+  init?(_ configType: BVConfigurationType, keyValues: [String: Any]?) {
+    return nil
+  }
+  
+  func isSameTypeAs(_ config: BVConfiguration) -> Bool {
+    guard let rawConfig = config as? BVRawConfiguration else {
+      return false
+    }
+    return self == rawConfig
+  }
+  
+  var configurationKey: String
+  var endpoint: String
+  var type: BVConfigurationType
+  var subConfigurations: [BVConfigurationInternal]?
+  
+  init(
+    key: String,
+    endpoint: String,
+    type: BVConfigurationType,
+    subConfigs: [BVConfigurationInternal]? = nil) {
+    self.configurationKey = key
+    self.endpoint = endpoint
+    self.type = type
+    self.subConfigurations = subConfigs
+  }
 }
 
-internal protocol BVConfigureExistentially {
-  func configureExistentially(_ config: BVConfiguration) -> Self
+extension BVRawConfiguration: Equatable {
+  public static func == (lhs: BVRawConfiguration,
+                         rhs: BVRawConfiguration) -> Bool {
+    return lhs.configurationKey == rhs.configurationKey &&
+      lhs.endpoint == rhs.endpoint &&
+      lhs.type == rhs.type
+  }
+}
+
+internal protocol BVConfigureRaw {
+  var rawConfiguration: BVRawConfiguration? { get }
+  func configureRaw(_ config: BVRawConfiguration) -> Self
 }

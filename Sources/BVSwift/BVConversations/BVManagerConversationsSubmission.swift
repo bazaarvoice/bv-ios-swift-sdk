@@ -209,4 +209,3 @@ extension BVManager: BVConversationsSubmissionGenerator {
     return BVUASSubmission(bvAuthToken: bvAuthToken)?.configure(config)
   }
 }
-

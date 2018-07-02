@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import UIKit
 
@@ -14,40 +14,34 @@ import UIKit
 @objc
 public class BVConversationsCollectionView:
 UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
-  
+
   /// private var cellToProductMap: [String : BVType] = [:]
   private var hasEnteredView: Bool = false
   private var hasSentScrollEvent: Bool = false
   private var delegateProxy: BVProxyObject?
   private var datasourceProxy: BVProxyObject?
-  
+
   private func initialize() {
     delegateProxy = BVProxyObject(self)
     datasourceProxy = BVProxyObject(self)
-    
+
     /// This makes sure to set the proxies
     delegate = nil
     dataSource = nil
   }
-  
+
   internal var dataSourceReceiver: UICollectionViewDataSource? {
-    get {
-      return dataSource
-    }
+    return dataSource
   }
-  
+
   internal var scrollEvent: BVAnalyticsEvent? {
-    get {
-      return nil
-    }
+    return nil
   }
-  
+
   internal var wasSeenEvent: BVAnalyticsEvent? {
-    get {
-      return nil
-    }
+    return nil
   }
-  
+
   public final override var dataSource: UICollectionViewDataSource? {
     get {
       return datasourceProxy?.receiver as? UICollectionViewDataSource
@@ -57,7 +51,7 @@ UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
       super.dataSource = datasourceProxy
     }
   }
-  
+
   public final override var delegate: UICollectionViewDelegate? {
     get {
       return delegateProxy?.receiver as? UICollectionViewDelegate
@@ -67,34 +61,34 @@ UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
       super.delegate = delegateProxy
     }
   }
-  
+
   deinit {
     datasourceProxy?.receiver = nil
     delegateProxy?.receiver = nil
   }
-  
+
   public override init(
     frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
     initialize()
   }
-  
+
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     initialize()
   }
-  
+
   public override func layoutSubviews() {
     super.layoutSubviews()
-    
+
     if let event = wasSeenEvent,
       !hasEnteredView {
       hasEnteredView = true
       BVPixel.track(event)
     }
   }
-  
-  
+
+
   // MARK: - UICollectionViewDataSource
   public func collectionView(
     _ collectionView: UICollectionView,
@@ -106,7 +100,7 @@ UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
     ///      collectionView, numberOfItemsInSection: section)
     return 0
   }
-  
+
   public func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -134,7 +128,7 @@ UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
     ///    return cell
     return UICollectionViewCell()
   }
-  
+
   // MARK: - UICollectionViewDelegate
   public final func collectionView(
     _ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -143,25 +137,25 @@ UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
     }
     receiver.collectionView?(collectionView, didSelectItemAt: indexPath)
   }
-  
+
   // MARK: - UIScrollViewDelegate
   public final func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     if let receiver = delegate {
       receiver.scrollViewWillBeginDragging?(scrollView)
     }
-    
+
     if let event = scrollEvent,
       !hasSentScrollEvent {
       hasSentScrollEvent = true
       BVPixel.track(event)
     }
   }
-  
+
   public final func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     if let receiver = delegate {
       receiver.scrollViewDidEndDecelerating?(scrollView)
     }
-    
+
     if let event = scrollEvent {
       BVPixel.track(event)
     }

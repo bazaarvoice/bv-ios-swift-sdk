@@ -80,19 +80,30 @@ public extension URLSession {
     
     let action = { (error: Error?) -> URLSessionDataTask? in
       
+      /// Execute preflight and check for any errors
       if let err = error {
-        requestable.process(data: nil, urlResponse: nil, error: err)
+        requestable.process(
+          request: nil, data: nil, urlResponse: nil, error: err)
         completionHandler(nil, nil, err)
         return nil
       }
       
+      /// Ask nicely for the request object
       guard let request = requestable.request else {
         fatalError("nil request for BVURLRequestable")
       }
       
+      /// Next we ask if there's any cached responses laying around for the
+      /// request
+      if let cached = requestable.cached(request) {
+        completionHandler(cached.data, cached.response, nil)
+        return nil
+      }
+      
       let task: URLSessionDataTask = self.dataTask(with: request) {
         (data: Data?, response: URLResponse?, error: Error?) in
-        requestable.process(data: data, urlResponse: response, error: error)
+        requestable.process(
+          request: request, data: data, urlResponse: response, error: error)
         completionHandler(data, response, error)
       }
       task.resume()
@@ -136,24 +147,36 @@ public extension URLSession {
     
     let action = { (error: Error?) -> URLSessionUploadTask? in
       
+      /// Execute preflight and check for any errors
       if let err = error {
-        requestable.process(data: nil, urlResponse: nil, error: err)
+        requestable.process(
+          request: nil, data: nil, urlResponse: nil, error: err)
         completionHandler(nil, nil, err)
         return nil
       }
       
+      /// Ask nicely for the request object
       guard let request = requestable.request else {
         fatalError("nil request for BVURLRequestable")
       }
       
+      /// Ask nicely for the file handle
       guard let fileURL = requestable.fileURL else {
         fatalError("nil fileURL for BVURLRequestable")
+      }
+      
+      /// Next we ask if there's any cached responses laying around for the
+      /// request
+      if let cached = requestable.cached(request) {
+        completionHandler(cached.data, cached.response, nil)
+        return nil
       }
       
       let task: URLSessionUploadTask =
         self.uploadTask(with: request, fromFile: fileURL) {
           (data: Data?, response: URLResponse?, error: Error?) in
-          requestable.process(data: data, urlResponse: response, error: error)
+          requestable.process(
+            request: request, data: data, urlResponse: response, error: error)
           completionHandler(data, response, error)
       }
       task.resume()
@@ -197,24 +220,36 @@ public extension URLSession {
     
     let action = { (error: Error?) -> URLSessionUploadTask? in
       
+      /// Execute preflight and check for any errors
       if let err = error {
-        requestable.process(data: nil, urlResponse: nil, error: err)
+        requestable.process(
+          request: nil, data: nil, urlResponse: nil, error: err)
         completionHandler(nil, nil, err)
         return nil
       }
       
+      /// Ask nicely for the request object
       guard let request = requestable.request else {
         fatalError("nil request for BVURLRequestable")
       }
       
+      /// Ask nicely for the body data
       guard let bodyData = requestable.bodyData else {
         fatalError("nil bodyData for BVURLRequestable")
+      }
+      
+      /// Next we ask if there's any cached responses laying around for the
+      /// request
+      if let cached = requestable.cached(request) {
+        completionHandler(cached.data, cached.response, nil)
+        return nil
       }
       
       let task: URLSessionUploadTask =
         self.uploadTask(with: request, from: bodyData) {
           (data: Data?, response: URLResponse?, error: Error?) in
-          requestable.process(data: data, urlResponse: response, error: error)
+          requestable.process(
+            request: request, data: data, urlResponse: response, error: error)
           completionHandler(data, response, error)
       }
       task.resume()
@@ -255,19 +290,30 @@ internal extension URLSession {
     
     let action = { (error: Error?) -> URLSessionDownloadTask? in
       
+      /// Execute preflight and check for any errors
       if let err = error {
-        requestable.process(data: nil, urlResponse: nil, error: err)
+        requestable.process(
+          request: nil, data: nil, urlResponse: nil, error: err)
         completionHandler(nil, nil, err)
         return nil
       }
       
+      /// Ask nicely for the request object
       guard let request = requestable.request else {
         fatalError("nil request for BVURLRequestable")
       }
       
+      /// Next we ask if there's any cached responses laying around for the
+      /// request
+      if let cached = requestable.cached(request) {
+        completionHandler(cached.response.url, cached.response, nil)
+        return nil
+      }
+      
       let task: URLSessionDownloadTask = self.downloadTask(with: request) {
         (url: URL?, response: URLResponse?, error: Error?) in
-        requestable.process(url: url, urlResponse: response, error: error)
+        requestable.process(
+          request: request, url: url, urlResponse: response, error: error)
         completionHandler(url, response, error)
       }
       task.resume()
@@ -286,4 +332,3 @@ internal extension URLSession {
     return nil
   }
 }
-

@@ -8,34 +8,47 @@
 import Foundation
 
 extension BVInternalQuery: BVURLRequestable {
-  
+
   internal var request: URLRequest? {
-    get {
-      
-      if commonEndpoint.isEmpty {
-        fatalError(
-          "Endpoint value is empty, make sure you configure the query first.")
-      }
-      
-      let urlString: String = "\(commonEndpoint)\(bvPath)"
-      guard var urlComponents:URLComponents =
-        URLComponents(string: urlString) else {
-          return nil
-      }
-      
-      urlComponents.queryItems = urlQueryItems
-      
-      guard let url: URL = urlComponents.url else {
+    if commonEndpoint.isEmpty {
+      fatalError(
+        "Endpoint value is empty, make sure you configure the query first.")
+    }
+
+    let urlString: String = "\(commonEndpoint)\(bvPath)"
+    guard var urlComponents: URLComponents =
+      URLComponents(string: urlString) else {
         return nil
-      }
-      
-      BVLogger
-        .sharedLogger.debug("Issuing Query Request to: \(url.absoluteString)")
-      
-      return URLRequest(url: url)
+    }
+
+    if let items = urlQueryItems,
+      !items.isEmpty {
+      urlComponents.queryItems = items
+    }
+
+    guard let url: URL = urlComponents.url else {
+      return nil
+    }
+
+    BVLogger
+      .sharedLogger.debug("Issuing Query Request to: \(url.absoluteString)")
+
+    let cachePolicy: URLRequest.CachePolicy =
+      usesURLCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
+    return URLRequest(url: url, cachePolicy: cachePolicy)
+  }
+
+  func cached(_ request: URLRequest) -> CachedURLResponse? {
+    switch request.cachePolicy {
+    case .returnCacheDataDontLoad:
+      fallthrough
+    case .returnCacheDataElseLoad:
+      return BVURLCacheManager.shared.load(request)
+    default:
+      return nil
     }
   }
-  
+
   func preflight(_ completion: BVCompletionWithErrorsHandler?) -> Bool {
     guard let handler = preflightHandler else {
       return false
@@ -43,49 +56,69 @@ extension BVInternalQuery: BVURLRequestable {
     handler(completion)
     return true
   }
-  
-  internal final func process(
-    data: Data?, urlResponse: URLResponse?, error: Error?) {
-    
-    guard let _ = responseHandler else {
+
+  internal final
+  func process(
+    request: URLRequest?,
+    data: Data?,
+    urlResponse: URLResponse?,
+    error: Error?) {
+
+    guard nil != responseHandler else {
       fatalError(
         "No completion response block given for query, make sure you" +
         "explicitly mark ignoringCompletion if this is what you intended.")
     }
-    
-    guard let httpResponse:HTTPURLResponse = urlResponse as? HTTPURLResponse
+
+    guard let httpResponse: HTTPURLResponse = urlResponse as? HTTPURLResponse
       else {
-        let err = BVCommonError.unknown("URLResponse wasn't an HTTPURLResponse")
+        let err =
+          BVCommonError.unknown("URLResponse wasn't an HTTPURLResponse")
         assert(false, err.description)
-        
-        
+
         responseHandler?(.failure([err]))
         return
     }
-    
-    if let httpError:Error = error, 200 != httpResponse.statusCode {
+
+    if let httpError: Error = error, 200 != httpResponse.statusCode {
       let err = BVCommonError.network(
         httpResponse.statusCode, httpError.localizedDescription)
       assert(false, err.description)
-      
+
       responseHandler?(.failure([err]))
       return
     }
-    
-    guard let jsonData:Data = data else {
+
+    guard let jsonData: Data = data else {
       let err = BVCommonError.noData
       assert(false, err.description)
-      
-      
+
+
       responseHandler?(.failure([err]))
       return
     }
-    
+
+    /// We'll only cache successful calls with successful requests
+    switch request {
+    case let .some(req)
+      where req.cachePolicy == .returnCacheDataDontLoad ||
+        req.cachePolicy == .returnCacheDataElseLoad:
+      let cachedResponse =
+        CachedURLResponse(response: httpResponse, data: jsonData)
+      BVURLCacheManager.shared.store(cachedResponse, request: req)
+    default:
+      break
+    }
+
     responseHandler?(.success(urlResponse, jsonData))
   }
-  
-  internal final func process(
-    url: URL?, urlResponse: URLResponse?, error: Error?) {
-    
+
+  internal final
+  func process(
+    request: URLRequest?,
+    url: URL?,
+    urlResponse: URLResponse?,
+    error: Error?) {
+    fatalError("Processing requests via URL isn't supported yet.")
   }
 }
