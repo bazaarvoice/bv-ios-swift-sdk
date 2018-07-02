@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-//MARK: - Extensions
+// MARK: - Extensions
 
 internal func +<Key, Value>
-  (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key : Value] {
+  (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
   guard let right = rhs else {
     return lhs
   }
@@ -24,19 +24,7 @@ internal func +=<Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]?) {
   lhs = (lhs + rhs)
 }
 
-internal func +<T: Hashable & Equatable>
-  (lhs: [T], rhs: [T]?) -> [T] {
-  guard let right = rhs else {
-    return lhs
-  }
-  var union = lhs
-  right.forEach({ if !union.contains($0) { union.append($0) } })
-  return union
-}
-
-internal func +=<T: Hashable & Equatable>(lhs: inout [T], rhs: [T]?) {
-  lhs = (lhs + rhs)
-}
+// swiftlint:disable identifier_name
 
 infix operator ∪ : AdditionPrecedence
 infix operator ∪= : AssignmentPrecedence
@@ -55,7 +43,9 @@ internal func ∪=(lhs: inout [URLQueryItem], rhs: [URLQueryItem]?) {
   lhs = (lhs ∪ rhs)
 }
 
-internal func +(lhs: Data, rhs: Data?) -> Data {
+// swiftlint:enable identifier_name
+
+internal func + (lhs: Data, rhs: Data?) -> Data {
   guard let right = rhs else {
     return lhs
   }
@@ -64,32 +54,52 @@ internal func +(lhs: Data, rhs: Data?) -> Data {
   return merge
 }
 
-internal func +=(lhs: inout Data, rhs: Data?) {
+internal func += (lhs: inout Data, rhs: Data?) {
   lhs = (lhs + rhs)
 }
 
+internal extension Sequence where Element: Equatable {
+  var uniqueElements: [Element] {
+    return self.reduce(into: []) {
+      uniqueElements, element in
+
+      if !uniqueElements.contains(element) {
+        uniqueElements.append(element)
+      }
+    }
+  }
+}
+
+internal extension Date {
+  var toBVFormat: String {
+    let df: DateFormatter = DateFormatter()
+    df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+    return df.string(from: self)
+  }
+}
+
 internal extension String {
-  internal static var empty:String = ""
-  
+  internal static var empty: String = ""
+
   internal func toBVDate() -> Date? {
-    let df:DateFormatter = DateFormatter()
+    let df: DateFormatter = DateFormatter()
     df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
     return df.date(from: self)
   }
-  
+
   internal func escaping() -> String {
     return self
       .replacingOccurrences(of: ",", with: "\\,")
       .replacingOccurrences(of: ":", with: "\\:")
       .replacingOccurrences(of: "&", with: "%26")
   }
-  
+
   internal func urlEncode() -> String? {
     var set: CharacterSet = CharacterSet.urlQueryAllowed
     set.remove(charactersIn: "+&")
     return addingPercentEncoding(withAllowedCharacters: set)
   }
-  
+
   internal mutating func escape() {
     self = escaping()
   }
@@ -102,7 +112,7 @@ internal extension String {
       ($0 << 5) &+ $0 &+ Int($1)
     }
   }
-  
+
   var sdbmhash: Int {
     let unicodeScalars = self.unicodeScalars.map { $0.value }
     return unicodeScalars.reduce(0) {
@@ -119,18 +129,16 @@ internal extension String {
 
 internal extension Sequence where Iterator.Element == String {
   var hashValue: Int {
-    get {
-      var hash: Int = 0
-      var first: Bool = true
-      for str in self {
-        if first {
-          hash = str.djb2hash
-          first = false
-        }
-        hash ^= str.hashValue
+    var hash: Int = 0
+    var first: Bool = true
+    for str in self {
+      if first {
+        hash = str.djb2hash
+        first = false
       }
-      return hash
+      hash ^= str.hashValue
     }
+    return hash
   }
 }
 
@@ -140,12 +148,12 @@ Iterator.Element == (key: String, value: String) {
     return reduce([]) {
       (result: [URLQueryItem],
       element: (key: String, value: String)) -> [URLQueryItem] in
-      
+
       guard let name = element.key.urlEncode(),
         let urlValue = element.value.urlEncode() else {
           return result
       }
-      
+
       return result + [URLQueryItem(name: name, value: urlValue)]
     }
   }
@@ -153,8 +161,8 @@ Iterator.Element == (key: String, value: String) {
 
 internal extension UnkeyedDecodingContainer {
   internal mutating func decodeArray<T>(_ type: T.Type)
-    throws -> [T] where T : Decodable {
-      var array:[T] = [T]()
+    throws -> [T] where T: Decodable {
+      var array: [T] = [T]()
       while !self.isAtEnd {
         let elem: T = try self.decode(T.self)
         array.append(elem)
@@ -166,19 +174,19 @@ internal extension UnkeyedDecodingContainer {
 internal extension URLRequest {
   static var defaultBoundary: String =
   "----------------------------f3a1ba9c57bd"
-  
+
   static func multipartData(
     key: String,
     value: String,
     boundary: String? = URLRequest.defaultBoundary,
     isLast: Bool = false) -> Data? {
-    
+
     var body: Data = Data()
-    
+
     guard let delimiter: String = boundary else {
       return nil
     }
-    
+
     if !key.isEmpty && !value.isEmpty {
       body += "--\(delimiter)\r\n".toUTF8Data()
       body +=
@@ -187,26 +195,26 @@ internal extension URLRequest {
       body += value.toUTF8Data()
       body += "\r\n".toUTF8Data()
     }
-    
+
     if isLast {
       body += encloseMultipartData(delimiter)
     }
-    
+
     return body
   }
-  
+
   static func multipartData(
     key: String,
     value: Data,
     boundary: String? = URLRequest.defaultBoundary,
     isLast: Bool = false) -> Data? {
-    
+
     var body: Data = Data()
-    
+
     guard let delimiter: String = boundary else {
       return nil
     }
-    
+
     if !key.isEmpty && !value.isEmpty {
       body += "--\(delimiter)\r\n".toUTF8Data()
       body +=
@@ -217,21 +225,21 @@ internal extension URLRequest {
       body += value
       body += "\r\n".toUTF8Data()
     }
-    
+
     if isLast {
       body += encloseMultipartData(delimiter)
     }
-    
+
     return body
   }
-  
+
   static func encloseMultipartData(
     _ boundary: String? = URLRequest.defaultBoundary) -> Data? {
-    
+
     guard let delimiter: String = boundary else {
       return nil
     }
-    
+
     return "--\(delimiter)--\r\n".toUTF8Data()
   }
 }
@@ -262,48 +270,42 @@ internal extension UIDevice {
 }
 
 internal extension Bundle {
-  
+
   class internal var mainBundleIdentifier: String {
-    get {
-      return Bundle.main.bundleIdentifier ?? "unknown"
-    }
+    return Bundle.main.bundleIdentifier ?? "unknown"
   }
-  
+
   class internal var releaseVersionNumber: String {
-    get {
-      let error: String = "x.x.x"
-      guard let infoDict = self.main.infoDictionary else {
-        return error
-      }
-      
-      guard let releaseNumber: String =
-        infoDict["CFBundleShortVersionString"] as? String else {
-          return error
-      }
-      
-      return releaseNumber
+    let error: String = "x.x.x"
+    guard let infoDict = self.main.infoDictionary else {
+      return error
     }
+
+    guard let releaseNumber: String =
+      infoDict["CFBundleShortVersionString"] as? String else {
+        return error
+    }
+
+    return releaseNumber
   }
-  
+
   class internal var buildVersionNumber: String {
-    get {
-      let error: String = "-1"
-      guard let infoDict = self.main.infoDictionary else {
-        return error
-      }
-      
-      guard let versionString = kCFBundleVersionKey as String?,
-        let buildNumber: String =
-        infoDict[versionString] as? String else {
-          return error
-      }
-      
-      return buildNumber
+    let error: String = "-1"
+    guard let infoDict = self.main.infoDictionary else {
+      return error
     }
+
+    guard let versionString = kCFBundleVersionKey as String?,
+      let buildNumber: String =
+      infoDict[versionString] as? String else {
+        return error
+    }
+
+    return buildNumber
   }
-  
+
   class internal func loadJSONFileFromMain(
-    name: String, fileExtension: String) -> [String : Any]? {
+    name: String, fileExtension: String) -> [String: Any]? {
     if let path =
       Bundle.main.url(
         forResource: name,
@@ -311,7 +313,7 @@ internal extension Bundle {
       let data = try? Data(contentsOf: path),
       let representation =
       try? JSONSerialization.jsonObject(with: data, options: []),
-      let json = representation as? [String : Any] {
+      let json = representation as? [String: Any] {
       return json
     }
     return nil
@@ -324,17 +326,17 @@ internal extension UIView {
     addTarget: Any?,
     addTargetSelector: Selector,
     forControlEvents: UIControlEvents = .touchUpInside) {
-    
+
     var subviewQueue: [UIView] = self.subviews
-    
+
     while !subviewQueue.isEmpty {
       let subview = subviewQueue.removeFirst()
-      
+
       if let control = subview as? T {
         control.addTarget(
           addTarget, action: addTargetSelector, for: forControlEvents)
       }
-      
+
       subviewQueue += subview.subviews
     }
   }
@@ -345,21 +347,19 @@ internal extension UIView {
     guard let gestureRecognizers = gestureRecognizers else {
       return
     }
-    
+
     for recognizer in gestureRecognizers {
       guard recognizer.cancelsTouchesInView else {
         continue
       }
       assert(false, "UIGestureRecognizer must have \"cancelsTouchesInView\" " +
-        "set to false for the BVSDK to properly function.")
+        "set to false for the BVSwift to properly function.")
     }
   }
 }
 
 internal extension IndexPath {
   var bvKey: String {
-    get {
-      return "\(section):\(row)"
-    }
+    return "\(section):\(row)"
   }
 }
