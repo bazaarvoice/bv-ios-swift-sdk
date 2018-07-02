@@ -102,7 +102,7 @@ public protocol BVConversationsSubmissionFieldTypeable {
 /// Protocol defining the ability to accept custom dictionary of strings
 public protocol BVConversationsSubmissionCustomizeable {
   @discardableResult
-  func add(_ customFields: [String : String]) -> Self
+  func add(_ fields: [String: String]) -> Self
 }
 
 /// Enumeration defining the submission type
@@ -238,13 +238,11 @@ BVConversationsSubmissionPostflightable: BVSubmissionActionable {
 extension BVConversationsSubmissionAction:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case .preview:
-        return [URLQueryItem(name: "action", value: "Preview")]
-      case .submit:
-        return [URLQueryItem(name: "action", value: "Submit")]
-      }
+    switch self {
+    case .preview:
+      return [URLQueryItem(name: "action", value: "Preview")]
+    case .submit:
+      return [URLQueryItem(name: "action", value: "Submit")]
     }
   }
 }
@@ -252,14 +250,12 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionUserAuthenticatedString:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .uas(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "user", value: encoded)]
+    switch self {
+    case let .uas(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(name: "user", value: encoded)]
     }
   }
 }
@@ -267,14 +263,12 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionAuthenticity:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .fingerprint(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "fp", value: encoded)]
+    switch self {
+    case let .fingerprint(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(name: "fp", value: encoded)]
     }
   }
 }
@@ -282,17 +276,15 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionAlerts:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .sendEmailWhenCommented(value):
-        let encoded = value ? "true" : "false"
-        return [URLQueryItem(
-          name: "sendemailalertwhencommented", value: encoded)]
-      case let .sendEmailWhenPublished(value):
-        let encoded = value ? "true" : "false"
-        return [URLQueryItem(
-          name: "sendemailalertwhenpublished", value: encoded)]
-      }
+    switch self {
+    case let .sendEmailWhenCommented(value):
+      let encoded = value ? "true" : "false"
+      return [URLQueryItem(
+        name: "sendemailalertwhencommented", value: encoded)]
+    case let .sendEmailWhenPublished(value):
+      let encoded = value ? "true" : "false"
+      return [URLQueryItem(
+        name: "sendemailalertwhenpublished", value: encoded)]
     }
   }
 }
@@ -300,31 +292,29 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionFieldTypes:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-        
-      case let .additional(name, value):
-        return [URLQueryItem(
-          name: "additionalfield_\(name)", value: value)]
-      case let .contextData(name, value):
-        return [URLQueryItem(
-          name: "contextdatavalue_\(name)", value: value)]
-      case let .contextDataFalse(name):
-        return [URLQueryItem(
-          name: "contextdatavalue_\(name)", value: "false")]
-      case let .contextDataTrue(name):
-        return [URLQueryItem(
-          name: "contextdatavalue_\(name)", value: "true")]
-      case let .freeformTag(name, number, value):
-        return [URLQueryItem(
-          name: "tagid_\(name)_\(number)", value: value)]
-      case let .predefinedTag(name, id, value):
-        return [URLQueryItem(
-          name: "tagid_\(name)/\(id)", value: value)]
-      case let .rating(name, value):
-        return [URLQueryItem(
-          name: "rating_\(name)", value: "\(value)")]
-      }
+    switch self {
+      
+    case let .additional(name, value):
+      return [URLQueryItem(
+        name: "additionalfield_\(name)", value: value)]
+    case let .contextData(name, value):
+      return [URLQueryItem(
+        name: "contextdatavalue_\(name)", value: value)]
+    case let .contextDataFalse(name):
+      return [URLQueryItem(
+        name: "contextdatavalue_\(name)", value: "false")]
+    case let .contextDataTrue(name):
+      return [URLQueryItem(
+        name: "contextdatavalue_\(name)", value: "true")]
+    case let .freeformTag(name, number, value):
+      return [URLQueryItem(
+        name: "tagid_\(name)_\(number)", value: value)]
+    case let .predefinedTag(name, id, value):
+      return [URLQueryItem(
+        name: "tagid_\(name)/\(id)", value: value)]
+    case let .rating(name, value):
+      return [URLQueryItem(
+        name: "rating_\(name)", value: "\(value)")]
     }
   }
 }
@@ -332,21 +322,19 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionHostedAuthenticated:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .hostedAuthCallback(value):
-        guard let encoded = value.absoluteString.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(
-          name: "hostedauthentication_callbackurl", value: encoded)]
-      case let .hostedAuthEmail(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(
-          name: "hostedauthentication_authenticationemail", value: encoded)]
+    switch self {
+    case let .hostedAuthCallback(value):
+      guard let encoded = value.absoluteString.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(
+        name: "hostedauthentication_callbackurl", value: encoded)]
+    case let .hostedAuthEmail(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
+      }
+      return [URLQueryItem(
+        name: "hostedauthentication_authenticationemail", value: encoded)]
     }
   }
 }
@@ -354,14 +342,12 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionLocale:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .locale(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "locale", value: encoded)]
+    switch self {
+    case let .locale(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(name: "locale", value: encoded)]
     }
   }
 }
@@ -369,53 +355,51 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionMedia:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .photos(value):
-        var index: Int = 0
-        return value.reduce([])
-        { (result: [URLQueryItem], photo: BVPhoto) -> [URLQueryItem] in
+    switch self {
+    case let .photos(value):
+      var index: Int = 0
+      return value.reduce([])
+      { (result: [URLQueryItem], photo: BVPhoto) -> [URLQueryItem] in
+        var items = result
+        
+        if let caption = photo.caption?.urlEncode(),
+          let sizes = photo.photoSizes,
+          let url = sizes.filter({ (photoSize: BVPhotoSize) -> Bool in
+            guard let sizeId = photoSize.sizeId else {
+              return false
+            }
+            return "normal" == sizeId.lowercased()
+          }).first?.url?.value?.absoluteString.urlEncode() {
+          
+          items += [
+            URLQueryItem(name: "photourl_\(index)", value: url),
+            URLQueryItem(name: "photocaption_\(index)", value: caption)
+          ]
+          
+          index += 1
+        }
+        
+        return items
+      }
+    case let .videos(value):
+      var index: Int = 1
+      return
+        value.reduce([])
+        { (result: [URLQueryItem], video: BVVideo) -> [URLQueryItem] in
           var items = result
           
-          if let caption = photo.caption?.urlEncode(),
-            let sizes = photo.photoSizes,
-            let url = sizes.filter({ (photoSize: BVPhotoSize) -> Bool in
-              guard let sizeId = photoSize.sizeId else {
-                return false
-              }
-              return "normal" == sizeId.lowercased()
-            }).first?.url?.absoluteString.urlEncode() {
+          if let url = video.videoUrl?.value?.absoluteString.urlEncode(),
+            let caption = video.caption {
             
             items += [
-              URLQueryItem(name: "photourl_\(index)", value: url),
-              URLQueryItem(name: "photocaption_\(index)", value: caption)
+              URLQueryItem(name: "VideoUrl_\(index)", value: url),
+              URLQueryItem(name: "VideoCaption_\(index)", value: caption)
             ]
             
             index += 1
           }
           
           return items
-        }
-      case let .videos(value):
-        var index: Int = 1
-        return
-          value.reduce([])
-          { (result: [URLQueryItem], video: BVVideo) -> [URLQueryItem] in
-            var items = result
-            
-            if let url = video.videoUrl?.absoluteString.urlEncode(),
-              let caption = video.caption {
-              
-              items += [
-                URLQueryItem(name: "VideoUrl_\(index)", value: url),
-                URLQueryItem(name: "VideoCaption_\(index)", value: caption)
-              ]
-              
-              index += 1
-            }
-            
-            return items
-        }
       }
     }
   }
@@ -424,32 +408,30 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionRating:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .comment(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(
-          name: "netpromotercomment", value: encoded)]
-      case let .score(value):
-        
-        let score = (0 < value) ?
-          (10 > value) ?
-            value : 10 : 1
-        
-        guard let encoded = "\(score)".urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(
-          name: "netpromoterscore", value: encoded)]
-      case let .recommended(value):
-        guard let encoded = (value ? "true" : "false").urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(
-          name: "isrecommended", value: encoded)]
+    switch self {
+    case let .comment(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(
+        name: "netpromotercomment", value: encoded)]
+    case let .score(value):
+      
+      let score = (0 < value) ?
+        (10 > value) ?
+          value : 10 : 1
+      
+      guard let encoded = "\(score)".urlEncode() else {
+        return nil
+      }
+      return [URLQueryItem(
+        name: "netpromoterscore", value: encoded)]
+    case let .recommended(value):
+      guard let encoded = (value ? "true" : "false").urlEncode() else {
+        return nil
+      }
+      return [URLQueryItem(
+        name: "isrecommended", value: encoded)]
     }
   }
 }
@@ -457,14 +439,12 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionTag:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .campaignId(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "campaignid", value: encoded)]
+    switch self {
+    case let .campaignId(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(name: "campaignid", value: encoded)]
     }
   }
 }
@@ -472,13 +452,11 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionTermsAndConditions:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .agree(value):
-        let encoded = value ? "true" : "false"
-        return
-          [URLQueryItem(name: "agreedtotermsandconditions", value: encoded)]
-      }
+    switch self {
+    case let .agree(value):
+      let encoded = value ? "true" : "false"
+      return
+        [URLQueryItem(name: "agreedtotermsandconditions", value: encoded)]
     }
   }
 }
@@ -486,30 +464,27 @@ BVConversationsSubmissionParameterable {
 extension BVConversationsSubmissionUserInfo:
 BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .email(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "useremail", value: encoded)]
-      case let .identifier(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "userid", value: encoded)]
-      case let .location(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "userlocation", value: encoded)]
-      case let .nickname(value):
-        guard let encoded = value.urlEncode() else {
-          return nil
-        }
-        return [URLQueryItem(name: "usernickname", value: encoded)]
+    switch self {
+    case let .email(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
       }
+      return [URLQueryItem(name: "useremail", value: encoded)]
+    case let .identifier(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
+      }
+      return [URLQueryItem(name: "userid", value: encoded)]
+    case let .location(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
+      }
+      return [URLQueryItem(name: "userlocation", value: encoded)]
+    case let .nickname(value):
+      guard let encoded = value.urlEncode() else {
+        return nil
+      }
+      return [URLQueryItem(name: "usernickname", value: encoded)]
     }
   }
 }
-

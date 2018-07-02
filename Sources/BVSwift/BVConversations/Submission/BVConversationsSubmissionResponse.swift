@@ -46,21 +46,17 @@ public enum BVConversationsSubmissionResponse
   public typealias MetaType = BVConversationsSubmissionMetaData
   
   public var success: Bool {
-    get {
-      guard case .success = self else {
-        return false
-      }
-      return true
+    guard case .success = self else {
+      return false
     }
+    return true
   }
   
   public var errors: [Error]? {
-    get {
-      guard case let .failure(errors) = self else {
-        return nil
-      }
-      return errors
+    guard case let .failure(errors) = self else {
+      return nil
     }
+    return errors
   }
   
   case success(MetaType, ResponseType)

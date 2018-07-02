@@ -11,8 +11,6 @@ import Foundation
 extension BVManager {
   internal static
   var conversationsConfiguration: BVConversationsConfiguration? {
-    get {
-      return BVManager.sharedManager.getConfiguration()
-    }
+    return BVManager.sharedManager.getConfiguration()
   }
 }

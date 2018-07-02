@@ -181,7 +181,7 @@ public class BVLogger {
           os_log("%{public}@", log: self.logger, msg)
           
           #if DEBUG
-            print(msg)
+          print(msg)
           #endif
           
         } else {
