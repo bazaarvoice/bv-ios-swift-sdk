@@ -6,10 +6,6 @@
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
 //
 
-#if !DISABLE_BVSDK_IDFA
-  import AdSupport
-#endif
-
 import Foundation
 
 /// The BVAnalytics BVAnalyticsEvent enum
@@ -149,7 +145,7 @@ public enum BVAnalyticsEvent {
 /// We need to make sure to keep this updated with the types that we use...
 extension BVAnalyticsEvent {
   internal static func stringifyAndTypeErase(
-    _ encodableDict: [String : Encodable]?) -> [String : BVAnyEncodable] {
+    _ encodableDict: [String: Encodable]?) -> [String: BVAnyEncodable] {
     
     guard let dict = encodableDict else {
       return [:]
@@ -171,26 +167,24 @@ extension BVAnalyticsEvent {
 }
 
 extension BVAnalyticsEvent {
-  internal var additional: [String : Encodable]? {
-    get {
-      switch self {
-      case let .conversion(_,_,_, additional):
-        return additional
-      case let .feature(_, _, _, _, additional):
-        return additional
-      case let .impression(_, _, _, _, _, _, additional):
-        return additional
-      case let .inView(_, _, _, _, additional):
-        return additional
-      case let .pageView(_, _, _, _, _, additional):
-        return additional
-      case let .personalization(_, additional):
-        return additional
-      case let .transaction(_, _, _, _, _, _, _, _, _, additional):
-        return additional
-      case let .viewed(_, _, _, _, _, additional):
-        return additional
-      }
+  internal var additional: [String: Encodable]? {
+    switch self {
+    case let .conversion(_, _, _, additional):
+      return additional
+    case let .feature(_, _, _, _, additional):
+      return additional
+    case let .impression(_, _, _, _, _, _, additional):
+      return additional
+    case let .inView(_, _, _, _, additional):
+      return additional
+    case let .pageView(_, _, _, _, _, additional):
+      return additional
+    case let .personalization(_, additional):
+      return additional
+    case let .transaction(_, _, _, _, _, _, _, _, _, additional):
+      return additional
+    case let .viewed(_, _, _, _, _, additional):
+      return additional
     }
   }
 }
@@ -198,162 +192,142 @@ extension BVAnalyticsEvent {
 extension BVAnalyticsEvent {
   
   internal var hasPII: Bool {
-    get {
-      return 0 < toBlacklistDict.count
-    }
+    return !toBlacklistDict.isEmpty
   }
   
   internal var hasNonPII: Bool {
-    get {
-      return 0 < toWhitelistDict.count
+    return !toWhitelistDict.isEmpty
+  }
+  
+  internal var toWhitelistDict: [String: Encodable] {
+    return toDict.filter {
+      BVAnalyticsEvent.whiteList.contains($0.key)
     }
   }
   
-  internal var toWhitelistDict: [String : Encodable] {
-    get {
-      return toDict.filter {
-        BVAnalyticsEvent.whiteList.contains($0.key)
-      }
+  internal var toBlacklistDict: [String: Encodable] {
+    return toDict.filter {
+      !BVAnalyticsEvent.whiteList.contains($0.key)
     }
   }
   
-  internal var toBlacklistDict: [String : Encodable] {
-    get {
-      return toDict.filter {
-        !BVAnalyticsEvent.whiteList.contains($0.key)
-      }
+  internal var toDict: [String: Encodable] {
+    let analyticsMirror: Mirror = Mirror(reflecting: self)
+    guard let child = analyticsMirror.children.first else {
+      return [:]
     }
-  }
-  
-  internal var toDict: [String : Encodable] {
-    get {
-      let analyticsMirror: Mirror = Mirror(reflecting: self)
-      guard let child = analyticsMirror.children.first else {
-        return [:]
-      }
+    
+    let childMirror = Mirror(reflecting: child.value)
+    
+    /// Super important to always have the supplimentary encodable dictionary
+    /// be the last associated value in the enumeration value.
+    let children = childMirror.children.dropLast(1)
+    
+    let core: [String: Encodable] = children.reduce([:])
+    { (result: [String: Encodable],
+      arg: (label: String?, value: Any)) -> [String: Encodable] in
+      var copyResult: [String: Encodable] = result
       
-      let childMirror = Mirror(reflecting: child.value)
-      
-      /// Super important to always have the supplimentary encodable dictionary
-      /// be the last associated value in the enumeration value.
-      let children = childMirror.children.dropLast(1)
-      
-      let core: [String : Encodable] = children.reduce([:])
-      { (result: [String : Encodable],
-        arg: (label: String?, value: Any)) -> [String : Encodable] in
-        var copyResult: [String : Encodable] = result
-        
-        let (label, value) = arg
-        guard let thisLabel: String = label else {
-          return copyResult
-        }
-        
-        let valueMirror = Mirror(reflecting: value)
-        
-        if let displayStyle = valueMirror.displayStyle,
-          displayStyle == .optional,
-          0 == valueMirror.children.count {
-          return copyResult
-        }
-        
-        guard let encodeValue: Encodable = value as? Encodable else {
-          return copyResult
-        }
-        
-        copyResult[thisLabel] = encodeValue
+      let (label, value) = arg
+      guard let thisLabel: String = label else {
         return copyResult
       }
       
-      return core + additional
+      let valueMirror = Mirror(reflecting: value)
+      
+      if let displayStyle = valueMirror.displayStyle,
+        displayStyle == .optional,
+        0 == valueMirror.children.count {
+        return copyResult
+      }
+      
+      /// This is gloriously ridiculous. It appears that when in "mirror-land"
+      /// if you're more than one degree of separation from the concrete
+      /// encodable type, e.g., Array, Set, Optional, etc., swift doesn't like
+      /// it and gets grumpy about what type is encapsulated. So, we have to do
+      /// this little dance. (29 Jun 18) Swift 4.1
+      switch value {
+      case let valueOptional as [BVAnyEncodable]:
+        copyResult[thisLabel] = valueOptional
+      case let valueOptional as [Encodable]:
+        var wrapper = [BVAnyEncodable]()
+        valueOptional.forEach { wrapper.append(BVAnyEncodable($0)) }
+        copyResult[thisLabel] = wrapper
+      case let valueOptional as Any?:
+        if case let .some(thisValue) = valueOptional,
+          let encoded = thisValue as? Encodable {
+          copyResult[thisLabel] = encoded
+        }
+      }
+      
+      return copyResult
     }
+    
+    return core + additional
   }
 }
 
 extension BVAnalyticsEvent {
   
   internal static var idfaKey: String = "advertisingId"
-  internal static var bvidUserDefaultsKey: String = "BVID_STORAGE_KEY"
-  internal static var defaultIdfa: String = "nontracking"
   internal static var loadIdKey: String = "loadId"
   
-  internal static var bvid: String {
-    get {
-      if let id: String =
-        UserDefaults.standard.string(forKey: bvidUserDefaultsKey),
-        0 < id.count {
-        return id
-      }
-      
-      let uuid: String = UUID().uuidString
-      UserDefaults.standard.setValue(uuid, forKey: bvidUserDefaultsKey)
-      UserDefaults.standard.synchronize()
-      return uuid
-    }
-  }
-  
   internal static var whiteList: [String] {
-    get {
-      return [
-        "orderId",
-        "affiliation",
-        "total",
-        "tax",
-        "shipping",
-        "city",
-        "state",
-        "country",
-        "currency",
-        "items",
-        "locale",
-        "type",
-        "label",
-        "value",
-        "proxy",
-        "partnerSource",
-        "TestCase",
-        "TestSession",
-        "dc",
-        "ref"
-      ]
-    }
+    return [
+      "orderId",
+      "affiliation",
+      "total",
+      "tax",
+      "shipping",
+      "city",
+      "state",
+      "country",
+      "currency",
+      "items",
+      "locale",
+      "type",
+      "label",
+      "value",
+      "proxy",
+      "partnerSource",
+      "TestCase",
+      "TestSession",
+      "dc",
+      "ref"
+    ]
   }
   
   internal static func commonAnalyticsValues(
-    _ anonymous: () -> Bool) -> [String : String] {
+    _ anonymous: () -> Bool) -> [String: String] {
     
-    var id: String = defaultIdfa
-    #if !DISABLE_BVSDK_IDFA
-      guard !anonymous() && ASIdentifierManager.shared()
-        .isAdvertisingTrackingEnabled else {
-          return [idfaKey : id]
-      }
-      id = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-    #endif
+    guard let idfa = BVFingerprint.shared.idfa, !anonymous() else {
+      return [idfaKey: BVFingerprint.shared.nontrackingIDFA]
+    }
     
     return [
-      "mobileSource" : "bv-ios-sdk",
-      "HashedIP" : "default",
-      "source" : "native-mobile-sdk",
-      "UA" : bvid,
-      idfaKey : id
+      "mobileSource": "bv-ios-sdk",
+      "HashedIP": "default",
+      "source": "native-mobile-sdk",
+      "UA": BVFingerprint.shared.bvid,
+      idfaKey: idfa
     ]
   }
   
   internal static func clientIdentifier(
-    _ clientId: String) -> [String : BVAnyEncodable] {
-    return ["client" : BVAnyEncodable(clientId)]
+    _ clientId: String) -> [String: BVAnyEncodable] {
+    return ["client": BVAnyEncodable(clientId)]
   }
   
-  internal static func loadId(_ count: UInt = 10) -> [String : String]? {
+  internal static func loadId(_ count: UInt = 10) -> [String: String]? {
     let byteCount = Int(count) /// Yep, pedantry, recast to Int
     let align = MemoryLayout<UInt8>.alignment
     let buffer: UnsafeMutableRawPointer =
       UnsafeMutableRawPointer.allocate(
-        bytes: byteCount,
-        alignedTo: align)
+        byteCount: byteCount,
+        alignment: align)
     
     defer {
-      buffer.deallocate(bytes: byteCount, alignedTo: align)
+      buffer.deallocate()
     }
     
     guard errSecSuccess ==
@@ -365,7 +339,7 @@ extension BVAnalyticsEvent {
       UnsafeRawBufferPointer(start: buffer, count: byteCount)
     
     return [
-      loadIdKey : bufferPointer.reduce(String.empty)
+      loadIdKey: bufferPointer.reduce(String.empty)
       { (result: String, byte: UInt8) -> String in
         result + String(format: "%x", byte)
       }
@@ -374,11 +348,12 @@ extension BVAnalyticsEvent {
 }
 
 internal protocol BVAnalyticsEventable {
-  func serialize(_ anonymous: Bool) -> Encodable
-  mutating func augment(_ additional: [String : Encodable]?)
+  func serialize(_ anonymous: Bool) -> [String: BVAnyEncodable]
+  mutating func augment(_ additional: [String: BVAnyEncodable]?)
 }
 
 internal typealias BVAnalyticsEventInstance =
   (event: BVAnalyticsEventable,
   configuration: BVAnalyticsConfiguration,
-  anonymous: Bool)
+  anonymous: Bool,
+  overrides: [String: BVAnyEncodable]?)

@@ -13,12 +13,14 @@ internal protocol BVInternalQueryDelegate: class, BVURLQueryItemable { }
 internal class BVInternalQuery<T: BVQueryable> {
   
   /// Private
+  final private var rawConfig: BVRawConfiguration?
+  final private var configuration: BVConfiguration?
+  final private var cacheable: Bool = false
   private var preflightClosure: BVURLRequestablePreflightHandler?
   private var baseResponseCompletion: BVURLRequestableHandler?
   private let getResource: String
   
   /// Internal
-  final internal var configurationType: BVConfiguration?
   internal weak var queryItemable: BVInternalQueryDelegate?
   
   internal init<Concrete: BVQueryableInternal>(_ type: Concrete.Type) {
@@ -30,12 +32,25 @@ internal class BVInternalQuery<T: BVQueryable> {
 extension BVInternalQuery: BVConfigureExistentially {
   @discardableResult
   final func configureExistentially(_ config: BVConfiguration) -> Self {
-    configurationType = config
+    configuration = config
     return self
   }
 }
 
-// MARK: - BVInternalQuery: BVQueryInternal
+// MARK: - BVInternalQuery: BVConfigureRaw
+extension BVInternalQuery: BVConfigureRaw {
+  var rawConfiguration: BVRawConfiguration? {
+    return rawConfig
+  }
+  
+  @discardableResult
+  final func configureRaw(_ config: BVRawConfiguration) -> Self {
+    rawConfig = config
+    return self
+  }
+}
+
+// MARK: - BVInternalQuery: BVQueryActionableInternal
 extension BVInternalQuery: BVQueryActionableInternal {
   
   var preflightHandler: BVURLRequestablePreflightHandler? {
@@ -57,18 +72,29 @@ extension BVInternalQuery: BVQueryActionableInternal {
   }
 }
 
+// MARK: - BVInternalQuery: BVURLRequestableCacheable
+extension BVInternalQuery: BVURLRequestableCacheable {
+  var usesURLCache: Bool {
+    get {
+      return cacheable
+    }
+    set(newValue) {
+      cacheable = newValue
+    }
+  }
+}
+
 // MARK: - BVInternalQuery: BVURLRequestableInternal
 extension BVInternalQuery: BVURLRequestableInternal {
   final internal var bvPath: String {
-    get {
-      return getResource
-    }
+    return getResource
   }
   
   final internal var commonEndpoint: String {
-    get {
-      return configurationType?.endpoint ?? String.empty
+    if let raw = rawConfiguration {
+      return raw.endpoint
     }
+    return configuration?.endpoint ?? String.empty
   }
 }
 

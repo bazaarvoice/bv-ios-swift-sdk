@@ -10,7 +10,7 @@ import Foundation
 
 extension BVAnalyticsEvent: BVAnalyticsEventable {
   
-  internal mutating func augment(_ additional: [String : Encodable]?) {
+  internal mutating func augment(_ additional: [String: BVAnyEncodable]?) {
     
     guard let add = additional else {
       return
@@ -24,8 +24,6 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
       self =
         .conversion(
           type: type, value: value, label: label, additional: new + old)
-      break
-      
     case let .feature(bvProduct, name, productId, brand, old):
       self =
         .feature(
@@ -34,8 +32,6 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
           productId: productId,
           brand: brand,
           additional: new + old)
-      break
-      
     case let .impression(
       bvProduct, contentId, contentType, productId, brand, categoryId, old):
       self =
@@ -47,8 +43,6 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
           brand: brand,
           categoryId: categoryId,
           additional: new + old)
-      break
-      
     case let .inView(bvProduct, component, productId, brand, old):
       self =
         .inView(
@@ -57,8 +51,6 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
           productId: productId,
           brand: brand,
           additional: new + old)
-      break
-      
     case let .pageView(
       bvProduct, productId, brand, categoryId, rootCategoryId, old):
       self =
@@ -69,8 +61,6 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
           categoryId: categoryId,
           rootCategoryId: rootCategoryId,
           additional: new + old)
-      break
-      
     case let .transaction(
       items,
       orderId,
@@ -93,8 +83,6 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
         state: state,
         tax: tax,
         additional: new + old)
-      break
-      
     case let .viewed(
       bvProduct, productId, brand, categoryId, rootCategoryId, old):
       self = .viewed(
@@ -104,14 +92,12 @@ extension BVAnalyticsEvent: BVAnalyticsEventable {
         categoryId: categoryId,
         rootCategoryId: rootCategoryId,
         additional: new + old)
-      break
-      
     default:
       break
     }
   }
   
-  internal func serialize(_ anonymous: Bool) -> Encodable {
+  internal func serialize(_ anonymous: Bool) -> [String: BVAnyEncodable] {
     switch self {
     case .conversion:
       return serializeConversion(anonymous)

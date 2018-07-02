@@ -89,17 +89,15 @@ internal enum BVAnalyticsLocaleService {
   }
   
   var resource: String {
-    get {
-      switch (self) {
-      case .eu(.production):
-        return BVConstants.BVAnalytics.productionEndpointEU
-      case .eu(.staging):
-        return BVConstants.BVAnalytics.stagingEndpointEU
-      case .default(.production):
-        return BVConstants.BVAnalytics.productionEndpoint
-      case .default(.staging):
-        return BVConstants.BVAnalytics.stagingEndpoint
-      }
+    switch self {
+    case .eu(.production):
+      return BVAnalyticsConstants.productionEndpointEU
+    case .eu(.staging):
+      return BVAnalyticsConstants.stagingEndpointEU
+    case .default(.production):
+      return BVAnalyticsConstants.productionEndpoint
+    case .default(.staging):
+      return BVAnalyticsConstants.stagingEndpoint
     }
   }
 }

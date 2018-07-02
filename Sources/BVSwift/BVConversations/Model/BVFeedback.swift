@@ -16,15 +16,11 @@ import Foundation
 public enum BVFeedback: BVSubmissionable {
   
   public static var singularKey: String {
-    get {
-      return BVConversationsConstants.BVFeedback.singularKey
-    }
+    return BVConversationsConstants.BVFeedback.singularKey
   }
   
   public static var pluralKey: String {
-    get {
-      return BVConversationsConstants.BVFeedback.pluralKey
-    }
+    return BVConversationsConstants.BVFeedback.pluralKey
   }
   
   case helpfulness(
@@ -40,53 +36,47 @@ public enum BVFeedback: BVSubmissionable {
     contentType: ContentType?)
   
   internal var urlQueryItems: [URLQueryItem]? {
-    get {
-      switch self {
-      case let .helpfulness(
-        vote, _, .some(contentId), .some(contentType)):
-        return [
-          URLQueryItem(name: "contentId", value: contentId.urlEncode()),
-          URLQueryItem(name: "contentType", value: contentType.rawValue),
-          URLQueryItem(name: "feedbackType", value: "helpfulness"),
-          URLQueryItem(name: "vote", value: vote.rawValue)
-        ]
-      case let .inappropriate(
-        reason, _, .some(contentId), .some(contentType)):
-        return [
-          URLQueryItem(name: "contentId", value: contentId.urlEncode()),
-          URLQueryItem(name: "contentType", value: contentType.rawValue),
-          URLQueryItem(name: "feedbackType", value: "inappropriate"),
-          URLQueryItem(name: "reasonText", value: reason)
-        ]
-      default:
-        return nil
-      }
+    switch self {
+    case let .helpfulness(
+      vote, _, .some(contentId), .some(contentType)):
+      return [
+        URLQueryItem(name: "contentId", value: contentId.urlEncode()),
+        URLQueryItem(name: "contentType", value: contentType.rawValue),
+        URLQueryItem(name: "feedbackType", value: "helpfulness"),
+        URLQueryItem(name: "vote", value: vote.rawValue)
+      ]
+    case let .inappropriate(
+      reason, _, .some(contentId), .some(contentType)):
+      return [
+        URLQueryItem(name: "contentId", value: contentId.urlEncode()),
+        URLQueryItem(name: "contentType", value: contentType.rawValue),
+        URLQueryItem(name: "feedbackType", value: "inappropriate"),
+        URLQueryItem(name: "reasonText", value: reason)
+      ]
+    default:
+      return nil
     }
   }
   
   internal var contentId: String? {
-    get {
-      switch self {
-      case let .helpfulness(_, _, .some(contentId), _):
-        return contentId
-      case let .inappropriate(_, _, .some(contentId), _):
-        return contentId
-      default:
-        return nil
-      }
+    switch self {
+    case let .helpfulness(_, _, .some(contentId), _):
+      return contentId
+    case let .inappropriate(_, _, .some(contentId), _):
+      return contentId
+    default:
+      return nil
     }
   }
   
   internal var contentType: ContentType? {
-    get {
-      switch self {
-      case let .helpfulness(_, _, _, .some(contentType)):
-        return contentType
-      case let .inappropriate(_, _, _, .some(contentType)):
-        return contentType
-      default:
-        return nil
-      }
+    switch self {
+    case let .helpfulness(_, _, _, .some(contentType)):
+      return contentType
+    case let .inappropriate(_, _, _, .some(contentType)):
+      return contentType
+    default:
+      return nil
     }
   }
   
@@ -96,15 +86,13 @@ public enum BVFeedback: BVSubmissionable {
     case review
     
     internal var rawValue: String {
-      get {
-        switch self {
-        case .answer:
-          return "answer"
-        case .question:
-          return "question"
-        case .review:
-          return "review"
-        }
+      switch self {
+      case .answer:
+        return "answer"
+      case .question:
+        return "question"
+      case .review:
+        return "review"
       }
     }
   }
@@ -125,13 +113,11 @@ public enum BVFeedback: BVSubmissionable {
     }
     
     internal var rawValue: String {
-      get {
-        switch self {
-        case .positive:
-          return "positive"
-        case .negative:
-          return "negative"
-        }
+      switch self {
+      case .positive:
+        return "positive"
+      case .negative:
+        return "negative"
       }
     }
   }
@@ -209,7 +195,6 @@ public enum BVFeedback: BVSubmissionable {
       
       try keyedContainer.encode(authorId, forKey: .authorId)
       try keyedContainer.encode(vote.rawValue, forKey: .vote)
-      break
     case let .inappropriate(reason, authorId, _, _):
       var keyedContainer =
         container.nestedContainer(
@@ -217,15 +202,15 @@ public enum BVFeedback: BVSubmissionable {
       
       try keyedContainer.encode(authorId, forKey: .authorId)
       try keyedContainer.encode(reason, forKey: .reason)
-      break
     }
   }
 }
 
 extension BVFeedback: BVSubmissionableInternal {
+  
   internal static var postResource: String? {
-    get {
-      return BVConversationsConstants.BVFeedback.postResource
-    }
+    return BVConversationsConstants.BVFeedback.postResource
   }
+  
+  internal func update(_ values: [String: Encodable]?) { }
 }
