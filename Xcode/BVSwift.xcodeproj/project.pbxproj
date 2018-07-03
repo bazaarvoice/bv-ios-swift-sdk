@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B512EA1320EAC0BA00531CA7 /* BVCurationsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512EA1220EAC0BA00531CA7 /* BVCurationsCollectionView.swift */; };
+		B512EA1920EC154900531CA7 /* BVCurationsBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512EA1820EC154900531CA7 /* BVCurationsBrand.swift */; };
 		B52149DB20D179E000BF9D1B /* BVProductAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DA20D179E000BF9D1B /* BVProductAttribute.swift */; };
 		B52149DD20D17F1700BF9D1B /* BVCurationsProductAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DC20D17F1700BF9D1B /* BVCurationsProductAttribute.swift */; };
 		B52149DF20D1ACE300BF9D1B /* BVXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DE20D1ACE300BF9D1B /* BVXMLParser.swift */; };
@@ -239,6 +240,7 @@
 
 /* Begin PBXFileReference section */
 		B512EA1220EAC0BA00531CA7 /* BVCurationsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsCollectionView.swift; sourceTree = "<group>"; };
+		B512EA1820EC154900531CA7 /* BVCurationsBrand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVCurationsBrand.swift; sourceTree = "<group>"; };
 		B52149DA20D179E000BF9D1B /* BVProductAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductAttribute.swift; sourceTree = "<group>"; };
 		B52149DC20D17F1700BF9D1B /* BVCurationsProductAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsProductAttribute.swift; sourceTree = "<group>"; };
 		B52149DE20D1ACE300BF9D1B /* BVXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVXMLParser.swift; sourceTree = "<group>"; };
@@ -995,6 +997,7 @@
 			isa = PBXGroup;
 			children = (
 				B549EE9D20D0248600ED5190 /* BVCurationsAuthor.swift */,
+				B512EA1820EC154900531CA7 /* BVCurationsBrand.swift */,
 				B5FC4B7020D2E2D60072B354 /* BVCurationsChannelContent.swift */,
 				B549EE9F20D026CD00ED5190 /* BVCurationsCoordinates.swift */,
 				B5FC4B7220D2E2F10072B354 /* BVCurationsCustomContent.swift */,
@@ -1337,6 +1340,7 @@
 				B53984EB20E2936800EF77DA /* BVCurationsReviewStatistics.swift in Sources */,
 				B5B31EFC20B373A3002DBEC8 /* BVProductQuery.swift in Sources */,
 				B5B31F1B20B373A3002DBEC8 /* BVConversationsQueryResponse.swift in Sources */,
+				B512EA1920EC154900531CA7 /* BVCurationsBrand.swift in Sources */,
 				B5B31F0320B373A3002DBEC8 /* BVAuthorStat.swift in Sources */,
 				B53984DA20DC3F0F00EF77DA /* BVRecommendationsInterestLevel.swift in Sources */,
 				B5B31E8620B3739A002DBEC8 /* BVSubmission.swift in Sources */,

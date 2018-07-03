@@ -12,28 +12,28 @@ import Foundation
 /// \
 /// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVRatingDistribution: BVAuxiliaryable {
-  
+
   public let oneStarCount: Int?
   public let twoStarCount: Int?
   public let threeStarCount: Int?
   public let fourStarCount: Int?
   public let fiveStarCount: Int?
-  
+
   private struct BVRating: Codable {
     let ratingValue: Int?
     let count: Int?
-    
+
     private enum CodingKeys: String, CodingKey {
       case ratingValue = "RatingValue"
       case count = "Count"
     }
   }
-  
+
   public init(from decoder: Decoder) throws {
     var unkeyedContainer = try decoder.unkeyedContainer()
     let ratingArray: [BVRating] =
       try unkeyedContainer.decodeArray(BVRating.self)
-    
+
     /// This is ridiculous that we have to do this but for whatever reason
     /// Swift currently doesn't like any closure/loop where let constants can
     /// be initialized. So we have to zip up the objects into a dictionary. I
@@ -49,7 +49,7 @@ public struct BVRatingDistribution: BVAuxiliaryable {
         }
         return new
     }
-    
+
     oneStarCount = ratingDict[1].map { $0 } ?? 0
     twoStarCount = ratingDict[2].map { $0 } ?? 0
     threeStarCount = ratingDict[3].map { $0 } ?? 0

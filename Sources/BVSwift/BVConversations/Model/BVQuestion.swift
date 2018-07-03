@@ -13,19 +13,19 @@ import Foundation
 /// It conforms to BVQueryable and BVSubmissionable, therefore, it is used for
 /// both BVQuery and BVSubmission.
 public struct BVQuestion: BVQueryable, BVSubmissionable {
-  
+
   public static var singularKey: String {
     return BVConversationsConstants.BVQuestions.singularKey
   }
-  
+
   public static var pluralKey: String {
     return BVConversationsConstants.BVQuestions.pluralKey
   }
-  
+
   private var includedAnswers: [BVAnswer]?
   private var includedAuthors: [BVAuthor]?
   private var includedProducts: [BVProduct]?
-  
+
   public var additionalFields: Decoder? {
     return additionalFieldsDecoder?.decoder
   }
@@ -79,7 +79,7 @@ public struct BVQuestion: BVQueryable, BVSubmissionable {
   public let userLocation: String?
   public let userNickname: String?
   public let videos: [BVVideo]?
-  
+
   private enum CodingKeys: String, CodingKey {
     case additionalFieldsDecoder = "AdditionalFields"
     case answerIds = "AnswerIds"
@@ -183,10 +183,10 @@ extension BVQuestion: BVProductIncludable {
 
 // MARK: - BVQuestion: BVConversationsUpdateIncludable
 extension BVQuestion: BVConversationsUpdateIncludable {
-  
+
   internal mutating
   func update(_ includable: BVConversationsIncludable) {
-    
+
     if let answers: [BVAnswer] = includable.answers {
       self.includedAnswers = answers
     }
@@ -206,10 +206,10 @@ extension BVQuestion: BVQueryableInternal {
 }
 
 extension BVQuestion: BVSubmissionableInternal {
-  
+
   internal static var postResource: String? {
     return BVConversationsConstants.BVQuestions.postResource
   }
-  
+
   internal func update(_ values: [String: Encodable]?) { }
 }

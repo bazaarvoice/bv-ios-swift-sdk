@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -25,7 +25,7 @@ public struct BVFormField: BVAuxiliaryable {
   public let options: [BVFormFieldOption]?
   public let required: Bool?
   public let value: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case identifier = "Id"
     case isDefault = "Default"
@@ -43,7 +43,7 @@ public struct BVFormFieldError: Codable {
   public let codeString: String?
   public let messageString: String?
   public let name: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case codeString = "Code"
     case messageString = "Message"
@@ -55,15 +55,15 @@ extension BVFormFieldError: BVError {
   public var code: String {
     return codeString ?? "Unknown Form Field Error Code"
   }
-  
+
   public var message: String {
     return messageString ?? "Unknown Form Field Error Message"
   }
-  
+
   public var description: String {
     return "Code: \(code) Message: \(message)"
   }
-  
+
   public var debugDescription: String {
     return "Name: \(name ?? "Unknown"), " +
     "Code: \(code), Message: \(message)"
@@ -74,7 +74,7 @@ public struct BVFormFieldOption: Codable {
   public let label: String?
   public let selected: Bool?
   public let value: String?
-  
+
   private enum CodingKeys: String, CodingKey {
     case label = "Label"
     case selected = "Selected"

@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -18,20 +18,20 @@ import Foundation
 public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var ignoreCompletion: Bool = false
   private var conversationsConfiguration: BVConversationsConfiguration?
-  
+
   internal override init<BVTypeInternal: BVQueryableInternal>(
     _ type: BVTypeInternal.Type) {
     super.init(type)
-    
+
     defaultSDKParameters.forEach { add(.unsafe($0.0, $0.1, nil)) }
   }
-  
+
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
     return {
       return self.queryItems
     }
   }
-  
+
   internal var conversationsPostflightResultsClosure: (([ConversationsPostflightResult]?) -> Swift.Void)? {
     return nil
   }
@@ -43,7 +43,7 @@ extension BVConversationsQuery: BVQueryActionable {
   public typealias Kind = BVType
   public typealias Response =
     BVConversationsQueryResponse<Kind>
-  
+
   public var ignoringCompletion: Bool {
     get {
       return ignoreCompletion
@@ -52,19 +52,19 @@ extension BVConversationsQuery: BVQueryActionable {
       ignoreCompletion = newValue
     }
   }
-  
+
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
-    
+
     responseHandler = {
-      
+
       if self.ignoreCompletion {
         return
       }
-      
+
       switch $0 {
       case let .success(_, jsonData):
-        
+
         #if DEBUG
         do {
           let jsonObject =
@@ -74,7 +74,7 @@ extension BVConversationsQuery: BVQueryActionable {
           BVLogger.sharedLogger.error("JSON ERROR: \(error)")
         }
         #endif
-        
+
         guard let response: BVConversationsQueryResponseInternal<BVType> =
           try? JSONDecoder()
             .decode(
@@ -86,25 +86,25 @@ extension BVConversationsQuery: BVQueryActionable {
                       "An Unknown parse error occurred")]))
                 return
         }
-        
+
         if let errors: [Error] = response.errors,
           !errors.isEmpty {
           completion(.failure(errors))
           return
         }
-        
+
         if let hasErrors: Bool = response.hasErrors {
           assert(!hasErrors, "Weird, we have an error flag set but no errors?")
         }
-        
+
         completion(.success(response, response.results ?? []))
         self.conversationsPostflight(response.results)
-        
+
       case let .failure(errors):
         completion(.failure(errors))
       }
     }
-    
+
     return self
   }
 }
@@ -113,13 +113,13 @@ extension BVConversationsQuery: BVQueryActionable {
 /// information.
 extension BVConversationsQuery: BVConfigurable {
   public typealias Configuration = BVConversationsConfiguration
-  
+
   @discardableResult
   final public func configure(_ config: Configuration) -> Self {
-    
+
     assert(nil == conversationsConfiguration)
     conversationsConfiguration = config
-    
+
     /// We update here just in case various things step on top of each
     /// other. We may want to revisit this if this becomes a pain
     /// point
@@ -131,10 +131,10 @@ extension BVConversationsQuery: BVConfigurable {
       .unsafe(
         BVConversationsConstants.clientKey,
         config.type.clientId, nil))
-    
+
     /// Make sure we call through to the superclass
     configureExistentially(config)
-    
+
     return self
   }
 }
@@ -154,7 +154,7 @@ extension BVConversationsQuery: BVQueryUnsafeField {
 // MARK: - BVConversationsQuery: BVConversationsQueryPostflightable
 extension BVConversationsQuery: BVConversationsQueryPostflightable {
   internal typealias ConversationsPostflightResult = BVType
-  
+
   func conversationsPostflight(_ results: [BVType]?) {
     conversationsPostflightResultsClosure?(results)
   }
