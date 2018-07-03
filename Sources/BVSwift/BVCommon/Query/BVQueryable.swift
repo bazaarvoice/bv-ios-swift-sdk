@@ -37,6 +37,7 @@ public protocol BVQueryfiltererator: CustomStringConvertible { }
 /// Protocol defining the primitive query include types
 public protocol BVQueryInclude: CustomStringConvertible {
   static var includePrefix: String { get }
+  static var includeLimitKey: String { get }
   static var includeLimitSeparator: String { get }
 }
 
