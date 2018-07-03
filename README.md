@@ -10,6 +10,7 @@ BVSwift is currently in **α** stage of development, therefore, is a work in pro
 ## Supported Modules
  - [BVAnalytics](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVAnalytics)
  - [BVConversations](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVConversations)
+ - [BVCurations](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVCurations)
  - [BVRecommendations](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVRecommendations)
 ## How To Get Started
 - Read [this](https://developer.bazaarvoice.com/mobile-sdks/ios/getting-started). Some of it will only be pertinent to the objc library but most of it is apropos.
