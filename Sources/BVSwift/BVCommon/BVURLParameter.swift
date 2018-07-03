@@ -56,8 +56,7 @@ internal indirect enum BVURLParameter: BVParameter {
     case .include(let include, _):
       return type(of: include).includePrefix.escaping()
     case .includeLimit(let include, _, _):
-      let limitKey: String =
-        BVConversationsConstants.BVQueryType.Keys.limit.escaping()
+      let limitKey = type(of: include).includeLimitKey
       let separator = type(of: include).includeLimitSeparator
       return [limitKey,
               include.description.escaping()].joined(separator: separator)

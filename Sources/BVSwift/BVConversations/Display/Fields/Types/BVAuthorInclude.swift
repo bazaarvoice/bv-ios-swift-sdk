@@ -23,6 +23,10 @@ public enum BVAuthorInclude: BVQueryInclude {
     return BVConversationsConstants.BVQueryInclude.defaultField
   }
   
+  public static var includeLimitKey: String {
+    return BVConversationsConstants.BVQueryType.Keys.limit
+  }
+  
   public static var includeLimitSeparator: String {
     return BVConversationsConstants.BVQueryInclude.limitSeparatorField
   }
