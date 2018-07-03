@@ -43,6 +43,12 @@ class BVURLParameterTest: XCTestCase {
       }
     }
     
+    static var includeLimitKey: String {
+      get {
+        return "Limit"
+      }
+    }
+    
     static var includeLimitSeparator: String {
       get {
         return "_"

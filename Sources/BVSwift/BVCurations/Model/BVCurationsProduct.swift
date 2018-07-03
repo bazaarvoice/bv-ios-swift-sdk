@@ -18,7 +18,7 @@ public struct BVCurationsProduct: BVAuxiliaryable {
     return attributesDictionary?.array
   }
   private let attributesDictionary: BVCodableDictionary<BVCurationsProductAttribute>?
-  public let brand: BVBrand?
+  public let brand: BVCurationsBrand?
   public let brandExternalId: String?
   public let categoryId: String?
   public let eans: [String]?
