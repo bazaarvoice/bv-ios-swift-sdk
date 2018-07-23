@@ -2,9 +2,9 @@
 
 
 # BVSwift – Bazaarvoice's Swift SDK
-[![Version](https://img.shields.io/cocoapods/v/BSwift.svg?style=flat)](https://cocoapods.org/pods/BSwift)
-[![License](https://img.shields.io/cocoapods/l/BSwift.svg?style=flat)](https://cocoapods.org/pods/BSwift)
-[![Platform](https://img.shields.io/cocoapods/p/BSwift.svg?style=flat)](https://cocoapods.org/pods/BSwift)
+[![Version](https://img.shields.io/cocoapods/v/BVSwift.svg?style=flat)](https://cocoapods.org/pods/BVSwift)
+[![License](https://img.shields.io/cocoapods/l/BVSwift.svg?style=flat)](https://cocoapods.org/pods/BVSwift)
+[![Platform](https://img.shields.io/cocoapods/p/BVSwift.svg?style=flat)](https://cocoapods.org/pods/BVSwift)
 ## Introduction
 BVSwift is currently in **α** stage of development, therefore, is a work in progress and everything is subject to change until it reaches **β** stage. If you can't find something here then it's probably best to first go to [the objc library](https://github.com/bazaarvoice/bv-ios-sdk) as well as check the [public documentation](https://developer.bazaarvoice.com/mobile-sdks/ios).
 ## Supported Modules
