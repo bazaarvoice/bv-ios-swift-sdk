@@ -172,10 +172,9 @@ extension CALayerDelegate {
   
   public func trackContainerTypeViewedEvent(
     _ containerType: BVRecommendationsContainerType,
-    product: BVRecommendationsProduct,
+    productId: String,
     categoryId: String? = nil) {
-    guard let productId = product.productId,
-      let configuration: BVAnalyticsConfiguration =
+    guard let configuration: BVAnalyticsConfiguration =
       BVManager.sharedManager.getConfiguration() else {
         return
     }
