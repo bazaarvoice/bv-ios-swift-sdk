@@ -20,6 +20,7 @@ public enum BVCurationsFeedItemField: BVQueryField {
   case before(Date)
   case display(String)
   case featured(UInt16)
+  case groups([String])
   case hasGeotag(Bool)
   case hasLink(Bool)
   case hasPhoto(Bool)
@@ -47,6 +48,8 @@ public enum BVCurationsFeedItemField: BVQueryField {
       return filter
     case let .featured(filter):
       return filter
+    case let .groups(filter):
+      return filter.joined(separator: ",")
     case let .hasGeotag(filter):
       return filter
     case let .hasLink(filter):
@@ -84,6 +87,8 @@ extension BVCurationsFeedItemField: BVCurationsQueryValue {
       return BVCurationsConstants.BVCurationsFeedItem.Keys.display
     case .featured:
       return BVCurationsConstants.BVCurationsFeedItem.Keys.featured
+    case .groups:
+      return BVCurationsConstants.BVCurationsFeedItem.Keys.group
     case .hasGeotag:
       return BVCurationsConstants.BVCurationsFeedItem.Keys.hasGeotag
     case .hasLink:

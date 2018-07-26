@@ -12,7 +12,19 @@ import Foundation
 /// - Note:
 /// \
 /// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
-public struct BVCurationsFeedItem: BVQueryable {
+public struct BVCurationsFeedItem: BVQueryable, Hashable {
+  public var hashValue: Int {
+    return contentId?.hashValue ?? 0
+  }
+  
+  public static func == (
+    lhs: BVCurationsFeedItem, rhs: BVCurationsFeedItem) -> Bool {
+    guard let lhsContentId = lhs.contentId,
+      let rhsContentId = rhs.contentId else {
+      return false
+    }
+    return lhsContentId == rhsContentId
+  }
   
   public static var singularKey: String {
     return BVCurationsConstants.BVCurationsFeedItem.singularKey

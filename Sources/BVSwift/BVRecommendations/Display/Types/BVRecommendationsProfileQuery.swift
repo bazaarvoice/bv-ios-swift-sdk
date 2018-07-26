@@ -17,6 +17,24 @@ public class BVRecommendationsProfileQuery:
 BVRecommendationsQuery<BVRecommendationsProfile> {
   private var fields: [BVRecommendationsProfileField] = []
   
+  public var productId: String? {
+    for field in fields {
+      if case let .product(id) = field {
+        return id
+      }
+    }
+    return nil
+  }
+  
+  public var requiredCategory: String? {
+    for field in fields {
+      if case let .requiredCategory(category) = field {
+        return category
+      }
+    }
+    return nil
+  }
+  
   init(_ limit: UInt16 = 20) {
     super.init(BVRecommendationsProfile.self)
     
