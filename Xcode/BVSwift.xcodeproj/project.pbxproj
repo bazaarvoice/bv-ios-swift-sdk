@@ -62,6 +62,15 @@
 		B549EEB120D057B000ED5190 /* BVCurationsLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B549EEAF20D057AD00ED5190 /* BVCurationsLink.swift */; };
 		B57018BD20B709C700DBE186 /* BVQuestionSearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57018BC20B709C700DBE186 /* BVQuestionSearchQuery.swift */; };
 		B57523272100D84A007A514F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B57523262100D84A007A514F /* Assets.xcassets */; };
+		B575232A2106361D007A514F /* BVCurationsPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57523292106361D007A514F /* BVCurationsPostViewController.swift */; };
+		B575232C21063636007A514F /* BVCurationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B575232B21063636007A514F /* BVCurationsCollectionViewCell.swift */; };
+		B57AD8AC210A12310095AD7E /* BVRecommendationsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8AB210A12310095AD7E /* BVRecommendationsContainer.swift */; };
+		B57AD8AE210A177B0095AD7E /* BVRecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8AD210A177B0095AD7E /* BVRecommendationsView.swift */; };
+		B57AD8B0210A179C0095AD7E /* BVRecommendationsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8AF210A179C0095AD7E /* BVRecommendationsCollectionView.swift */; };
+		B57AD8B2210A17B70095AD7E /* BVRecommendationsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8B1210A17B70095AD7E /* BVRecommendationsTableView.swift */; };
+		B57AD8B4210A2BE10095AD7E /* BVRecommendationsProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8B3210A2BE10095AD7E /* BVRecommendationsProductView.swift */; };
+		B57AD8B6210A2BF40095AD7E /* BVRecommendationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8B5210A2BF40095AD7E /* BVRecommendationsTableViewCell.swift */; };
+		B57AD8B8210A2C030095AD7E /* BVRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD8B7210A2C030095AD7E /* BVRecommendationsCollectionViewCell.swift */; };
 		B5A5E8F920B70D950049CE41 /* BVReviewSearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5E8F820B70D950049CE41 /* BVReviewSearchQuery.swift */; };
 		B5A5E8FB20B714C00049CE41 /* BVProductSearchQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5E8FA20B714C00049CE41 /* BVProductSearchQueryTest.swift */; };
 		B5A5E8FD20B71D050049CE41 /* BVQuestionSearchQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5E8FC20B71D050049CE41 /* BVQuestionSearchQueryTest.swift */; };
@@ -295,6 +304,15 @@
 		B549EEAF20D057AD00ED5190 /* BVCurationsLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsLink.swift; sourceTree = "<group>"; };
 		B57018BC20B709C700DBE186 /* BVQuestionSearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVQuestionSearchQuery.swift; sourceTree = "<group>"; };
 		B57523262100D84A007A514F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B57523292106361D007A514F /* BVCurationsPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsPostViewController.swift; sourceTree = "<group>"; };
+		B575232B21063636007A514F /* BVCurationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsCollectionViewCell.swift; sourceTree = "<group>"; };
+		B57AD8AB210A12310095AD7E /* BVRecommendationsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsContainer.swift; sourceTree = "<group>"; };
+		B57AD8AD210A177B0095AD7E /* BVRecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsView.swift; sourceTree = "<group>"; };
+		B57AD8AF210A179C0095AD7E /* BVRecommendationsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsCollectionView.swift; sourceTree = "<group>"; };
+		B57AD8B1210A17B70095AD7E /* BVRecommendationsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsTableView.swift; sourceTree = "<group>"; };
+		B57AD8B3210A2BE10095AD7E /* BVRecommendationsProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsProductView.swift; sourceTree = "<group>"; };
+		B57AD8B5210A2BF40095AD7E /* BVRecommendationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsTableViewCell.swift; sourceTree = "<group>"; };
+		B57AD8B7210A2C030095AD7E /* BVRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5A5E8F820B70D950049CE41 /* BVReviewSearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewSearchQuery.swift; sourceTree = "<group>"; };
 		B5A5E8FA20B714C00049CE41 /* BVProductSearchQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSearchQueryTest.swift; sourceTree = "<group>"; };
 		B5A5E8FC20B71D050049CE41 /* BVQuestionSearchQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVQuestionSearchQueryTest.swift; sourceTree = "<group>"; };
@@ -488,6 +506,8 @@
 			isa = PBXGroup;
 			children = (
 				B512EA1220EAC0BA00531CA7 /* BVCurationsCollectionView.swift */,
+				B575232B21063636007A514F /* BVCurationsCollectionViewCell.swift */,
+				B57523292106361D007A514F /* BVCurationsPostViewController.swift */,
 				B512EA1120EAC07E00531CA7 /* Icons */,
 			);
 			path = BVCurationsUI;
@@ -583,6 +603,28 @@
 			path = Display;
 			sourceTree = "<group>";
 		};
+		B575232821062512007A514F /* BVCommonUI */ = {
+			isa = PBXGroup;
+			children = (
+				B5454BC220C6F0F50071E817 /* BVProxyObjectConformance.swift */,
+			);
+			path = BVCommonUI;
+			sourceTree = "<group>";
+		};
+		B57AD8AA210A11A00095AD7E /* BVRecommendationsUI */ = {
+			isa = PBXGroup;
+			children = (
+				B57AD8AB210A12310095AD7E /* BVRecommendationsContainer.swift */,
+				B57AD8AF210A179C0095AD7E /* BVRecommendationsCollectionView.swift */,
+				B57AD8B7210A2C030095AD7E /* BVRecommendationsCollectionViewCell.swift */,
+				B57AD8B3210A2BE10095AD7E /* BVRecommendationsProductView.swift */,
+				B57AD8B1210A17B70095AD7E /* BVRecommendationsTableView.swift */,
+				B57AD8B5210A2BF40095AD7E /* BVRecommendationsTableViewCell.swift */,
+				B57AD8AD210A177B0095AD7E /* BVRecommendationsView.swift */,
+			);
+			path = BVRecommendationsUI;
+			sourceTree = "<group>";
+		};
 		B5B31E0920B36ABD002DBEC8 = {
 			isa = PBXGroup;
 			children = (
@@ -606,11 +648,13 @@
 			children = (
 				B5B31E3320B37383002DBEC8 /* BVAnalytics */,
 				B5B31E5C20B3739A002DBEC8 /* BVCommon */,
+				B575232821062512007A514F /* BVCommonUI */,
 				B5B31E8920B373A3002DBEC8 /* BVConversations */,
 				B5F2918C20C5D9D900BF4717 /* BVConversationsUI */,
 				B5EC2F7220CACE74002F8233 /* BVCurations */,
 				B512EA1020EAC06300531CA7 /* BVCurationsUI */,
 				B53984B320D94F4D00EF77DA /* BVRecommendations */,
+				B57AD8AA210A11A00095AD7E /* BVRecommendationsUI */,
 				B5B31F6A20B375DC002DBEC8 /* Support */,
 			);
 			name = BVSwift;
@@ -1040,7 +1084,6 @@
 		B5F2918C20C5D9D900BF4717 /* BVConversationsUI */ = {
 			isa = PBXGroup;
 			children = (
-				B5454BC220C6F0F50071E817 /* BVProxyObjectConformance.swift */,
 				B5F2918D20C5DA0400BF4717 /* Views */,
 			);
 			path = BVConversationsUI;
@@ -1258,6 +1301,7 @@
 				B5B31EEA20B373A3002DBEC8 /* BVSyndicationSource.swift in Sources */,
 				B5B31F1320B373A3002DBEC8 /* BVQuestionSort.swift in Sources */,
 				B5454BCB20C716160071E817 /* BVConversationsViews.swift in Sources */,
+				B57AD8B6210A2BF40095AD7E /* BVRecommendationsTableViewCell.swift in Sources */,
 				B53984BA20D9592400EF77DA /* BVRecommendationsProfile.swift in Sources */,
 				B5B31F1D20B373A3002DBEC8 /* BVConversationsSubmissionable.swift in Sources */,
 				B52149DD20D17F1700BF9D1B /* BVCurationsProductAttribute.swift in Sources */,
@@ -1302,7 +1346,9 @@
 				B5B31E5A20B37383002DBEC8 /* BVAnalyticsLocaleService.swift in Sources */,
 				B5B31E8520B3739A002DBEC8 /* BVInternalSubmission.swift in Sources */,
 				B5B31EF120B373A3002DBEC8 /* BVDistributionValue.swift in Sources */,
+				B575232A2106361D007A514F /* BVCurationsPostViewController.swift in Sources */,
 				B53984D020DBF74100EF77DA /* BVRecommendationsProfileField.swift in Sources */,
+				B57AD8B2210A17B70095AD7E /* BVRecommendationsTableView.swift in Sources */,
 				B5B31EE420B373A3002DBEC8 /* BVAnswer.swift in Sources */,
 				B53984D420DC285E00EF77DA /* BVRecommendationsProfileInclude.swift in Sources */,
 				B512EA1320EAC0BA00531CA7 /* BVCurationsCollectionView.swift in Sources */,
@@ -1313,6 +1359,7 @@
 				B53984F520E2C7B300EF77DA /* BVRecommendationsAnalytics.swift in Sources */,
 				B5B31F7220B5BC93002DBEC8 /* BVNetworkingManager.swift in Sources */,
 				B5B31F0A20B373A3002DBEC8 /* BVReviewFilter.swift in Sources */,
+				B57AD8B4210A2BE10095AD7E /* BVRecommendationsProductView.swift in Sources */,
 				B52149DB20D179E000BF9D1B /* BVProductAttribute.swift in Sources */,
 				B5B31F2120B373A3002DBEC8 /* BVPhotoSubmission.swift in Sources */,
 				B5B31F0620B373A3002DBEC8 /* BVProductStatisticsStat.swift in Sources */,
@@ -1331,18 +1378,22 @@
 				B5EC2F7820CAE085002F8233 /* BVCurationsConstants.swift in Sources */,
 				B5B31F0220B373A3002DBEC8 /* BVConversationsQuery.swift in Sources */,
 				B5EC2F7620CACF4B002F8233 /* BVCurationsConfiguration.swift in Sources */,
+				B57AD8B0210A179C0095AD7E /* BVRecommendationsCollectionView.swift in Sources */,
 				B5B31F1420B373A3002DBEC8 /* BVAnswerFilter.swift in Sources */,
 				B5B31E7F20B3739A002DBEC8 /* BVQueryDispatchQueueable.swift in Sources */,
 				B5FC4B7320D2E2F10072B354 /* BVCurationsCustomContent.swift in Sources */,
 				B5B31F2520B373A3002DBEC8 /* BVCommentSubmission.swift in Sources */,
 				B5B31EE320B373A3002DBEC8 /* BVComment.swift in Sources */,
+				B575232C21063636007A514F /* BVCurationsCollectionViewCell.swift in Sources */,
 				B5B31F1920B373A3002DBEC8 /* BVConversationsSortOrder.swift in Sources */,
 				B5EC2F7C20CAE0B6002F8233 /* BVManagerCurations.swift in Sources */,
+				B57AD8B8210A2C030095AD7E /* BVRecommendationsCollectionViewCell.swift in Sources */,
 				B5B31E5620B37383002DBEC8 /* BVAnalyticsTypes.swift in Sources */,
 				B5B31E4920B37383002DBEC8 /* BVAnalyticsSubmission.swift in Sources */,
 				B5EC2F8A20CB059A002F8233 /* BVCurationsFeedItemQuery.swift in Sources */,
 				B53984EB20E2936800EF77DA /* BVCurationsReviewStatistics.swift in Sources */,
 				B5B31EFC20B373A3002DBEC8 /* BVProductQuery.swift in Sources */,
+				B57AD8AC210A12310095AD7E /* BVRecommendationsContainer.swift in Sources */,
 				B5B31F1B20B373A3002DBEC8 /* BVConversationsQueryResponse.swift in Sources */,
 				B512EA1920EC154900531CA7 /* BVCurationsBrand.swift in Sources */,
 				B5B31F0320B373A3002DBEC8 /* BVAuthorStat.swift in Sources */,
@@ -1372,6 +1423,7 @@
 				B5B31E5220B37383002DBEC8 /* BVAnalyticsConfiguration.swift in Sources */,
 				B5B31EF320B373A3002DBEC8 /* BVContextDataValue.swift in Sources */,
 				B5B31EE620B373A3002DBEC8 /* BVSecondaryRatingsAverage.swift in Sources */,
+				B57AD8AE210A177B0095AD7E /* BVRecommendationsView.swift in Sources */,
 				B5B31F1720B373A3002DBEC8 /* BVReviewInclude.swift in Sources */,
 				B549EEA220D027A500ED5190 /* BVCurationsPhoto.swift in Sources */,
 				B5B31F2020B373A3002DBEC8 /* BVFeedbackSubmission.swift in Sources */,
