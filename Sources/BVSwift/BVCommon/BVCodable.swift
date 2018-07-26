@@ -38,7 +38,7 @@ public protocol BVResourceable: Codable {
 /// \
 /// Most often than not the instances that this wraps are String but we keep
 /// this around to be forward/backward compatible between various modules.
-public enum BVIdentifier: Codable {
+public enum BVIdentifier: Codable, Hashable {
   
   case int(Int)
   case string(String)
