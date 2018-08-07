@@ -18,39 +18,40 @@ public class BVProductsQuery: BVConversationsQuery<BVProduct> {
   /// The initializer for BVProductSearchQuery
   public init() {
     super.init(BVProduct.self)
-    
-    preflightHandler =
-      { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
-        
-        /// Here we gather all the product filters that we've already added and
-        /// check to make sure that we've added at least 2 unique product
-        /// identifiers else we have to error out.
-        let productFilters: [String] =
-          self.parameters.reduce([]) {
-            (result: [String],
-            next: BVURLParameter) -> [String] in
-            guard case let .filter(filter, _, _) = next,
-              let productFilter: BVProductFilter =
-              filter as? BVProductFilter,
-              case let .productId(id) = productFilter,
-              !result.contains(id) else {
-                return result
-            }
-            return result + [id]
-        }
-        
-        if 2 > productFilters.count {
-          let errorMessage: String =
-            "Adding a single Product ID will cause problems. Please use " +
-              "BVProductQuery if you care to get information about a " +
-          "singular product."
-          let tooFewError: BVConversationsError = .tooFew(errorMessage)
-          completion?(tooFewError)
-          BVLogger.sharedLogger.error(errorMessage)
-          return
-        }
-        
-        completion?(nil)
+  }
+  
+  final internal override var queryPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+    return { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
+      
+      /// Here we gather all the product filters that we've already added and
+      /// check to make sure that we've added at least 2 unique product
+      /// identifiers else we have to error out.
+      let productFilters: [String] =
+        self.parameters.reduce([]) {
+          (result: [String],
+          next: BVURLParameter) -> [String] in
+          guard case let .filter(filter, _, _) = next,
+            let productFilter: BVProductFilter =
+            filter as? BVProductFilter,
+            case let .productId(id) = productFilter,
+            !result.contains(id) else {
+              return result
+          }
+          return result + [id]
+      }
+      
+      if 2 > productFilters.count {
+        let errorMessage: String =
+          "Adding a single Product ID will cause problems. Please use " +
+            "BVProductQuery if you care to get information about a " +
+        "singular product."
+        let tooFewError: BVConversationsError = .tooFew(errorMessage)
+        completion?(tooFewError)
+        BVLogger.sharedLogger.error(errorMessage)
+        return
+      }
+      
+      completion?(nil)
     }
   }
 }
@@ -61,25 +62,25 @@ extension BVProductsQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     
     /// We have to do *almost* the inverse of BVProductQuery
     let internalFilter: BVURLParameter? = {
-      switch filter {
+      switch by {
       case .productId:
-        return .filter(filter, op, nil)
+        return .filter(by, op, nil)
       case let .answers(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .authors(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .comments(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .questions(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .reviews(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       default:
-        return .filter(filter, op, nil)
+        return .filter(by, op, nil)
       }
     }()
     
@@ -96,13 +97,13 @@ extension BVProductsQuery: BVQueryIncludeable {
   public typealias Include = BVProductInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 10) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
     return self
@@ -115,21 +116,21 @@ extension BVProductsQuery: BVQuerySortable {
   public typealias Order = BVConversationsSortOrder
   
   @discardableResult
-  public func sort(_ sort: Sort, order: Order) -> Self {
+  public func sort(_ on: Sort, order: Order) -> Self {
     let internalSort: BVURLParameter = {
-      switch sort {
+      switch on {
       case let .answers(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .authors(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .comments(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .questions(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .reviews(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       default:
-        return .sort(sort, order, nil)
+        return .sort(on, order, nil)
       }
     }()
     

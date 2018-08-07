@@ -29,13 +29,3 @@ internal protocol BVSubmissionableInternal: BVSubmissionable {
 // MARK: - BVSubmissionActionableInternal
 internal protocol BVSubmissionActionableInternal:
 BVURLRequestableWithHandlerInternal { }
-
-// MARK: - BVSubmissionPreflightable
-internal protocol BVSubmissionPreflightable: BVSubmissionActionableInternal {
-  func preflightWithInternalResponse(_ continue: (() -> Swift.Void))
-}
-
-// MARK: - BVSubmissionPostflightable
-internal protocol BVSubmissionPostflightable: BVSubmissionActionableInternal {
-  func postflight(_ response: BVURLRequestableResponseInternal)
-}

@@ -35,10 +35,6 @@ public class BVQuery<BVType: BVQueryable> {
     #endif
     return nil
   }
-  
-  internal var postflightClosure: BVURLRequestableHandler? {
-    return nil
-  }
 }
 
 // MARK: - BVQuery: BVURLRequestable
@@ -141,6 +137,15 @@ extension BVQuery: BVQueryActionableInternal {
     }
   }
   
+  var postflightHandler: BVURLRequestablePostflightHandler? {
+    get {
+      return box.postflightHandler
+    }
+    set(newValue) {
+      box.postflightHandler = newValue
+    }
+  }
+  
   internal var responseHandler: BVURLRequestableHandler? {
     get {
       return box.responseHandler
@@ -155,7 +160,7 @@ extension BVQuery: BVQueryActionableInternal {
       }
       box.responseHandler = {
         cmp($0)
-        self.postflight($0)
+        self.postflightHandler?($0)
       }
     }
   }
@@ -180,13 +185,6 @@ extension BVQuery: BVConfigureRaw {
   func configureRaw(_ config: BVRawConfiguration) -> Self {
     box.configureRaw(config)
     return self
-  }
-}
-
-// MARK: - BVQuery: BVQueryPostflightable
-extension BVQuery: BVQueryPostflightable {
-  internal func postflight(_ response: BVURLRequestableResponseInternal) {
-    postflightClosure?(response)
   }
 }
 

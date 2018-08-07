@@ -42,7 +42,7 @@ public struct BVReviewStatistics: BVAuxiliaryable {
   }
   private let tagDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let totalReviewCount: Int?
-
+  
   private enum CodingKeys: String, CodingKey {
     case averageOverallRating = "AverageOverallRating"
     case contextDataDistributionArray = "ContextDataDistribution"

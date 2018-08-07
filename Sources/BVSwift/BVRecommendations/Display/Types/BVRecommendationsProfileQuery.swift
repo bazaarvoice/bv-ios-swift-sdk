@@ -37,8 +37,10 @@ BVRecommendationsQuery<BVRecommendationsProfile> {
   
   init(_ limit: UInt16 = 20) {
     super.init(BVRecommendationsProfile.self)
-    
-    preflightHandler =
+  }
+  
+  final internal override var recommendationsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+    return
       { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
         
         guard let config = self.configuration else {
@@ -77,9 +79,9 @@ extension BVRecommendationsProfileQuery: BVQueryFieldable {
   public typealias Field = BVRecommendationsProfileField
   
   @discardableResult
-  public func field(_ field: Field) -> Self {
-    if !fields.contains(field) {
-      fields.append(field)
+  public func field(_ to: Field) -> Self {
+    if !fields.contains(to) {
+      fields.append(to)
     }
     return self
   }

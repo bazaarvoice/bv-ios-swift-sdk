@@ -28,13 +28,13 @@ class BVQuestionSearchQueryTest: XCTestCase {
     return URLSession(configuration: .default)
   }()
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVPixel.skipAllPixelEvents = true
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false

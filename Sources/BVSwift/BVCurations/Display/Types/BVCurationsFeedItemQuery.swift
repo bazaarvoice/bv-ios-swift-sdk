@@ -29,21 +29,21 @@ extension BVCurationsFeedItemQuery: BVQueryFieldable {
   public typealias Field = BVCurationsFeedItemField
   
   @discardableResult
-  public func field(_ field: Field) -> Self {
+  public func field(_ to: Field) -> Self {
     
-    switch field {
+    switch to {
     case .display:
       fallthrough
     case .language:
       fallthrough
     case .tag:
-      add(.field(field, nil), coalesce: true)
+      add(.field(to, nil), coalesce: true)
     case let .featured(count):
       let currentLimit = limit ?? 10
       let newCount = count <= currentLimit ? count : currentLimit
       add(.field(BVCurationsFeedItemField.featured(newCount), nil))
     default:
-      add(.field(field, nil))
+      add(.field(to, nil))
     }
     
     return self

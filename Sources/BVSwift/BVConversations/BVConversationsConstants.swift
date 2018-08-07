@@ -29,6 +29,10 @@ internal struct BVConversationsConstants {
     static let valueSeparatorField: String = ":"
   }
   
+  internal struct BVQueryFilteredStat {
+    static let defaultField: String = "FilteredStats"
+  }
+  
   internal struct BVQueryInclude {
     static let defaultField: String = "Include"
     static let limitSeparatorField: String = "_"

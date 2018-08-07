@@ -23,13 +23,13 @@ class BVCommentQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVPixel.skipAllPixelEvents = true
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false
