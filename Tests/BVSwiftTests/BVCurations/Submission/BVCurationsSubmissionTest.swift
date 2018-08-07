@@ -71,14 +71,14 @@ class BVCurationsSubmissionTest: XCTestCase {
     return try? Data(contentsOf: resourceURL, options: [])
   }
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVManager.sharedManager.logLevel = .debug
     BVPixel.skipAllPixelEvents = true
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false

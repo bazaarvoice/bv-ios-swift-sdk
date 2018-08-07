@@ -30,13 +30,13 @@ class BVReviewQueryTest: XCTestCase {
     return URLSession(configuration: .default)
   }()
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVPixel.skipAllPixelEvents = true
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false
@@ -250,7 +250,8 @@ class BVReviewQueryTest: XCTestCase {
       .filter(.hasPhotos(true))
       .filter(.hasComments(false))
       .include(.products)
-      .unsafeField("filteredstats", value: "reviews,questions")
+      .filter(.reviews)
+      .filter(.questions)
       .configure(BVReviewQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         

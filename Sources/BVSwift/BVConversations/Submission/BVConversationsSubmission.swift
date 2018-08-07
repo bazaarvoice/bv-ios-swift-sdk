@@ -16,81 +16,120 @@ import Foundation
 /// extending something that you want to see being made public :)
 public class
 BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
-
+  
   /// Private
   private var ignoreCompletion: Bool = false
   internal private(set) var conversationsConfiguration: BVConversationsConfiguration?
-  private var submissionParameters: [URLQueryItem] =
-    [URLQueryItem(name: apiVersionField, value: apiVersion)]
   private var customSubmissionParameters: [URLQueryItem]?
-
+  
+  private func postSuperInit() {
+    /// We do this after super.init() so that in the future we can capture any
+    /// call being set from below.
+    let superPreflightHandler = preflightHandler
+    
+    /// We have to make sure that we don't "own" ourself to create a retain
+    /// cycle.
+    preflightHandler = { [unowned self] completion in
+      self.conversationsSubmissionPreflight { (errors: Error?) in
+        /// First we call this subclass level to see if everything is alright.
+        /// If not, then we call the completion handler to error out.
+        guard nil == errors else {
+          completion?(errors)
+          return
+        }
+        
+        /// There doesn't exist any super preflight, therefore, we just pass
+        /// through no errors up through the completion handler.
+        guard let superPreflight = superPreflightHandler else {
+          completion?(nil)
+          return
+        }
+        
+        /// If everything is alright, then drop down to the superclass level
+        /// and let it determine the fate of the preflight check.
+        superPreflight(completion)
+      }
+    }
+  }
+  
   /// Internal
+  internal var submissionParameters: [URLQueryItem] =
+    [URLQueryItem(name: apiVersionField, value: apiVersion)]
+  
+  internal var submissionable: BVType? {
+    return submissionableInternal as? BVType
+  }
+  
   internal init(_ submissionableInternal: BVSubmissionableInternal) {
     super.init(internalType: submissionableInternal)
+    postSuperInit()
   }
-
+  
   internal init?(_ submissionable: BVType) {
     guard let internalType = submissionable as? BVSubmissionableInternal else {
       return nil
     }
     super.init(internalType: internalType)
+    postSuperInit()
   }
-
+  
   override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
     return {
       /// Unused for now...
       return nil
     }
   }
-
-  override var contentBodyClosure: ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
+  
+  override var contentBodyClosure: (
+    (BVSubmissionableInternal) -> BVURLRequestBody?)? {
     return { (_) -> BVURLRequestBody? in
-
+      
       guard var container: URLComponents =
         URLComponents(string: "http://bazaarvoice.com") else {
           return nil
       }
-
+      
       container.queryItems =
-        (self.conversationsParameters ∪ self.customConversationsParameters)
-
+        (self.submissionParameters ∪ self.customSubmissionParameters)
+      
       guard let query: Data = container.query?.data(using: .utf8) else {
         return nil
       }
-
+      
       return .raw(query)
     }
   }
-
+  
   override var contentTypeClosure: (() -> String?)? {
     return {
       return "application/x-www-form-urlencoded"
     }
   }
-
-  internal var conversationsPostflightResultsClosure: (([ConversationsPostflightResult]?) -> Swift.Void)? {
+  
+  internal var submissionPreflightResultsClosure: BVURLRequestablePreflightHandler? {
     return nil
   }
-
-  internal var submissionable: BVType? {
-    return submissionableInternal as? BVType
+  
+  internal var submissionPostflightResultsClosure: (
+    ([ConversationsSubmissionPostflightResult]?) -> Swift.Void)? {
+    return nil
   }
 }
 
 // MARK: - BVConversationsSubmission: BVConfigurable
 extension BVConversationsSubmission: BVConfigurable {
   public typealias Configuration = BVConversationsConfiguration
-
+  
   @discardableResult
   final public func configure(_ config: Configuration) -> Self {
-
+    
     /// Squirrel this away so we can access it for whatever our needs
     assert(nil == conversationsConfiguration)
     conversationsConfiguration = config
-
+    
     /// Make sure we call through to the superclass
     configureExistentially(config)
-
+    
     /// Might as well add the parameter as well...
     let checkConfigurationForSubmission = { () -> String? in
       switch config {
@@ -102,12 +141,12 @@ extension BVConversationsSubmission: BVConfigurable {
         return nil
       }
     }
-
+    
     if let passKey = checkConfigurationForSubmission() {
-      conversationsParameters +=
+      submissionParameters +=
         [URLQueryItem(name: "passkey", value: passKey)]
     }
-
+    
     return self
   }
 }
@@ -123,50 +162,43 @@ extension BVConversationsSubmission: BVConfigurableInternal {
 extension BVConversationsSubmission: BVConversationsSubmissionCustomizeable {
   @discardableResult
   public func add(_ fields: [String: String]) -> Self {
-    guard var customParams = customConversationsParameters else {
-      customConversationsParameters = fields.toBVURLQueryItems()
+    guard var customParams = customSubmissionParameters else {
+      customSubmissionParameters = fields.toBVURLQueryItems()
       return self
     }
     customParams ∪= fields.toBVURLQueryItems()
-    customConversationsParameters = customParams
+    customSubmissionParameters = customParams
     return self
+  }
+}
+
+// MARK: - BVConversationsSubmission: BVConversationsSubmissionPreflightable
+extension BVConversationsSubmission: BVConversationsSubmissionPreflightable {
+  func conversationsSubmissionPreflight(
+    _ preflight: BVCompletionWithErrorsHandler?) {
+    /// We have to make sure to call through, else the preflight chain will not
+    /// end up firing through to the superclass.
+    guard let preflightResultsClosure = submissionPreflightResultsClosure else {
+      preflight?(nil)
+      return
+    }
+    preflightResultsClosure(preflight)
   }
 }
 
 // MARK: - BVConversationsSubmission: BVConversationsSubmissionPostflightable
 extension BVConversationsSubmission: BVConversationsSubmissionPostflightable {
-  internal typealias ConversationsPostflightResult = BVType
-
-  final func conversationsPostflight(_ results: [BVType]?) {
-    conversationsPostflightResultsClosure?(results)
-  }
-}
-
-// MARK: - BVConversationsSubmission: BVConversationsSubmissionable
-extension BVConversationsSubmission: BVConversationsSubmissionable {
-  internal var conversationsParameters: [URLQueryItem] {
-    get {
-      return submissionParameters
-    }
-    set(newValue) {
-      submissionParameters = newValue
-    }
-  }
-
-  internal var customConversationsParameters: [URLQueryItem]? {
-    get {
-      return customSubmissionParameters
-    }
-    set(newValue) {
-      customSubmissionParameters = newValue
-    }
+  internal typealias ConversationsSubmissionPostflightResult = BVType
+  
+  final func conversationsSubmissionPostflight(_ results: [BVType]?) {
+    submissionPostflightResultsClosure?(results)
   }
 }
 
 // MARK: - BVConversationsSubmission: BVSubmissionActionable
 extension BVConversationsSubmission: BVSubmissionActionable {
   public typealias Response = BVConversationsSubmissionResponse<BVType>
-
+  
   public var ignoringCompletion: Bool {
     get {
       return ignoreCompletion
@@ -175,19 +207,19 @@ extension BVConversationsSubmission: BVSubmissionActionable {
       ignoreCompletion = newValue
     }
   }
-
+  
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
-
+    
     responseHandler = {
-
+      
       if self.ignoreCompletion {
         return
       }
-
+      
       switch $0 {
       case let .success(_, jsonData):
-
+        
         #if DEBUG
         do {
           let jsonObject =
@@ -197,7 +229,7 @@ extension BVConversationsSubmission: BVSubmissionActionable {
           BVLogger.sharedLogger.error("JSON ERROR: \(error)")
         }
         #endif
-
+        
         guard let response =
           try? JSONDecoder()
             .decode(
@@ -209,7 +241,7 @@ extension BVConversationsSubmission: BVSubmissionActionable {
                       "An Unknown parse error occurred")]))
                 return
         }
-
+        
         guard let result = response.result,
           !response.hasErrors else {
             var errors: [BVError] = []
@@ -218,9 +250,9 @@ extension BVConversationsSubmission: BVSubmissionActionable {
             completion(.failure(errors))
             return
         }
-
+        
         completion(.success(response, result))
-        self.conversationsPostflight([result])
+        self.conversationsSubmissionPostflight([result])
       case let .failure(errors):
         completion(.failure(errors))
       }

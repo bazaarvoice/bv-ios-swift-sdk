@@ -32,26 +32,36 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
     }
   }
   
-  private var currentAction: BVConversationsSubmissionAction = .preview {
-    didSet {
-      primePreflightHandler()
-    }
-  }
-  
-  private var photos: [BVPhoto] = [] {
-    didSet {
-      primePreflightHandler()
-    }
-  }
-  
-  private var videos: [BVVideo] = [] {
-    didSet {
-      primePreflightHandler()
-    }
-  }
+  private var currentAction: BVConversationsSubmissionAction = .preview
+  private var photos: [BVPhoto] = [BVPhoto]()
+  private var videos: [BVVideo] = [BVVideo]()
   
   /// Internal
-  final internal override var conversationsPostflightResultsClosure: (([BVType]?) -> Swift.Void)? {
+  final internal override var submissionPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+    switch currentAction {
+    case .submit:
+      let configurationHandler = { () -> BVConversationsConfiguration? in
+        return self.conversationsConfiguration
+      }
+      
+      let urlQueryItemHandler = { (urlQueryItems: [URLQueryItem]?) in
+        guard let items = urlQueryItems else {
+          return
+        }
+        self.submissionParameters ∪= items
+      }
+      
+      return getPhotoSubmissionHandler(
+        configurationHandler: configurationHandler,
+        urlQueryItemHandler: urlQueryItemHandler)
+      
+    default:
+      return nil
+    }
+  }
+  
+  final internal override var submissionPostflightResultsClosure: (
+    ([BVType]?) -> Swift.Void)? {
     return { (results: [BVType]?) in
       self.conversationsPostflightDidSubmitPhotoUpload(results)
       self.conversationsPostflightDidSubmit(results)
@@ -75,7 +85,7 @@ extension BVMediaSubmission: BVConversationsSubmissionActionable {
     guard let actionSet = action.urlQueryItems else {
       return self
     }
-    conversationsParameters = (actionSet ∪ conversationsParameters)
+    submissionParameters = (actionSet ∪ submissionParameters)
     currentAction = action
     return self
   }
@@ -112,27 +122,7 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
   
   internal func primePreflightHandler() {
     
-    switch currentAction {
-    case .submit:
-      let configurationHandler = { () -> BVConversationsConfiguration? in
-        return self.conversationsConfiguration
-      }
-      
-      let urlQueryItemHandler = { (urlQueryItems: [URLQueryItem]?) in
-        guard let items = urlQueryItems else {
-          return
-        }
-        self.conversationsParameters ∪= items
-      }
-      
-      preflightHandler =
-        getPhotoSubmissionHandler(
-          configurationHandler: configurationHandler,
-          urlQueryItemHandler: urlQueryItemHandler)
-      
-    default:
-      preflightHandler = nil
-    }
+    
   }
 }
 
@@ -149,7 +139,7 @@ extension BVMediaSubmission {
       
       return { handlerCompletion in
         
-        self.conversationsParameters ∪=
+        self.submissionParameters ∪=
           BVConversationsSubmissionMedia.videos(self.videos).urlQueryItems
         
         let concurrentQueue =
