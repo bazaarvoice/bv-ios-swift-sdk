@@ -80,6 +80,13 @@ extension BVInternalSubmission: BVURLRequestableWithBodyData {
         "explicitly mark ignoringCompletion if this is what you intended.")
     }
     
+    if let err = error {
+      assert(false, err.localizedDescription)
+      
+      responseHandler?(.failure([err]))
+      return
+    }
+    
     guard let httpResponse: HTTPURLResponse = urlResponse as? HTTPURLResponse
       else {
         let err = BVCommonError.unknown("URLResponse wasn't an HTTPURLResponse")

@@ -35,6 +35,10 @@ public class BVRecommendationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     }
   }
   
+  internal var recommendationsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+    return nil
+  }
+  
   internal var recommendationsPostflightResultsClosure: (
     ([RecommendationsPostflightResult]?) -> Swift.Void)? {
     return nil
@@ -141,6 +145,20 @@ extension BVRecommendationsQuery: BVQueryActionable {
     }
     
     return self
+  }
+}
+
+// MARK: - BVRecommendationsQuery: BVRecommendationsQueryPreflightable
+extension BVRecommendationsQuery: BVRecommendationsQueryPreflightable {
+  func recommendationsQueryPreflight(
+    _ preflight: BVCompletionWithErrorsHandler?) {
+    /// We have to make sure to call through, else the preflight chain will not
+    /// end up firing through to the superclass.
+    guard let preflightResultsClosure = recommendationsPreflightResultsClosure else {
+      preflight?(nil)
+      return
+    }
+    preflightResultsClosure(preflight)
   }
 }
 

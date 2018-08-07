@@ -29,12 +29,12 @@ public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
     }
     super.init(feedback)
     
-    conversationsParameters ∪= urlQueryItems
+    submissionParameters ∪= urlQueryItems
   }
   
   /// Internal
   override var
-  conversationsPostflightResultsClosure: (([BVFeedback]?) -> Void)? {
+  submissionPostflightResultsClosure: (([BVFeedback]?) -> Void)? {
     return { (results: [BVFeedback]?) in
       guard nil != results,
         let fb = self.feedback,
@@ -92,7 +92,7 @@ extension BVFeedbackSubmission: BVConversationsSubmissionUserInformationable {
     
     switch userInfo {
     case .identifier:
-      conversationsParameters ∪= userInfo.urlQueryItems
+      submissionParameters ∪= userInfo.urlQueryItems
     default:
       break
     }

@@ -46,12 +46,12 @@ public class BVQuestionQuery: BVConversationsQuery<BVQuestion> {
     add(productFilter)
     
     if 0 < limit {
-      let limitField: BVConversationsLimitQueryField = BVConversationsLimitQueryField(limit)
+      let limitField: BVConversationsQueryLimitField = BVConversationsQueryLimitField(limit)
       add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVConversationsOffsetQueryField = BVConversationsOffsetQueryField(offset)
+      let offsetField: BVConversationsQueryOffsetField = BVConversationsQueryOffsetField(offset)
       add(.field(offsetField, nil))
     }
   }
@@ -63,9 +63,9 @@ extension BVQuestionQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     let internalFilter: BVURLParameter =
-      .filter(filter, op, nil)
+      .filter(by, op, nil)
     add(internalFilter)
     return self
   }
@@ -76,13 +76,13 @@ extension BVQuestionQuery: BVQueryIncludeable {
   public typealias Include = BVQuestionInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 10) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
     return self
@@ -95,8 +95,8 @@ extension BVQuestionQuery: BVQuerySortable {
   public typealias Order = BVConversationsSortOrder
   
   @discardableResult
-  public func sort(_ sort: Sort, order: Order) -> Self {
-    let internalSort: BVURLParameter = .sort(sort, order, nil)
+  public func sort(_ on: Sort, order: Order) -> Self {
+    let internalSort: BVURLParameter = .sort(on, order, nil)
     add(internalSort)
     return self
   }
