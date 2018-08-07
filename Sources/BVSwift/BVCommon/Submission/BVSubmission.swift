@@ -172,13 +172,21 @@ extension BVSubmission: BVURLParameterableInternal {
 
 // MARK: - BVSubmission: BVSubmissionActionableInternal
 extension BVSubmission: BVSubmissionActionableInternal {
-  
   var preflightHandler: BVURLRequestablePreflightHandler? {
     get {
       return box.preflightHandler
     }
     set(newValue) {
       box.preflightHandler = newValue
+    }
+  }
+  
+  var postflightHandler: BVURLRequestablePostflightHandler? {
+    get {
+      return box.postflightHandler
+    }
+    set(newValue) {
+      box.postflightHandler = newValue
     }
   }
   
@@ -196,7 +204,7 @@ extension BVSubmission: BVSubmissionActionableInternal {
       }
       box.responseHandler = {
         cmp($0)
-        self.postflight($0)
+        self.postflightHandler?($0)
       }
     }
   }
@@ -223,14 +231,6 @@ extension BVSubmission: BVConfigureRaw {
     return self
   }
 }
-
-// MARK: - BVSubmission: BVSubmissionPostflightable
-extension BVSubmission: BVSubmissionPostflightable {
-  internal func postflight(_ response: BVURLRequestableResponseInternal) {
-    postflightClosure?(response)
-  }
-}
-
 
 // MARK: - BVSubmission: BVSubmissionableConsumable
 extension BVSubmission: BVSubmissionableConsumable {

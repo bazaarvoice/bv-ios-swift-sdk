@@ -17,6 +17,12 @@ public protocol BVRecommendationsQueryFilter: CustomStringConvertible {
 internal protocol BVRecommendationsQueryValue:
 BVInternalCustomStringConvertible { }
 
+// MARK: - BVRecommendationsQueryPreflightable
+internal protocol BVRecommendationsQueryPreflightable: BVQueryActionable {
+  func recommendationsQueryPreflight(
+    _ preflight: BVCompletionWithErrorsHandler?)
+}
+
 // MARK: - BVRecommendationsQueryPostflightable
 internal protocol BVRecommendationsQueryPostflightable: BVQueryActionable {
   associatedtype RecommendationsPostflightResult: BVQueryable

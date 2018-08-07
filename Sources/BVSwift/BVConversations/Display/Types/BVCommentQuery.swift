@@ -46,7 +46,7 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure: (([BVComment]?) -> Swift.Void)? {
+  final internal override var queryPostflightResultsClosure: (([BVComment]?) -> Swift.Void)? {
     return { (results: [BVComment]?) in
       if let comments = results {
         for comment in comments {
@@ -79,9 +79,9 @@ extension BVCommentQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     let internalFilter: BVURLParameter =
-      .filter(filter, op, nil)
+      .filter(by, op, nil)
     add(internalFilter)
     return self
   }
@@ -92,13 +92,13 @@ extension BVCommentQuery: BVQueryIncludeable {
   public typealias Include = BVCommentInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 0) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
     return self
@@ -111,9 +111,9 @@ extension BVCommentQuery: BVQuerySortable {
   public typealias Order = BVConversationsSortOrder
   
   @discardableResult
-  public func sort(_ sort: Sort, order: Order) -> Self {
+  public func sort(_ on: Sort, order: Order) -> Self {
     let internalSort: BVURLParameter =
-      .sort(sort, order, nil)
+      .sort(on, order, nil)
     add(internalSort)
     return self
   }

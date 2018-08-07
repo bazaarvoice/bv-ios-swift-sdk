@@ -18,12 +18,12 @@ internal indirect enum BVURLParameter: BVParameter {
     BVURLParameter?)
   case filter(
     BVQueryFilter,
-    BVQueryfiltererator,
+    BVQueryFilterOperator,
     BVURLParameter?)
   case filterType(
     BVQueryFilter,
     BVQueryFilter,
-    BVQueryfiltererator,
+    BVQueryFilterOperator,
     BVURLParameter?)
   case include(BVQueryInclude, BVURLParameter?)
   case includeLimit(
@@ -247,6 +247,15 @@ internal indirect enum BVURLParameter: BVParameter {
     }
     
     return list
+  }
+}
+
+extension BVURLParameter {
+  internal func contains(parameter: BVURLParameter) -> Bool {
+    return children.reduce(parameter == self) {
+      (result: Bool, child: BVURLParameter) -> Bool in
+      return result || parameter == child
+    }
   }
 }
 

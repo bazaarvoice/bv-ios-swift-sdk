@@ -9,16 +9,16 @@ import Foundation
 
 /// Protocol defining the meta-data header for queries
 public protocol BVConversationsQueryMetaData {
-
+  
   /// The limit used in the query
   var limit: UInt16? { get }
-
+  
   /// The locale type of the query
   var locale: String? { get }
-
+  
   /// The offset used in the query
   var offset: UInt16? { get }
-
+  
   /// The total returned results of the query
   var totalResults: UInt16? { get }
 }
@@ -31,7 +31,7 @@ public enum
 BVConversationsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
   public typealias ResponseType = [BVType]
   public typealias MetaType = BVConversationsQueryMetaData
-
+  
   /// Success state of the query, a.k.a, no errors.
   public var success: Bool {
     guard case .success = self else {
@@ -39,7 +39,7 @@ BVConversationsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
     }
     return true
   }
-
+  
   /// Failure case returned errors.
   public var errors: [Error]? {
     guard case let .failure(errors) = self else {
@@ -47,12 +47,12 @@ BVConversationsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
     }
     return errors
   }
-
+  
   case success(MetaType, ResponseType)
   case failure([Error])
 }
 
-internal struct BVIncludes: BVConversationsIncludable {
+internal struct BVIncludes: BVConversationsQueryIncludable {
   var answers: [BVAnswer]?
   var authors: [BVAuthor]?
   var comments: [BVComment]?
@@ -68,7 +68,7 @@ internal struct BVIncludesDictionaries: Codable {
   let products: BVCodableDictionary<BVProduct>?
   let questions: BVCodableDictionary<BVQuestion>?
   let reviews: BVCodableDictionary<BVReview>?
-
+  
   private enum CodingKeys: String, CodingKey {
     case answers = "Answers"
     case authors = "Authors"
@@ -89,7 +89,7 @@ internal struct BVConversationsQueryResponseInternal
   let totalResults: UInt16?
   let results: [BVType]?
   private let includes: BVIncludesDictionaries?
-
+  
   private enum CodingKeys: String, CodingKey {
     case errors = "Errors"
     case hasErrors = "HasErrors"
@@ -100,7 +100,7 @@ internal struct BVConversationsQueryResponseInternal
     case totalResults = "TotalResults"
     case results = "Results"
   }
-
+  
   private enum IncludeCodingKeys: String, CodingKey {
     case answerId = "AnswerId"
     case answerIds = "AnswerIds"
@@ -115,7 +115,7 @@ internal struct BVConversationsQueryResponseInternal
     case reviewId = "ReviewId"
     case reviewIds = "ReviewIds"
   }
-
+  
   /// Function to walk include objects by id and in order to make sure that the
   /// returned array preserves the ordering so that we don't have to also
   /// squirrel away the order somewhere else.
@@ -138,7 +138,7 @@ internal struct BVConversationsQueryResponseInternal
     lookup: [String: T],
     plural: Key,
     singular: Key) throws -> [T] {
-
+    
     var extraction: [T] = []
     if let ids: [String] =
       try container
@@ -152,10 +152,10 @@ internal struct BVConversationsQueryResponseInternal
     }
     return extraction
   }
-
+  
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-
+    
     /// The main suspects...
     errors =
       try container.decodeIfPresent(
@@ -169,7 +169,7 @@ internal struct BVConversationsQueryResponseInternal
     offset = try container.decodeIfPresent(UInt16.self, forKey: .offset)
     totalResults =
       try container.decodeIfPresent(UInt16.self, forKey: .totalResults)
-
+    
     /// Let's start the main object hydration dance by grabbing a nested
     /// unkeyed container.
     guard var resultsContainer: UnkeyedDecodingContainer =
@@ -177,9 +177,9 @@ internal struct BVConversationsQueryResponseInternal
         results = nil
         return
     }
-
+    
     var resultsArray: [BVType] = []
-
+    
     /// This next line is critical. Apparently decoders (and their child
     /// objects) are copy on write/mutation (probably structs but I don't want
     /// to jump to conclusions) and therefore this allows for us to walk the
@@ -192,39 +192,39 @@ internal struct BVConversationsQueryResponseInternal
     /// Otherwise if it were referencing the same buffers we'd deplete the tree
     /// before we got a chance to re-walk the members.
     var includesContainer: UnkeyedDecodingContainer = resultsContainer
-
+    
     /// This is how much I trust any language...
     var ceiling: Int = resultsContainer.count ?? 0
     ceiling = 0 > ceiling ? 0 : ceiling
-
+    
     while !resultsContainer.isAtEnd && 0 < ceiling {
-
+      
       ceiling -= 1
-
+      
       /// Grab a decoder to toss over to the initializer
       let result: BVType =
         try BVType(from: try resultsContainer.superDecoder())
-
+      
       /// If we don't have any includes or an object that doesn't follow the
       /// protocol, then what's the point of continuing?
-      guard var resultUpdateIncludable: BVConversationsUpdateIncludable =
-        result as? BVConversationsUpdateIncludable,
+      guard var resultUpdateIncludable: BVConversationsQueryUpdateIncludable =
+        result as? BVConversationsQueryUpdateIncludable,
         let resultIncludes: BVIncludesDictionaries = includes else {
           resultsArray.append(result)
           continue
       }
-
+      
       var internalIncludes: BVIncludes = BVIncludes()
-
+      
       /// Let us grab each nested container object, i.e., BVQueryable and jump
       /// over their keys that we expose and tear out the included key values
       /// that we're keeping private.
       let includeContainer: KeyedDecodingContainer =
         try includesContainer.nestedContainer(keyedBy: IncludeCodingKeys.self)
-
+      
       /// We could really do with some preprocessor macros here...
       /// although, I will not apologize for: `type(of: self)`
-
+      
       /// BVAnswerIncludable
       if let answers: [String: BVAnswer] =
         resultIncludes.answers?.dictionary {
@@ -235,7 +235,7 @@ internal struct BVConversationsQueryResponseInternal
             plural: .answerIds,
             singular: .answerId)
       }
-
+      
       /// BVAuthorIncludableInternal
       if let authors: [String: BVAuthor] =
         resultIncludes.authors?.dictionary {
@@ -246,7 +246,7 @@ internal struct BVConversationsQueryResponseInternal
             plural: .authorIds,
             singular: .authorId)
       }
-
+      
       /// BVCommentIncludableInternal
       if let comments: [String: BVComment] =
         resultIncludes.comments?.dictionary {
@@ -257,7 +257,7 @@ internal struct BVConversationsQueryResponseInternal
             plural: .commentIds,
             singular: .commentId)
       }
-
+      
       /// BVProductIncludableInternal
       if let products: [String: BVProduct] =
         resultIncludes.products?.dictionary {
@@ -268,7 +268,7 @@ internal struct BVConversationsQueryResponseInternal
             plural: .productIds,
             singular: .productId)
       }
-
+      
       /// BVQuestionIncludableInternal
       if let questions: [String: BVQuestion] =
         resultIncludes.questions?.dictionary {
@@ -279,7 +279,7 @@ internal struct BVConversationsQueryResponseInternal
             plural: .questionIds,
             singular: .questionId)
       }
-
+      
       /// BVReviewIncludableInternal
       if let reviews: [String: BVReview] =
         resultIncludes.reviews?.dictionary {
@@ -290,9 +290,9 @@ internal struct BVConversationsQueryResponseInternal
             plural: .reviewIds,
             singular: .reviewId)
       }
-
+      
       resultUpdateIncludable.update(internalIncludes)
-
+      
       /// This is kind of gross. We're attempting to obfuscate the fact that we
       /// have an internal protocol that we're following. This causes a copy to
       /// happen. However, let's hope the compiler is smart enough to not do
@@ -308,10 +308,10 @@ internal struct BVConversationsQueryResponseInternal
           resultsArray.append(result)
           continue
       }
-
+      
       resultsArray.append(backToQueryableType)
     }
-
+    
     results = resultsArray
   }
 }

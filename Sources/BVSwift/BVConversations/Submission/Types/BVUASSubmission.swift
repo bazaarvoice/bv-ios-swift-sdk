@@ -39,7 +39,7 @@ public class BVUASSubmission: BVConversationsSubmission<BVUAS> {
     }
     super.init(uas)
     
-    conversationsParameters ∪= [
+    submissionParameters ∪= [
       URLQueryItem(name: "authtoken", value: bvAuthToken)
     ]
   }

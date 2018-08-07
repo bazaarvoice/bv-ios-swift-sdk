@@ -17,6 +17,7 @@ internal class BVInternalQuery<T: BVQueryable> {
   final private var configuration: BVConfiguration?
   final private var cacheable: Bool = false
   private var preflightClosure: BVURLRequestablePreflightHandler?
+  private var postflightClosure: BVURLRequestablePostflightHandler?
   private var baseResponseCompletion: BVURLRequestableHandler?
   private let getResource: String
   
@@ -52,13 +53,21 @@ extension BVInternalQuery: BVConfigureRaw {
 
 // MARK: - BVInternalQuery: BVQueryActionableInternal
 extension BVInternalQuery: BVQueryActionableInternal {
-  
   var preflightHandler: BVURLRequestablePreflightHandler? {
     get {
       return preflightClosure
     }
     set(newValue) {
       preflightClosure = newValue
+    }
+  }
+  
+  var postflightHandler: BVURLRequestablePostflightHandler? {
+    get {
+      return postflightClosure
+    }
+    set(newValue) {
+      postflightClosure = newValue
     }
   }
   

@@ -15,23 +15,23 @@ public struct BVBadge: BVAuxiliaryable {
   private let badgeTypeString: String?
   public let contentType: String?
   public let badgeId: String?
-
+  
   public var badgeType: BVBadgeType? {
     return BVBadgeType(value: badgeTypeString)
   }
-
+  
   public enum BVBadgeType {
     case affiliation
     case custom
     case merit
     case rank
-
+    
     internal init?(value: String?) {
-
+      
       guard let val = value else {
         return nil
       }
-
+      
       switch val {
       case "Affiliation":
         self = .affiliation
@@ -44,7 +44,7 @@ public struct BVBadge: BVAuxiliaryable {
       }
     }
   }
-
+  
   private enum CodingKeys: String, CodingKey {
     case badgeTypeString = "BadgeType"
     case contentType = "ContentType"
