@@ -30,13 +30,13 @@ class BVAuthorQueryTest: XCTestCase {
     return URLSession(configuration: .default)
   }()
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVPixel.skipAllPixelEvents = true
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false
@@ -211,8 +211,10 @@ class BVAuthorQueryTest: XCTestCase {
           
           // Review Statistics
           XCTAssertEqual(reviewStatistics.totalReviewCount, 23)
-          XCTAssertEqual(reviewStatistics.helpfulVoteCount, 66)
-          XCTAssertEqual(reviewStatistics.notHelpfulVoteCount, 58)
+          XCTAssertGreaterThanOrEqual(
+            reviewStatistics.helpfulVoteCount ?? -1, 66)
+          XCTAssertGreaterThanOrEqual(
+            reviewStatistics.notHelpfulVoteCount ?? -1, 58)
           XCTAssertEqual(reviewStatistics.notRecommendedCount, 1)
           XCTAssertEqual(reviewStatistics.overallRatingRange, 5)
           XCTAssertEqual(ratingDistribution.fiveStarCount, 7)

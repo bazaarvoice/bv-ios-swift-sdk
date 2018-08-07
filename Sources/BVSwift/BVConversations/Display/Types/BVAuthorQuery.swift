@@ -35,7 +35,7 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure: (([BVAuthor]?) -> Swift.Void)? {
+  final internal override var queryPostflightResultsClosure: (([BVAuthor]?) -> Swift.Void)? {
     return { (results: [BVAuthor]?) in
       if nil != results,
         let authorId = self.authorId {
@@ -59,13 +59,13 @@ extension BVAuthorQuery: BVQueryIncludeable {
   public typealias Include = BVAuthorInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 0) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
     return self
@@ -78,17 +78,17 @@ extension BVAuthorQuery: BVQuerySortable {
   public typealias Order = BVConversationsSortOrder
   
   @discardableResult
-  public func sort(_ sort: Sort, order: Order) -> Self {
+  public func sort(_ on: Sort, order: Order) -> Self {
     let internalSort: BVURLParameter = {
-      switch sort {
+      switch on {
       case let .answers(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .comments(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .questions(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .reviews(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       }
     }()
     

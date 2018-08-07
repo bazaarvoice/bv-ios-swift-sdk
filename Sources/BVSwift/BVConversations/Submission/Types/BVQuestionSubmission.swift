@@ -80,7 +80,7 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
     }
     super.init(question)
     
-    conversationsParameters ∪= [
+    submissionParameters ∪= [
       URLQueryItem(name: "isuseranonymous", value: "\(isUserAnonymous)"),
       URLQueryItem(name: "productId", value: productId.urlEncode()),
       URLQueryItem(name: "questiondetails", value: details.urlEncode()),
@@ -130,7 +130,7 @@ public class BVQuestionSubmission: BVMediaSubmission<BVQuestion> {
 extension BVQuestionSubmission: BVConversationsSubmissionAlertable {
   @discardableResult
   public func add(_ alert: BVConversationsSubmissionAlerts) -> Self {
-    conversationsParameters ∪= alert.urlQueryItems
+    submissionParameters ∪= alert.urlQueryItems
     return self
   }
 }
@@ -140,7 +140,7 @@ extension BVQuestionSubmission: BVConversationsSubmissionAuthenticityable {
   @discardableResult
   public func add(
     _ authenticity: BVConversationsSubmissionAuthenticity) -> Self {
-    conversationsParameters ∪= authenticity.urlQueryItems
+    submissionParameters ∪= authenticity.urlQueryItems
     return self
   }
 }
@@ -151,7 +151,7 @@ BVQuestionSubmission: BVConversationsSubmissionHostedAuthenticatable {
   @discardableResult
   public func add(
     _ hostedAuth: BVConversationsSubmissionHostedAuthenticated) -> Self {
-    conversationsParameters ∪= hostedAuth.urlQueryItems
+    submissionParameters ∪= hostedAuth.urlQueryItems
     return self
   }
 }
@@ -160,7 +160,7 @@ BVQuestionSubmission: BVConversationsSubmissionHostedAuthenticatable {
 extension BVQuestionSubmission: BVConversationsSubmissionLocaleable {
   @discardableResult
   public func add(_ locale: BVConversationsSubmissionLocale) -> Self {
-    conversationsParameters ∪= locale.urlQueryItems
+    submissionParameters ∪= locale.urlQueryItems
     return self
   }
 }
@@ -169,7 +169,7 @@ extension BVQuestionSubmission: BVConversationsSubmissionLocaleable {
 extension BVQuestionSubmission: BVConversationsSubmissionTaggable {
   @discardableResult
   public func add(_ tag: BVConversationsSubmissionTag) -> Self {
-    conversationsParameters ∪= tag.urlQueryItems
+    submissionParameters ∪= tag.urlQueryItems
     return self
   }
 }
@@ -180,7 +180,7 @@ BVQuestionSubmission: BVConversationsSubmissionTermsAndConditionsable {
   @discardableResult
   public func add(
     _ termsAndConditions: BVConversationsSubmissionTermsAndConditions) -> Self {
-    conversationsParameters ∪= termsAndConditions.urlQueryItems
+    submissionParameters ∪= termsAndConditions.urlQueryItems
     return self
   }
 }
@@ -191,7 +191,7 @@ BVConversationsSubmissionUserAuthenticatedStringable {
   @discardableResult
   public func add(
     _ uas: BVConversationsSubmissionUserAuthenticatedString) -> Self {
-    conversationsParameters ∪= uas.urlQueryItems
+    submissionParameters ∪= uas.urlQueryItems
     return self
   }
 }
@@ -200,7 +200,7 @@ BVConversationsSubmissionUserAuthenticatedStringable {
 extension BVQuestionSubmission: BVConversationsSubmissionUserInformationable {
   @discardableResult
   public func add(_ userInfo: BVConversationsSubmissionUserInfo) -> Self {
-    conversationsParameters ∪= userInfo.urlQueryItems
+    submissionParameters ∪= userInfo.urlQueryItems
     return self
   }
 }

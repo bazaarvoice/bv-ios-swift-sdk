@@ -45,9 +45,9 @@ extension BVProductStatisticsQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     let internalFilter: BVURLParameter =
-      .filter(filter, op, nil)
+      .filter(by, op, nil)
     add(internalFilter)
     return self
   }

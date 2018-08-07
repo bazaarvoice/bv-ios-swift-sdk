@@ -87,34 +87,6 @@ public enum BVRecommendationsContainerType {
 }
 
 extension CALayerDelegate {
-  public func trackViewedEvent(_ product: BVRecommendationsProduct) {
-    
-    guard let productId = product.productId,
-      let configuration: BVAnalyticsConfiguration =
-      BVManager.sharedManager.getConfiguration() else {
-        return
-    }
-    
-    let common = BVRecommendationsAnalytics.analyticInfo(product)
-    let overrides = BVRecommendationsAnalytics.mainParameters + common
-    
-    let event: BVAnalyticsEvent =
-      .impression(
-        bvProduct: .recommendations,
-        contentId: productId,
-        contentType: .productRecommendation,
-        productId: productId,
-        brand: nil,
-        categoryId: nil,
-        additional: nil)
-    
-    BVAnalyticsManager.sharedManager.enqueue(
-      analyticsEventable: event,
-      configuration: configuration,
-      anonymous: false,
-      overrides: overrides)
-  }
-  
   public func trackTappedEvent(_ product: BVRecommendationsProduct) {
     guard let productId = product.productId,
       let configuration: BVAnalyticsConfiguration =
@@ -179,12 +151,10 @@ extension CALayerDelegate {
         return
     }
     
-    let pageType = type(of: self)
-    
     let overrides =
       BVRecommendationsAnalytics.pageViewParameters +
         ["reportingGroup": containerType.analyticsValue,
-         "pageType": BVAnyEncodable("\(pageType)")]
+         "pageType": BVAnyEncodable("\(type(of: self))")]
     
     let event: BVAnalyticsEvent =
       .pageView(
@@ -204,7 +174,8 @@ extension CALayerDelegate {
 }
 
 extension UIScrollViewDelegate {
-  public func trackScrollEvent(_ containerType: BVRecommendationsContainerType) {
+  public func trackScrollEvent(
+    _ containerType: BVRecommendationsContainerType) {
     guard let configuration: BVAnalyticsConfiguration =
       BVManager.sharedManager.getConfiguration() else {
         return

@@ -26,7 +26,7 @@ public class BVProductSearchQuery: BVConversationsQuery<BVProduct> {
     
     super.init(BVProduct.self)
     
-    let queryField: BVConversationsSearchQueryField = BVConversationsSearchQueryField(searchQuery)
+    let queryField: BVConversationsQuerySearchField = BVConversationsQuerySearchField(searchQuery)
     let searchField: BVURLParameter =
       .field(queryField, nil)
     
@@ -40,23 +40,23 @@ extension BVProductSearchQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     
     /// I think we can let everything pass...
     let internalFilter: BVURLParameter = {
-      switch filter {
+      switch by {
       case let .answers(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .authors(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .comments(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .questions(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .reviews(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       default:
-        return .filter(filter, op, nil)
+        return .filter(by, op, nil)
       }
     }()
     
@@ -70,13 +70,13 @@ extension BVProductSearchQuery: BVQueryIncludeable {
   public typealias Include = BVProductInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 10) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
     return self
