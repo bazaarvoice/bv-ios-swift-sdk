@@ -12,20 +12,20 @@ import Foundation
 /// \
 /// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
 public struct BVAuthor: BVQueryable {
-
+  
   public static var singularKey: String {
     return BVConversationsConstants.BVAuthors.singularKey
   }
-
+  
   public static var pluralKey: String {
     return BVConversationsConstants.BVAuthors.pluralKey
   }
-
+  
   private var includedAnswers: [BVAnswer]?
   private var includedComments: [BVComment]?
   private var includedQuestions: [BVQuestion]?
   private var includedReviews: [BVReview]?
-
+  
   public let authorId: String?
   public var badges: [BVBadge]? {
     return badgesArray?.array
@@ -64,7 +64,7 @@ public struct BVAuthor: BVQueryable {
   public let userLocation: String?
   public let userNickname: String?
   public let videos: [BVVideo]?
-
+  
   private enum CodingKeys: String, CodingKey {
     case authorId = "Id"
     case badgesArray = "Badges"
@@ -114,12 +114,12 @@ extension BVAuthor: BVReviewIncludable {
   }
 }
 
-// MARK: - BVAuthor: BVConversationsUpdateIncludable
-extension BVAuthor: BVConversationsUpdateIncludable {
-
+// MARK: - BVAuthor: BVConversationsQueryUpdateIncludable
+extension BVAuthor: BVConversationsQueryUpdateIncludable {
+  
   internal mutating
-  func update(_ includable: BVConversationsIncludable) {
-
+  func update(_ includable: BVConversationsQueryIncludable) {
+    
     if let answers: [BVAnswer] = includable.answers {
       self.includedAnswers = answers
     }

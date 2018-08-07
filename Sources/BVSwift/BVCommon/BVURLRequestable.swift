@@ -107,8 +107,11 @@ internal typealias BVURLRequestableHandler =
 internal typealias BVURLRequestablePreflightHandler =
   ((BVCompletionWithErrorsHandler?) -> Swift.Void)
 
+internal typealias BVURLRequestablePostflightHandler = BVURLRequestableHandler
+
 internal protocol BVURLRequestableWithHandlerInternal {
   var preflightHandler: BVURLRequestablePreflightHandler? { get set }
+  var postflightHandler: BVURLRequestablePostflightHandler? { get set }
   var responseHandler: BVURLRequestableHandler? { get set }
 }
 

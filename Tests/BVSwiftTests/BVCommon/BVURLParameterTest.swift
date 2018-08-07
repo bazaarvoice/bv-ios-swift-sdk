@@ -117,7 +117,7 @@ class BVURLParameterTest: XCTestCase {
   
   private enum BVURLParameterTestOperator:
     String,
-    BVQueryfiltererator,
+    BVQueryFilterOperator,
   BVQuerySortOrder {
     case plus
     case moins

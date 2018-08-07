@@ -57,16 +57,24 @@ class BVRecommendationsQueryTest: XCTestCase {
   
   private var listener: BVRecommendationsQueryTestListener?
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVPixel.skipAllPixelEvents = true
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false
+  }
+  
+  override func setUp() {
+    super.setUp()
+  }
+  
+  override func tearDown() {
+    super.tearDown()
     
     BVURLCacheManager.shared.expunge()
     self.listener = nil

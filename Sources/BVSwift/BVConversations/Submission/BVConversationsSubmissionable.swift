@@ -23,6 +23,14 @@ public protocol BVConversationsSubmissionActionable {
   func add(_ action: BVConversationsSubmissionAction) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionActionable>(
+  lhs: T, rhs: BVConversationsSubmissionAction?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
+
 /// Enumeration defining the submission type
 public enum BVConversationsSubmissionUserAuthenticatedString {
   
@@ -35,6 +43,14 @@ public enum BVConversationsSubmissionUserAuthenticatedString {
 public protocol BVConversationsSubmissionUserAuthenticatedStringable {
   @discardableResult
   func add(_ uas: BVConversationsSubmissionUserAuthenticatedString) -> Self
+}
+
+public func <+><T: BVConversationsSubmissionUserAuthenticatedStringable>(
+  lhs: T, rhs: BVConversationsSubmissionUserAuthenticatedString?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
 }
 
 /// Enumeration defining the submission type
@@ -51,6 +67,14 @@ public protocol BVConversationsSubmissionAuthenticityable {
   func add(_ authenticity: BVConversationsSubmissionAuthenticity) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionAuthenticityable>(
+  lhs: T, rhs: BVConversationsSubmissionAuthenticity?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
+
 /// Enumeration defining the submission type
 public enum BVConversationsSubmissionAlerts {
   
@@ -65,6 +89,14 @@ public enum BVConversationsSubmissionAlerts {
 public protocol BVConversationsSubmissionAlertable {
   @discardableResult
   func add(_ alert: BVConversationsSubmissionAlerts) -> Self
+}
+
+public func <+><T: BVConversationsSubmissionAlertable>(
+  lhs: T, rhs: BVConversationsSubmissionAlerts?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
 }
 
 /// Enumeration defining the submission type
@@ -99,10 +131,26 @@ public protocol BVConversationsSubmissionFieldTypeable {
   func add(_ fieldType: BVConversationsSubmissionFieldTypes) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionFieldTypeable>(
+  lhs: T, rhs: BVConversationsSubmissionFieldTypes?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
+
 /// Protocol defining the ability to accept custom dictionary of strings
 public protocol BVConversationsSubmissionCustomizeable {
   @discardableResult
   func add(_ fields: [String: String]) -> Self
+}
+
+public func <+><T: BVConversationsSubmissionCustomizeable>(
+  lhs: T, rhs: [String: String]?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
 }
 
 /// Enumeration defining the submission type
@@ -122,6 +170,14 @@ public protocol BVConversationsSubmissionHostedAuthenticatable {
   func add(_ hostedAuth: BVConversationsSubmissionHostedAuthenticated) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionHostedAuthenticatable>(
+  lhs: T, rhs: BVConversationsSubmissionHostedAuthenticated?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
+
 /// Enumeration defining the submission type
 public enum BVConversationsSubmissionLocale {
   
@@ -134,6 +190,14 @@ public enum BVConversationsSubmissionLocale {
 public protocol BVConversationsSubmissionLocaleable {
   @discardableResult
   func add(_ locale: BVConversationsSubmissionLocale) -> Self
+}
+
+public func <+><T: BVConversationsSubmissionLocaleable>(
+  lhs: T, rhs: BVConversationsSubmissionLocale?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
 }
 
 /// Enumeration defining the submission type
@@ -150,6 +214,14 @@ public enum BVConversationsSubmissionMedia {
 public protocol BVConversationsSubmissionMediable {
   @discardableResult
   func add(_ media: BVConversationsSubmissionMedia) -> Self
+}
+
+public func <+><T: BVConversationsSubmissionMediable>(
+  lhs: T, rhs: BVConversationsSubmissionMedia?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
 }
 
 /// Enumeration defining the submission type
@@ -170,6 +242,14 @@ public protocol BVConversationsSubmissionRatable {
   func add(_ rate: BVConversationsSubmissionRating) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionRatable>(
+  lhs: T, rhs: BVConversationsSubmissionRating?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
+
 /// Enumeration defining the submission type
 public enum BVConversationsSubmissionTag {
   
@@ -180,6 +260,14 @@ public enum BVConversationsSubmissionTag {
 public protocol BVConversationsSubmissionTaggable {
   @discardableResult
   func add(_ tag: BVConversationsSubmissionTag) -> Self
+}
+
+public func <+><T: BVConversationsSubmissionTaggable>(
+  lhs: T, rhs: BVConversationsSubmissionTag?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
 }
 
 /// Enumeration defining the submission type
@@ -195,6 +283,13 @@ public protocol BVConversationsSubmissionTermsAndConditionsable {
     _ termsAndConditions: BVConversationsSubmissionTermsAndConditions) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionTermsAndConditionsable>(
+  lhs: T, rhs: BVConversationsSubmissionTermsAndConditions?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
 
 /// Enumeration defining the submission type
 public enum BVConversationsSubmissionUserInfo {
@@ -217,22 +312,31 @@ public protocol BVConversationsSubmissionUserInformationable {
   func add(_ userInfo: BVConversationsSubmissionUserInfo) -> Self
 }
 
+public func <+><T: BVConversationsSubmissionUserInformationable>(
+  lhs: T, rhs: BVConversationsSubmissionUserInfo?) -> T {
+  if let action = rhs {
+    lhs.add(action)
+  }
+  return lhs
+}
+
 // MARK: - BVConversationsSubmissionParameterable
 internal protocol BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? { get }
 }
 
-// MARK: - BVConversationsSubmissionable
-internal protocol BVConversationsSubmissionable: class {
-  var conversationsParameters: [URLQueryItem] { get set }
-  var customConversationsParameters: [URLQueryItem]? { get set }
+// MARK: - BVConversationsSubmissionPreflightable
+internal protocol BVConversationsSubmissionPreflightable: BVSubmissionActionable {
+  func conversationsSubmissionPreflight(
+    _ preflight: BVCompletionWithErrorsHandler?)
 }
 
 // MARK: - BVConversationsSubmissionPostflightable
 internal protocol
 BVConversationsSubmissionPostflightable: BVSubmissionActionable {
-  associatedtype ConversationsPostflightResult: BVSubmissionable
-  func conversationsPostflight(_ results: [ConversationsPostflightResult]?)
+  associatedtype ConversationsSubmissionPostflightResult: BVSubmissionable
+  func conversationsSubmissionPostflight(
+    _ results: [ConversationsSubmissionPostflightResult]?)
 }
 
 extension BVConversationsSubmissionAction:

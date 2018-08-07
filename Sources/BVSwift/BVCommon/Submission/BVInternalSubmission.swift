@@ -20,6 +20,7 @@ internal class BVInternalSubmission {
   final private var configuration: BVConfiguration?
   final private var cacheable: Bool = false
   private var preflightClosure: BVURLRequestablePreflightHandler?
+  private var postflightClosure: BVURLRequestablePostflightHandler?
   private var baseResponseCompletion: BVURLRequestableHandler?
   private let postResource: String
   
@@ -65,13 +66,21 @@ extension BVInternalSubmission: BVSubmissionableConsumable {
 
 // MARK: - BVInternalSubmission: BVSubmissionActionableInternal
 extension BVInternalSubmission: BVSubmissionActionableInternal {
-  
   var preflightHandler: BVURLRequestablePreflightHandler? {
     get {
       return preflightClosure
     }
     set(newValue) {
       preflightClosure = newValue
+    }
+  }
+  
+  var postflightHandler: BVURLRequestablePostflightHandler? {
+    get {
+      return postflightClosure
+    }
+    set(newValue) {
+      postflightClosure = newValue
     }
   }
   
