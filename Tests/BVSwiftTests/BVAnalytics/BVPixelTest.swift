@@ -31,7 +31,7 @@ class BVPixelTest: XCTestCase {
     return URLSession(configuration: .default)
   }()
   
-  override func setUp() {
+  override class func setUp() {
     super.setUp()
     
     BVManager.sharedManager.addConfiguration(BVPixelTest.config)
@@ -40,7 +40,7 @@ class BVPixelTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
-  override func tearDown() {
+  override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = true

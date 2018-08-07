@@ -50,7 +50,7 @@ public struct BVQAStatistics: BVAuxiliaryable {
   private let tagDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let totalAnswerCount: Int?
   public let totalQuestionCount: Int?
-
+  
   private enum CodingKeys: String, CodingKey {
     case answerHelpfulVoteCount = "AnswerHelpfulVoteCount"
     case answerNotHelpfulVoteCount = "AnswerNotHelpfulVoteCount"

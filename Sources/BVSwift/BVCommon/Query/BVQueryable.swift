@@ -32,7 +32,11 @@ public protocol BVQueryFilter: BVQueryRepresentable {
 }
 
 /// Protocol defining the primitive query filter operator types
-public protocol BVQueryfiltererator: CustomStringConvertible { }
+public protocol BVQueryFilterOperator: CustomStringConvertible { }
+
+/// Protocol defining the primitive query filtered stat types
+public protocol BVQueryFilteredStat: BVQueryStat {
+}
 
 /// Protocol defining the primitive query include types
 public protocol BVQueryInclude: CustomStringConvertible {
@@ -59,27 +63,33 @@ public protocol BVQueryStat: CustomStringConvertible {
 /// Protocol definition for the behavior of adding filters
 public protocol BVQueryFieldable {
   associatedtype Field: BVQueryField
-  func field(_ field: Field) -> Self
+  func field(_ to: Field) -> Self
 }
 
 /// Protocol definition for the behavior of adding filters with operators
 public protocol BVQueryFilterable {
   associatedtype Filter: BVQueryFilter
-  associatedtype Operator: BVQueryfiltererator
-  func filter(_ filter: Filter, op: Operator) -> Self
+  associatedtype Operator: BVQueryFilterOperator
+  func filter(_ by: Filter, op: Operator) -> Self
+}
+
+/// Protocol definition for the behavior of adding filtered stats
+public protocol BVQueryFilteredStatable {
+  associatedtype FilteredStat: BVQueryFilteredStat
+  func filter(_ by: FilteredStat) -> Self
 }
 
 /// Protocol definition for the behavior of adding included filters
 public protocol BVQueryIncludeable {
   associatedtype Include: BVQueryInclude
-  func include(_ include: Include, limit: UInt16) -> Self
+  func include(_ kind: Include, limit: UInt16) -> Self
 }
 
 /// Protocol definition for the behavior of adding sort filters
 public protocol BVQuerySortable {
   associatedtype Sort: BVQuerySort
   associatedtype Order: BVQuerySortOrder
-  func sort(_ sort: Sort, order: Order) -> Self
+  func sort(_ on: Sort, order: Order) -> Self
 }
 
 /// Protocol definition for the behavior of adding stat filters
@@ -95,8 +105,8 @@ public protocol BVQueryStatable {
 /// contain any ["not nice"](https://tools.ietf.org/html/rfc3986#section-2)
 /// characters for a URL
 public protocol BVQueryUnsafeField {
-  func unsafeField(_ field: CustomStringConvertible,
-                   value: CustomStringConvertible) -> Self
+  func unsafe(_ field: CustomStringConvertible,
+              value: CustomStringConvertible) -> Self
 }
 
 // MARK: - BVQueryableInternal
@@ -107,8 +117,3 @@ internal protocol BVQueryableInternal: BVQueryable {
 // MARK: - BVQueryActionableInternal
 internal protocol BVQueryActionableInternal:
 BVURLRequestableWithHandlerInternal { }
-
-// MARK: - BVQueryPostflightable
-internal protocol BVQueryPostflightable: BVQueryActionableInternal {
-  func postflight(_ response: BVURLRequestableResponseInternal)
-}

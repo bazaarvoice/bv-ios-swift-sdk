@@ -318,32 +318,11 @@ extension BVAnalyticsEvent {
     return ["client": BVAnyEncodable(clientId)]
   }
   
-  internal static func loadId(_ count: UInt = 10) -> [String: String]? {
-    let byteCount = Int(count) /// Yep, pedantry, recast to Int
-    let align = MemoryLayout<UInt8>.alignment
-    let buffer: UnsafeMutableRawPointer =
-      UnsafeMutableRawPointer.allocate(
-        byteCount: byteCount,
-        alignment: align)
-    
-    defer {
-      buffer.deallocate()
+  internal static func loadId(_ length: UInt = 10) -> [String: String]? {
+    guard let randomString = String.random(length) else {
+      return nil
     }
-    
-    guard errSecSuccess ==
-      SecRandomCopyBytes(kSecRandomDefault, byteCount, buffer) else {
-        return nil
-    }
-    
-    let bufferPointer =
-      UnsafeRawBufferPointer(start: buffer, count: byteCount)
-    
-    return [
-      loadIdKey: bufferPointer.reduce(String.empty)
-      { (result: String, byte: UInt8) -> String in
-        result + String(format: "%x", byte)
-      }
-    ]
+    return [loadIdKey: randomString]
   }
 }
 

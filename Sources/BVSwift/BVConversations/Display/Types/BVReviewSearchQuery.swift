@@ -53,25 +53,56 @@ public class BVReviewSearchQuery: BVConversationsQuery<BVReview> {
     
     add(productFilter)
     
-    let queryField: BVConversationsSearchQueryField = BVConversationsSearchQueryField(searchQuery)
+    let queryField: BVConversationsQuerySearchField =
+      BVConversationsQuerySearchField(searchQuery)
     let searchField: BVURLParameter =
       .field(queryField, nil)
     
     add(searchField)
     
     if 0 < limit {
-      let limitField: BVConversationsLimitQueryField = BVConversationsLimitQueryField(limit)
+      let limitField: BVConversationsQueryLimitField =
+        BVConversationsQueryLimitField(limit)
       add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVConversationsOffsetQueryField = BVConversationsOffsetQueryField(offset)
+      let offsetField: BVConversationsQueryOffsetField =
+        BVConversationsQueryOffsetField(offset)
       add(.field(offsetField, nil))
     }
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure: (([BVReview]?) -> Swift.Void)? {
+  final internal override var queryPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+    return { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
+      var hasProductInclude: Bool = false
+      var hasFilteredInclude: Bool = false
+      
+      self.parameters.forEach {
+        switch $0 {
+        case .stats(_ as BVQueryFilteredStat, _):
+          hasFilteredInclude = true
+        case let .include(include as BVReviewInclude, _)
+          where .products == include:
+          hasProductInclude = true
+        default:
+          break
+        }
+      }
+      
+      if hasFilteredInclude && !hasProductInclude {
+        completion?(
+          BVConversationsError.badRequest("Must include product include"))
+        return
+      }
+      
+      completion?(nil)
+    }
+  }
+  
+  final internal override var queryPostflightResultsClosure: (
+    ([BVReview]?) -> Swift.Void)? {
     return { (results: [BVReview]?) in
       if let reviews = results,
         let firstReview = reviews.first,
@@ -137,10 +168,22 @@ extension BVReviewSearchQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     let internalFilter: BVURLParameter =
-      .filter(filter, op, nil)
+      .filter(by, op, nil)
     add(internalFilter)
+    return self
+  }
+}
+
+// MARK: - BVReviewSearchQuery: BVQueryFilteredStatable
+extension BVReviewSearchQuery: BVQueryFilteredStatable {
+  public typealias FilteredStat = BVReviewFilteredStat
+  
+  @discardableResult
+  public func filter(_ by: FilteredStat) -> Self {
+    let internalStat: BVURLParameter = .stats(by, nil)
+    add(internalStat, coalesce: true)
     return self
   }
 }
@@ -150,15 +193,27 @@ extension BVReviewSearchQuery: BVQueryIncludeable {
   public typealias Include = BVReviewInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 0) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 0) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
+    return self
+  }
+}
+
+// MARK: - BVReviewSearchQuery: BVQueryStatable
+extension BVReviewSearchQuery: BVQueryStatable {
+  public typealias Stat = BVReviewStat
+  
+  @discardableResult
+  public func stats(_ for: BVReviewStat) -> Self {
+    let internalStat: BVURLParameter = .stats(`for`, nil)
+    add(internalStat)
     return self
   }
 }

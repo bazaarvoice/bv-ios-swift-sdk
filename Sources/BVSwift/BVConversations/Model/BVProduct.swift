@@ -12,21 +12,21 @@ import Foundation
 /// \
 /// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
 public struct BVProduct: BVQueryable {
-
+  
   public static var singularKey: String {
     return BVConversationsConstants.BVProducts.singularKey
   }
-
+  
   public static var pluralKey: String {
     return BVConversationsConstants.BVProducts.pluralKey
   }
-
+  
   private var includedAnswers: [BVAnswer]?
   private var includedAuthors: [BVAuthor]?
   private var includedComments: [BVComment]?
   private var includedQuestions: [BVQuestion]?
   private var includedReviews: [BVReview]?
-
+  
   public var attributes: [BVProductAttribute]? {
     return attributesDictionary?.array
   }
@@ -49,7 +49,7 @@ public struct BVProduct: BVQueryable {
   public let qaStatistics: BVQAStatistics?
   public let reviewStatistics: BVReviewStatistics?
   public let upcs: [String]?
-
+  
   private enum CodingKeys: String, CodingKey {
     case attributesDictionary = "Attributes"
     case brand = "Brand"
@@ -108,12 +108,12 @@ extension BVProduct: BVReviewIncludable {
   }
 }
 
-// MARK: - BVProduct: BVConversationsUpdateIncludable
-extension BVProduct: BVConversationsUpdateIncludable {
-
+// MARK: - BVProduct: BVConversationsQueryUpdateIncludable
+extension BVProduct: BVConversationsQueryUpdateIncludable {
+  
   internal mutating
-  func update(_ includable: BVConversationsIncludable) {
-
+  func update(_ includable: BVConversationsQueryIncludable) {
+    
     if let answers: [BVAnswer] = includable.answers {
       self.includedAnswers = answers
     }
