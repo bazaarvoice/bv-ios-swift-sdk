@@ -36,7 +36,7 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
   }
   
   /// Internal
-  internal override var conversationsPostflightResultsClosure: (([BVProduct]?) -> Swift.Void)? {
+  final internal override var queryPostflightResultsClosure: (([BVProduct]?) -> Swift.Void)? {
     return { (results: [BVProduct]?) in
       if let product = results?.first,
         let productId = self.productId {
@@ -117,22 +117,22 @@ extension BVProductQuery: BVQueryFilterable {
   public typealias Operator = BVConversationsfiltererator
   
   @discardableResult
-  public func filter(_ filter: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
     
     /// We don't allow regular product filters since that wouldn't make sense
     /// for a product display request.
     let internalFilter: BVURLParameter? = {
-      switch filter {
+      switch by {
       case let .answers(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .authors(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .comments(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .questions(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       case let .reviews(typeFilter):
-        return .filterType(filter, typeFilter, op, nil)
+        return .filterType(by, typeFilter, op, nil)
       default:
         return nil
       }
@@ -151,13 +151,13 @@ extension BVProductQuery: BVQueryIncludeable {
   public typealias Include = BVProductInclude
   
   @discardableResult
-  public func include(_ include: Include, limit: UInt16 = 10) -> Self {
+  public func include(_ kind: Include, limit: UInt16 = 10) -> Self {
     let internalInclude: BVURLParameter =
-      .include(include, nil)
+      .include(kind, nil)
     add(internalInclude, coalesce: true)
     if limit > 0 {
       let internalIncludeLimit: BVURLParameter =
-        .includeLimit(include, limit, nil)
+        .includeLimit(kind, limit, nil)
       add(internalIncludeLimit)
     }
     return self
@@ -170,21 +170,21 @@ extension BVProductQuery: BVQuerySortable {
   public typealias Order = BVConversationsSortOrder
   
   @discardableResult
-  public func sort(_ sort: Sort, order: Order) -> Self {
+  public func sort(_ on: Sort, order: Order) -> Self {
     let internalSort: BVURLParameter = {
-      switch sort {
+      switch on {
       case let .answers(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .authors(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .comments(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .questions(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       case let .reviews(by):
-        return .sortType(sort, by, order, nil)
+        return .sortType(on, by, order, nil)
       default:
-        return .sort(sort, order, nil)
+        return .sort(on, order, nil)
       }
     }()
     

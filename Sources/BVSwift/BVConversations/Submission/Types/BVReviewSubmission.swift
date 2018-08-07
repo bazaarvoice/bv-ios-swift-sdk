@@ -79,7 +79,7 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
     }
     super.init(review)
     
-    conversationsParameters ∪= [
+    submissionParameters ∪= [
       URLQueryItem(name: "productId", value: productId.urlEncode()),
       URLQueryItem(name: "rating", value: "\(rating)".urlEncode()),
       URLQueryItem(name: "reviewtext", value: text.urlEncode()),
@@ -129,7 +129,7 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
 extension BVReviewSubmission: BVConversationsSubmissionAlertable {
   @discardableResult
   public func add(_ alert: BVConversationsSubmissionAlerts) -> Self {
-    conversationsParameters ∪= alert.urlQueryItems
+    submissionParameters ∪= alert.urlQueryItems
     return self
   }
 }
@@ -139,7 +139,7 @@ extension BVReviewSubmission: BVConversationsSubmissionAuthenticityable {
   @discardableResult
   public func add(
     _ authenticity: BVConversationsSubmissionAuthenticity) -> Self {
-    conversationsParameters ∪= authenticity.urlQueryItems
+    submissionParameters ∪= authenticity.urlQueryItems
     return self
   }
 }
@@ -148,7 +148,7 @@ extension BVReviewSubmission: BVConversationsSubmissionAuthenticityable {
 extension BVReviewSubmission: BVConversationsSubmissionFieldTypeable {
   @discardableResult
   public func add(_ fieldType: BVConversationsSubmissionFieldTypes) -> Self {
-    conversationsParameters ∪= fieldType.urlQueryItems
+    submissionParameters ∪= fieldType.urlQueryItems
     return self
   }
 }
@@ -158,7 +158,7 @@ extension BVReviewSubmission: BVConversationsSubmissionHostedAuthenticatable {
   @discardableResult
   public func add(
     _ hostedAuth: BVConversationsSubmissionHostedAuthenticated) -> Self {
-    conversationsParameters ∪= hostedAuth.urlQueryItems
+    submissionParameters ∪= hostedAuth.urlQueryItems
     return self
   }
 }
@@ -167,7 +167,7 @@ extension BVReviewSubmission: BVConversationsSubmissionHostedAuthenticatable {
 extension BVReviewSubmission: BVConversationsSubmissionLocaleable {
   @discardableResult
   public func add(_ locale: BVConversationsSubmissionLocale) -> Self {
-    conversationsParameters ∪= locale.urlQueryItems
+    submissionParameters ∪= locale.urlQueryItems
     return self
   }
 }
@@ -176,7 +176,7 @@ extension BVReviewSubmission: BVConversationsSubmissionLocaleable {
 extension BVReviewSubmission: BVConversationsSubmissionRatable {
   @discardableResult
   public func add(_ rate: BVConversationsSubmissionRating) -> Self {
-    conversationsParameters ∪= rate.urlQueryItems
+    submissionParameters ∪= rate.urlQueryItems
     return self
   }
 }
@@ -185,7 +185,7 @@ extension BVReviewSubmission: BVConversationsSubmissionRatable {
 extension BVReviewSubmission: BVConversationsSubmissionTaggable {
   @discardableResult
   public func add(_ tag: BVConversationsSubmissionTag) -> Self {
-    conversationsParameters ∪= tag.urlQueryItems
+    submissionParameters ∪= tag.urlQueryItems
     return self
   }
 }
@@ -195,7 +195,7 @@ extension BVReviewSubmission: BVConversationsSubmissionTermsAndConditionsable {
   @discardableResult
   public func add(
     _ termsAndConditions: BVConversationsSubmissionTermsAndConditions) -> Self {
-    conversationsParameters ∪= termsAndConditions.urlQueryItems
+    submissionParameters ∪= termsAndConditions.urlQueryItems
     return self
   }
 }
@@ -206,7 +206,7 @@ BVConversationsSubmissionUserAuthenticatedStringable {
   @discardableResult
   public func add(
     _ uas: BVConversationsSubmissionUserAuthenticatedString) -> Self {
-    conversationsParameters ∪= uas.urlQueryItems
+    submissionParameters ∪= uas.urlQueryItems
     return self
   }
 }
@@ -215,7 +215,7 @@ BVConversationsSubmissionUserAuthenticatedStringable {
 extension BVReviewSubmission: BVConversationsSubmissionUserInformationable {
   @discardableResult
   public func add(_ userInfo: BVConversationsSubmissionUserInfo) -> Self {
-    conversationsParameters ∪= userInfo.urlQueryItems
+    submissionParameters ∪= userInfo.urlQueryItems
     return self
   }
 }

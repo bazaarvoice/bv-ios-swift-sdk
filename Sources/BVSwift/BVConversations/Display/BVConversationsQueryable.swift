@@ -39,7 +39,7 @@ public protocol BVReviewIncludable: BVQueryable {
 
 /// Internal
 
-internal protocol BVConversationsIncludable {
+internal protocol BVConversationsQueryIncludable {
   var answers: [BVAnswer]? { get }
   var authors: [BVAuthor]? { get }
   var comments: [BVComment]? { get }
@@ -48,10 +48,10 @@ internal protocol BVConversationsIncludable {
   var reviews: [BVReview]? { get }
 }
 
-extension BVConversationsUpdateIncludable {
+extension BVConversationsQueryUpdateIncludable {
   internal mutating func update(_ any: Any?) {
-    if let includable: BVConversationsIncludable =
-      any as? BVConversationsIncludable {
+    if let includable: BVConversationsQueryIncludable =
+      any as? BVConversationsQueryIncludable {
       update(includable)
     }
   }
@@ -61,24 +61,31 @@ extension BVConversationsUpdateIncludable {
 internal protocol BVConversationsQueryValue:
 BVInternalCustomStringConvertible { }
 
-// MARK: - BVConversationsUpdateable
-internal protocol BVConversationsUpdateable: BVQueryable {
+// MARK: - BVConversationsQueryUpdateable
+internal protocol BVConversationsQueryUpdateable: BVQueryable {
   mutating func update(_ any: Any?)
 }
 
-// MARK: - BVConversationsUpdateIncludable
-internal protocol BVConversationsUpdateIncludable: BVConversationsUpdateable {
-  mutating func update(_ includable: BVConversationsIncludable)
+// MARK: - BVConversationsQueryUpdateIncludable
+internal protocol BVConversationsQueryUpdateIncludable: BVConversationsQueryUpdateable {
+  mutating func update(_ includable: BVConversationsQueryIncludable)
+}
+
+// MARK: - BVConversationsQueryPreflightable
+internal protocol BVConversationsQueryPreflightable: BVQueryActionable {
+  func conversationsQueryPreflight(
+    _ preflight: BVCompletionWithErrorsHandler?)
 }
 
 // MARK: - BVConversationsQueryPostflightable
 internal protocol BVConversationsQueryPostflightable: BVQueryActionable {
-  associatedtype ConversationsPostflightResult: BVQueryable
-  func conversationsPostflight(_ results: [ConversationsPostflightResult]?)
+  associatedtype ConversationsQueryPostflightResult: BVQueryable
+  func conversationsQueryPostflight(
+    _ results: [ConversationsQueryPostflightResult]?)
 }
 
-// MARK: - BVConversationsSearchQueryField
-internal struct BVConversationsSearchQueryField: BVQueryField {
+// MARK: - BVConversationsQuerySearchField
+internal struct BVConversationsQuerySearchField: BVQueryField {
   private let value: CustomStringConvertible
   
   var internalDescription: String {
@@ -98,8 +105,8 @@ internal struct BVConversationsSearchQueryField: BVQueryField {
   }
 }
 
-// MARK: - BVConversationsLimitQueryField
-internal struct BVConversationsLimitQueryField: BVQueryField {
+// MARK: - BVConversationsQueryLimitField
+internal struct BVConversationsQueryLimitField: BVQueryField {
   private let value: CustomStringConvertible
   
   var internalDescription: String {
@@ -119,8 +126,8 @@ internal struct BVConversationsLimitQueryField: BVQueryField {
   }
 }
 
-// MARK: - BVConversationsOffsetQueryField
-internal struct BVConversationsOffsetQueryField: BVQueryField {
+// MARK: - BVConversationsQueryOffsetField
+internal struct BVConversationsQueryOffsetField: BVQueryField {
   private let value: CustomStringConvertible
   
   var internalDescription: String {
