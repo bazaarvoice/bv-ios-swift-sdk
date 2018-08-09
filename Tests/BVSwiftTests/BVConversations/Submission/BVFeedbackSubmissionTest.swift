@@ -63,9 +63,8 @@ class BVFeedbackSubmissionTest: XCTestCase {
     let randomId = String(arc4random())
     let userId: String = "userId\(randomId)"
     
-    feedbackSubmission
+    (feedbackSubmission <+> .identifier(userId))
       .configure(BVFeedbackSubmissionTest.config)
-      .add(.identifier(userId))
       .handler { (response: BVConversationsSubmissionResponse<BVFeedback>) in
         
         if let _ = response.errors {
@@ -124,9 +123,8 @@ class BVFeedbackSubmissionTest: XCTestCase {
     let randomId = String(arc4random())
     let userId: String = "userId\(randomId)"
     
-    feedbackSubmission
+    (feedbackSubmission <+> .identifier(userId))
       .configure(BVFeedbackSubmissionTest.config)
-      .add(.identifier(userId))
       .handler { (response: BVConversationsSubmissionResponse<BVFeedback>) in
         
         if let _ = response.errors {
@@ -183,9 +181,8 @@ class BVFeedbackSubmissionTest: XCTestCase {
     
     let randomId = String(arc4random())
     
-    feedbackSubmission
+    (feedbackSubmission <+> .identifier("userId\(randomId)"))
       .configure(BVFeedbackSubmissionTest.config)
-      .add(.identifier("userId\(randomId)"))
       .handler { (response: BVConversationsSubmissionResponse<BVFeedback>) in
         
         guard let errors = response.errors else {

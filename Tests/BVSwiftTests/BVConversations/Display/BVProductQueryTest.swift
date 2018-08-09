@@ -129,9 +129,9 @@ class BVProductQueryTest: XCTestCase {
       .include(.reviews, limit: 10)
       .include(.questions, limit: 5)
       // only include reviews where isRatingsOnly is false
-      .filter(.reviews(.isRatingsOnly(false)))
+      .filter((.reviews(.isRatingsOnly(false)), .equalTo))
       // only include questions where isFeatured is not equal to true
-      .filter(.questions(.isFeatured(true)), op: .notEqualTo)
+      .filter((.questions(.isFeatured(true)), .notEqualTo))
       .stats(.reviews)
       .configure(BVProductQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVProduct>) in
@@ -194,5 +194,29 @@ class BVProductQueryTest: XCTestCase {
       XCTAssertNil(
         error, "Something went horribly wrong, request took too long.")
     }
+  }
+  
+  func testProductQueryDisplayWithOrFilter() {
+    
+    let productQuery = BVProductQuery(productId: "test1")
+      .filter(
+          (.isActive(false), .equalTo),
+          (.isDisabled(false), .equalTo),
+          (.reviews(.isRatingsOnly(false)), .equalTo),
+          (.reviews(.isRecommended(false)), .equalTo),
+          (.reviews(.rating(5)), .equalTo),
+          (.questions(.isFeatured(true)), .equalTo),
+          (.questions(.hasAnswers(true)), .equalTo),
+          (.questions(.hasBrandAnswers(true)), .equalTo)
+        )
+      .configure(BVProductQueryTest.config)
+    
+    guard let req = productQuery.request else {
+      XCTFail()
+      return
+    }
+    
+    print(req)
+    
   }
 }

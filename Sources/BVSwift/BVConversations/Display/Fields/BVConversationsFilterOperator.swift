@@ -1,5 +1,5 @@
 //
-//  BVConversationsfiltererator.swift
+//  BVConversationsFilterOperator.swift
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
@@ -9,7 +9,7 @@ import Foundation
 
 /// An enum that represents a filtering mechanism that allows for filtering by
 /// the usual relational operators that we all know and love.
-public enum BVConversationsfiltererator: BVQueryFilterOperator {
+public enum BVConversationsFilterOperator: BVQueryFilterOperator {
   case greaterThan
   case greaterThanOrEqualTo
   case lessThan
@@ -22,33 +22,33 @@ public enum BVConversationsfiltererator: BVQueryFilterOperator {
   }
 }
 
-extension BVConversationsfiltererator: BVConversationsQueryValue {
+extension BVConversationsFilterOperator: BVConversationsQueryValue {
   internal var internalDescription: String {
     switch self {
     case .greaterThan:
       return
         BVConversationsConstants
-          .BVConversationsfiltererator.Keys.greaterThan
+          .BVConversationsFilterOperator.Keys.greaterThan
     case .greaterThanOrEqualTo:
       return
         BVConversationsConstants
-          .BVConversationsfiltererator.Keys.greaterThanOrEqualTo
+          .BVConversationsFilterOperator.Keys.greaterThanOrEqualTo
     case .lessThan:
       return
         BVConversationsConstants
-          .BVConversationsfiltererator.Keys.lessThan
+          .BVConversationsFilterOperator.Keys.lessThan
     case .lessThanOrEqualTo:
       return
         BVConversationsConstants
-          .BVConversationsfiltererator.Keys.lessThanOrEqualTo
+          .BVConversationsFilterOperator.Keys.lessThanOrEqualTo
     case .equalTo:
       return
         BVConversationsConstants
-          .BVConversationsfiltererator.Keys.equalTo
+          .BVConversationsFilterOperator.Keys.equalTo
     case .notEqualTo:
       return
         BVConversationsConstants
-          .BVConversationsfiltererator.Keys.notEqualTo
+          .BVConversationsFilterOperator.Keys.notEqualTo
     }
   }
 }

@@ -124,8 +124,8 @@ class BVQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
       .sort(.rating, order: .ascending)
-      .filter(.hasPhotos(true))
-      .filter(.hasComments(false))
+      .filter((.hasPhotos(true), .equalTo))
+      .filter((.hasComments(false), .equalTo))
       .configure(BVQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         
@@ -268,7 +268,7 @@ class BVQueryTest: XCTestCase {
     let questionQuery =
       BVQuestionQuery(productId: "test1", limit: 10, offset: 0)
         .include(.answers)
-        .filter(.hasAnswers(true))
+        .filter((.hasAnswers(true), .equalTo))
         .configure(BVQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
           
@@ -360,7 +360,7 @@ class BVQueryTest: XCTestCase {
     
     let productStatisticsQuery =
       BVProductStatisticsQuery(productIds: ["test3"])
-        .filter(.contentLocale("en_US"))
+        .filter((.contentLocale("en_US"), .equalTo))
         .stats(.nativeReviews)
         .stats(.reviews)
         .configure(BVQueryTest.config)
@@ -429,7 +429,7 @@ class BVQueryTest: XCTestCase {
       BVProductStatisticsQuery(productIds: ["test1", "test2", "test3"])
         .stats(.nativeReviews)
         .stats(.reviews)
-        .filter(.contentLocale("en_US"))
+        .filter((.contentLocale("en_US"), .equalTo))
         .configure(BVQueryTest.config)
         .handler {
           (response: BVConversationsQueryResponse<BVProductStatistics>) in
