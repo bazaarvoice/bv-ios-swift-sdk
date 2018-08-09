@@ -274,7 +274,7 @@ internal struct BVConversationsConstants {
     }
   }
   
-  internal struct BVConversationsfiltererator {
+  internal struct BVConversationsFilterOperator {
     
     internal struct Keys {
       static let greaterThan: String = "gt"
