@@ -70,7 +70,7 @@ public protocol BVQueryFieldable {
 public protocol BVQueryFilterable {
   associatedtype Filter: BVQueryFilter
   associatedtype Operator: BVQueryFilterOperator
-  func filter(_ by: Filter, op: Operator) -> Self
+  func filter(_ apply: (Filter, Operator)...) -> Self
 }
 
 /// Protocol definition for the behavior of adding filtered stats
@@ -107,6 +107,74 @@ public protocol BVQueryStatable {
 public protocol BVQueryUnsafeField {
   func unsafe(_ field: CustomStringConvertible,
               value: CustomStringConvertible) -> Self
+}
+
+/// Enum defining the supported logical operators of filter
+internal enum BVQueryFilterExpression<T: BVQueryFilter, U: BVQueryFilterOperator> {
+  case and([(T, U)])
+  case not((T, U))
+  case or([(T, U)])
+  case xor([(T, U)])
+}
+
+// MARK: - BVQueryFilterable: Extension for supported expressions
+extension BVQueryFilterable {
+  internal func flatten<T: BVQueryFilter, U: BVQueryFilterOperator>(
+    _ expr: BVQueryFilterExpression<T, U>,
+    preflight: ((T, U) -> BVURLParameter?)? = nil) -> [BVURLParameter] {
+    
+    /// First we set a default apply closure to just return a filter parameter.
+    let defaultPreflight: ((T, U) -> BVURLParameter) = {
+      return BVURLParameter.filter($0, $1, nil)
+    }
+    
+    /// AND is the easiest, we just linearly append the filters to the list.
+    ///
+    /// but...
+    ///
+    /// OR is more complicated because we have to not only have to construct
+    /// the recursive composition but we also have to make sure to preflight
+    /// the parameters into equivelent genus buckets, e.g., .filter() &
+    /// .filterType(), otherwise we'll end up losing some filters.
+    switch expr {
+    case let .and(list):
+      return list.map {
+        return preflight?($0.0, $0.1) ?? defaultPreflight($0.0, $0.1)
+      }
+    case let .or(list):
+      
+      let urlParameters: [BVURLParameter] = list.map {
+        return preflight?($0.0, $0.1) ?? defaultPreflight($0.0, $0.1)
+      }
+      
+      /// We zip up the values into buckets based on the name of the parameter
+      /// since (at least for now) it's unique. This way we end up with an
+      /// array of BVURLParameter arrays all sorted by the name. This ensures
+      /// that when we go to try and compose them it won't fail and drop a
+      /// filter off the list.
+      ///
+      /// For more information, see the Dictionary(grouping:) call-site as it's
+      /// the main workhorse for separation by genus equality.
+      return Array(Dictionary(grouping: urlParameters) { $0.name }.values)
+        .reduce([]) { accum, bucket in
+          
+          let compose: BVURLParameter? = bucket.reduce(nil) {
+            guard let prev = $0 else {
+              return $1
+            }
+            return prev +~ $1
+          }
+          
+          guard let filter = compose else {
+            return accum
+          }
+          
+          return accum + [filter]
+      }
+    default:
+      return []
+    }
+  }
 }
 
 // MARK: - BVQueryableInternal

@@ -50,7 +50,7 @@ class BVProductStatisticsQueryTest: XCTestCase {
     
     let productStatisticsQuery =
       BVProductStatisticsQuery(productIds: ["test3"])
-        .filter(.contentLocale("en_US"))
+        .filter((.contentLocale("en_US"), .equalTo))
         .stats(.nativeReviews)
         .stats(.reviews)
         .configure(BVProductStatisticsQueryTest.config)
@@ -122,7 +122,7 @@ class BVProductStatisticsQueryTest: XCTestCase {
       BVProductStatisticsQuery(productIds: ["test1", "test2", "test3"])
         .stats(.nativeReviews)
         .stats(.reviews)
-        .filter(.contentLocale("en_US"))
+        .filter((.contentLocale("en_US"), .equalTo))
         .configure(BVProductStatisticsQueryTest.config)
         .handler {
           (response: BVConversationsQueryResponse<BVProductStatistics>) in

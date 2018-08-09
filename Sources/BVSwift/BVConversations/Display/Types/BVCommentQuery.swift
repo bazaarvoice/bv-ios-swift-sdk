@@ -33,12 +33,12 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
     let productFilter: BVURLParameter =
       .filter(
         BVCommentFilter.productId(productId),
-        BVConversationsfiltererator.equalTo,
+        BVConversationsFilterOperator.equalTo,
         nil)
     
     let commentFilter: BVURLParameter =
       .filter(BVCommentFilter.commentId(commentId),
-              BVConversationsfiltererator.equalTo,
+              BVConversationsFilterOperator.equalTo,
               nil)
     
     add(productFilter)
@@ -76,13 +76,20 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
 // MARK: - BVCommentQuery: BVQueryFilterable
 extension BVCommentQuery: BVQueryFilterable {
   public typealias Filter = BVCommentFilter
-  public typealias Operator = BVConversationsfiltererator
+  public typealias Operator = BVConversationsFilterOperator
   
+  /// The BVCommentQuery's BVQueryFilterable filter() implementation.
+  /// - Parameters:
+  ///   - apply: The list of filter tuples to apply to this query.
+  /// - Important:
+  /// \
+  /// If more than one tuple is provided then it is assumed that the proper
+  /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
-  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
-    let internalFilter: BVURLParameter =
-      .filter(by, op, nil)
-    add(internalFilter)
+  public func filter(_ apply: (Filter, Operator)...) -> Self {
+    let expr: BVQueryFilterExpression<Filter, Operator> =
+      1 < apply.count ? .or(apply) : .and(apply)
+    flatten(expr).forEach { add($0) }
     return self
   }
 }

@@ -28,7 +28,7 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
     let authorFilter: BVURLParameter =
       .filter(
         BVAuthorFilter.authorId(authorId),
-        BVConversationsfiltererator.equalTo,
+        BVConversationsFilterOperator.equalTo,
         nil)
     
     add(authorFilter)
