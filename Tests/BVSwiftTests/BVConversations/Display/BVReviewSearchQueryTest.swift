@@ -49,8 +49,8 @@ class BVReviewSearchQueryTest: XCTestCase {
     let reviewSearchQuery =
       BVReviewSearchQuery(
         productId: "test1", searchQuery: "volutpat")
-        .filter(.hasPhotos(true))
-        .filter(.hasComments(false))
+        .filter((.hasPhotos(true), .equalTo))
+        .filter((.hasComments(false), .equalTo))
         .configure(BVReviewSearchQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVReview>) in
           

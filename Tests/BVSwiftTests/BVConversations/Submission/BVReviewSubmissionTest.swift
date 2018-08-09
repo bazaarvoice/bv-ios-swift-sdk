@@ -146,8 +146,7 @@ class BVReviewSubmissionTest: XCTestCase {
     
     let videoCaption: String = "Very videogenic"
     
-    reviewSubmission
-      .add(.videos([BVVideo(videoURL, caption: videoCaption)]))
+    (reviewSubmission <+> .videos([BVVideo(videoURL, caption: videoCaption)]))
       .handler { result in
         if case let .failure(errors) = result {
           errors.forEach { print($0) }
@@ -194,11 +193,11 @@ class BVReviewSubmissionTest: XCTestCase {
       return
     }
     
-    reviewSubmission
+    (reviewSubmission
+      <+> .submit
+      <+> .nickname("cgil")
+      <+> .identifier("craiggiddl"))
       .configure(BVReviewSubmissionTest.config)
-      .add(.submit)
-      .add(.nickname("cgil"))
-      .add(.identifier("craiggiddl"))
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
         guard let errors = result.errors else {
@@ -235,11 +234,11 @@ class BVReviewSubmissionTest: XCTestCase {
       return
     }
     
-    reviewSubmission
+    (reviewSubmission
+      <+> .submit
+      <+> .nickname("cgil")
+      <+> .identifier("craiggiddl"))
       .configure(BVReviewSubmissionTest.config)
-      .add(.submit)
-      .add(.nickname("cgil"))
-      .add(.identifier("craiggiddl"))
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
         guard let errors = result.errors else {
@@ -302,11 +301,11 @@ class BVReviewSubmissionTest: XCTestCase {
       return
     }
     
-    reviewSubmission
+    (reviewSubmission
+      <+> .submit
+      <+> .nickname("cgil")
+      <+> .identifier("craiggiddl"))
       .configure(BVReviewSubmissionTest.config)
-      .add(.submit)
-      .add(.nickname("cgil"))
-      .add(.identifier("craiggiddl"))
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
         guard let errors = result.errors else {
@@ -364,26 +363,26 @@ class BVReviewSubmissionTest: XCTestCase {
     let randomId = String(arc4random())
     let photo: BVPhoto = BVPhoto(png, "Very photogenic")
     
-    return reviewSubmission
+    return (reviewSubmission
+      <+> action
+      <+> .campaignId("BV_REVIEW_DISPLAY")
+      <+> .locale("en_US")
+      <+> .sendEmailWhenCommented(true)
+      <+> .sendEmailWhenPublished(true)
+      <+> .nickname("UserNickname\(randomId)")
+      <+> .email("developer@bazaarvoice.com")
+      <+> .identifier("UserId\(randomId)")
+      <+> .score(5)
+      <+> .comment("Never!")
+      <+> .agree(true)
+      <+> .contextData(name: "Age", value: "18to24")
+      <+> .contextData(name: "Gender", value: "Male")
+      <+> .rating(name: "Quality", value: 1)
+      <+> .rating(name: "Value", value: 3)
+      <+> .rating(name: "HowDoes", value: 4)
+      <+> .rating(name: "Fit", value: 3)
+      <+> .photos([photo])
+      <+> ["_foo": "bar"])
       .configure(BVReviewSubmissionTest.config)
-      .add(action)
-      .add(.campaignId("BV_REVIEW_DISPLAY"))
-      .add(.locale("en_US"))
-      .add(.sendEmailWhenCommented(true))
-      .add(.sendEmailWhenPublished(true))
-      .add(.nickname("UserNickname\(randomId)"))
-      .add(.email("developer@bazaarvoice.com"))
-      .add(.identifier("UserId\(randomId)"))
-      .add(.score(5))
-      .add(.comment("Never!"))
-      .add(.agree(true))
-      .add(.contextData(name: "Age", value: "18to24"))
-      .add(.contextData(name: "Gender", value: "Male"))
-      .add(.rating(name: "Quality", value: 1))
-      .add(.rating(name: "Value", value: 3))
-      .add(.rating(name: "HowDoes", value: 4))
-      .add(.rating(name: "Fit", value: 3))
-      .add(["_foo" : "bar"])
-      .add(.photos([photo]))
   }
 }

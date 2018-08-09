@@ -23,6 +23,7 @@ public protocol BVConversationsSubmissionActionable {
   func add(_ action: BVConversationsSubmissionAction) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionActionable>(
   lhs: T, rhs: BVConversationsSubmissionAction?) -> T {
   if let action = rhs {
@@ -45,6 +46,7 @@ public protocol BVConversationsSubmissionUserAuthenticatedStringable {
   func add(_ uas: BVConversationsSubmissionUserAuthenticatedString) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionUserAuthenticatedStringable>(
   lhs: T, rhs: BVConversationsSubmissionUserAuthenticatedString?) -> T {
   if let action = rhs {
@@ -67,6 +69,7 @@ public protocol BVConversationsSubmissionAuthenticityable {
   func add(_ authenticity: BVConversationsSubmissionAuthenticity) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionAuthenticityable>(
   lhs: T, rhs: BVConversationsSubmissionAuthenticity?) -> T {
   if let action = rhs {
@@ -91,6 +94,7 @@ public protocol BVConversationsSubmissionAlertable {
   func add(_ alert: BVConversationsSubmissionAlerts) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionAlertable>(
   lhs: T, rhs: BVConversationsSubmissionAlerts?) -> T {
   if let action = rhs {
@@ -131,6 +135,7 @@ public protocol BVConversationsSubmissionFieldTypeable {
   func add(_ fieldType: BVConversationsSubmissionFieldTypes) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionFieldTypeable>(
   lhs: T, rhs: BVConversationsSubmissionFieldTypes?) -> T {
   if let action = rhs {
@@ -145,6 +150,7 @@ public protocol BVConversationsSubmissionCustomizeable {
   func add(_ fields: [String: String]) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionCustomizeable>(
   lhs: T, rhs: [String: String]?) -> T {
   if let action = rhs {
@@ -170,6 +176,7 @@ public protocol BVConversationsSubmissionHostedAuthenticatable {
   func add(_ hostedAuth: BVConversationsSubmissionHostedAuthenticated) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionHostedAuthenticatable>(
   lhs: T, rhs: BVConversationsSubmissionHostedAuthenticated?) -> T {
   if let action = rhs {
@@ -192,6 +199,7 @@ public protocol BVConversationsSubmissionLocaleable {
   func add(_ locale: BVConversationsSubmissionLocale) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionLocaleable>(
   lhs: T, rhs: BVConversationsSubmissionLocale?) -> T {
   if let action = rhs {
@@ -216,6 +224,7 @@ public protocol BVConversationsSubmissionMediable {
   func add(_ media: BVConversationsSubmissionMedia) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionMediable>(
   lhs: T, rhs: BVConversationsSubmissionMedia?) -> T {
   if let action = rhs {
@@ -242,6 +251,7 @@ public protocol BVConversationsSubmissionRatable {
   func add(_ rate: BVConversationsSubmissionRating) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionRatable>(
   lhs: T, rhs: BVConversationsSubmissionRating?) -> T {
   if let action = rhs {
@@ -262,6 +272,7 @@ public protocol BVConversationsSubmissionTaggable {
   func add(_ tag: BVConversationsSubmissionTag) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionTaggable>(
   lhs: T, rhs: BVConversationsSubmissionTag?) -> T {
   if let action = rhs {
@@ -283,6 +294,7 @@ public protocol BVConversationsSubmissionTermsAndConditionsable {
     _ termsAndConditions: BVConversationsSubmissionTermsAndConditions) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionTermsAndConditionsable>(
   lhs: T, rhs: BVConversationsSubmissionTermsAndConditions?) -> T {
   if let action = rhs {
@@ -312,6 +324,7 @@ public protocol BVConversationsSubmissionUserInformationable {
   func add(_ userInfo: BVConversationsSubmissionUserInfo) -> Self
 }
 
+@discardableResult
 public func <+><T: BVConversationsSubmissionUserInformationable>(
   lhs: T, rhs: BVConversationsSubmissionUserInfo?) -> T {
   if let action = rhs {
