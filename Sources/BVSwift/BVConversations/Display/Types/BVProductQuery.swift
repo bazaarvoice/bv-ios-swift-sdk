@@ -29,7 +29,7 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
     let productFilter: BVURLParameter =
       .filter(
         BVProductFilter.productId(productId),
-        BVConversationsfiltererator.equalTo,
+        BVConversationsFilterOperator.equalTo,
         nil)
     
     add(productFilter)
@@ -114,33 +114,41 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
 // MARK: - BVProductQuery: BVQueryFilterable
 extension BVProductQuery: BVQueryFilterable {
   public typealias Filter = BVProductFilter
-  public typealias Operator = BVConversationsfiltererator
+  public typealias Operator = BVConversationsFilterOperator
   
+  /// The BVProductQuery's BVQueryFilterable filter() implementation.
+  /// - Parameters:
+  ///   - apply: The list of filter tuples to apply to this query.
+  /// - Important:
+  /// \
+  /// If more than one tuple is provided then it is assumed that the proper
+  /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
-  public func filter(_ by: Filter, op: Operator = .equalTo) -> Self {
+  public func filter(
+    _ apply: (BVProductFilter, BVConversationsFilterOperator)...) -> Self {
     
-    /// We don't allow regular product filters since that wouldn't make sense
-    /// for a product display request.
-    let internalFilter: BVURLParameter? = {
-      switch by {
+    let preflight: ((Filter, Operator) -> BVURLParameter?) = {
+      /// We don't allow regular product filters since that wouldn't make sense
+      /// for a product display request.
+      switch $0 {
       case let .answers(typeFilter):
-        return .filterType(by, typeFilter, op, nil)
+        return .filterType($0, typeFilter, $1, nil)
       case let .authors(typeFilter):
-        return .filterType(by, typeFilter, op, nil)
+        return .filterType($0, typeFilter, $1, nil)
       case let .comments(typeFilter):
-        return .filterType(by, typeFilter, op, nil)
+        return .filterType($0, typeFilter, $1, nil)
       case let .questions(typeFilter):
-        return .filterType(by, typeFilter, op, nil)
+        return .filterType($0, typeFilter, $1, nil)
       case let .reviews(typeFilter):
-        return .filterType(by, typeFilter, op, nil)
+        return .filterType($0, typeFilter, $1, nil)
       default:
         return nil
       }
-    }()
-    
-    if let subFilter = internalFilter {
-      add(subFilter)
     }
+    
+    let expr: BVQueryFilterExpression<Filter, Operator> =
+      1 < apply.count ? .or(apply) : .and(apply)
+    flatten(expr, preflight: preflight).forEach { add($0) }
     
     return self
   }

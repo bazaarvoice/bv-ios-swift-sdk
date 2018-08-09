@@ -48,8 +48,8 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
       .sort(.rating, order: .ascending)
-      .filter(.hasPhotos(true))
-      .filter(.hasComments(false))
+      .filter((.hasPhotos(true), .equalTo))
+      .filter((.hasComments(false), .equalTo))
       .configure(BVReviewQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         
@@ -247,8 +247,8 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
       .sort(.rating, order: .ascending)
-      .filter(.hasPhotos(true))
-      .filter(.hasComments(false))
+      .filter((.hasPhotos(true), .equalTo))
+      .filter((.hasComments(false), .equalTo))
       .include(.products)
       .filter(.reviews)
       .filter(.questions)
@@ -455,7 +455,7 @@ class BVReviewQueryTest: XCTestCase {
     
     let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 0)
       .include(.comments)
-      .filter(.reviewId("192463"))
+      .filter((.reviewId("192463"), .equalTo))
       // This review is know to have a comment
       .configure(BVReviewQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
