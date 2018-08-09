@@ -143,11 +143,11 @@ class BVQuestionSubmissionTest: XCTestCase {
       return
     }
     
-    questionSubmission
+    (questionSubmission
+      <+> .preview
+      <+> .identifier("craiggiddl")
+      <+> .nickname("cgil"))
       .configure(BVQuestionSubmissionTest.config)
-      .add(.preview)
-      .add(.identifier("craiggiddl"))
-      .add(.nickname("cgil"))
       .handler { (result: BVConversationsSubmissionResponse<BVQuestion>) in
         
         guard let errors = result.errors else {
@@ -211,17 +211,17 @@ class BVQuestionSubmissionTest: XCTestCase {
     let randomId = String(arc4random())
     let photo: BVPhoto = BVPhoto(png, "Very photogenic")
     
-    return questionSubmission
+    return (questionSubmission
+      <+> action
+      <+> .campaignId("BV_REVIEW_DISPLAY")
+      <+> .locale("en_US")
+      <+> .sendEmailWhenCommented(true)
+      <+> .sendEmailWhenPublished(true)
+      <+> .nickname("UserNickname\(randomId)")
+      <+> .email("developer@bazaarvoice.com")
+      <+> .identifier("UserId\(randomId)")
+      <+> .agree(true)
+      <+> .photos([photo]))
       .configure(BVQuestionSubmissionTest.config)
-      .add(action)
-      .add(.campaignId("BV_REVIEW_DISPLAY"))
-      .add(.locale("en_US"))
-      .add(.sendEmailWhenCommented(true))
-      .add(.sendEmailWhenPublished(true))
-      .add(.nickname("UserNickname\(randomId)"))
-      .add(.email("developer@bazaarvoice.com"))
-      .add(.identifier("UserId\(randomId)"))
-      .add(.agree(true))
-      .add(.photos([photo]))
   }
 }

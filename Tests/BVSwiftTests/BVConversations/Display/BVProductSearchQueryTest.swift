@@ -130,9 +130,9 @@ class BVProductSearchQueryTest: XCTestCase {
         .include(.reviews, limit: 10)
         .include(.questions, limit: 5)
         // only include reviews where isRatingsOnly is false
-        .filter(.reviews(.isRatingsOnly(false)))
+        .filter((.reviews(.isRatingsOnly(false)), .equalTo))
         // only include questions where isFeatured is not equal to true
-        .filter(.questions(.isFeatured(true)), op: .notEqualTo)
+        .filter((.questions(.isFeatured(true)), .notEqualTo))
         .stats(.reviews)
         .configure(BVProductSearchQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVProduct>) in

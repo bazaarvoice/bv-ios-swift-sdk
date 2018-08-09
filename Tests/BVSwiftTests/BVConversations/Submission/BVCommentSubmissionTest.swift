@@ -62,16 +62,16 @@ class BVCommentSubmissionTest: XCTestCase {
       return
     }
     
-    commentSubmission
+    (commentSubmission
+      <+> .preview
+      <+> .campaignId("BV_COMMENT_CAMPAIGN_ID")
+      <+> .locale("en_US")
+      <+> .sendEmailWhenPublished(true)
+      <+> .agree(true)
+      <+> .nickname("UserNickname\(randomId)")
+      <+> .identifier("UserId\(randomId)")
+      <+> .email("developer@bazaarvoice.com"))
       .configure(BVCommentSubmissionTest.config)
-      .add(.preview)
-      .add(.campaignId("BV_COMMENT_CAMPAIGN_ID"))
-      .add(.locale("en_US"))
-      .add(.sendEmailWhenPublished(true))
-      .add(.agree(true))
-      .add(.nickname("UserNickname\(randomId)"))
-      .add(.identifier("UserId\(randomId)"))
-      .add(.email("developer@bazaarvoice.com"))
       .handler { (response: BVConversationsSubmissionResponse<BVComment>) in
         
         if case let .failure(errors) = response {
@@ -122,9 +122,8 @@ class BVCommentSubmissionTest: XCTestCase {
       return
     }
     
-    commentSubmission
+    (commentSubmission <+> .preview)
       .configure(BVCommentSubmissionTest.config)
-      .add(.preview)
       .handler { (response: BVConversationsSubmissionResponse<BVComment>) in
         
         if case let .failure(errors) = response,
