@@ -62,10 +62,12 @@ class BVCommentSubmissionTest: XCTestCase {
       return
     }
     
+    let usLocale: Locale = Locale(identifier: "en_US")
+    
     (commentSubmission
       <+> .preview
       <+> .campaignId("BV_COMMENT_CAMPAIGN_ID")
-      <+> .locale("en_US")
+      <+> .locale(usLocale)
       <+> .sendEmailWhenPublished(true)
       <+> .agree(true)
       <+> .nickname("UserNickname\(randomId)")
@@ -88,7 +90,7 @@ class BVCommentSubmissionTest: XCTestCase {
             return
         }
         
-        XCTAssertEqual(meta.locale, "en_US")
+        XCTAssertEqual(meta.locale, usLocale.identifier)
         XCTAssertEqual(formFields.count, 11)
         XCTAssertEqual(result.title, commentTitle)
         XCTAssertEqual(result.commentText, commentText)
