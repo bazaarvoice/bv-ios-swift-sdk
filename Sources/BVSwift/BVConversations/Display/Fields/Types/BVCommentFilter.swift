@@ -18,7 +18,7 @@ public enum BVCommentFilter: BVQueryFilter {
   case campaignId(String)
   case categoryAncestorId(String)
   case commentId(String)
-  case contentLocale(String)
+  case contentLocale(Locale)
   case isFeatured(Bool)
   case lastModeratedTime(Date)
   case lastModificationTime(Date)
@@ -59,7 +59,7 @@ public enum BVCommentFilter: BVQueryFilter {
     case let .commentId(filter):
       return filter
     case let .contentLocale(filter):
-      return filter
+      return filter.identifier
     case let .isFeatured(filter):
       return filter
     case let .lastModeratedTime(filter):

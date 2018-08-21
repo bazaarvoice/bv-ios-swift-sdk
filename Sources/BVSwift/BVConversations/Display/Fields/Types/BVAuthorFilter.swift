@@ -17,7 +17,7 @@ public enum BVAuthorFilter: BVQueryFilter {
   
   case additionalField(name: String, value: String)
   case authorId(String)
-  case contentLocale(String)
+  case contentLocale(Locale)
   case contextDataValue(name: String, value: String)
   case hasPhotos(Bool)
   case hasVideos(Bool)
@@ -52,7 +52,7 @@ public enum BVAuthorFilter: BVQueryFilter {
     case let .authorId(filter):
       return filter
     case let .contentLocale(filter):
-      return filter
+      return filter.identifier
     case let .contextDataValue(_, filter):
       return filter
     case let .hasPhotos(filter):

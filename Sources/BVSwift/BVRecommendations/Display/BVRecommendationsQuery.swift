@@ -19,6 +19,36 @@ public class BVRecommendationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var ignoreCompletion: Bool = false
   private var recommendationsConfiguration: BVRecommendationsConfiguration?
   
+  private func postSuperInit() {
+    /// We do this after super.init() so that in the future we can capture any
+    /// call being set from below.
+    let superPreflightHandler = preflightHandler
+    
+    /// We have to make sure that we don't "own" ourself to create a retain
+    /// cycle.
+    preflightHandler = { [unowned self] completion in
+      self.recommendationsQueryPreflight { (errors: Error?) in
+        /// First we call this subclass level to see if everything is alright.
+        /// If not, then we call the completion handler to error out.
+        guard nil == errors else {
+          completion?(errors)
+          return
+        }
+        
+        /// There doesn't exist any super preflight, therefore, we just pass
+        /// through no errors up through the completion handler.
+        guard let superPreflight = superPreflightHandler else {
+          completion?(nil)
+          return
+        }
+        
+        /// If everything is alright, then drop down to the superclass level
+        /// and let it determine the fate of the preflight check.
+        superPreflight(completion)
+      }
+    }
+  }
+  
   internal override init<BVTypeInternal: BVQueryableInternal>(
     _ type: BVTypeInternal.Type) {
     super.init(type)
@@ -27,6 +57,8 @@ public class BVRecommendationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     usesURLCache = true
     
     add(.unsafe(sdkVersionField, sdkVersion, nil))
+    
+    postSuperInit()
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {

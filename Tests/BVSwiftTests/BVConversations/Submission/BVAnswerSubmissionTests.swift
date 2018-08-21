@@ -196,10 +196,12 @@ class BVAnswerSubmissionTests: XCTestCase {
     let randomId = String(arc4random())
     let photo: BVPhoto = BVPhoto(png, "Very photogenic")
     
+    let usLocale: Locale = Locale(identifier: "en_US")
+    
     return (answerSubmission
       <+> action
       <+> .campaignId("BV_REVIEW_DISPLAY")
-      <+> .locale("en_US")
+      <+> .locale(usLocale)
       <+> .sendEmailWhenPublished(true)
       <+> .nickname("UserNickname\(randomId)")
       <+> .email("developer@bazaarvoice.com")
