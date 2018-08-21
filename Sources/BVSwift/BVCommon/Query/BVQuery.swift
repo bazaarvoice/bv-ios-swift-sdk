@@ -89,7 +89,7 @@ extension BVQuery: BVURLParameterableInternal {
   final internal var parameters: [BVURLParameter] {
     return paramsPriv
   }
-
+  
   final internal func add(
     _ parameter: BVURLParameter, coalesce: Bool = false) {
     
@@ -119,7 +119,7 @@ extension BVQuery: BVURLParameterableInternal {
   
   final internal func update(_ parameter: BVURLParameter) {
     var paramsTemp: [BVURLParameter] =
-      paramsPriv.filter { $0 != parameter }
+      paramsPriv.filter { $0 !%% parameter }
     paramsTemp.append(parameter)
     
     paramsPriv = paramsTemp
