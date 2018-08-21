@@ -62,7 +62,7 @@ BVRecommendationsQuery<BVRecommendationsProfile> {
             self.update(.unsafe($0.description.escaping(), composed, nil))
           case .include:
             fallthrough
-          case .strategies:
+          case .strategy:
             self.add(.field($0, nil), coalesce: true)
           default:
             self.update(.field($0, nil))

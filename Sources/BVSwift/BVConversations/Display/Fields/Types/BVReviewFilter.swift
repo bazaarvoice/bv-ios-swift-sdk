@@ -17,7 +17,7 @@ public enum BVReviewFilter: BVQueryFilter {
   case authorId(String)
   case campaignId(String)
   case categoryAncestorId(String)
-  case contentLocale(String)
+  case contentLocale(Locale)
   case hasComments(Bool)
   case hasPhotos(Bool)
   case hasTags(Bool)
@@ -66,7 +66,7 @@ public enum BVReviewFilter: BVQueryFilter {
     case let .categoryAncestorId(filter):
       return filter
     case let .contentLocale(filter):
-      return filter
+      return filter.identifier
     case let .hasComments(filter):
       return filter
     case let .hasPhotos(filter):
