@@ -89,7 +89,7 @@ extension BVQuery: BVURLParameterableInternal {
   final internal var parameters: [BVURLParameter] {
     return paramsPriv
   }
-  
+
   final internal func add(
     _ parameter: BVURLParameter, coalesce: Bool = false) {
     
