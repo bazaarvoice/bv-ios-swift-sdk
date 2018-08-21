@@ -19,7 +19,7 @@ public enum BVAnswerFilter: BVQueryFilter {
   case authorId(String)
   case campaignId(String)
   case categoryAncestorId(String)
-  case contentLocale(String)
+  case contentLocale(Locale)
   case hasPhotos(Bool)
   case isBestAnswer(Bool)
   case isBrandAnswer(Bool)
@@ -63,7 +63,7 @@ public enum BVAnswerFilter: BVQueryFilter {
     case let .categoryAncestorId(filter):
       return filter
     case let .contentLocale(filter):
-      return filter
+      return filter.identifier
     case let .hasPhotos(filter):
       return filter
     case let .isBestAnswer(filter):

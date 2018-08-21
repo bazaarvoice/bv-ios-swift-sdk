@@ -119,7 +119,7 @@ extension BVQuery: BVURLParameterableInternal {
   
   final internal func update(_ parameter: BVURLParameter) {
     var paramsTemp: [BVURLParameter] =
-      paramsPriv.filter { $0 != parameter }
+      paramsPriv.filter { $0 !%% parameter }
     paramsTemp.append(parameter)
     
     paramsPriv = paramsTemp
