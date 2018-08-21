@@ -19,13 +19,13 @@ public enum BVRecommendationsProfileField: BVQueryField {
   case brandId(String)
   case include(BVRecommendationsProfileInclude)
   case interest(String)
-  case locale(String)
+  case locale(Locale)
   case lookback(Date)
   case preferredCategory(String)
   case product(String)
   case purpose(BVRecommendationsProfilePurpose)
   case requiredCategory(String)
-  case strategies(String)
+  case strategy(String)
   
   public var description: String {
     return internalDescription
@@ -36,7 +36,7 @@ public enum BVRecommendationsProfileField: BVQueryField {
     case let .allowInactiveProducts(value):
       return value
     case let .avgRating(value):
-      return value
+      return String(format: "%.5f", value)
     case let .brandId(value):
       return value
     case let .preferredCategory(value):
@@ -46,16 +46,23 @@ public enum BVRecommendationsProfileField: BVQueryField {
     case let .interest(value):
       return value
     case let .locale(value):
-      return value
+      return value.identifier
     case let .lookback(value):
-      return value.timeIntervalSinceNow
+      let seconds = { () -> Int in
+        let secondsComponent: DateComponents =
+          Calendar.current.dateComponents(
+            Set<Calendar.Component>([.second]), from: value, to: Date())
+        let inSeconds: Int = (secondsComponent.second ?? 0)
+        return (0 < inSeconds) ? inSeconds : 0
+      }()
+      return "\(seconds)s"
     case let .product(value):
       return value
     case let .purpose(value):
       return value.rawValue
     case let .requiredCategory(value):
       return value
-    case let .strategies(value):
+    case let .strategy(value):
       return value
     }
   }
@@ -93,14 +100,50 @@ extension BVRecommendationsProfileField: BVRecommendationsQueryValue {
       return
         BVRecommendationsConstants
           .BVRecommendationsQueryField.requiredCategory
-    case .strategies:
+    case .strategy:
       return
         BVRecommendationsConstants.BVRecommendationsQueryField.strategies
     }
   }
 }
 
-// MARK: - BVRecommendationsProfileField: BVRecommendationsProfileField
+extension BVRecommendationsProfileField {
+  internal static func % (lhs: BVRecommendationsProfileField,
+                          rhs: BVRecommendationsProfileField) -> Bool {
+    return { () -> Bool in
+      switch (lhs, rhs) {
+      case (.allowInactiveProducts, .allowInactiveProducts):
+        fallthrough
+      case (.avgRating, .avgRating):
+        fallthrough
+      case (.brandId, .brandId):
+        fallthrough
+      case (.include, .include):
+        fallthrough
+      case (.interest, .interest):
+        fallthrough
+      case (.locale, .locale):
+        fallthrough
+      case (.lookback, .lookback):
+        fallthrough
+      case (.preferredCategory, .preferredCategory):
+        fallthrough
+      case (.product, .product):
+        fallthrough
+      case (.purpose, .purpose):
+        fallthrough
+      case (.requiredCategory, .requiredCategory):
+        fallthrough
+      case (.strategy, .strategy):
+        fallthrough
+      default:
+        return false
+      }
+      }()
+  }
+}
+
+// MARK: - BVRecommendationsProfileField: Hashable
 extension BVRecommendationsProfileField: Hashable {
   public var hashValue: Int {
     return description.hashValue ^ "\(representedValue)".djb2hash
@@ -108,7 +151,6 @@ extension BVRecommendationsProfileField: Hashable {
   
   public static func == (lhs: BVRecommendationsProfileField,
                          rhs: BVRecommendationsProfileField) -> Bool {
-    return lhs.description == rhs.description
-      && "\(lhs.representedValue)" == "\(rhs.representedValue)"
+    return (lhs % rhs) && "\(lhs.representedValue)" == "\(rhs.representedValue)"
   }
 }

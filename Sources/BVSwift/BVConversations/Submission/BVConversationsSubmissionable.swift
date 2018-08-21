@@ -189,7 +189,7 @@ public func <+><T: BVConversationsSubmissionHostedAuthenticatable>(
 public enum BVConversationsSubmissionLocale {
   
   /// The locale for the submission type
-  case locale(String)
+  case locale(Locale)
 }
 
 /// Protocol defining the ability to accept a
@@ -461,7 +461,7 @@ BVConversationsSubmissionParameterable {
   var urlQueryItems: [URLQueryItem]? {
     switch self {
     case let .locale(value):
-      guard let encoded = value.urlEncode() else {
+      guard let encoded = value.identifier.urlEncode() else {
         return nil
       }
       return [URLQueryItem(name: "locale", value: encoded)]

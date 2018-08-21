@@ -48,9 +48,11 @@ class BVProductStatisticsQueryTest: XCTestCase {
       self.expectation(
         description: "testProductStatisticsQueryDisplayOneProduct")
     
+    let usLocale: Locale = Locale(identifier: "en_US")
+    
     let productStatisticsQuery =
       BVProductStatisticsQuery(productIds: ["test3"])
-        .filter((.contentLocale("en_US"), .equalTo))
+        .filter((.contentLocale(usLocale), .equalTo))
         .stats(.nativeReviews)
         .stats(.reviews)
         .configure(BVProductStatisticsQueryTest.config)
@@ -118,11 +120,13 @@ class BVProductStatisticsQueryTest: XCTestCase {
       self.expectation(
         description: "testProductStatisticsQueryDisplayMultipleProducts")
     
+    let usLocale: Locale = Locale(identifier: "en_US")
+    
     let productStatisticsQuery =
       BVProductStatisticsQuery(productIds: ["test1", "test2", "test3"])
         .stats(.nativeReviews)
         .stats(.reviews)
-        .filter((.contentLocale("en_US"), .equalTo))
+        .filter((.contentLocale(usLocale), .equalTo))
         .configure(BVProductStatisticsQueryTest.config)
         .handler {
           (response: BVConversationsQueryResponse<BVProductStatistics>) in

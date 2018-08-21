@@ -408,11 +408,12 @@ class BVReviewQueryTest: XCTestCase {
           "erat volutpat.")
         XCTAssertEqual(photo.photoId, "72586")
         XCTAssertNotNil(thumbnail.url)
+        
         XCTAssertTrue(
           normalURL
             .absoluteString
             .lowercased()
-            .contains("jpg?client=apireadonlysandbox"))
+            .contains("https://photos-uat-eu.bazaarvoice.com"))
         
         XCTAssertEqual(contextDataValues.count, 1)
         XCTAssertEqual(cdv.value, "Female")
