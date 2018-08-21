@@ -15,7 +15,7 @@ import Foundation
 /// Used for conformance with the BVQueryFilterable protocol.
 public enum BVProductStatisticsFilter: BVQueryFilter {
   
-  case contentLocale(String)
+  case contentLocale(Locale)
   case productId(String)
   
   public static var filterPrefix: String {
@@ -37,7 +37,7 @@ public enum BVProductStatisticsFilter: BVQueryFilter {
   public var representedValue: CustomStringConvertible {
     switch self {
     case let .contentLocale(filter):
-      return filter
+      return filter.identifier
     case let .productId(filter):
       return filter
     }

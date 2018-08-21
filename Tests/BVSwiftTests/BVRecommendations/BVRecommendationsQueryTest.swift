@@ -18,11 +18,11 @@ class BVRecommendationsQueryTest: XCTestCase {
     
     let analyticsConfig: BVAnalyticsConfiguration =
       .dryRun(
-        configType: .staging(clientId: "maurices"))
+        configType: .staging(clientId: "apitestcustomer"))
     
     return BVRecommendationsConfiguration.display(
-      clientKey: "sr2E446qoPDpZ8NIMhvphZSG0VteEm9nqMyqDWwXjg7OA",
-      configType: .production(clientId: "maurices"),
+      clientKey: "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo",
+      configType: .production(clientId: "apitestcustomer"),
       analyticsConfig: analyticsConfig)
   }()
   
@@ -31,11 +31,11 @@ class BVRecommendationsQueryTest: XCTestCase {
     
     let analyticsConfig: BVAnalyticsConfiguration =
       .dryRun(
-        configType: .staging(clientId: "kohls"))
+        configType: .staging(clientId: "badclient"))
     
     return BVRecommendationsConfiguration.display(
       clientKey: "badkeybadkeybadkey",
-      configType: .staging(clientId: "kohls"),
+      configType: .staging(clientId: "badclient"),
       analyticsConfig: analyticsConfig)
   }()
   
@@ -78,6 +78,89 @@ class BVRecommendationsQueryTest: XCTestCase {
     
     BVURLCacheManager.shared.expunge()
     self.listener = nil
+  }
+  
+  func testProfileQueryConstruction() {
+    
+    let bvBrandId: String = "610ce8a1-644f-4f02-8b6e-8b198376aa9d"
+    let lookbackTime: Int = 10
+    guard let lookback =
+      Calendar.current.date(
+        byAdding: .second,
+        value: -1 * lookbackTime,
+        to: Date()) else {
+          XCTFail()
+          return
+    }
+    
+    let usLocale: Locale = Locale(identifier: "en_US")
+    
+    let profileQuery =
+      BVRecommendationsProfileQuery()
+        /// Config
+        .configure(BVRecommendationsQueryTest.config)
+        /// Average Rating
+        .field(.avgRating(3.333333333333333333))
+        /// Brand Id
+        .field(.brandId(bvBrandId))
+        /// Interest
+        .field(.interest("football"))
+        /// Locale
+        .field(.locale(usLocale))
+        /// Lookback
+        .field(.lookback(lookback))
+        /// Includes
+        .field(.include(.interests))
+        .field(.include(.categories))
+        .field(.include(.brands))
+        .field(.include(.recommendations))
+        /// Preferred Category
+        .field(.preferredCategory("sports_wear"))
+        /// Product
+        .field(.product("product1234"))
+        /// Purpose
+        .field(.purpose(.ads))
+        /// Required Category
+        .field(.requiredCategory("menswear"))
+        /// Strategies
+        .field(.strategy("foo"))
+        .field(.strategy("foo"))
+        .field(.strategy("bar"))
+        .field(.strategy("bar"))
+        .field(.strategy("baz"))
+        .field(.strategy("baz"))
+    
+    _ = profileQuery.preflight { (error: Error?) in
+      guard nil == error else {
+        XCTFail()
+        return
+      }
+    }
+    
+    guard let request = profileQuery.request,
+      let requestString = request.url?.absoluteString else {
+        XCTFail()
+        return
+    }
+    
+    print(requestString)
+    
+    XCTAssertTrue(requestString.contains("avg_rating=\(3.33333)"))
+    XCTAssertTrue(requestString.contains("bvbrandid=\(bvBrandId)"))
+    XCTAssertTrue(
+      requestString.contains("category=apitestcustomer/sports_wear"))
+    XCTAssertTrue(
+      requestString.contains(
+        "include=brands,category_recommendations,interests,recommendations"))
+    XCTAssertTrue(requestString.contains("interest=football"))
+    XCTAssertTrue(requestString.contains("locale=\(usLocale.identifier)"))
+    XCTAssertTrue(requestString.contains("lookback=10s"))
+    XCTAssertTrue(
+      requestString.contains("product=apitestcustomer/product1234"))
+    XCTAssertTrue(requestString.contains("purpose=ads"))
+    XCTAssertTrue(
+      requestString.contains("required_category=apitestcustomer/menswear"))
+    XCTAssertTrue(requestString.contains("strategies=bar,baz,foo"))
   }
   
   func testProfileQuery() {
@@ -173,6 +256,5 @@ internal class BVRecommendationsQueryTestListener: BVURLCacheListener {
   
   func miss(_ request: URLRequest) {
     print("MISS")
-    //expectation?.fulfill()
   }
 }
