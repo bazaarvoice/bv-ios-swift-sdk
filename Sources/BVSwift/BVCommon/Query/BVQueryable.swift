@@ -35,8 +35,7 @@ public protocol BVQueryFilter: BVQueryRepresentable {
 public protocol BVQueryFilterOperator: CustomStringConvertible { }
 
 /// Protocol defining the primitive query filtered stat types
-public protocol BVQueryFilteredStat: BVQueryStat {
-}
+public protocol BVQueryFilteredStat: BVQueryStat { }
 
 /// Protocol defining the primitive query include types
 public protocol BVQueryInclude: CustomStringConvertible {

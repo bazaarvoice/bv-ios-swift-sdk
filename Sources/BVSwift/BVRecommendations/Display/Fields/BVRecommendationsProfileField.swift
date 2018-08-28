@@ -14,18 +14,15 @@ import Foundation
 /// These are passed as query items to HTTPS requests.
 public enum BVRecommendationsProfileField: BVQueryField {
   
-  case allowInactiveProducts(Bool)
-  case avgRating(Double)
+  case averageRating(Double)
   case brandId(String)
   case include(BVRecommendationsProfileInclude)
   case interest(String)
   case locale(Locale)
-  case lookback(Date)
   case preferredCategory(String)
   case product(String)
   case purpose(BVRecommendationsProfilePurpose)
   case requiredCategory(String)
-  case strategy(String)
   
   public var description: String {
     return internalDescription
@@ -33,9 +30,11 @@ public enum BVRecommendationsProfileField: BVQueryField {
   
   public var representedValue: CustomStringConvertible {
     switch self {
-    case let .allowInactiveProducts(value):
-      return value
-    case let .avgRating(value):
+      /*
+       case let .allowInactiveProducts(value):
+       return value
+       */
+    case let .averageRating(value):
       return String(format: "%.5f", value)
     case let .brandId(value):
       return value
@@ -47,23 +46,27 @@ public enum BVRecommendationsProfileField: BVQueryField {
       return value
     case let .locale(value):
       return value.identifier
-    case let .lookback(value):
-      let seconds = { () -> Int in
-        let secondsComponent: DateComponents =
-          Calendar.current.dateComponents(
-            Set<Calendar.Component>([.second]), from: value, to: Date())
-        let inSeconds: Int = (secondsComponent.second ?? 0)
-        return (0 < inSeconds) ? inSeconds : 0
-      }()
-      return "\(seconds)s"
+      /*
+       case let .lookback(value):
+       let seconds = { () -> Int in
+       let secondsComponent: DateComponents =
+       Calendar.current.dateComponents(
+       Set<Calendar.Component>([.second]), from: value, to: Date())
+       let inSeconds: Int = (secondsComponent.second ?? 0)
+       return (0 < inSeconds) ? inSeconds : 0
+       }()
+       return "\(seconds)s"
+       */
     case let .product(value):
       return value
     case let .purpose(value):
       return value.rawValue
     case let .requiredCategory(value):
       return value
-    case let .strategy(value):
-      return value
+      /*
+       case let .strategy(value):
+       return value
+       */
     }
   }
 }
@@ -71,11 +74,13 @@ public enum BVRecommendationsProfileField: BVQueryField {
 extension BVRecommendationsProfileField: BVRecommendationsQueryValue {
   internal var internalDescription: String {
     switch self {
-    case .allowInactiveProducts:
-      return
-        BVRecommendationsConstants
-          .BVRecommendationsQueryField.allowInactiveProducts
-    case .avgRating:
+      /*
+       case .allowInactiveProducts:
+       return
+       BVRecommendationsConstants
+       .BVRecommendationsQueryField.allowInactiveProducts
+       */
+    case .averageRating:
       return
         BVRecommendationsConstants.BVRecommendationsQueryField.averageRating
     case .brandId:
@@ -90,8 +95,10 @@ extension BVRecommendationsProfileField: BVRecommendationsQueryValue {
       return BVRecommendationsConstants.BVRecommendationsQueryField.interest
     case .locale:
       return BVRecommendationsConstants.BVRecommendationsQueryField.locale
-    case .lookback:
-      return BVRecommendationsConstants.BVRecommendationsQueryField.lookback
+      /*
+       case .lookback:
+       return BVRecommendationsConstants.BVRecommendationsQueryField.lookback
+       */
     case .product:
       return BVRecommendationsConstants.BVRecommendationsQueryField.product
     case .purpose:
@@ -100,9 +107,11 @@ extension BVRecommendationsProfileField: BVRecommendationsQueryValue {
       return
         BVRecommendationsConstants
           .BVRecommendationsQueryField.requiredCategory
-    case .strategy:
-      return
-        BVRecommendationsConstants.BVRecommendationsQueryField.strategies
+      /*
+       case .strategy:
+       return
+       BVRecommendationsConstants.BVRecommendationsQueryField.strategies
+       */
     }
   }
 }
@@ -112,9 +121,11 @@ extension BVRecommendationsProfileField {
                           rhs: BVRecommendationsProfileField) -> Bool {
     return { () -> Bool in
       switch (lhs, rhs) {
-      case (.allowInactiveProducts, .allowInactiveProducts):
-        fallthrough
-      case (.avgRating, .avgRating):
+        /*
+         case (.allowInactiveProducts, .allowInactiveProducts):
+         fallthrough
+         */
+      case (.averageRating, .averageRating):
         fallthrough
       case (.brandId, .brandId):
         fallthrough
@@ -124,8 +135,10 @@ extension BVRecommendationsProfileField {
         fallthrough
       case (.locale, .locale):
         fallthrough
-      case (.lookback, .lookback):
-        fallthrough
+        /*
+         case (.lookback, .lookback):
+         fallthrough
+         */
       case (.preferredCategory, .preferredCategory):
         fallthrough
       case (.product, .product):
@@ -133,9 +146,11 @@ extension BVRecommendationsProfileField {
       case (.purpose, .purpose):
         fallthrough
       case (.requiredCategory, .requiredCategory):
-        fallthrough
-      case (.strategy, .strategy):
-        fallthrough
+        return true
+        /*
+         case (.strategy, .strategy):
+         return true
+         */
       default:
         return false
       }
