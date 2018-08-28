@@ -61,9 +61,11 @@ BVRecommendationsQuery<BVRecommendationsProfile> {
                 .joined(separator: "/").escaping()
             self.update(.unsafe($0.description.escaping(), composed, nil))
           case .include:
-            fallthrough
-          case .strategy:
             self.add(.field($0, nil), coalesce: true)
+            /*
+             case .strategy:
+             self.add(.field($0, nil), coalesce: true)
+             */
           default:
             self.update(.field($0, nil))
           }
@@ -80,9 +82,19 @@ extension BVRecommendationsProfileQuery: BVQueryFieldable {
   
   @discardableResult
   public func field(_ to: Field) -> Self {
-    if !fields.contains(to) {
-      fields.append(to)
+    fields = fields.filter {
+      switch to {
+      case .include:
+        return !($0 == to)
+        /*
+         case .strategy:
+         return !($0 == to)
+         */
+      default:
+        return !($0 % to)
+      }
     }
+    fields.append(to)
     return self
   }
 }
