@@ -83,51 +83,28 @@ extension BVQuery: BVURLRequestableCacheable {
   }
 }
 
-// MARK: - BVQuery: BVURLParameterableInternal
-extension BVQuery: BVURLParameterableInternal {
-  
+// MARK: - BVQuery: BVURLParameterable
+extension BVQuery: BVURLParameterable {
   final internal var parameters: [BVURLParameter] {
     return paramsPriv
   }
-
-  final internal func add(
-    _ parameter: BVURLParameter, coalesce: Bool = false) {
-    
-    guard coalesce else {
-      if 0 == paramsPriv.filter({ $0 === parameter }).count {
-        paramsPriv.append(parameter)
-      }
-      return
-    }
-    
-    var coalesceList: [BVURLParameter] = []
-    var otherList: [BVURLParameter] = []
-    paramsPriv.forEach { (param: BVURLParameter) in
-      if param %% parameter {
-        coalesceList.append(param)
-      } else {
-        otherList.append(param)
-      }
-    }
-    
-    let coalesce: BVURLParameter =
-      coalesceList.reduce(parameter, +~)
-    otherList.append(coalesce)
-    
-    paramsPriv = otherList
-  }
   
-  final internal func update(_ parameter: BVURLParameter) {
-    var paramsTemp: [BVURLParameter] =
-      paramsPriv.filter { $0 !%% parameter }
-    paramsTemp.append(parameter)
-    
-    paramsPriv = paramsTemp
+  final internal func set(_ parameters: [BVURLParameter]) {
+    paramsPriv = parameters
   }
 }
 
 // MARK: - BVQuery: BVQueryActionableInternal
 extension BVQuery: BVQueryActionableInternal {
+  
+  var bvPath: String {
+    return box.bvPath
+  }
+  
+  var commonEndpoint: String {
+    return box.commonEndpoint
+  }
+  
   var preflightHandler: BVURLRequestablePreflightHandler? {
     get {
       return box.preflightHandler
