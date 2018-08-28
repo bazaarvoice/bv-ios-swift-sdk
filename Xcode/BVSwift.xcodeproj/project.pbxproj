@@ -50,6 +50,8 @@
 		B549EEAE20D0502400ED5190 /* testCurationsFeedTest.json in Resources */ = {isa = PBXBuildFile; fileRef = B549EEAD20D0502400ED5190 /* testCurationsFeedTest.json */; };
 		B549EEB120D057B000ED5190 /* BVCurationsLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B549EEAF20D057AD00ED5190 /* BVCurationsLink.swift */; };
 		B57018BD20B709C700DBE186 /* BVQuestionSearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57018BC20B709C700DBE186 /* BVQuestionSearchQuery.swift */; };
+		B586396C212E01EC00EFD763 /* BVURLRequestableInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B586396B212E01EC00EFD763 /* BVURLRequestableInternal.swift */; };
+		B586396E212E047F00EFD763 /* BVURLParameterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B586396D212E047F00EFD763 /* BVURLParameterable.swift */; };
 		B588E6DC2118F1D300F76040 /* BVReviewStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B588E6DB2118F1D300F76040 /* BVReviewStat.swift */; };
 		B588E6DE2118FB9200F76040 /* BVReviewFilteredStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B588E6DD2118FB9200F76040 /* BVReviewFilteredStat.swift */; };
 		B5A5E8F920B70D950049CE41 /* BVReviewSearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5E8F820B70D950049CE41 /* BVReviewSearchQuery.swift */; };
@@ -272,6 +274,8 @@
 		B549EEAD20D0502400ED5190 /* testCurationsFeedTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testCurationsFeedTest.json; sourceTree = "<group>"; };
 		B549EEAF20D057AD00ED5190 /* BVCurationsLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsLink.swift; sourceTree = "<group>"; };
 		B57018BC20B709C700DBE186 /* BVQuestionSearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVQuestionSearchQuery.swift; sourceTree = "<group>"; };
+		B586396B212E01EC00EFD763 /* BVURLRequestableInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVURLRequestableInternal.swift; sourceTree = "<group>"; };
+		B586396D212E047F00EFD763 /* BVURLParameterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVURLParameterable.swift; sourceTree = "<group>"; };
 		B588E6DB2118F1D300F76040 /* BVReviewStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewStat.swift; sourceTree = "<group>"; };
 		B588E6DD2118FB9200F76040 /* BVReviewFilteredStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewFilteredStat.swift; sourceTree = "<group>"; };
 		B5A5E8F820B70D950049CE41 /* BVReviewSearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewSearchQuery.swift; sourceTree = "<group>"; };
@@ -635,7 +639,9 @@
 				B5B31E6520B3739A002DBEC8 /* BVLogger.swift */,
 				B53984BB20D963DA00EF77DA /* BVURLCacheManager.swift */,
 				B5B31EA820B373A3002DBEC8 /* BVURLParameter.swift */,
+				B586396D212E047F00EFD763 /* BVURLParameterable.swift */,
 				B5B31E6020B3739A002DBEC8 /* BVURLRequestable.swift */,
+				B586396B212E01EC00EFD763 /* BVURLRequestableInternal.swift */,
 				B5B31E5D20B3739A002DBEC8 /* BVURLSession.swift */,
 				B5B31E6220B3739A002DBEC8 /* BVUtilities.swift */,
 				B53984F620E3DCCB00EF77DA /* BVUtilityTypes.swift */,
@@ -1189,8 +1195,10 @@
 				B5B31E4F20B37383002DBEC8 /* BVAnalyticsEventPersonalization.swift in Sources */,
 				B57018BD20B709C700DBE186 /* BVQuestionSearchQuery.swift in Sources */,
 				B5B31E4A20B37383002DBEC8 /* BVAnalyticsEventFeature.swift in Sources */,
+				B586396E212E047F00EFD763 /* BVURLParameterable.swift in Sources */,
 				B5EC2F8D20CB33CA002F8233 /* BVCurationsFeedItemField.swift in Sources */,
 				B5B31F0720B373A3002DBEC8 /* BVProductSort.swift in Sources */,
+				B586396C212E01EC00EFD763 /* BVURLRequestableInternal.swift in Sources */,
 				B52149DF20D1ACE300BF9D1B /* BVXMLParser.swift in Sources */,
 				B5B31E4D20B37383002DBEC8 /* BVAnalyticsEventInView.swift in Sources */,
 				B5B31E5020B37383002DBEC8 /* BVAnalyticsEventTransaction.swift in Sources */,
