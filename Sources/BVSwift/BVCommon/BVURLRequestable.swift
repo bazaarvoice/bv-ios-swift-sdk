@@ -74,6 +74,14 @@ public protocol BVURLRequestableWithFileURL: BVURLRequestable {
   var fileURL: URL? { get }
 }
 
+/// The protocol concerning itself with types that will register response
+/// handlers for when various requests start/finish/error.
+public protocol BVURLRequestableWithHandler: BVURLRequestable {
+  associatedtype Response
+  var ignoringCompletion: Bool { get set }
+  func handler(completion: @escaping ((Response) -> Void)) -> Self
+}
+
 /// The base protocol for all URLResponses to be packaged into a top level BV
 /// object graph.
 public protocol BVURLRequestableResponse {
@@ -83,79 +91,16 @@ public protocol BVURLRequestableResponse {
   var errors: [Error]? { get }
 }
 
-/// The protocol concerning itself with types that will register response
-/// handlers for when various requests start/finish/error.
-public protocol BVURLRequestableWithHandler {
-  associatedtype Response
-  var ignoringCompletion: Bool { get set }
-  func handler(completion: @escaping ((Response) -> Void)) -> Self
-}
-
-/// Internal
-internal protocol BVURLRequestableCacheable {
-  var usesURLCache: Bool { get set }
-}
-
-internal protocol BVURLRequestableInternal {
-  var bvPath: String { get }
-  var commonEndpoint: String { get }
-}
-
-internal typealias BVURLRequestableHandler =
-  ((BVURLRequestableResponseInternal) -> Swift.Void)
-
-internal typealias BVURLRequestablePreflightHandler =
-  ((BVCompletionWithErrorsHandler?) -> Swift.Void)
-
-internal typealias BVURLRequestablePostflightHandler = BVURLRequestableHandler
-
-internal protocol BVURLRequestableWithHandlerInternal {
-  var preflightHandler: BVURLRequestablePreflightHandler? { get set }
-  var postflightHandler: BVURLRequestablePostflightHandler? { get set }
-  var responseHandler: BVURLRequestableHandler? { get set }
-}
-
-internal protocol BVURLParameterable {
-  associatedtype ParameterType: BVParameter
-  func add(_ parameter: ParameterType, coalesce: Bool)
-  func update(_ parameter: ParameterType)
-}
-
-internal protocol BVURLQueryItemable {
-  var urlQueryItems: [URLQueryItem]? { get }
-}
-
-internal protocol BVURLRequestBodyable {
-  var requestContentType: String? { get }
-  func requestBody(_ type: BVSubmissionableInternal) -> BVURLRequestBody?
-}
-
-internal protocol BVURLParameterableInternal:
-BVURLParameterable, BVURLQueryItemable {
-  var parameters: [ParameterType] { get }
-}
-
-internal extension BVURLParameterableInternal {
-  var queryItems: [URLQueryItem]? {
-    return parameters.map(URLQueryItem.init)
-  }
-}
-
-// MARK: - BVURLRequestableResponseInternal
-internal enum BVURLRequestableResponseInternal {
-  public var success: Bool {
-    guard case .success = self else {
-      return false
+/// Default cache policy implementation
+extension BVURLRequestable {
+  func cached(_ request: URLRequest) -> CachedURLResponse? {
+    switch request.cachePolicy {
+    case .returnCacheDataDontLoad:
+      fallthrough
+    case .returnCacheDataElseLoad:
+      return BVURLCacheManager.shared.load(request)
+    default:
+      return nil
     }
-    return true
   }
-  
-  case success(URLResponse?, Data)
-  case failure([Error])
-}
-
-// MARK: - BVURLRequestBody
-internal enum BVURLRequestBody {
-  case multipart([String: Any])
-  case raw(Data)
 }
