@@ -10,7 +10,7 @@ import Foundation
 internal typealias BVURLParameters = [String: String]
 
 internal let apiVersion: String = "5.4"
-internal let sdkVersion: String = "0.0.1"
+internal let sdkVersion: String = "0.1.5"
 internal let apiClientId: String = "clientId"
 
 internal let apiVersionField: String = "apiversion"
