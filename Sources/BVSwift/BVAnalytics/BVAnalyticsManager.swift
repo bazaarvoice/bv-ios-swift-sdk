@@ -292,8 +292,15 @@ internal class BVAnalyticsManager {
     configuration: BVAnalyticsConfiguration,
     completion: @escaping (([Error]?) -> Void)) {
     
-    /// Dry run, we callback and then bail
-    if case .dryRun = configuration {
+    if case let .dryRun(configType) = configuration {
+      /// There shouldn't be any situation where you're setting a production
+      /// configuration while also setting a dry run configuration.
+      if case .production = configType {
+        fatalError(
+          "Disable .dryRun configuration before pushing a release build.")
+      }
+      
+      /// Dry run, we callback and then bail
       completion(nil)
       return
     }
