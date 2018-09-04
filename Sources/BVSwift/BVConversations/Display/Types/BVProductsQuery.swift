@@ -15,43 +15,35 @@ import Foundation
 /// [Documentation].(https://developer.bazaarvoice.com/conversations-api/reference/v5.4/product-catalog/product-display)
 public class BVProductsQuery: BVConversationsQuery<BVProduct> {
   
-  /// The initializer for BVProductSearchQuery
-  public init() {
-    super.init(BVProduct.self)
-  }
+  /// The Product ids for the query
+  public let productIds: [String]?
   
-  final internal override var queryPreflightResultsClosure: BVURLRequestablePreflightHandler? {
-    return { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
-      
-      /// Here we gather all the product filters that we've already added and
-      /// check to make sure that we've added at least 2 unique product
-      /// identifiers else we have to error out.
-      let productFilters: [String] =
-        self.parameters.reduce([]) {
-          (result: [String],
-          next: BVURLParameter) -> [String] in
-          guard case let .filter(filter, _, _) = next,
-            let productFilter: BVProductFilter =
-            filter as? BVProductFilter,
-            case let .productId(id) = productFilter,
-            !result.contains(id) else {
-              return result
-          }
-          return result + [id]
-      }
-      
-      if 2 > productFilters.count {
-        let errorMessage: String =
-          "Adding a single Product ID will cause problems. Please use " +
-            "BVProductQuery if you care to get information about a " +
-        "singular product."
-        let tooFewError: BVConversationsError = .tooFew(errorMessage)
-        completion?(tooFewError)
-        BVLogger.sharedLogger.error(errorMessage)
-        return
-      }
-      
-      completion?(nil)
+  /// The initializer for BVProductsQuery
+  /// - Parameters:
+  ///   - productIds: The Product ids for the query
+  /// - Note:
+  /// \
+  /// productIds.count must be greater than 1.
+  public init?(productIds: [String]) {
+    
+    guard 1 < productIds.count else {
+      return nil
+    }
+    
+    self.productIds = productIds
+    
+    super.init(BVProduct.self)
+    
+    let productIdFilterTuple = productIds.map {
+      return (BVConversationsQueryFilter.id($0),
+              BVConversationsFilterOperator.equalTo)
+    }
+    
+    type(of: self).groupFilters(productIdFilterTuple).forEach { group in
+      let expr: BVQueryFilterExpression<BVConversationsQueryFilter,
+        BVConversationsFilterOperator> =
+        1 < group.count ? .or(group) : .and(group)
+      flatten(expr).forEach { add($0) }
     }
   }
 }
@@ -89,10 +81,11 @@ extension BVProductsQuery: BVQueryFilterable {
       }
     }
     
-    let expr: BVQueryFilterExpression<Filter, Operator> =
-      1 < apply.count ? .or(apply) : .and(apply)
-    flatten(expr, preflight: preflight).forEach { add($0) }
-    
+    type(of: self).groupFilters(apply).forEach { group in
+      let expr: BVQueryFilterExpression<Filter, Operator> =
+        1 < group.count ? .or(group) : .and(group)
+      flatten(expr, preflight: preflight).forEach { add($0) }
+    }
     return self
   }
 }

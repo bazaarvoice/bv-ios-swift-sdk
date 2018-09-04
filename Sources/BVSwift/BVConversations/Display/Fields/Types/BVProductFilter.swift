@@ -27,7 +27,6 @@ public enum BVProductFilter: BVQueryFilter {
   case lastReviewTime(Date)
   case lastStoryTime(Date)
   case name(String)
-  case productId(String)
   case questions(BVQuestionFilter)
   case ratingsOnlyReviewCount(Int)
   case reviews(BVReviewFilter)
@@ -80,8 +79,6 @@ public enum BVProductFilter: BVQueryFilter {
       return filter.toBVFormat
     case let .name(filter):
       return filter
-    case let .productId(filter):
-      return filter
     case let .questions(filter):
       return filter.representedValue
     case let .ratingsOnlyReviewCount(filter):
@@ -129,8 +126,6 @@ extension BVProductFilter: BVConversationsQueryValue {
       return BVConversationsConstants.BVProducts.Keys.lastStoryTime
     case .name:
       return BVConversationsConstants.BVProducts.Keys.name
-    case .productId:
-      return BVConversationsConstants.BVProducts.Keys.productId
     case .questions:
       return BVQuestion.pluralKey
     case .ratingsOnlyReviewCount:

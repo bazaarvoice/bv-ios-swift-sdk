@@ -35,6 +35,31 @@ class BVCommentQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testCommentQueryConstruction() {
+    
+    let commentQuery:BVCommentQuery =
+      BVCommentQuery(
+        productId: "1000001",
+        commentId: "192548")
+        .configure(BVCommentQueryTest.config)
+        .filter((.reviewId("testID1"), .equalTo),
+                (.reviewId("testID2"), .equalTo),
+                (.reviewId("testID3"), .equalTo),
+                (.reviewId("testID4"), .notEqualTo),
+                (.reviewId("testID5"), .notEqualTo))
+    
+    guard let url = commentQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "ReviewId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains("ReviewId:neq:testID4,testID5"))
+  }
+  
   func testCommentQuery() {
     
     let expectation =
