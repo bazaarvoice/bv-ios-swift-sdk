@@ -111,9 +111,11 @@ extension BVCommentsQuery: BVQueryFilterable {
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
   public func filter(_ apply: (Filter, Operator)...) -> Self {
-    let expr: BVQueryFilterExpression<Filter, Operator> =
-      1 < apply.count ? .or(apply) : .and(apply)
-    flatten(expr).forEach { add($0) }
+    type(of: self).groupFilters(apply).forEach { group in
+      let expr: BVQueryFilterExpression<Filter, Operator> =
+        1 < group.count ? .or(group) : .and(group)
+      flatten(expr).forEach { add($0) }
+    }
     return self
   }
 }

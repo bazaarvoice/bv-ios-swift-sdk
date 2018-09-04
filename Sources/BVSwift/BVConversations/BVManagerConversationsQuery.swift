@@ -45,11 +45,9 @@ public protocol BVConversationsQueryGenerator {
   func query(productSearchQuery: String) -> BVProductSearchQuery?
   
   /// Generator for BVProductsQuery
-  /// - Note:
-  /// \
-  /// This is the only generator that takes no parameter. It's assumed that if
-  /// you need no other bit of information you're querying against products.
-  func query() -> BVProductsQuery?
+  /// - Parameters:
+  ///   - productIds: Array of product ids to query against
+  func query(productIds: [String]) -> BVProductsQuery?
   
   /// Generator for BVProductStatisticsQuery
   /// - Parameters:
@@ -167,13 +165,13 @@ extension BVManager: BVConversationsQueryGenerator {
         .configure(config)
   }
   
-  public func query() -> BVProductsQuery? {
+  public func query(productIds: [String]) -> BVProductsQuery? {
     guard let config = BVManager.conversationsConfiguration else {
       return nil
     }
     
     return
-      BVProductsQuery().configure(config)
+      BVProductsQuery(productIds: productIds)?.configure(config)
   }
   
   public func query(productIds: [String]) -> BVProductStatisticsQuery? {
@@ -182,7 +180,7 @@ extension BVManager: BVConversationsQueryGenerator {
     }
     
     return
-      BVProductStatisticsQuery(productIds: productIds)
+      BVProductStatisticsQuery(productIds: productIds)?
         .configure(config)
   }
   
