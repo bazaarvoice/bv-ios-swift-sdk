@@ -40,6 +40,31 @@ class BVQuestionSearchQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testQuestionSearchQueryConstruction() {
+    
+    let questionSearchQuery =
+      BVQuestionSearchQuery(
+        productId: "test1", searchQuery: "Pellentesque", limit: 10, offset: 0)
+        .configure(BVQuestionSearchQueryTest.config)
+        .filter((.categoryAncestorId("testID1"), .equalTo),
+                (.categoryAncestorId("testID2"), .equalTo),
+                (.categoryAncestorId("testID3"), .equalTo),
+                (.categoryAncestorId("testID4"), .notEqualTo),
+                (.categoryAncestorId("testID5"), .notEqualTo))
+    
+    guard let url = questionSearchQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:neq:testID4,testID5"))
+  }
+  
   func testQuestionSearchQueryDisplay() {
     
     let expectation =

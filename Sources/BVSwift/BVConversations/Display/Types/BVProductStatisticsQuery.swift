@@ -22,19 +22,29 @@ BVProductStatisticsQuery: BVConversationsQuery<BVProductStatistics> {
   /// The initializer for BVProductStatisticsQuery
   /// - Parameters:
   ///   - productIds: The Product ids for the query
-  public init(productIds: [String]) {
+  /// - Note:
+  /// \
+  /// productIds.count must be greater than 0.
+  public init?(productIds: [String]) {
+    
+    guard !productIds.isEmpty else {
+      return nil
+    }
+    
     self.productIds = productIds
     
     super.init(BVProductStatistics.self)
     
-    for id in productIds {
-      let productIdFilter: BVURLParameter =
-        .filter(
-          BVProductStatisticsFilter.productId(id),
-          BVConversationsFilterOperator.equalTo,
-          nil)
-      
-      add(productIdFilter)
+    let productIdFilterTuple = productIds.map {
+      return (BVConversationsQueryFilter.productId($0),
+              BVConversationsFilterOperator.equalTo)
+    }
+    
+    type(of: self).groupFilters(productIdFilterTuple).forEach { group in
+      let expr: BVQueryFilterExpression<BVConversationsQueryFilter,
+        BVConversationsFilterOperator> =
+        1 < group.count ? .or(group) : .and(group)
+      flatten(expr).forEach { add($0) }
     }
   }
 }
@@ -53,9 +63,11 @@ extension BVProductStatisticsQuery: BVQueryFilterable {
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
   public func filter(_ apply: (Filter, Operator)...) -> Self {
-    let expr: BVQueryFilterExpression<Filter, Operator> =
-      1 < apply.count ? .or(apply) : .and(apply)
-    flatten(expr).forEach { add($0) }
+    type(of: self).groupFilters(apply).forEach { group in
+      let expr: BVQueryFilterExpression<Filter, Operator> =
+        1 < group.count ? .or(group) : .and(group)
+      flatten(expr).forEach { add($0) }
+    }
     return self
   }
 }

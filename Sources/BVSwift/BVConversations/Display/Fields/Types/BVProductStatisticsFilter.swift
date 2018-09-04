@@ -16,7 +16,6 @@ import Foundation
 public enum BVProductStatisticsFilter: BVQueryFilter {
   
   case contentLocale(Locale)
-  case productId(String)
   
   public static var filterPrefix: String {
     return BVConversationsConstants.BVQueryFilter.defaultField
@@ -38,8 +37,6 @@ public enum BVProductStatisticsFilter: BVQueryFilter {
     switch self {
     case let .contentLocale(filter):
       return filter.identifier
-    case let .productId(filter):
-      return filter
     }
   }
 }
@@ -49,8 +46,6 @@ extension BVProductStatisticsFilter: BVConversationsQueryValue {
     switch self {
     case .contentLocale:
       return BVConversationsConstants.BVProductStatistics.Keys.contentLocale
-    case .productId:
-      return BVConversationsConstants.BVProductStatistics.Keys.productId
     }
   }
 }

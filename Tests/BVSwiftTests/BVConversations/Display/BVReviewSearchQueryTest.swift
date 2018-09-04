@@ -41,6 +41,30 @@ class BVReviewSearchQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testReviewSearchQueryConstruction() {
+    
+    let reviewSearchQuery = BVReviewSearchQuery(
+      productId: "test1", searchQuery: "volutpat")
+      .configure(BVReviewSearchQueryTest.config)
+      .filter((.categoryAncestorId("testID1"), .equalTo),
+              (.categoryAncestorId("testID2"), .equalTo),
+              (.categoryAncestorId("testID3"), .equalTo),
+              (.categoryAncestorId("testID4"), .notEqualTo),
+              (.categoryAncestorId("testID5"), .notEqualTo))
+    
+    guard let url = reviewSearchQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:neq:testID4,testID5"))
+  }
+  
   func testReviewSearchQueryDisplay() {
     
     let expectation =
