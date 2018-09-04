@@ -138,8 +138,8 @@ extension BVSubmission: BVURLParameterable {
   }
 }
 
-// MARK: - BVSubmission: BVSubmissionActionableInternal
-extension BVSubmission: BVSubmissionActionableInternal {
+// MARK: - BVSubmission: BVURLRequestableWithHandlerInternal
+extension BVSubmission: BVURLRequestableWithHandlerInternal {
   var bvPath: String {
     return box.bvPath
   }

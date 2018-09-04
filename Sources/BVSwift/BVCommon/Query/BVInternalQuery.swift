@@ -10,100 +10,14 @@ import Foundation
 internal protocol BVInternalQueryDelegate: class, BVURLQueryItemable { }
 
 // MARK: - BVInternalQuery
-internal class BVInternalQuery<T: BVQueryable> {
-  
-  /// Private
-  final private var rawConfig: BVRawConfiguration?
-  final private var configuration: BVConfiguration?
-  final private var cacheable: Bool = false
-  private var preflightClosure: BVURLRequestablePreflightHandler?
-  private var postflightClosure: BVURLRequestablePostflightHandler?
-  private var baseResponseCompletion: BVURLRequestableHandler?
-  private let getResource: String
+internal class BVInternalQuery<T: BVQueryable>: BVURLRequest {
   
   /// Internal
   internal weak var queryItemable: BVInternalQueryDelegate?
   
   internal init<Concrete: BVQueryableInternal>(_ type: Concrete.Type) {
-    self.getResource = type.getResource.map { $0 } ?? String.empty
-  }
-}
-
-// MARK: - BVInternalQuery: BVConfigureExistentially
-extension BVInternalQuery: BVConfigureExistentially {
-  @discardableResult
-  final func configureExistentially(_ config: BVConfiguration) -> Self {
-    configuration = config
-    return self
-  }
-}
-
-// MARK: - BVInternalQuery: BVConfigureRaw
-extension BVInternalQuery: BVConfigureRaw {
-  var rawConfiguration: BVRawConfiguration? {
-    return rawConfig
-  }
-  
-  @discardableResult
-  final func configureRaw(_ config: BVRawConfiguration) -> Self {
-    rawConfig = config
-    return self
-  }
-}
-
-// MARK: - BVInternalQuery: BVQueryActionableInternal
-extension BVInternalQuery: BVQueryActionableInternal {
-  var preflightHandler: BVURLRequestablePreflightHandler? {
-    get {
-      return preflightClosure
-    }
-    set(newValue) {
-      preflightClosure = newValue
-    }
-  }
-  
-  var postflightHandler: BVURLRequestablePostflightHandler? {
-    get {
-      return postflightClosure
-    }
-    set(newValue) {
-      postflightClosure = newValue
-    }
-  }
-  
-  internal var responseHandler: BVURLRequestableHandler? {
-    get {
-      return baseResponseCompletion
-    }
-    set(newValue) {
-      baseResponseCompletion = newValue
-    }
-  }
-}
-
-// MARK: - BVInternalQuery: BVURLRequestableCacheable
-extension BVInternalQuery: BVURLRequestableCacheable {
-  var usesURLCache: Bool {
-    get {
-      return cacheable
-    }
-    set(newValue) {
-      cacheable = newValue
-    }
-  }
-}
-
-// MARK: - BVInternalQuery: BVURLRequestableInternal
-extension BVInternalQuery: BVURLRequestableInternal {
-  final internal var bvPath: String {
-    return getResource
-  }
-  
-  final internal var commonEndpoint: String {
-    if let raw = rawConfiguration {
-      return raw.endpoint
-    }
-    return configuration?.endpoint ?? String.empty
+    super.init()
+    resource = type.getResource.map { $0 } ?? String.empty
   }
 }
 
@@ -111,5 +25,37 @@ extension BVInternalQuery: BVURLRequestableInternal {
 extension BVInternalQuery: BVURLQueryItemable {
   var urlQueryItems: [URLQueryItem]? {
     return queryItemable?.urlQueryItems
+  }
+}
+
+// MARK: - BVInternalQuery: BVURLRequestableWithHandlerInternal Overrides
+extension BVInternalQuery {
+  internal var request: URLRequest? {
+    if commonEndpoint.isEmpty {
+      fatalError(
+        "Endpoint value is empty, make sure you configure the query first.")
+    }
+    
+    let urlString: String = "\(commonEndpoint)\(bvPath)"
+    guard var urlComponents: URLComponents =
+      URLComponents(string: urlString) else {
+        return nil
+    }
+    
+    if let items = urlQueryItems,
+      !items.isEmpty {
+      urlComponents.queryItems = items
+    }
+    
+    guard let url: URL = urlComponents.url else {
+      return nil
+    }
+    
+    BVLogger
+      .sharedLogger.debug("Issuing Query Request to: \(url.absoluteString)")
+    
+    let cachePolicy: URLRequest.CachePolicy =
+      usesURLCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
+    return URLRequest(url: url, cachePolicy: cachePolicy)
   }
 }
