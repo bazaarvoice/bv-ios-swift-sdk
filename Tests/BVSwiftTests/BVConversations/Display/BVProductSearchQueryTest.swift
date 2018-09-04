@@ -41,6 +41,30 @@ class BVProductSearchQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testProductSearchQueryConstruction() {
+    
+    let productSearchQuery =
+      BVProductSearchQuery(searchQuery: "pinpoint oxford")
+        .configure(BVProductSearchQueryTest.config)
+        .filter((.categoryAncestorId("testID1"), .equalTo),
+                (.categoryAncestorId("testID2"), .equalTo),
+                (.categoryAncestorId("testID3"), .equalTo),
+                (.categoryAncestorId("testID4"), .notEqualTo),
+                (.categoryAncestorId("testID5"), .notEqualTo))
+    
+    guard let url = productSearchQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:neq:testID4,testID5"))
+  }
+  
   func testProductSearchQueryDisplay() {
     
     let expectation =

@@ -42,17 +42,16 @@ internal indirect enum BVURLParameter: BVParameter {
   var name: String {
     switch self {
     case .unsafe(let field, _, _):
-      return field.description
+      return field.description.escaping()
     case .field(let field, _):
       return field.description.escaping()
     case .filter(let filter, _, _):
       return type(of: filter).filterPrefix.escaping()
     case .filterType(let filter, _, _, _):
+      let prefix = type(of: filter).filterPrefix.escaping()
       let separator = type(of: filter).filterTypeSeparator
-      return
-        [type(of: filter).filterPrefix.escaping(),
-         filter.description.escaping()]
-          .joined(separator: separator)
+      return [prefix, filter.description.escaping()]
+        .joined(separator: separator)
     case .include(let include, _):
       return type(of: include).includePrefix.escaping()
     case .includeLimit(let include, _, _):
@@ -63,60 +62,28 @@ internal indirect enum BVURLParameter: BVParameter {
     case .sort(let sort, _, _):
       return type(of: sort).sortPrefix.escaping()
     case .sortType(let sort, _, _, _):
+      let prefix = type(of: sort).sortPrefix.escaping()
       let separator = type(of: sort).sortTypeSeparator
       return
-        [type(of: sort).sortPrefix.escaping(),
-         sort.description.escaping()]
-          .joined(separator: separator)
+        [prefix, sort.description.escaping()].joined(separator: separator)
     case .stats(let stats, _):
       return type(of: stats).statPrefix.escaping()
     }
   }
   
   var value: String {
-    
-    var final: String = ""
-    
-    switch self {
-    case .unsafe(_, let value, _):
-      final = value.description
-    case .field(let field, _):
-      final = field.representedValue.description.escaping()
-    case .filter(let filter, let op, _):
-      let separator = type(of: filter).filterValueSeparator
-      final =
-        [filter.description.escaping(),
-         op.description.escaping(),
-         "\(filter.representedValue)".escaping()]
-          .joined(separator: separator)
-    case .filterType(_, let filter, let op, _):
-      let separator = type(of: filter).filterValueSeparator
-      final =
-        [filter.description,
-         op.description,
-         "\(filter.representedValue)".escaping()]
-          .joined(separator: separator)
-    case .include(let include, _):
-      final = include.description
-    case .includeLimit(_, let limit, _):
-      final = limit.description
-    case .sort(let sort, let order, _):
-      let separator = type(of: sort).sortValueSeparator
-      final =
-        [sort.description, order.description].joined(separator: separator)
-    case .sortType(_, let sort, let order, _):
-      let separator = type(of: sort).sortValueSeparator
-      final =
-        [sort.description, order.description].joined(separator: separator)
-    case .stats(let stats, _):
-      final = stats.description
-    }
-    
-    guard let next = child else {
-      return final
-    }
-    
-    return [next.value, final].joined(separator: ",")
+    return ([self] + children)
+      .reduce([String: [String]]()) { result, param in
+        var ret = result
+        ret[param.headValue] =
+          (param.tailValue.map { return [$0] } ?? []) +
+          (ret[param.headValue] ?? [])
+        return ret
+      }.map {
+        return $0.0 + $0.1.joined(separator: ",")
+      }
+      .sorted()
+      .joined(separator: ",")
   }
   
   private init(
@@ -155,38 +122,70 @@ internal indirect enum BVURLParameter: BVParameter {
     }
   }
   
+  private var headValue: String {
+    switch self {
+    case let .filter(filter, op, _):
+      let separator = type(of: filter).filterValueSeparator
+      return [filter.description.escaping(),
+              op.description.escaping(),
+              String.empty]
+        .joined(separator: separator)
+    case let .filterType(_, filter, op, _):
+      let separator = type(of: filter).filterValueSeparator
+      return [filter.description.escaping(),
+              op.description.escaping(),
+              String.empty]
+        .joined(separator: separator)
+    default:
+      return peek
+    }
+  }
+  
+  private var tailValue: String? {
+    switch self {
+    case let .filter(filter, _, _):
+      return "\(filter.representedValue)".escaping()
+    case let .filterType(_, filter, _, _):
+      return "\(filter.representedValue)".escaping()
+    default:
+      return nil
+    }
+  }
+  
   private var peek: String {
     switch self {
     case .unsafe(_, let value, _):
       return value.description.escaping()
     case .field(let value, _):
-      return value.description.escaping()
+      return value.representedValue.description.escaping()
     case .filter(let filter, let op, _):
       let separator = type(of: filter).filterValueSeparator
       return
-        [filter.description,
-         op.description,
+        [filter.description.escaping(),
+         op.description.escaping(),
          "\(filter.representedValue)".escaping()].joined(separator: separator)
     case .filterType(_, let filter, let op, _):
       let separator = type(of: filter).filterValueSeparator
       return
-        [filter.description,
-         op.description,
+        [filter.description.escaping(),
+         op.description.escaping(),
          "\(filter.representedValue)".escaping()].joined(separator: separator)
     case .include(let include, _):
-      return include.description
+      return include.description.escaping()
     case .includeLimit(_, let limit, _):
-      return limit.description
+      return limit.description.escaping()
     case .sort(let sort, let order, _):
       let separator = type(of: sort).sortValueSeparator
       return
-        [sort.description, order.description].joined(separator: separator)
+        [sort.description.escaping(),
+         order.description.escaping()].joined(separator: separator)
     case .sortType(_, let sort, let order, _):
       let separator = type(of: sort).sortValueSeparator
       return
-        [sort.description, order.description].joined(separator: separator)
+        [sort.description.escaping(),
+         order.description.escaping()].joined(separator: separator)
     case .stats(let stats, _):
-      return stats.description
+      return stats.description.escaping()
     }
   }
   
@@ -245,7 +244,6 @@ internal indirect enum BVURLParameter: BVParameter {
       list.append(BVURLParameter(parent: sub, child: nil))
       cursor = sub.child
     }
-    
     return list
   }
 }
@@ -309,8 +307,8 @@ extension BVURLParameter: Equatable {
   }
   
   /*
-   * `~=` runs off of the logic of comparing genus and first level value of
-   * enum.
+   * `~=` runs off of the logic of comparing genus and first level value
+   * construction of the enum.
    */
   static internal func ~= (lhs: BVURLParameter, rhs: BVURLParameter) -> Bool {
     
@@ -319,26 +317,12 @@ extension BVURLParameter: Equatable {
     }
     
     switch (lhs, rhs) {
-    case (.unsafe, .unsafe) where lhs.peek == rhs.peek:
-      return true
-    case (.field, .field) where lhs.peek == rhs.peek:
-      return true
-    case (.filter, .filter) where lhs.peek == rhs.peek:
-      return true
-    case (.filterType, .filterType) where lhs.peek == rhs.peek:
-      return true
-    case (.include, .include) where lhs.peek == rhs.peek:
-      return true
-    case (.includeLimit, .includeLimit) where lhs.peek == rhs.peek:
-      return true
-    case (.sort, .sort) where lhs.peek == rhs.peek:
-      return true
-    case (.sortType, .sortType) where lhs.peek == rhs.peek:
-      return true
-    case (.stats, .stats) where lhs.peek == rhs.peek:
-      return true
+    case (.filter, .filter):
+      fallthrough
+    case (.filterType, .filterType):
+      return lhs.headValue == rhs.headValue
     default:
-      return false
+      return true
     }
   }
   
@@ -398,7 +382,9 @@ extension BVURLParameter: Equatable {
       return false
     }
     
-    if 0 == lhsChildren.filter({ rhsChildren.contains($0) }).count {
+    if 0 < lhsChildren.count,
+      0 < rhsChildren.count,
+      0 == lhsChildren.filter({ rhsChildren.contains($0) }).count {
       return false
     }
     
