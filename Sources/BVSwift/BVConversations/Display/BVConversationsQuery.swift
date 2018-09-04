@@ -175,7 +175,7 @@ extension BVConversationsQuery: BVConfigurable {
   }
 }
 
-//// Conformance with BVQueryUnsafeField. Please see protocol
+/// Conformance with BVQueryUnsafeField. Please see protocol
 /// definition for more information.
 extension BVConversationsQuery: BVQueryUnsafeField {
   @discardableResult
@@ -214,5 +214,32 @@ extension BVConversationsQuery: BVConversationsQueryPostflightable {
 extension BVConversationsQuery: BVConfigurableInternal {
   var configuration: BVConversationsConfiguration? {
     return conversationsConfiguration
+  }
+}
+
+/// Helper class method for coalescing the filters
+extension BVConversationsQuery {
+  internal class func
+    groupFilters<Filter: BVQueryFilter>(
+    _ list: [(Filter, BVConversationsFilterOperator)]) -> [[(Filter, BVConversationsFilterOperator)]] {
+    
+    return Array(list.reduce([String: [(Filter, BVConversationsFilterOperator)]]()) {
+      let next = $1
+      var prev = $0
+      let result = { () -> [(Filter, BVConversationsFilterOperator)] in
+        switch next.1 {
+        case .equalTo:
+          fallthrough
+        case .notEqualTo:
+          return [next] + (prev["\(next.0):\(next.1)"] ?? [])
+        default:
+          return [next]
+        }
+      }()
+      
+      prev["\(next.0):\(next.1)"] = result
+      
+      return prev
+      }.values)
   }
 }

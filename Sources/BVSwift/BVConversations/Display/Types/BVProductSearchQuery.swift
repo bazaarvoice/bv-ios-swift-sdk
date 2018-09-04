@@ -68,10 +68,11 @@ extension BVProductSearchQuery: BVQueryFilterable {
       }
     }
     
-    let expr: BVQueryFilterExpression<Filter, Operator> =
-      1 < apply.count ? .or(apply) : .and(apply)
-    flatten(expr, preflight: preflight).forEach { add($0) }
-    
+    type(of: self).groupFilters(apply).forEach { group in
+      let expr: BVQueryFilterExpression<Filter, Operator> =
+        1 < group.count ? .or(group) : .and(group)
+      flatten(expr, preflight: preflight).forEach { add($0) }
+    }
     return self
   }
 }

@@ -42,6 +42,38 @@ class BVProductStatisticsQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testProductStatisticsQueryConstruction() {
+    
+    let enLocale = Locale(identifier: "en_US")
+    let ukLocale = Locale(identifier: "en_GB")
+    
+    let productIds =
+      ["testID1",
+       "testID2",
+       "testID3"]
+    
+    guard let productStatisticsQuery =
+      BVProductStatisticsQuery(productIds: productIds)?
+        .configure(BVProductStatisticsQueryTest.config)
+        .filter((.contentLocale(enLocale), .notEqualTo),
+                (.contentLocale(ukLocale), .notEqualTo)) else {
+                  XCTFail()
+                  return
+    }
+    
+    guard let url = productStatisticsQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "ProductId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "ContentLocale:neq:en_GB,en_US"))
+  }
+  
   func testProductStatisticsQueryDisplayOneProduct() {
     
     let expectation =
@@ -50,49 +82,55 @@ class BVProductStatisticsQueryTest: XCTestCase {
     
     let usLocale: Locale = Locale(identifier: "en_US")
     
-    let productStatisticsQuery =
-      BVProductStatisticsQuery(productIds: ["test3"])
-        .filter((.contentLocale(usLocale), .equalTo))
-        .stats(.nativeReviews)
-        .stats(.reviews)
-        .configure(BVProductStatisticsQueryTest.config)
-        .handler {
-          (response: BVConversationsQueryResponse<BVProductStatistics>) in
-          
-          if case .failure(let error) = response {
-            print(error)
-            XCTFail()
-            expectation.fulfill()
-            return
-          }
-          
-          guard case let .success(_, productStatistics) = response else {
-            XCTFail()
-            expectation.fulfill()
-            return
-          }
-          
-          guard let firstProductStatistic: BVProductStatistics =
-            productStatistics.first,
-            let reviewStatistics =
-            firstProductStatistic.reviewStatistics,
-            let nativeReviewStatistics =
-            firstProductStatistic.nativeReviewStatistics else {
-              XCTFail()
-              expectation.fulfill()
-              return
-          }
-          
-          XCTAssertEqual(productStatistics.count, 1)
-          
-          XCTAssertEqual(firstProductStatistic.productId, "test3")
-          XCTAssertEqual(reviewStatistics.totalReviewCount, 29)
-          XCTAssertNotNil(reviewStatistics.averageOverallRating)
-          XCTAssertEqual(reviewStatistics.overallRatingRange, 5)
-          XCTAssertEqual(nativeReviewStatistics.totalReviewCount, 29)
-          XCTAssertEqual(nativeReviewStatistics.overallRatingRange, 5)
-          
+    guard let productStatisticsQuery =
+      BVProductStatisticsQuery(productIds: ["test3"]) else {
+        XCTFail()
+        expectation.fulfill()
+        return
+    }
+    
+    productStatisticsQuery
+      .filter((.contentLocale(usLocale), .equalTo))
+      .stats(.nativeReviews)
+      .stats(.reviews)
+      .configure(BVProductStatisticsQueryTest.config)
+      .handler {
+        (response: BVConversationsQueryResponse<BVProductStatistics>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
           expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, productStatistics) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard let firstProductStatistic: BVProductStatistics =
+          productStatistics.first,
+          let reviewStatistics =
+          firstProductStatistic.reviewStatistics,
+          let nativeReviewStatistics =
+          firstProductStatistic.nativeReviewStatistics else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+        
+        XCTAssertEqual(productStatistics.count, 1)
+        
+        XCTAssertEqual(firstProductStatistic.productId, "test3")
+        XCTAssertEqual(reviewStatistics.totalReviewCount, 29)
+        XCTAssertNotNil(reviewStatistics.averageOverallRating)
+        XCTAssertEqual(reviewStatistics.overallRatingRange, 5)
+        XCTAssertEqual(nativeReviewStatistics.totalReviewCount, 29)
+        XCTAssertEqual(nativeReviewStatistics.overallRatingRange, 5)
+        
+        expectation.fulfill()
     }
     
     guard let req = productStatisticsQuery.request else {
@@ -122,30 +160,36 @@ class BVProductStatisticsQueryTest: XCTestCase {
     
     let usLocale: Locale = Locale(identifier: "en_US")
     
-    let productStatisticsQuery =
-      BVProductStatisticsQuery(productIds: ["test1", "test2", "test3"])
-        .stats(.nativeReviews)
-        .stats(.reviews)
-        .filter((.contentLocale(usLocale), .equalTo))
-        .configure(BVProductStatisticsQueryTest.config)
-        .handler {
-          (response: BVConversationsQueryResponse<BVProductStatistics>) in
-          
-          if case .failure(let error) = response {
-            print(error)
-            XCTFail()
-            expectation.fulfill()
-            return
-          }
-          
-          guard case let .success(_, productStatistics) = response else {
-            XCTFail()
-            expectation.fulfill()
-            return
-          }
-          
-          XCTAssertEqual(productStatistics.count, 3)
+    guard let productStatisticsQuery =
+      BVProductStatisticsQuery(productIds: ["test1", "test2", "test3"]) else {
+        XCTFail()
+        expectation.fulfill()
+        return
+    }
+    
+    productStatisticsQuery
+      .stats(.nativeReviews)
+      .stats(.reviews)
+      .filter((.contentLocale(usLocale), .equalTo))
+      .configure(BVProductStatisticsQueryTest.config)
+      .handler {
+        (response: BVConversationsQueryResponse<BVProductStatistics>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
           expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, productStatistics) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        XCTAssertEqual(productStatistics.count, 3)
+        expectation.fulfill()
     }
     
     guard let req = productStatisticsQuery.request else {
@@ -176,28 +220,34 @@ class BVProductStatisticsQueryTest: XCTestCase {
       tooManyProductIds += [String(index)]
     }
     
-    let productStatisticsQuery =
-      BVProductStatisticsQuery(productIds: tooManyProductIds)
-        .stats(.nativeReviews)
-        .stats(.reviews)
-        .configure(BVProductStatisticsQueryTest.config)
-        .handler {
-          (response: BVConversationsQueryResponse<BVProductStatistics>) in
-          
-          if case .failure(let error) = response {
-            print(error)
-            expectation.fulfill()
-            return
-          }
-          
-          if case let .success(_, productStatistics) = response,
-            0 == productStatistics.count {
-            expectation.fulfill()
-            return
-          }
-          
-          XCTFail()
+    guard let productStatisticsQuery =
+      BVProductStatisticsQuery(productIds: tooManyProductIds) else {
+        XCTFail()
+        expectation.fulfill()
+        return
+    }
+    
+    productStatisticsQuery
+      .stats(.nativeReviews)
+      .stats(.reviews)
+      .configure(BVProductStatisticsQueryTest.config)
+      .handler {
+        (response: BVConversationsQueryResponse<BVProductStatistics>) in
+        
+        if case .failure(let error) = response {
+          print(error)
           expectation.fulfill()
+          return
+        }
+        
+        if case let .success(_, productStatistics) = response,
+          0 == productStatistics.count {
+          expectation.fulfill()
+          return
+        }
+        
+        XCTFail()
+        expectation.fulfill()
     }
     
     guard let req = productStatisticsQuery.request else {

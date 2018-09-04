@@ -133,7 +133,7 @@ extension BVQueryFilterable {
     ///
     /// OR is more complicated because we have to not only have to construct
     /// the recursive composition but we also have to make sure to preflight
-    /// the parameters into equivelent genus buckets, e.g., .filter() &
+    /// the parameters into equivalent genus buckets, e.g., .filter() &
     /// .filterType(), otherwise we'll end up losing some filters.
     switch expr {
     case let .and(list):
