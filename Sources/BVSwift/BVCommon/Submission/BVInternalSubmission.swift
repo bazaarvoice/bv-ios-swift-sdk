@@ -1,5 +1,4 @@
 //
-//
 //  BVInternalSubmission.swift
 //  BVSwift
 //
@@ -8,115 +7,28 @@
 
 import Foundation
 
-typealias EncodingClosure = (Encodable?) -> Data?
-
 internal protocol BVInternalSubmissionDelegate: class,
 BVURLRequestBodyable, BVURLQueryItemable { }
 
-internal class BVInternalSubmission {  
-  
-  /// Private
-  final private var rawConfig: BVRawConfiguration?
-  final private var configuration: BVConfiguration?
-  final private var cacheable: Bool = false
-  private var preflightClosure: BVURLRequestablePreflightHandler?
-  private var postflightClosure: BVURLRequestablePostflightHandler?
-  private var baseResponseCompletion: BVURLRequestableHandler?
-  private let postResource: String
+// MARK: - BVInternalSubmission
+internal class BVInternalSubmission: BVURLRequest {
   
   /// Internal
   final internal let submissionableType: BVSubmissionableInternal?
   internal weak var submissionBodyable: BVInternalSubmissionDelegate?
   
   internal init(_ internalType: BVSubmissionableInternal) {
-    postResource =
-      type(of: internalType).postResource ?? String.empty
     submissionableType = internalType
+    super.init()
+    resource =
+      type(of: internalType).postResource ?? String.empty
   }
 }
 
-// MARK: - BVInternalSubmission: BVConfigureExistentially
-extension BVInternalSubmission: BVConfigureExistentially {
-  @discardableResult
-  final func configureExistentially(_ config: BVConfiguration) -> Self {
-    configuration = config
-    return self
-  }
-}
-
-// MARK: - BVInternalSubmission: BVConfigureRaw
-extension BVInternalSubmission: BVConfigureRaw {
-  var rawConfiguration: BVRawConfiguration? {
-    return rawConfig
-  }
-  
-  @discardableResult
-  final func configureRaw(_ config: BVRawConfiguration) -> Self {
-    rawConfig = config
-    return self
-  }
-}
-
-// MARK: - BVSubmissionableConsumable: BVSubmissionableConsumable
+// MARK: - BVInternalSubmission: BVSubmissionableConsumable
 extension BVInternalSubmission: BVSubmissionableConsumable {
   var submissionableInternal: BVSubmissionableInternal? {
     return submissionableType
-  }
-}
-
-// MARK: - BVInternalSubmission: BVSubmissionActionableInternal
-extension BVInternalSubmission: BVSubmissionActionableInternal {
-  var preflightHandler: BVURLRequestablePreflightHandler? {
-    get {
-      return preflightClosure
-    }
-    set(newValue) {
-      preflightClosure = newValue
-    }
-  }
-  
-  var postflightHandler: BVURLRequestablePostflightHandler? {
-    get {
-      return postflightClosure
-    }
-    set(newValue) {
-      postflightClosure = newValue
-    }
-  }
-  
-  internal var responseHandler: BVURLRequestableHandler? {
-    get {
-      return baseResponseCompletion
-    }
-    set(newValue) {
-      baseResponseCompletion = newValue
-    }
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLRequestableCacheable
-extension BVInternalSubmission: BVURLRequestableCacheable {
-  var usesURLCache: Bool {
-    get {
-      return cacheable
-    }
-    set(newValue) {
-      cacheable = newValue
-    }
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLRequestableInternal
-extension BVInternalSubmission: BVURLRequestableInternal {
-  final internal var bvPath: String {
-    return postResource
-  }
-  
-  final internal var commonEndpoint: String {
-    if let raw = rawConfiguration {
-      return raw.endpoint
-    }
-    return configuration?.endpoint ?? String.empty
   }
 }
 
@@ -124,5 +36,79 @@ extension BVInternalSubmission: BVURLRequestableInternal {
 extension BVInternalSubmission: BVURLQueryItemable {
   var urlQueryItems: [URLQueryItem]? {
     return submissionBodyable?.urlQueryItems
+  }
+}
+
+// MARK: - BVInternalSubmission: BVURLRequestableWithHandlerInternal Overrides
+extension BVInternalSubmission {
+  internal var request: URLRequest? {
+    if commonEndpoint.isEmpty {
+      fatalError(
+        "Endpoint value is empty, make sure you configure the query first.")
+    }
+    
+    let urlString: String = "\(commonEndpoint)\(bvPath)"
+    guard var urlComponents: URLComponents =
+      URLComponents(string: urlString) else {
+        return nil
+    }
+    
+    if let items = urlQueryItems,
+      !items.isEmpty {
+      urlComponents.queryItems = items
+    }
+    
+    guard let url: URL = urlComponents.url else {
+      return nil
+    }
+    
+    let cachePolicy: URLRequest.CachePolicy =
+      usesURLCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
+    var request: URLRequest = URLRequest(url: url, cachePolicy: cachePolicy)
+    request.httpMethod = "POST"
+    
+    if let contentType: String = submissionBodyable?.requestContentType {
+      request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    }
+    
+    BVLogger
+      .sharedLogger.debug(
+        "Issuing Submission Request to: \(url.absoluteString)")
+    
+    return request
+  }
+}
+
+// MARK: - BVInternalSubmission: BVURLRequestableWithBodyData
+extension BVInternalSubmission: BVURLRequestableWithBodyData {
+  internal var bodyData: Data? {
+    guard let bodyable = submissionBodyable,
+      let type = submissionableType else {
+        return nil
+    }
+    
+    switch bodyable.requestBody(type) {
+    case let .some(.multipart(map)):
+      
+      let multipartData = map.reduce(Data())
+      { (result: Data, keyValue: (key: String, value: Any)) -> Data in
+        switch keyValue.value {
+        case let value as String:
+          return (result + URLRequest
+            .multipartData(key: keyValue.key, value: value))
+        case let value as Data:
+          return (result + URLRequest
+            .multipartData(key: keyValue.key, value: value))
+        default:
+          return result
+        }
+      }
+      
+      return (multipartData + URLRequest.encloseMultipartData())
+    case let .some(.raw(data)):
+      return data
+    default:
+      return nil
+    }
   }
 }

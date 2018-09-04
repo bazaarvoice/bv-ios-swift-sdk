@@ -108,6 +108,11 @@ public protocol BVQueryUnsafeField {
               value: CustomStringConvertible) -> Self
 }
 
+// MARK: - BVQueryableInternal
+internal protocol BVQueryableInternal: BVQueryable {
+  static var getResource: String? { get }
+}
+
 /// Enum defining the supported logical operators of filter
 internal enum BVQueryFilterExpression<T: BVQueryFilter, U: BVQueryFilterOperator> {
   case and([(T, U)])
@@ -175,12 +180,3 @@ extension BVQueryFilterable {
     }
   }
 }
-
-// MARK: - BVQueryableInternal
-internal protocol BVQueryableInternal: BVQueryable {
-  static var getResource: String? { get }
-}
-
-// MARK: - BVQueryActionableInternal
-internal protocol BVQueryActionableInternal:
-BVURLRequestableWithHandlerInternal { }
