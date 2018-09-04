@@ -274,6 +274,13 @@ internal struct BVConversationsConstants {
     }
   }
   
+  internal struct BVConversationsQueryFilter {
+    internal struct Keys {
+      static let id: String = "Id"
+      static let productId: String = "ProductId"
+    }
+  }
+  
   internal struct BVConversationsFilterOperator {
     
     internal struct Keys {

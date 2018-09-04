@@ -146,3 +146,43 @@ internal struct BVConversationsQueryOffsetField: BVQueryField {
     value = "\(offset)"
   }
 }
+
+// MARK: - BVConversationsQueryFilter
+internal enum BVConversationsQueryFilter: BVQueryFilter {
+  case id(String)
+  case productId(String)
+  
+  public static var filterPrefix: String {
+    return BVConversationsConstants.BVQueryFilter.defaultField
+  }
+  
+  public static var filterTypeSeparator: String {
+    return BVConversationsConstants.BVQueryFilter.typeSeparatorField
+  }
+  
+  public static var filterValueSeparator: String {
+    return BVConversationsConstants.BVQueryFilter.valueSeparatorField
+  }
+  
+  public var description: String {
+    return internalDescription
+  }
+  
+  public var representedValue: CustomStringConvertible {
+    switch self {
+    case let .id(filter):
+      return filter
+    case let .productId(filter):
+      return filter
+    }
+  }
+  
+  internal var internalDescription: String {
+    switch self {
+    case .id:
+      return BVConversationsConstants.BVConversationsQueryFilter.Keys.id
+    case .productId:
+      return BVConversationsConstants.BVConversationsQueryFilter.Keys.productId
+    }
+  }
+}

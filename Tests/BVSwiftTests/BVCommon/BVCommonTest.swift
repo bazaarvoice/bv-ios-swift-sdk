@@ -38,9 +38,9 @@ class BVCommonTest: XCTestCase {
     let xmlString = "Bad string"
     
     guard let xmlData = xmlString.data(using: .utf8) else {
-        XCTFail()
-        expectation.fulfill()
-        return
+      XCTFail()
+      expectation.fulfill()
+      return
     }
     
     XCTAssertNil(BVXMLParser().parse(xmlData))
@@ -134,5 +134,14 @@ class BVCommonTest: XCTestCase {
       XCTAssertNil(
         error, "Something went horribly wrong, request took too long.")
     }
+  }
+  
+  func testSDKVersionExistence() {
+    let bundles = Bundle.allFrameworks
+    
+    let frameworkBundle =
+      bundles.filter { $0.bundleIdentifier?.contains("BVSwift") ?? false }
+    
+    XCTAssertTrue(!frameworkBundle.isEmpty)
   }
 }

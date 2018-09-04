@@ -42,6 +42,29 @@ class BVReviewQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testReviewQueryConstruction() {
+    
+    let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
+      .configure(BVReviewQueryTest.config)
+      .filter((.categoryAncestorId("testID1"), .equalTo),
+              (.categoryAncestorId("testID2"), .equalTo),
+              (.categoryAncestorId("testID3"), .equalTo),
+              (.categoryAncestorId("testID4"), .notEqualTo),
+              (.categoryAncestorId("testID5"), .notEqualTo))
+    
+    guard let url = reviewQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:neq:testID4,testID5"))
+  }
+  
   func testReviewQueryDisplay() {
     
     let expectation = self.expectation(description: "testReviewQueryDisplay")
