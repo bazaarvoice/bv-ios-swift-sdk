@@ -42,6 +42,29 @@ class BVProductQueryTest: XCTestCase {
     BVPixel.skipAllPixelEvents = false
   }
   
+  func testProductQueryConstruction() {
+    
+    let productQuery = BVProductQuery(productId: "test1")
+      .configure(BVProductQueryTest.config)
+      .filter((.categoryAncestorId("testID1"), .equalTo),
+              (.categoryAncestorId("testID2"), .equalTo),
+              (.categoryAncestorId("testID3"), .equalTo),
+              (.categoryAncestorId("testID4"), .notEqualTo),
+              (.categoryAncestorId("testID5"), .notEqualTo))
+    
+    guard let url = productQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    print(url.absoluteString)
+    
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:eq:testID1,testID2,testID3"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "CategoryAncestorId:neq:testID4,testID5"))
+  }
+  
   func testProductQueryDisplay() {
     
     let expectation =
@@ -200,15 +223,15 @@ class BVProductQueryTest: XCTestCase {
     
     let productQuery = BVProductQuery(productId: "test1")
       .filter(
-          (.isActive(false), .equalTo),
-          (.isDisabled(false), .equalTo),
-          (.reviews(.isRatingsOnly(false)), .equalTo),
-          (.reviews(.isRecommended(false)), .equalTo),
-          (.reviews(.rating(5)), .equalTo),
-          (.questions(.isFeatured(true)), .equalTo),
-          (.questions(.hasAnswers(true)), .equalTo),
-          (.questions(.hasBrandAnswers(true)), .equalTo)
-        )
+        (.isActive(false), .equalTo),
+        (.isDisabled(false), .equalTo),
+        (.reviews(.isRatingsOnly(false)), .equalTo),
+        (.reviews(.isRecommended(false)), .equalTo),
+        (.reviews(.rating(5)), .equalTo),
+        (.questions(.isFeatured(true)), .equalTo),
+        (.questions(.hasAnswers(true)), .equalTo),
+        (.questions(.hasBrandAnswers(true)), .equalTo)
+      )
       .configure(BVProductQueryTest.config)
     
     guard let req = productQuery.request else {
