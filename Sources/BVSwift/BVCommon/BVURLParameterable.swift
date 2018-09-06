@@ -48,7 +48,7 @@ extension BVURLParameterable {
     }
     
     let coalesce: BVURLParameter =
-      coalesceList.reduce(parameter, +~)
+      coalesceList.reduce(parameter, +)
     otherList.append(coalesce)
     
     set(otherList)
