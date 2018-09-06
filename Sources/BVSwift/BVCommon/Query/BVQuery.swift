@@ -94,8 +94,8 @@ extension BVQuery: BVURLParameterable {
   }
 }
 
-// MARK: - BVQuery: BVQueryActionableInternal
-extension BVQuery: BVQueryActionableInternal {
+// MARK: - BVQuery: BVURLRequestableWithHandlerInternal
+extension BVQuery: BVURLRequestableWithHandlerInternal {
   
   var bvPath: String {
     return box.bvPath

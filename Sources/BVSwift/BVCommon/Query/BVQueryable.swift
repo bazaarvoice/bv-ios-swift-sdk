@@ -108,6 +108,11 @@ public protocol BVQueryUnsafeField {
               value: CustomStringConvertible) -> Self
 }
 
+// MARK: - BVQueryableInternal
+internal protocol BVQueryableInternal: BVQueryable {
+  static var getResource: String? { get }
+}
+
 /// Enum defining the supported logical operators of filter
 internal enum BVQueryFilterExpression<T: BVQueryFilter, U: BVQueryFilterOperator> {
   case and([(T, U)])
@@ -154,33 +159,26 @@ extension BVQueryFilterable {
       ///
       /// For more information, see the Dictionary(grouping:) call-site as it's
       /// the main workhorse for separation by genus equality.
-      return Array(Dictionary(grouping: urlParameters) { $0.name }.values)
-        .reduce([]) { accum, bucket in
-          
-          let compose: BVURLParameter? = bucket.reduce(nil) {
-            guard let prev = $0 else {
-              return $1
+      return
+        Dictionary(grouping: urlParameters) { $0.name }
+          .values
+          .reduce([]) { accum, bucket in
+            
+            let compose: BVURLParameter? = bucket.reduce(nil) {
+              guard let prev = $0 else {
+                return $1
+              }
+              return prev + $1
             }
-            return prev +~ $1
-          }
-          
-          guard let filter = compose else {
-            return accum
-          }
-          
-          return accum + [filter]
+            
+            guard let filter = compose else {
+              return accum
+            }
+            
+            return accum + [filter]
       }
     default:
       return []
     }
   }
 }
-
-// MARK: - BVQueryableInternal
-internal protocol BVQueryableInternal: BVQueryable {
-  static var getResource: String? { get }
-}
-
-// MARK: - BVQueryActionableInternal
-internal protocol BVQueryActionableInternal:
-BVURLRequestableWithHandlerInternal { }
