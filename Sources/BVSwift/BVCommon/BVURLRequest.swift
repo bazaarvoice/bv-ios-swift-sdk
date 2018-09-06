@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class BVURLRequest {
+internal class BVURLRequest: BVURLRequestable, BVURLQueryItemable {
   
   /// Private
   final private var rawConfig: BVRawConfiguration?
@@ -20,6 +20,39 @@ internal class BVURLRequest {
   
   /// Internal
   internal var resource: String?
+  
+  internal var urlQueryItems: [URLQueryItem]? {
+    return nil
+  }
+  
+  internal var request: URLRequest? {
+    if commonEndpoint.isEmpty {
+      fatalError(
+        "Endpoint value is empty, make sure you configure the query first.")
+    }
+    
+    let urlString: String = "\(commonEndpoint)\(bvPath)"
+    guard var urlComponents: URLComponents =
+      URLComponents(string: urlString) else {
+        return nil
+    }
+    
+    if let items = urlQueryItems,
+      !items.isEmpty {
+      urlComponents.queryItems = items
+    }
+    
+    guard let url: URL = urlComponents.url else {
+      return nil
+    }
+    
+    BVLogger
+      .sharedLogger.debug("Issuing Query Request to: \(url.absoluteString)")
+    
+    let cachePolicy: URLRequest.CachePolicy =
+      usesURLCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
+    return URLRequest(url: url, cachePolicy: cachePolicy)
+  }
 }
 
 // MARK: - BVURLRequest: BVConfigureExistentially

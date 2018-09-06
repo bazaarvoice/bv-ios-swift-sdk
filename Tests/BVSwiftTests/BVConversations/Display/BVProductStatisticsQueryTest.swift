@@ -208,6 +208,53 @@ class BVProductStatisticsQueryTest: XCTestCase {
     }
   }
   
+  func testProductStatisticsQueryTooManyProductsTimeout() {
+    
+    let expectation =
+      self.expectation(
+        description: "testProductStatisticsQueryTooManyProductsTimeout")
+    
+    var tooManyProductIds: [String] = []
+    
+    for index in 1 ... 110 {
+      tooManyProductIds += ["ProductId\(index)"]
+    }
+    
+    guard let productStatisticsQuery =
+      BVProductStatisticsQuery(productIds: ["product1"])?
+        .configure(BVProductStatisticsQueryTest.config) else {
+          XCTFail()
+          return
+    }
+    
+    let productIdFilterTuple = tooManyProductIds.map {
+      return (BVConversationsQueryFilter.productId($0),
+              BVConversationsFilterOperator.equalTo)
+    }
+    
+    BVProductStatisticsQuery
+      .groupFilters(productIdFilterTuple).forEach { group in
+        let expr: BVQueryFilterExpression<BVConversationsQueryFilter,
+          BVConversationsFilterOperator> =
+          1 < group.count ? .or(group) : .and(group)
+        productStatisticsQuery.flatten(expr).forEach
+          { productStatisticsQuery.add($0) }
+    }
+    
+    guard let url = productStatisticsQuery.request?.url else {
+      XCTFail()
+      return
+    }
+    
+    expectation.fulfill()
+    print(url)
+    
+    self.waitForExpectations(timeout: 5) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
   func testProductStatisticsQueryTooManyProductsError() {
     
     let expectation =
@@ -217,7 +264,7 @@ class BVProductStatisticsQueryTest: XCTestCase {
     var tooManyProductIds: [String] = []
     
     for index in 1 ... 110 {
-      tooManyProductIds += [String(index)]
+      tooManyProductIds += ["ProductId\(index)"]
     }
     
     guard let productStatisticsQuery =
