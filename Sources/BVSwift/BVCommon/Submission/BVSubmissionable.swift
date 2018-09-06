@@ -25,7 +25,3 @@ internal protocol BVSubmissionableInternal: BVSubmissionable {
   static var postResource: String? { get }
   mutating func update(_ values: [String: Encodable]?)
 }
-
-// MARK: - BVSubmissionActionableInternal
-internal protocol BVSubmissionActionableInternal:
-BVURLRequestableWithHandlerInternal { }

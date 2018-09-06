@@ -1,5 +1,4 @@
 //
-//
 //  BVInternalSubmission.swift
 //  BVSwift
 //
@@ -8,121 +7,85 @@
 
 import Foundation
 
-typealias EncodingClosure = (Encodable?) -> Data?
-
 internal protocol BVInternalSubmissionDelegate: class,
 BVURLRequestBodyable, BVURLQueryItemable { }
 
-internal class BVInternalSubmission {  
-  
-  /// Private
-  final private var rawConfig: BVRawConfiguration?
-  final private var configuration: BVConfiguration?
-  final private var cacheable: Bool = false
-  private var preflightClosure: BVURLRequestablePreflightHandler?
-  private var postflightClosure: BVURLRequestablePostflightHandler?
-  private var baseResponseCompletion: BVURLRequestableHandler?
-  private let postResource: String
+// MARK: - BVInternalSubmission
+internal class BVInternalSubmission: BVURLRequest {
   
   /// Internal
   final internal let submissionableType: BVSubmissionableInternal?
   internal weak var submissionBodyable: BVInternalSubmissionDelegate?
   
   internal init(_ internalType: BVSubmissionableInternal) {
-    postResource =
-      type(of: internalType).postResource ?? String.empty
     submissionableType = internalType
-  }
-}
-
-// MARK: - BVInternalSubmission: BVConfigureExistentially
-extension BVInternalSubmission: BVConfigureExistentially {
-  @discardableResult
-  final func configureExistentially(_ config: BVConfiguration) -> Self {
-    configuration = config
-    return self
-  }
-}
-
-// MARK: - BVInternalSubmission: BVConfigureRaw
-extension BVInternalSubmission: BVConfigureRaw {
-  var rawConfiguration: BVRawConfiguration? {
-    return rawConfig
+    super.init()
+    resource =
+      type(of: internalType).postResource ?? String.empty
   }
   
-  @discardableResult
-  final func configureRaw(_ config: BVRawConfiguration) -> Self {
-    rawConfig = config
-    return self
+  override var urlQueryItems: [URLQueryItem]? {
+    return submissionBodyable?.urlQueryItems
+  }
+  
+  override internal var request: URLRequest? {
+    guard var superRequest = super.request,
+      let url = superRequest.url else {
+        /// This should fail in the super class
+        fatalError("Super request returned was nil")
+    }
+    
+    superRequest.httpMethod = "POST"
+    
+    if let contentType: String = submissionBodyable?.requestContentType {
+      superRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    }
+    
+    BVLogger
+      .sharedLogger.debug(
+        "Issuing Submission Request to: \(url.absoluteString)")
+    
+    return superRequest
   }
 }
 
-// MARK: - BVSubmissionableConsumable: BVSubmissionableConsumable
+// MARK: - BVInternalSubmission: BVSubmissionableConsumable
 extension BVInternalSubmission: BVSubmissionableConsumable {
   var submissionableInternal: BVSubmissionableInternal? {
     return submissionableType
   }
 }
 
-// MARK: - BVInternalSubmission: BVSubmissionActionableInternal
-extension BVInternalSubmission: BVSubmissionActionableInternal {
-  var preflightHandler: BVURLRequestablePreflightHandler? {
-    get {
-      return preflightClosure
+// MARK: - BVInternalSubmission: BVURLRequestableWithBodyData
+extension BVInternalSubmission: BVURLRequestableWithBodyData {
+  internal var bodyData: Data? {
+    guard let bodyable = submissionBodyable,
+      let type = submissionableType else {
+        return nil
     }
-    set(newValue) {
-      preflightClosure = newValue
+    
+    switch bodyable.requestBody(type) {
+    case let .some(.multipart(map)):
+      
+      let multipartData = map.reduce(Data())
+      { (result: Data, keyValue: (key: String, value: Any)) -> Data in
+        switch keyValue.value {
+        case let value as String:
+          return (result + URLRequest
+            .multipartData(key: keyValue.key, value: value))
+        case let value as Data:
+          return (result + URLRequest
+            .multipartData(key: keyValue.key, value: value))
+        default:
+          return result
+        }
+      }
+      
+      return (multipartData + URLRequest.encloseMultipartData())
+    case let .some(.raw(data)):
+      return data
+    default:
+      return nil
     }
-  }
-  
-  var postflightHandler: BVURLRequestablePostflightHandler? {
-    get {
-      return postflightClosure
-    }
-    set(newValue) {
-      postflightClosure = newValue
-    }
-  }
-  
-  internal var responseHandler: BVURLRequestableHandler? {
-    get {
-      return baseResponseCompletion
-    }
-    set(newValue) {
-      baseResponseCompletion = newValue
-    }
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLRequestableCacheable
-extension BVInternalSubmission: BVURLRequestableCacheable {
-  var usesURLCache: Bool {
-    get {
-      return cacheable
-    }
-    set(newValue) {
-      cacheable = newValue
-    }
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLRequestableInternal
-extension BVInternalSubmission: BVURLRequestableInternal {
-  final internal var bvPath: String {
-    return postResource
-  }
-  
-  final internal var commonEndpoint: String {
-    if let raw = rawConfiguration {
-      return raw.endpoint
-    }
-    return configuration?.endpoint ?? String.empty
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLQueryItemable
-extension BVInternalSubmission: BVURLQueryItemable {
-  var urlQueryItems: [URLQueryItem]? {
-    return submissionBodyable?.urlQueryItems
   }
 }
