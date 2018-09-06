@@ -9,10 +9,6 @@ import Foundation
 
 // MARK: - BVURLParameter
 internal indirect enum BVURLParameter: BVParameter {
-  case unsafe(
-    CustomStringConvertible,
-    CustomStringConvertible,
-    BVURLParameter?)
   case field(
     BVQueryField,
     BVURLParameter?)
@@ -38,11 +34,13 @@ internal indirect enum BVURLParameter: BVParameter {
     BVQuerySortOrder,
     BVURLParameter?)
   case stats(BVQueryStat, BVURLParameter?)
+  case unsafe(
+    CustomStringConvertible,
+    CustomStringConvertible,
+    BVURLParameter?)
   
   var name: String {
     switch self {
-    case .unsafe(let field, _, _):
-      return field.description.escaping()
     case .field(let field, _):
       return field.description.escaping()
     case .filter(let filter, _, _):
@@ -68,6 +66,8 @@ internal indirect enum BVURLParameter: BVParameter {
         [prefix, sort.description.escaping()].joined(separator: separator)
     case .stats(let stats, _):
       return type(of: stats).statPrefix.escaping()
+    case .unsafe(let field, _, _):
+      return field.description.escaping()
     }
   }
   
@@ -101,8 +101,6 @@ internal indirect enum BVURLParameter: BVParameter {
     }
     
     switch parent {
-    case let .unsafe(field, value, _):
-      self = .unsafe(field, value, child)
     case let .field(field, _):
       self = .field(field, child)
     case let .filter(filter, op, _):
@@ -119,6 +117,8 @@ internal indirect enum BVURLParameter: BVParameter {
       self = .sortType(type, sort, op, child)
     case let .stats(stats, _):
       self = .stats(stats, child)
+    case let .unsafe(field, value, _):
+      self = .unsafe(field, value, child)
     }
   }
   
@@ -154,8 +154,6 @@ internal indirect enum BVURLParameter: BVParameter {
   
   private var peek: String {
     switch self {
-    case .unsafe(_, let value, _):
-      return value.description.escaping()
     case .field(let value, _):
       return value.representedValue.description.escaping()
     case .filter(let filter, let op, _):
@@ -186,13 +184,13 @@ internal indirect enum BVURLParameter: BVParameter {
          order.description.escaping()].joined(separator: separator)
     case .stats(let stats, _):
       return stats.description.escaping()
+    case .unsafe(_, let value, _):
+      return value.description.escaping()
     }
   }
   
   private var pop: BVURLParameter {
     switch self {
-    case let .unsafe(field, value, _):
-      return .unsafe(field, value, nil)
     case let .field(field, _):
       return .field(field, nil)
     case let .filter(filter, op, _):
@@ -209,13 +207,13 @@ internal indirect enum BVURLParameter: BVParameter {
       return .sortType(type, sort, op, nil)
     case let .stats(stats, _):
       return .stats(stats, nil)
+    case let .unsafe(field, value, _):
+      return .unsafe(field, value, nil)
     }
   }
   
   private var child: BVURLParameter? {
     switch self {
-    case .unsafe(_, _, let child):
-      return child
     case .field(_, let child):
       return child
     case .filter(_, _, let child):
@@ -231,6 +229,8 @@ internal indirect enum BVURLParameter: BVParameter {
     case .sortType(_, _, _, let child):
       return child
     case .stats(_, let child):
+      return child
+    case .unsafe(_, _, let child):
       return child
     }
   }
@@ -276,8 +276,6 @@ extension BVURLParameter: Equatable {
    */
   static internal func %% (lhs: BVURLParameter, rhs: BVURLParameter) -> Bool {
     switch (lhs, rhs) {
-    case (.unsafe, .unsafe) where lhs.name == rhs.name:
-      return true
     case (.field, .field) where lhs.name == rhs.name:
       return true
     case (.filter, .filter) where lhs.name == rhs.name:
@@ -293,6 +291,8 @@ extension BVURLParameter: Equatable {
     case (.sortType, .sortType) where lhs.name == rhs.name:
       return true
     case (.stats, .stats) where lhs.name == rhs.name:
+      return true
+    case (.unsafe, .unsafe) where lhs.name == rhs.name:
       return true
     default:
       return false
@@ -387,6 +387,11 @@ extension BVURLParameter: Equatable {
   static internal func !== (lhs: BVURLParameter,
                             rhs: BVURLParameter) -> Bool {
     return !(lhs === rhs)
+  }
+  
+  static internal func += (lhs: inout BVURLParameter,
+                           rhs: BVURLParameter) {
+    lhs = (lhs + rhs)
   }
   
   static internal func + (lhs: BVURLParameter,

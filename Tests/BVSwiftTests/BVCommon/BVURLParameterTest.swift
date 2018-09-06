@@ -15,6 +15,7 @@ class BVURLParameterTest: XCTestCase {
   
   private enum BVURLParameterTestValue:
     BVQueryFilter,
+    BVQueryField,
     BVQueryInclude,
     BVQuerySort,
   BVQueryStat {
@@ -131,91 +132,57 @@ class BVURLParameterTest: XCTestCase {
     }
   }
   
-  func testURLParameterCustom() {
+  func testURLParameterField() {
     
     let un: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.plus,
-              nil)
+      .field(BVURLParameterTestValue.un("1"),
+             nil)
     
     let deux: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.deux("2"),
-              BVURLParameterTestOperator.moins,
-              nil)
+      .field(BVURLParameterTestValue.deux("2"),
+             nil)
     
     let trois: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.trois("3"),
-              BVURLParameterTestOperator.egale,
-              nil)
+      .field(BVURLParameterTestValue.trois("3"),
+             nil)
     
     let quatre: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.quatre("4"),
-              BVURLParameterTestOperator.non,
-              nil)
+      .field(BVURLParameterTestValue.quatre("4"),
+             nil)
     
     XCTAssertEqual(un.name, "Un")
     XCTAssertEqual(deux.name, "Deux")
     XCTAssertEqual(trois.name, "Trois")
     XCTAssertEqual(quatre.name, "Quatre")
     
-    XCTAssertEqual(un.value, "plus")
-    XCTAssertEqual(deux.value, "moins")
-    XCTAssertEqual(trois.value, "egale")
-    XCTAssertEqual(quatre.value, "non")
+    XCTAssertEqual(un.value, "1")
+    XCTAssertEqual(deux.value, "2")
+    XCTAssertEqual(trois.value, "3")
+    XCTAssertEqual(quatre.value, "4")
   }
   
-  func testURLParameterCustomCoalesce() {
+  func testURLParameterFieldCoalesce() {
     
     let un: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.plus,
-              nil)
+      .field(BVURLParameterTestValue.un("1"),
+             nil)
     
     let deux: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.moins,
-              nil)
+      .field(BVURLParameterTestValue.un("2"),
+             nil)
     
     let trois: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.egale,
-              nil)
+      .field(BVURLParameterTestValue.un("3"),
+             nil)
     
     let quatre: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.non,
-              nil)
+      .field(BVURLParameterTestValue.un("4"),
+             nil)
     
-    
-    let coalesced: BVURLParameter = un + deux + trois + quatre
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
     
     XCTAssertEqual(coalesced.name, "Un")
-    XCTAssertEqual(coalesced.value,
-                   "egale,moins,non,plus")
-  }
-  
-  func testURLParameterCustomCoalesceUnique() {
-    
-    let un: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.plus,
-              nil)
-    
-    let deux: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.moins,
-              nil)
-    
-    let trois: BVURLParameter =
-      .unsafe(BVURLParameterTestValue.un("1"),
-              BVURLParameterTestOperator.egale,
-              nil)
-    
-    
-    let coalesced: BVURLParameter = un + deux + deux + deux + trois
-    
-    XCTAssertEqual(coalesced.name, "Un")
-    XCTAssertEqual(coalesced.value, "egale,moins,plus")
+    XCTAssertEqual(coalesced.value, "1,2,3,4")
   }
   
   func testURLParameterFilter() {
@@ -274,7 +241,7 @@ class BVURLParameterTest: XCTestCase {
               nil)
     
     
-    let coalesced: BVURLParameter = un + deux + trois + quatre
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
     
     XCTAssertEqual(coalesced.name, "Filter")
     XCTAssertEqual(coalesced.value,
@@ -304,7 +271,7 @@ class BVURLParameterTest: XCTestCase {
               nil)
     
     
-    let coalesced: BVURLParameter = un + deux + trois + quatre
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
     
     XCTAssertEqual(coalesced.name, "Filter")
     XCTAssertEqual(coalesced.value,
@@ -352,7 +319,10 @@ class BVURLParameterTest: XCTestCase {
                   nil)
     
     let coalesced: BVURLParameter =
-      filterTypeUnDeux + filterTypeUnTrois + filterTypeUnQuatre
+      filterTypeUnDeux +
+        filterTypeUnTrois +
+        filterTypeUnQuatre +
+    filterTypeUnQuatre
     
     XCTAssertEqual(coalesced.name, "Filter_Un")
     XCTAssertEqual(coalesced.value,
@@ -364,46 +334,24 @@ class BVURLParameterTest: XCTestCase {
     let un: BVURLParameter =
       .include(BVURLParameterTestValue.un("1"), nil)
     
-    let unLimit: BVURLParameter =
-      .includeLimit(BVURLParameterTestValue.un("1"), 10, nil)
-    
     let deux: BVURLParameter =
       .include(BVURLParameterTestValue.deux("2"), nil)
-    
-    let deuxLimit: BVURLParameter =
-      .includeLimit(BVURLParameterTestValue.deux("2"), 10, nil)
     
     let trois: BVURLParameter =
       .include(BVURLParameterTestValue.trois("3"), nil)
     
-    let troisLimit: BVURLParameter =
-      .includeLimit(BVURLParameterTestValue.trois("3"), 10, nil)
-    
     let quatre: BVURLParameter =
       .include(BVURLParameterTestValue.quatre("4"), nil)
-    
-    let quatreLimit: BVURLParameter =
-      .includeLimit(BVURLParameterTestValue.quatre("4"), 10, nil)
     
     XCTAssertEqual(un.name, "Include")
     XCTAssertEqual(deux.name, "Include")
     XCTAssertEqual(trois.name, "Include")
     XCTAssertEqual(quatre.name, "Include")
     
-    XCTAssertEqual(unLimit.name, "Limit_Un")
-    XCTAssertEqual(deuxLimit.name, "Limit_Deux")
-    XCTAssertEqual(troisLimit.name, "Limit_Trois")
-    XCTAssertEqual(quatreLimit.name, "Limit_Quatre")
-    
     XCTAssertEqual(un.value, "Un")
     XCTAssertEqual(deux.value, "Deux")
     XCTAssertEqual(trois.value, "Trois")
     XCTAssertEqual(quatre.value, "Quatre")
-    
-    XCTAssertEqual(unLimit.value, "10")
-    XCTAssertEqual(deuxLimit.value, "10")
-    XCTAssertEqual(troisLimit.value, "10")
-    XCTAssertEqual(quatreLimit.value, "10")
   }
   
   func testURLParameterIncludeCoalesce() {
@@ -420,10 +368,56 @@ class BVURLParameterTest: XCTestCase {
     let quatre: BVURLParameter =
       .include(BVURLParameterTestValue.quatre("4"), nil)
     
-    let coalesced: BVURLParameter = un + deux + trois + quatre
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
     
     XCTAssertEqual(coalesced.name, "Include")
     XCTAssertEqual(coalesced.value, "Deux,Quatre,Trois,Un")
+  }
+  
+  func testURLParameterIncludeLimit() {
+    
+    let unLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.un("1"), 10, nil)
+    
+    let deuxLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.deux("2"), 10, nil)
+    
+    let troisLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.trois("3"), 10, nil)
+    
+    let quatreLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.quatre("4"), 10, nil)
+    
+    XCTAssertEqual(unLimit.name, "Limit_Un")
+    XCTAssertEqual(deuxLimit.name, "Limit_Deux")
+    XCTAssertEqual(troisLimit.name, "Limit_Trois")
+    XCTAssertEqual(quatreLimit.name, "Limit_Quatre")
+    
+    XCTAssertEqual(unLimit.value, "10")
+    XCTAssertEqual(deuxLimit.value, "10")
+    XCTAssertEqual(troisLimit.value, "10")
+    XCTAssertEqual(quatreLimit.value, "10")
+  }
+  
+  func testURLParameterIncludeLimitCoalesce() {
+    
+    let unLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.un("1"), 1, nil)
+    
+    let deuxLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.un("2"), 2, nil)
+    
+    let troisLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.un("3"), 3, nil)
+    
+    let quatreLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.un("4"), 4, nil)
+    
+    let coalesced: BVURLParameter =
+      unLimit + deuxLimit + troisLimit + quatreLimit + quatreLimit
+    
+    XCTAssertEqual(coalesced.name, "Limit_Un")
+    XCTAssertEqual(coalesced.value, "1,2,3,4")
   }
   
   func testURLParameterSort() {
@@ -481,8 +475,7 @@ class BVURLParameterTest: XCTestCase {
             BVURLParameterTestOperator.egale,
             nil)
     
-    
-    let coalesced: BVURLParameter = un + deux + trois + quatre
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
     
     XCTAssertEqual(coalesced.name, "Sort")
     XCTAssertEqual(coalesced.value,
@@ -530,7 +523,7 @@ class BVURLParameterTest: XCTestCase {
                 nil)
     
     let coalesced: BVURLParameter =
-      sortTypeUnDeux + sortTypeUnTrois + sortTypeUnQuatre
+      sortTypeUnDeux + sortTypeUnTrois + sortTypeUnQuatre + sortTypeUnQuatre
     
     XCTAssertEqual(coalesced.name, "Sort_Un")
     XCTAssertEqual(coalesced.value,
@@ -576,9 +569,241 @@ class BVURLParameterTest: XCTestCase {
     let quatre: BVURLParameter =
       .stats(BVURLParameterTestValue.quatre("4"), nil)
     
-    let coalesced: BVURLParameter = un + deux + trois + quatre
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
     
     XCTAssertEqual(coalesced.name, "Stats")
     XCTAssertEqual(coalesced.value, "Deux,Quatre,Trois,Un")
+  }
+  
+  func testURLParameterUnsafe() {
+    
+    let un: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.plus,
+              nil)
+    
+    let deux: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.deux("2"),
+              BVURLParameterTestOperator.moins,
+              nil)
+    
+    let trois: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.trois("3"),
+              BVURLParameterTestOperator.egale,
+              nil)
+    
+    let quatre: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.quatre("4"),
+              BVURLParameterTestOperator.non,
+              nil)
+    
+    XCTAssertEqual(un.name, "Un")
+    XCTAssertEqual(deux.name, "Deux")
+    XCTAssertEqual(trois.name, "Trois")
+    XCTAssertEqual(quatre.name, "Quatre")
+    
+    XCTAssertEqual(un.value, "plus")
+    XCTAssertEqual(deux.value, "moins")
+    XCTAssertEqual(trois.value, "egale")
+    XCTAssertEqual(quatre.value, "non")
+  }
+  
+  func testURLParameterUnsafeCoalesce() {
+    
+    let un: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.plus,
+              nil)
+    
+    let deux: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.moins,
+              nil)
+    
+    let trois: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.egale,
+              nil)
+    
+    let quatre: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.non,
+              nil)
+    
+    
+    let coalesced: BVURLParameter = un + deux + trois + quatre + quatre
+    
+    XCTAssertEqual(coalesced.name, "Un")
+    XCTAssertEqual(coalesced.value,
+                   "egale,moins,non,plus")
+  }
+  
+  func testURLParameterMixedCoalesce() {
+    
+    let field: BVURLParameter =
+      .field(BVURLParameterTestValue.un("1"),
+             nil)
+    
+    let filter: BVURLParameter =
+      .filter(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.egale,
+              nil)
+    
+    let filterType: BVURLParameter =
+      .filterType(BVURLParameterTestValue.un("1"),
+                  BVURLParameterTestValue.deux("2"),
+                  BVURLParameterTestOperator.egale,
+                  nil)
+    
+    let include: BVURLParameter =
+      .include(BVURLParameterTestValue.un("1"), nil)
+    
+    let includeLimit: BVURLParameter =
+      .includeLimit(BVURLParameterTestValue.un("1"), 10, nil)
+    
+    let sort: BVURLParameter =
+      .sort(BVURLParameterTestValue.un("1"),
+            BVURLParameterTestOperator.egale,
+            nil)
+    
+    let sortType: BVURLParameter =
+      .sortType(BVURLParameterTestValue.un("1"),
+                BVURLParameterTestValue.deux("2"),
+                BVURLParameterTestOperator.egale,
+                nil)
+    
+    let stats: BVURLParameter =
+      .stats(BVURLParameterTestValue.un("1"), nil)
+    
+    let unsafe: BVURLParameter =
+      .unsafe(BVURLParameterTestValue.un("1"),
+              BVURLParameterTestOperator.plus,
+              nil)
+    
+    /// Field permutation
+    var coalesced: BVURLParameter = field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += sortType
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Un")
+    XCTAssertEqual(coalesced.value, "1")
+    
+    /// Filter permutation
+    coalesced = filter
+    coalesced += field
+    coalesced += filterType
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += sortType
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Filter")
+    XCTAssertEqual(coalesced.value, "Un:egale:1")
+    
+    /// FilterType permutation
+    coalesced = filterType
+    coalesced += field
+    coalesced += filter
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += sortType
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Filter_Un")
+    XCTAssertEqual(coalesced.value, "Deux:egale:2")
+    
+    /// Include permutation
+    coalesced = include
+    coalesced += field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += sortType
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Include")
+    XCTAssertEqual(coalesced.value, "Un")
+    
+    /// IncludeLimit permutation
+    coalesced = includeLimit
+    coalesced += field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += include
+    coalesced += sort
+    coalesced += sortType
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Limit_Un")
+    XCTAssertEqual(coalesced.value, "10")
+    
+    /// Sort permutation
+    coalesced = sort
+    coalesced += field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sortType
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Sort")
+    XCTAssertEqual(coalesced.value, "Un:egale")
+    
+    /// SortType permutation
+    coalesced = sortType
+    coalesced += field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += stats
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Sort_Un")
+    XCTAssertEqual(coalesced.value, "Deux:egale")
+    
+    /// Stats permutation
+    coalesced = stats
+    coalesced += field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += sortType
+    coalesced += unsafe
+    
+    XCTAssertEqual(coalesced.name, "Stats")
+    XCTAssertEqual(coalesced.value, "Un")
+    
+    /// Unsafe permutation
+    coalesced = unsafe
+    coalesced += field
+    coalesced += filter
+    coalesced += filterType
+    coalesced += include
+    coalesced += includeLimit
+    coalesced += sort
+    coalesced += sortType
+    coalesced += stats
+    
+    XCTAssertEqual(coalesced.name, "Un")
+    XCTAssertEqual(coalesced.value, "plus")
   }
 }
