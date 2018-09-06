@@ -80,7 +80,7 @@ internal indirect enum BVURLParameter: BVParameter {
           (ret[param.headValue] ?? [])
         return ret
       }.map {
-        return $0.0 + $0.1.joined(separator: ",")
+        return $0.0 + $0.1.sorted().joined(separator: ",")
       }
       .sorted()
       .joined(separator: ",")
@@ -236,8 +236,7 @@ internal indirect enum BVURLParameter: BVParameter {
   }
   
   private var children: [BVURLParameter] {
-    var list: [BVURLParameter] =
-      [BVURLParameter]()
+    var list: [BVURLParameter] = [BVURLParameter]()
     var cursor: BVURLParameter? = self.child
     
     while let sub = cursor {
@@ -249,10 +248,9 @@ internal indirect enum BVURLParameter: BVParameter {
 }
 
 extension BVURLParameter {
-  internal func contains(parameter: BVURLParameter) -> Bool {
-    return children.reduce(parameter == self) {
-      (result: Bool, child: BVURLParameter) -> Bool in
-      return result || parameter == child
+  internal func contains(_ parameter: BVURLParameter) -> Bool {
+    return children.reduce(parameter == pop) {
+      return $0 || parameter == $1
     }
   }
 }
@@ -268,7 +266,6 @@ extension BVURLParameter: Hashable {
  * be careful and use extra characters in an attempt to mitigate collisions.
  */
 infix operator ~~ : AdditionPrecedence
-infix operator +~ : AdditionPrecedence
 infix operator %% : ComparisonPrecedence
 infix operator !%% : ComparisonPrecedence
 
@@ -371,24 +368,20 @@ extension BVURLParameter: Equatable {
       return false
     }
     
+    /// Silly optimization, since we already compared the genus, we just need
+    /// to check the value.
     if lhs.peek != rhs.peek {
       return false
     }
     
-    let lhsChildren: [BVURLParameter] = lhs.children
-    let rhsChildren: [BVURLParameter] = rhs.children
-    
-    if lhsChildren.count != rhsChildren.count {
+    if lhs.children.count != rhs.children.count {
       return false
     }
     
-    if 0 < lhsChildren.count,
-      0 < rhsChildren.count,
-      0 == lhsChildren.filter({ rhsChildren.contains($0) }).count {
-      return false
-    }
+    let lhsChildren = Set<BVURLParameter>(lhs.children)
+    let rhsChildren = Set<BVURLParameter>(rhs.children)
     
-    return true
+    return lhsChildren == rhsChildren
   }
   
   static internal func !== (lhs: BVURLParameter,
@@ -398,76 +391,47 @@ extension BVURLParameter: Equatable {
   
   static internal func + (lhs: BVURLParameter,
                           rhs: BVURLParameter) -> BVURLParameter {
-    return merge(lhs: lhs, rhs: rhs)
-  }
-  
-  static internal func +~ (lhs: BVURLParameter,
-                           rhs: BVURLParameter) -> BVURLParameter {
-    return merge(lhs: lhs, rhs: rhs, unique: true)
-  }
-  
-  static private func merge(lhs: BVURLParameter,
-                            rhs: BVURLParameter,
-                            unique: Bool = false) -> BVURLParameter {
     
     /// Not the same genus, pass.
     if lhs !%% rhs {
       return lhs
     }
     
-    /// They're completely the same, pass.
-    if lhs === rhs {
+    /// Fastpaths, just append root child to nil child list
+    if nil == lhs.child {
+      return rhs.contains(lhs) ? rhs : BVURLParameter(parent: lhs, child: rhs)
+    }
+    
+    if nil == rhs.child {
+      return lhs.contains(rhs) ? lhs : BVURLParameter(parent: rhs, child: lhs)
+    }
+    
+    /// Slowpath, have to toss everything into a Set and filter based on
+    /// whether there are subset matching. Else, we end up union'ing the sets
+    /// to get back a re-constructed coalesced object.
+    let rhsSet = Set<BVURLParameter>(rhs.children + [rhs.pop])
+    let lhsSet = Set<BVURLParameter>(lhs.children + [lhs.pop])
+    
+    /// They're strict [sub/super]sets or completely the same, pass.
+    ///
+    /// We do this in here so we hopefully don't have to allocate buffers to
+    /// make the merge. Sure, the compiler should probably be smart, but we're
+    /// going to assume a dumb compiler just in case.
+    if lhsSet.isSuperset(of: rhsSet) {
       return lhs
     }
     
-    /// O.K., time to concatenate! We're following left to right precedence
+    if rhsSet.isSuperset(of: lhsSet) {
+      return rhs
+    }
+    
+    /// O.K., time to union! We're following left to right precedence
     /// which means that we actually attach the reverse based on how we will
-    /// be coalescing
+    /// be coalescing, however, the returned values are sorted before being
+    /// returned so it doesn't really matter the construction.
     
-    var left: [BVURLParameter] = lhs.children
-    var right: BVURLParameter = rhs
-    
-    /// If we're unique-ing the merge then we take the union and then build
-    /// back up from there.
-    if unique {
-      
-      /// Slowpath, have to union everything together
-      let rhsSet = Set<BVURLParameter>(rhs.children + [rhs.pop])
-      let lhsSet = Set<BVURLParameter>(lhs.children + [lhs.pop])
-      
-      var merge = Array(lhsSet.union(rhsSet))
-        .sorted { (lhs: BVURLParameter, rhs: BVURLParameter) -> Bool in
-          return lhs.value < rhs.value
-      }
-      
-      let candidate = merge.remove(at: 0)
-      
-      left = merge
-      right = candidate
-    } else {
-      
-      /// Fastpaths, just append root child to nil child list
-      if nil == rhs.child {
-        return BVURLParameter(parent: rhs, child: lhs)
-      }
-      
-      if nil == lhs.child {
-        return BVURLParameter(parent: lhs, child: rhs)
-      }
-      
-      /// Obviously, shouldn't happen
-      guard let rightChild = rhs.child else {
-        fatalError(
-          "BVURLParameter: right-hand side shouldn't be nil.")
-      }
-      
-      right = rightChild
-    }
-    
-    /// Slowpath, have to walk left children and append new child list
-    return left.reduce(right) {
-      (previous: BVURLParameter, next: BVURLParameter) -> BVURLParameter in
-      return BVURLParameter(parent: next, child: previous)
-    }
+    return lhsSet
+      .union(rhsSet)
+      .reduce(nil) { return BVURLParameter(parent: $1, child: $0) } ?? lhs
   }
 }
