@@ -212,7 +212,7 @@ class BVURLParameterTest: XCTestCase {
               nil)
     
     
-    let coalesced: BVURLParameter = un +~ deux +~ deux +~ deux +~ trois
+    let coalesced: BVURLParameter = un + deux + deux + deux + trois
     
     XCTAssertEqual(coalesced.name, "Un")
     XCTAssertEqual(coalesced.value, "egale,moins,plus")

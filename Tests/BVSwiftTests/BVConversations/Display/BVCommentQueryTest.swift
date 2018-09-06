@@ -46,7 +46,10 @@ class BVCommentQueryTest: XCTestCase {
                 (.reviewId("testID2"), .equalTo),
                 (.reviewId("testID3"), .equalTo),
                 (.reviewId("testID4"), .notEqualTo),
-                (.reviewId("testID5"), .notEqualTo))
+                (.reviewId("testID5"), .notEqualTo),
+                (.userLocation("Chicago, IL"), .greaterThan),
+                (.categoryAncestorId("2"), .greaterThan),
+                (.moderatorCode("3"), .greaterThan))
     
     guard let url = commentQuery.request?.url else {
       XCTFail()

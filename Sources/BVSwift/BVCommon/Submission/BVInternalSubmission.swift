@@ -23,59 +23,36 @@ internal class BVInternalSubmission: BVURLRequest {
     resource =
       type(of: internalType).postResource ?? String.empty
   }
-}
-
-// MARK: - BVInternalSubmission: BVSubmissionableConsumable
-extension BVInternalSubmission: BVSubmissionableConsumable {
-  var submissionableInternal: BVSubmissionableInternal? {
-    return submissionableType
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLQueryItemable
-extension BVInternalSubmission: BVURLQueryItemable {
-  var urlQueryItems: [URLQueryItem]? {
+  
+  override var urlQueryItems: [URLQueryItem]? {
     return submissionBodyable?.urlQueryItems
   }
-}
-
-// MARK: - BVInternalSubmission: BVURLRequestableWithHandlerInternal Overrides
-extension BVInternalSubmission {
-  internal var request: URLRequest? {
-    if commonEndpoint.isEmpty {
-      fatalError(
-        "Endpoint value is empty, make sure you configure the query first.")
+  
+  override internal var request: URLRequest? {
+    guard var superRequest = super.request,
+      let url = superRequest.url else {
+        /// This should fail in the super class
+        fatalError("Super request returned was nil")
     }
     
-    let urlString: String = "\(commonEndpoint)\(bvPath)"
-    guard var urlComponents: URLComponents =
-      URLComponents(string: urlString) else {
-        return nil
-    }
-    
-    if let items = urlQueryItems,
-      !items.isEmpty {
-      urlComponents.queryItems = items
-    }
-    
-    guard let url: URL = urlComponents.url else {
-      return nil
-    }
-    
-    let cachePolicy: URLRequest.CachePolicy =
-      usesURLCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
-    var request: URLRequest = URLRequest(url: url, cachePolicy: cachePolicy)
-    request.httpMethod = "POST"
+    superRequest.httpMethod = "POST"
     
     if let contentType: String = submissionBodyable?.requestContentType {
-      request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+      superRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
     }
     
     BVLogger
       .sharedLogger.debug(
         "Issuing Submission Request to: \(url.absoluteString)")
     
-    return request
+    return superRequest
+  }
+}
+
+// MARK: - BVInternalSubmission: BVSubmissionableConsumable
+extension BVInternalSubmission: BVSubmissionableConsumable {
+  var submissionableInternal: BVSubmissionableInternal? {
+    return submissionableType
   }
 }
 
