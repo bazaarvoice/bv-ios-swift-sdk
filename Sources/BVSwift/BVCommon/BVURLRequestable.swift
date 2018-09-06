@@ -91,8 +91,12 @@ public protocol BVURLRequestableResponse {
   var errors: [Error]? { get }
 }
 
-/// Default cache policy implementation
+/// Default implementations
 extension BVURLRequestable {
+  var request: URLRequest? {
+    return nil
+  }
+  
   func cached(_ request: URLRequest) -> CachedURLResponse? {
     switch request.cachePolicy {
     case .returnCacheDataDontLoad:
