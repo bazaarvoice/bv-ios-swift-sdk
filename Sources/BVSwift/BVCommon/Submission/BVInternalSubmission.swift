@@ -35,11 +35,13 @@ internal class BVInternalSubmission: BVURLRequest {
         fatalError("Super request returned was nil")
     }
     
-    superRequest.httpMethod = "POST"
-    
-    if let contentType: String = submissionBodyable?.requestContentType {
-      superRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    guard let type = submissionableType,
+      let contentType = submissionBodyable?.requestContentType(type) else {
+        fatalError("Cannot ascertain content type from submissionable type")
     }
+    
+    superRequest.httpMethod = "POST"
+    superRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
     
     BVLogger
       .sharedLogger.debug(
@@ -65,23 +67,24 @@ extension BVInternalSubmission: BVURLRequestableWithBodyData {
     }
     
     switch bodyable.requestBody(type) {
-    case let .some(.multipart(map)):
+    case let .some(.multipart(map, boundary)):
       
       let multipartData = map.reduce(Data())
       { (result: Data, keyValue: (key: String, value: Any)) -> Data in
         switch keyValue.value {
         case let value as String:
           return (result + URLRequest
-            .multipartData(key: keyValue.key, value: value))
+            .multipartData(
+              key: keyValue.key, string: value, boundary: boundary))
         case let value as Data:
           return (result + URLRequest
-            .multipartData(key: keyValue.key, value: value))
+            .multipartData(
+              key: keyValue.key, data: value, boundary: boundary))
         default:
           return result
         }
       }
-      
-      return (multipartData + URLRequest.encloseMultipartData())
+      return (multipartData + URLRequest.encloseMultipartData(boundary))
     case let .some(.raw(data)):
       return data
     default:

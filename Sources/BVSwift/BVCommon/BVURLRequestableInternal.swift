@@ -10,7 +10,7 @@ import Foundation
 
 /// Internal Protocols
 internal protocol BVURLRequestBodyable: BVURLRequestable {
-  var requestContentType: String? { get }
+  func requestContentType(_ type: BVSubmissionableInternal) -> String?
   func requestBody(_ type: BVSubmissionableInternal) -> BVURLRequestBody?
 }
 
@@ -52,7 +52,7 @@ internal enum BVURLRequestableResponseInternal {
 
 // MARK: - BVURLRequestBody
 internal enum BVURLRequestBody {
-  case multipart([String: Any])
+  case multipart(content: [String: Any], boundary: String?)
   case raw(Data)
 }
 
