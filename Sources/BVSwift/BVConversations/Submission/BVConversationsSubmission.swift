@@ -100,8 +100,8 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
     }
   }
   
-  override var contentTypeClosure: (() -> String?)? {
-    return {
+  override var contentTypeClosure: ((BVSubmissionableInternal) -> String?)? {
+    return { _ in
       return "application/x-www-form-urlencoded"
     }
   }
