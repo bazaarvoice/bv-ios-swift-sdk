@@ -58,12 +58,14 @@ class BVPhotoSubmissionTest: XCTestCase {
     super.setUp()
     
     BVPixel.skipAllPixelEvents = true
+    BVManager.sharedManager.logLevel = .debug
   }
   
   override class func tearDown() {
     super.tearDown()
     
     BVPixel.skipAllPixelEvents = false
+    BVManager.sharedManager.logLevel = .error
   }
   
   func testPhotoResourceDecodingPath() {

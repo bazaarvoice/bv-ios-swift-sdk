@@ -119,11 +119,6 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
     
     return self
   }
-  
-  internal func primePreflightHandler() {
-    
-    
-  }
 }
 
 extension BVMediaSubmission {
