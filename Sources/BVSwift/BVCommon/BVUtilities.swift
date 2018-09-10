@@ -201,75 +201,85 @@ internal extension UnkeyedDecodingContainer {
 }
 
 internal extension URLRequest {
-  static var defaultBoundary: String =
-  "----------------------------f3a1ba9c57bd"
-  
-  static func multipartData(
-    key: String,
-    value: String,
-    boundary: String? = URLRequest.defaultBoundary,
-    isLast: Bool = false) -> Data? {
-    
-    var body: Data = Data()
-    
-    guard let delimiter: String = boundary else {
+  static func generateKeyValueForData(key: String, data: Data) -> Data? {
+    guard !key.isEmpty && !data.isEmpty else {
       return nil
     }
     
-    if !key.isEmpty && !value.isEmpty {
-      body += "--\(delimiter)\r\n".toUTF8Data()
-      body +=
-        "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n"
-          .toUTF8Data()
-      body += value.toUTF8Data()
-      body += "\r\n".toUTF8Data()
-    }
-    
-    if isLast {
-      body += encloseMultipartData(delimiter)
-    }
-    
-    return body
+    return Data() +
+      ("Content-Disposition: form-data; " +
+        "name=\"\(key)\"; filename=\"upload\"\r\n").toUTF8Data() +
+      "Content-Type: application/octet-stream\r\n\r\n".toUTF8Data() +
+      data +
+      "\r\n".toUTF8Data()
   }
   
-  static func multipartData(
-    key: String,
-    value: Data,
-    boundary: String? = URLRequest.defaultBoundary,
-    isLast: Bool = false) -> Data? {
-    
-    var body: Data = Data()
-    
-    guard let delimiter: String = boundary else {
+  static func generateKeyValueForString(key: String, string: String) -> Data? {
+    guard !key.isEmpty && !string.isEmpty else {
       return nil
     }
     
-    if !key.isEmpty && !value.isEmpty {
-      body += "--\(delimiter)\r\n".toUTF8Data()
-      body +=
-        ("Content-Disposition: form-data; name=\"\(key)\"; " +
-          "filename=\"upload\"\r\n")
-          .toUTF8Data()
-      body += "Content-Type: application/octet-stream\r\n\r\n".toUTF8Data()
-      body += value
-      body += "\r\n".toUTF8Data()
-    }
-    
-    if isLast {
-      body += encloseMultipartData(delimiter)
-    }
-    
-    return body
+    return Data() +
+      "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".toUTF8Data() +
+      string.toUTF8Data() +
+      "\r\n".toUTF8Data()
   }
   
   static func encloseMultipartData(
-    _ boundary: String? = URLRequest.defaultBoundary) -> Data? {
+    _ boundary: String?) -> Data? {
+    guard let delimiter: String = boundary else {
+      fatalError("Invalid boundary value")
+    }
+    return "--\(delimiter)--\r\n".toUTF8Data()
+  }
+  
+  static func multipartData(
+    key: String,
+    string: String,
+    boundary: String?,
+    isLast: Bool = false) -> Data? {
     
     guard let delimiter: String = boundary else {
-      return nil
+      fatalError("Invalid boundary value")
     }
     
-    return "--\(delimiter)--\r\n".toUTF8Data()
+    var body: Data = Data()
+    if let content = generateKeyValueForString(key: key, string: string) {
+      body += "--\(delimiter)\r\n".toUTF8Data()
+      body += content
+    }
+    
+    if isLast {
+      body += encloseMultipartData(delimiter)
+    }
+    
+    return body
+  }
+  
+  static func multipartData(
+    key: String,
+    data: Data,
+    boundary: String?,
+    isLast: Bool = false) -> Data? {
+    
+    var body: Data = Data()
+    
+    guard let delimiter: String = boundary else {
+      fatalError("Invalid boundary value")
+    }
+    
+    if !key.isEmpty && !data.isEmpty {
+      if let content = generateKeyValueForData(key: key, data: data) {
+        body += "--\(delimiter)\r\n".toUTF8Data()
+        body += content
+      }
+    }
+    
+    if isLast {
+      body += encloseMultipartData(delimiter)
+    }
+    
+    return body
   }
 }
 
