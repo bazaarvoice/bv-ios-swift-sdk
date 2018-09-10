@@ -60,8 +60,8 @@ public class BVSubmission {
     }
   }
   
-  internal var contentTypeClosure: (() -> String?)? {
-    return {
+  internal var contentTypeClosure: ((BVSubmissionableInternal) -> String?)? {
+    return { _ in
       return "application/json"
     }
   }
@@ -217,13 +217,12 @@ extension BVSubmission: BVSubmissionableConsumable {
 
 // MARK: - BVSubmission: BVInternalSubmissionDelegate
 extension BVSubmission: BVInternalSubmissionDelegate {
-  
   var urlQueryItems: [URLQueryItem]? {
     return urlQueryItemsClosure?()
   }
   
-  var requestContentType: String? {
-    return contentTypeClosure?()
+  func requestContentType(_ type: BVSubmissionableInternal) -> String? {
+    return contentTypeClosure?(type)
   }
   
   func requestBody(_ type: BVSubmissionableInternal) -> BVURLRequestBody? {
