@@ -12,7 +12,7 @@ internal protocol BVParameter {
   var value: String { get }
 }
 
-internal protocol BVInternalCustomStringConvertible: CustomStringConvertible {
+internal protocol BVCustomStringConvertible: CustomStringConvertible {
   var internalDescription: String { get }
 }
 
