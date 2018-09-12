@@ -15,8 +15,9 @@ public protocol BVSubmissionable: BVResourceable { }
 /// actionable callback handlers associated with them
 public protocol BVSubmissionActionable: BVURLRequestableWithHandler { }
 
-// MARK: - BVSubmissionableConsumable
-internal protocol BVSubmissionableConsumable: class {
+// MARK: - BVSubmissionableBodyTypeable
+internal protocol BVSubmissionableBodyTypeable: class,
+BVURLRequestBodyTypeable {
   var submissionableInternal: BVSubmissionableInternal? { get }
 }
 

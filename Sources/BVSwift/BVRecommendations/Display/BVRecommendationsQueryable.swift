@@ -14,8 +14,7 @@ public protocol BVRecommendationsQueryFilter: CustomStringConvertible {
 }
 
 // MARK: - BVRecommendationsQueryValue
-internal protocol BVRecommendationsQueryValue:
-BVInternalCustomStringConvertible { }
+internal protocol BVRecommendationsQueryValue: BVCustomStringConvertible { }
 
 // MARK: - BVRecommendationsQueryPreflightable
 internal protocol BVRecommendationsQueryPreflightable: BVQueryActionable {
@@ -35,6 +34,7 @@ internal protocol BVRecommendationsQueryUpdateable: BVAuxiliaryable {
 }
 
 // MARK: - BVRecommendationsStatsUpdateable
-internal protocol BVRecommendationsQueryStatsUpdateable: BVRecommendationsQueryUpdateable {
+internal protocol BVRecommendationsQueryStatsUpdateable:
+BVRecommendationsQueryUpdateable {
   mutating func update(_ stats: BVRecommendationsStats)
 }
