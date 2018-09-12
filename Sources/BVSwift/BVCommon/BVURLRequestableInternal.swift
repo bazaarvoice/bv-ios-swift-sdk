@@ -9,9 +9,8 @@
 import Foundation
 
 /// Internal Protocols
-internal protocol BVURLRequestBodyable: BVURLRequestable {
-  func requestContentType(_ type: BVSubmissionableInternal) -> String?
-  func requestBody(_ type: BVSubmissionableInternal) -> BVURLRequestBody?
+internal protocol BVURLRequestBodyTypeable: BVURLRequestableWithBodyData {
+  var requestBodyType: BVURLRequestBodyType? { get }
 }
 
 internal protocol BVURLRequestableCacheable: BVURLRequestable {
@@ -50,13 +49,53 @@ internal enum BVURLRequestableResponseInternal {
   case failure([Error])
 }
 
-// MARK: - BVURLRequestBody
-internal enum BVURLRequestBody {
-  case multipart(content: [String: Any], boundary: String?)
-  case raw(Data)
+// MARK: - BVURLRequestBodyType
+internal enum BVURLRequestBodyType {
+  case multipart(content: [String: Any], boundary: String)
+  case urlencoded(Data)
+}
+
+extension BVURLRequestBodyType: CustomStringConvertible {
+  var description: String {
+    switch self {
+    case let .multipart(_, boundary):
+      return "multipart/form-data; boundary=" + boundary
+    case .urlencoded:
+      return "application/x-www-form-urlencoded"
+    }
+  }
 }
 
 // MARK: - Internal Protocol Extensions
+extension BVURLRequestBodyTypeable {
+  public var bodyData: Data? {
+    switch requestBodyType {
+    case let .some(.multipart(map, boundary)):
+      
+      let multipartData = map.reduce(Data())
+      { (result: Data, keyValue: (key: String, value: Any)) -> Data in
+        switch keyValue.value {
+        case let value as String:
+          return (result + URLRequest
+            .multipartData(
+              key: keyValue.key, string: value, boundary: boundary))
+        case let value as Data:
+          return (result + URLRequest
+            .multipartData(
+              key: keyValue.key, data: value, boundary: boundary))
+        default:
+          return result
+        }
+      }
+      return (multipartData + URLRequest.encloseMultipartData(boundary))
+    case let .some(.urlencoded(data)):
+      return data
+    default:
+      return nil
+    }
+  }
+}
+
 extension BVURLRequestableWithHandlerInternal {
   func preflight(_ completion: BVCompletionWithErrorsHandler?) -> Bool {
     guard let handler = preflightHandler else {
