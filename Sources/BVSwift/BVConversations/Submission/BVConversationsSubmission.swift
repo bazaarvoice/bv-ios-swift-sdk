@@ -80,9 +80,9 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
     }
   }
   
-  override var contentBodyClosure: (
-    (BVSubmissionableInternal) -> BVURLRequestBody?)? {
-    return { (_) -> BVURLRequestBody? in
+  override var contentBodyTypeClosure: (
+    (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
+    return { (_) -> BVURLRequestBodyType? in
       
       guard var container: URLComponents =
         URLComponents(string: "http://bazaarvoice.com") else {
@@ -96,13 +96,7 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
         return nil
       }
       
-      return .raw(query)
-    }
-  }
-  
-  override var contentTypeClosure: ((BVSubmissionableInternal) -> String?)? {
-    return { _ in
-      return "application/x-www-form-urlencoded"
+      return .urlencoded(query)
     }
   }
   
