@@ -7,11 +7,14 @@
 
 import Foundation
 
-internal protocol BVInternalSubmissionDelegate: class,
-BVURLRequestBodyable, BVURLQueryItemable { }
+internal protocol BVInternalSubmissionDelegate:
+class, BVURLRequestBodyTypeable, BVURLQueryItemable { }
 
 // MARK: - BVInternalSubmission
 internal class BVInternalSubmission: BVURLRequest {
+  
+  /// Private
+  private var cachedBodyType: BVURLRequestBodyType?
   
   /// Internal
   final internal let submissionableType: BVSubmissionableInternal?
@@ -35,60 +38,32 @@ internal class BVInternalSubmission: BVURLRequest {
         fatalError("Super request returned was nil")
     }
     
-    guard let type = submissionableType,
-      let contentType = submissionBodyable?.requestContentType(type) else {
+    /// We always use the cached body type if we have it since that shouldn't
+    /// ever change. The content type of a request should be static. However,
+    /// the body may change, therefore, that's why we don't rely on a cache we
+    /// cafefully recompute each time; and thus, rely upon caching at the
+    /// specific request layer.
+    /// - Note:
+    /// \
+    /// If this becomes a performance bottleneck, then we can add a conditional
+    /// parameter to the delegate function to "hold off" on calculating the body
+    /// since we're only asking for the content type.
+    guard let bodyType =
+      cachedBodyType ?? submissionBodyable?.requestBodyType else {
         fatalError("Cannot ascertain content type from submissionable type")
     }
     
+    /// Make sure we keep it around
+    cachedBodyType = bodyType
+    
     superRequest.httpMethod = "POST"
-    superRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    superRequest.setValue(
+      bodyType.description, forHTTPHeaderField: "Content-Type")
     
     BVLogger
       .sharedLogger.debug(
         "Issuing Submission Request to: \(url.absoluteString)")
     
     return superRequest
-  }
-}
-
-// MARK: - BVInternalSubmission: BVSubmissionableConsumable
-extension BVInternalSubmission: BVSubmissionableConsumable {
-  var submissionableInternal: BVSubmissionableInternal? {
-    return submissionableType
-  }
-}
-
-// MARK: - BVInternalSubmission: BVURLRequestableWithBodyData
-extension BVInternalSubmission: BVURLRequestableWithBodyData {
-  internal var bodyData: Data? {
-    guard let bodyable = submissionBodyable,
-      let type = submissionableType else {
-        return nil
-    }
-    
-    switch bodyable.requestBody(type) {
-    case let .some(.multipart(map, boundary)):
-      
-      let multipartData = map.reduce(Data())
-      { (result: Data, keyValue: (key: String, value: Any)) -> Data in
-        switch keyValue.value {
-        case let value as String:
-          return (result + URLRequest
-            .multipartData(
-              key: keyValue.key, string: value, boundary: boundary))
-        case let value as Data:
-          return (result + URLRequest
-            .multipartData(
-              key: keyValue.key, data: value, boundary: boundary))
-        default:
-          return result
-        }
-      }
-      return (multipartData + URLRequest.encloseMultipartData(boundary))
-    case let .some(.raw(data)):
-      return data
-    default:
-      return nil
-    }
   }
 }
