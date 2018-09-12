@@ -58,8 +58,7 @@ extension BVConversationsQueryUpdateIncludable {
 }
 
 // MARK: - BVConversationsQueryValue
-internal protocol BVConversationsQueryValue:
-BVInternalCustomStringConvertible { }
+internal protocol BVConversationsQueryValue: BVCustomStringConvertible { }
 
 // MARK: - BVConversationsQueryUpdateable
 internal protocol BVConversationsQueryUpdateable: BVQueryable {
@@ -67,7 +66,8 @@ internal protocol BVConversationsQueryUpdateable: BVQueryable {
 }
 
 // MARK: - BVConversationsQueryUpdateIncludable
-internal protocol BVConversationsQueryUpdateIncludable: BVConversationsQueryUpdateable {
+internal protocol BVConversationsQueryUpdateIncludable:
+BVConversationsQueryUpdateable {
   mutating func update(_ includable: BVConversationsQueryIncludable)
 }
 

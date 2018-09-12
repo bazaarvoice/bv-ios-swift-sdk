@@ -15,7 +15,7 @@ internal protocol BVCurationsQueryMediaOverridable {
 }
 
 // MARK: - BVCurationsQueryValue
-internal protocol BVCurationsQueryValue: BVInternalCustomStringConvertible { }
+internal protocol BVCurationsQueryValue: BVCustomStringConvertible { }
 
 // MARK: - BVCurationsQueryPostflightable
 internal protocol BVCurationsQueryPostflightable: BVQueryActionable {
