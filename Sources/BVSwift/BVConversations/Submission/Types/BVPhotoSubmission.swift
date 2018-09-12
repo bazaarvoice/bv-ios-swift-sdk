@@ -98,27 +98,14 @@ internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
     return submissionBoundary
   }
   
-  override internal var contentBodyClosure: (
-    (BVSubmissionableInternal) -> BVURLRequestBody?)? {
+  override internal var contentBodyTypeClosure: (
+    (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
     return {
       guard let body = self.generateBodyContent($0),
         let boundary = self.generateBoundary(body) else {
           return nil
       }
       return .multipart(content: body, boundary: boundary)
-    }
-  }
-  
-  override internal var contentTypeClosure: (
-    (BVSubmissionableInternal) -> String?)? {
-    /// Soooo 'multipart/form-data' is a tad annoying in that the boundary
-    /// cannot exist anywhere within the data portion
-    return {
-      guard let body = self.generateBodyContent($0),
-        let boundary = self.generateBoundary(body) else {
-          return nil
-      }
-      return "multipart/form-data; boundary=" + boundary
     }
   }
 }

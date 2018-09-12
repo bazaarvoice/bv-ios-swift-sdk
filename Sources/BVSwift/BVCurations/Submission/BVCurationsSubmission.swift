@@ -40,8 +40,8 @@ BVCurationsSubmission<BVType: BVSubmissionable>: BVSubmission {
     }
   }
   
-  override var contentBodyClosure: ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
-    return { (_) -> BVURLRequestBody? in
+  override var contentBodyTypeClosure: ((BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
+    return { (_) -> BVURLRequestBodyType? in
       guard var submissionableType = self.submissionableInternal else {
         return nil
       }
@@ -79,13 +79,7 @@ BVCurationsSubmission<BVType: BVSubmissionable>: BVSubmission {
       #endif
       
       
-      return .raw(body)
-    }
-  }
-  
-  override var contentTypeClosure: ((BVSubmissionableInternal) -> String?)? {
-    return { _ in
-      return "application/json"
+      return .urlencoded(body)
     }
   }
   

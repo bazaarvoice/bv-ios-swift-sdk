@@ -36,8 +36,9 @@ public class BVSubmission {
     return nil
   }
   
-  internal var contentBodyClosure: ((BVSubmissionableInternal) -> BVURLRequestBody?)? {
-    return { (submission: BVSubmissionableInternal) -> BVURLRequestBody? in
+  internal var contentBodyTypeClosure: (
+    (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
+    return { (submission: BVSubmissionableInternal) -> BVURLRequestBodyType? in
       
       /// I think this is a swift bug, but this isn't maleviolent.
       let encodable = BVAnyEncodable(submission)
@@ -56,25 +57,12 @@ public class BVSubmission {
         #endif
       }
       
-      return .raw(data)
-    }
-  }
-  
-  internal var contentTypeClosure: ((BVSubmissionableInternal) -> String?)? {
-    return { _ in
-      return "application/json"
+      return .urlencoded(data)
     }
   }
   
   internal var postflightClosure: BVURLRequestableHandler? {
     return nil
-  }
-}
-
-// MARK: - BVSubmission: BVURLRequestableWithBodyData
-extension BVSubmission: BVURLRequestableWithBodyData {
-  public var bodyData: Data? {
-    return box.bodyData
   }
 }
 
@@ -208,24 +196,20 @@ extension BVSubmission: BVConfigureRaw {
   }
 }
 
-// MARK: - BVSubmission: BVSubmissionableConsumable
-extension BVSubmission: BVSubmissionableConsumable {
-  var submissionableInternal: BVSubmissionableInternal? {
-    return box.submissionableInternal
-  }
-}
-
 // MARK: - BVSubmission: BVInternalSubmissionDelegate
 extension BVSubmission: BVInternalSubmissionDelegate {
   var urlQueryItems: [URLQueryItem]? {
     return urlQueryItemsClosure?()
   }
   
-  func requestContentType(_ type: BVSubmissionableInternal) -> String? {
-    return contentTypeClosure?(type)
+  var requestBodyType: BVURLRequestBodyType? {
+    guard let type = submissionableInternal else {
+      return nil
+    }
+    return contentBodyTypeClosure?(type)
   }
   
-  func requestBody(_ type: BVSubmissionableInternal) -> BVURLRequestBody? {
-    return contentBodyClosure?(type)
+  var submissionableInternal: BVSubmissionableInternal? {
+    return box.submissionableType
   }
 }
