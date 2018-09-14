@@ -56,17 +56,16 @@ internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
         return
       }
       
-      let multipartData = content.reduce(Data())
-      { (result: Data, keyValue: (key: String, value: Any)) -> Data in
-        switch keyValue.value {
+      let multipartData = content.reduce(into: Data()) {
+        switch $1.value {
         case let value as String:
-          return (result + URLRequest
-            .generateKeyValueForString(key: keyValue.key, string: value))
+          $0 += URLRequest
+            .generateKeyValueForString(key: $1.key, string: value)
         case let value as Data:
-          return (result + URLRequest
-            .generateKeyValueForData(key: keyValue.key, data: value))
+          $0 += URLRequest
+            .generateKeyValueForData(key: $1.key, data: value)
         default:
-          return result
+          break
         }
       }
       

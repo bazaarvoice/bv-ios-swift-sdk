@@ -274,16 +274,13 @@ internal class BVAnalyticsManager {
   private func generateBatches(
     _ instances: [BVAnalyticsEventInstance]) -> BVAnalyticsEventInstanceMap {
     return
-      instances.reduce([:])
-      { (result, instance) -> BVAnalyticsEventInstanceMap in
-        var resultCopy = result
+      instances.reduce(into: [:]) {
         var collection: [BVAnalyticsEventInstance] = []
-        if let existing = resultCopy[instance.configuration] {
+        if let existing = $0[$1.configuration] {
           collection = existing
         }
-        collection.append(instance)
-        resultCopy[instance.configuration] = collection
-        return resultCopy
+        collection.append($1)
+        $0[$1.configuration] = collection
     }
   }
   
