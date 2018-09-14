@@ -475,12 +475,9 @@ BVConversationsSubmissionParameterable {
     switch self {
     case let .photos(value):
       var index: Int = 0
-      return value.reduce([])
-      { (result: [URLQueryItem], photo: BVPhoto) -> [URLQueryItem] in
-        var items = result
-        
-        if let caption = photo.caption?.urlEncode(),
-          let sizes = photo.photoSizes,
+      return value.reduce(into: [URLQueryItem]()){
+        if let caption = $1.caption?.urlEncode(),
+          let sizes = $1.photoSizes,
           let url = sizes.filter({ (photoSize: BVPhotoSize) -> Bool in
             guard let sizeId = photoSize.sizeId else {
               return false
@@ -488,35 +485,28 @@ BVConversationsSubmissionParameterable {
             return "normal" == sizeId.lowercased()
           }).first?.url?.value?.absoluteString.urlEncode() {
           
-          items += [
+          $0 += [
             URLQueryItem(name: "photourl_\(index)", value: url),
             URLQueryItem(name: "photocaption_\(index)", value: caption)
           ]
           
           index += 1
         }
-        
-        return items
       }
     case let .videos(value):
       var index: Int = 1
       return
-        value.reduce([])
-        { (result: [URLQueryItem], video: BVVideo) -> [URLQueryItem] in
-          var items = result
-          
-          if let url = video.videoUrl?.value?.absoluteString.urlEncode(),
-            let caption = video.caption {
+        value.reduce(into: [URLQueryItem]()) {
+          if let url = $1.videoUrl?.value?.absoluteString.urlEncode(),
+            let caption = $1.caption {
             
-            items += [
+            $0 += [
               URLQueryItem(name: "VideoUrl_\(index)", value: url),
               URLQueryItem(name: "VideoCaption_\(index)", value: caption)
             ]
             
             index += 1
           }
-          
-          return items
       }
     }
   }

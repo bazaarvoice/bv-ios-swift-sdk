@@ -72,19 +72,18 @@ extension BVURLRequestBodyTypeable {
     switch requestBodyType {
     case let .some(.multipart(map, boundary)):
       
-      let multipartData = map.reduce(Data())
-      { (result: Data, keyValue: (key: String, value: Any)) -> Data in
-        switch keyValue.value {
+      let multipartData = map.reduce(into: Data()) {
+        switch $1.value {
         case let value as String:
-          return (result + URLRequest
+          $0 += URLRequest
             .multipartData(
-              key: keyValue.key, string: value, boundary: boundary))
+              key: $1.key, string: value, boundary: boundary)
         case let value as Data:
-          return (result + URLRequest
+          $0 += URLRequest
             .multipartData(
-              key: keyValue.key, data: value, boundary: boundary))
+              key: $1.key, data: value, boundary: boundary)
         default:
-          return result
+          break
         }
       }
       return (multipartData + URLRequest.encloseMultipartData(boundary))

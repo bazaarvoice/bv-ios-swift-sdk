@@ -40,12 +40,8 @@ internal struct BVRecommendationsAnalytics {
     var dict: [String: BVAnyEncodable] = [:]
     
     if let stats = product.stats {
-      dict = BVRecommendationsStats.CodingKeys.all.reduce([:])
-      { (result: [String: BVAnyEncodable],
-        key: BVRecommendationsStats.CodingKeys) -> [String: BVAnyEncodable] in
-        var statDict = result
-        statDict[key.rawValue] = BVAnyEncodable(stats[key] ?? 0)
-        return result
+      dict = BVRecommendationsStats.CodingKeys.all.reduce(into: [:]) {
+        $0[$1.rawValue] = BVAnyEncodable(stats[$1] ?? 0)
       }
     }
     
