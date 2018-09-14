@@ -73,12 +73,10 @@ internal indirect enum BVURLParameter: BVParameter {
   
   var value: String {
     return ([self] + children)
-      .reduce([String: [String]]()) { result, param in
-        var ret = result
-        ret[param.headValue] =
-          (param.tailValue.map { return [$0] } ?? []) +
-          (ret[param.headValue] ?? [])
-        return ret
+      .reduce(into: [String: [String]]()) {
+        let cons = ($1.tailValue.map { return [$0] } ?? []) +
+          $0[$1.headValue, default: []]
+        $0[$1.headValue] = cons
       }.map {
         return $0.0 + $0.1.sorted().joined(separator: ",")
       }
