@@ -41,14 +41,11 @@ public struct BVCurationsRatingDistribution: BVAuxiliaryable {
     /// could have walked these using container API but I think the code would
     /// look even worse.
     let ratingDict: [Int: Int] =
-      ratingArray.reduce([:])
-      { (result: [Int: Int], rating: BVRating) -> [Int: Int] in
-        var new: [Int: Int] = result
-        if let value: Int = rating.ratingValue,
-          let count: Int = rating.count {
-          new[value] = count
+      ratingArray.reduce(into: [:]) {
+        if let value: Int = $1.ratingValue,
+          let count: Int = $1.count {
+          $0[value] = count
         }
-        return new
     }
     
     oneStarCount = ratingDict[1].map { $0 } ?? 0
