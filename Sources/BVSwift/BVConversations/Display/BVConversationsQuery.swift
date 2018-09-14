@@ -221,25 +221,21 @@ extension BVConversationsQuery: BVConfigurableInternal {
 extension BVConversationsQuery {
   internal class func
     groupFilters<Filter: BVQueryFilter>(
-    _ list: [(Filter, BVConversationsFilterOperator)]) -> [[(Filter, BVConversationsFilterOperator)]] {
-    
-    return Array(list.reduce([String: [(Filter, BVConversationsFilterOperator)]]()) {
-      let next = $1
-      var prev = $0
-      let result = { () -> [(Filter, BVConversationsFilterOperator)] in
-        switch next.1 {
+    _ list: [(Filter, BVConversationsFilterOperator)]) ->
+    [[(Filter, BVConversationsFilterOperator)]] {
+      let accum = [String: [(Filter, BVConversationsFilterOperator)]]()
+      return Array(list.reduce(into: accum) {
+        var result: [(Filter, BVConversationsFilterOperator)]
+        switch $1.1 {
         case .equalTo:
           fallthrough
         case .notEqualTo:
-          return [next] + (prev["\(next.0):\(next.1)"] ?? [])
+          result = [$1] + ($0["\($1.0):\($1.1)"] ?? [])
         default:
-          return [next]
+          result = [$1]
         }
-      }()
-      
-      prev["\(next.0):\(next.1)"] = result
-      
-      return prev
-      }.values)
+        
+        $0["\($1.0):\($1.1)"] = result
+        }.values)
   }
 }
