@@ -299,11 +299,11 @@ internal extension UIDevice {
     var systemInfo = utsname()
     uname(&systemInfo)
     let machineMirror = Mirror(reflecting: systemInfo.machine)
-    return machineMirror.children.reduce("") { identifier, element in
-      guard let value = element.value as? Int8, value != 0 else {
-        return identifier
+    return machineMirror.children.reduce(into: "") {
+      guard let value = $1.value as? Int8, value != 0 else {
+        return
       }
-      return identifier + String(UnicodeScalar(UInt8(value)))
+      $0 += String(UnicodeScalar(UInt8(value)))
     }
   }
 }

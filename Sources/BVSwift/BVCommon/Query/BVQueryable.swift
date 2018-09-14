@@ -162,9 +162,8 @@ extension BVQueryFilterable {
       return
         Dictionary(grouping: urlParameters) { $0.name }
           .values
-          .reduce([]) { accum, bucket in
-            
-            let compose: BVURLParameter? = bucket.reduce(nil) {
+          .reduce(into: []) {
+            let compose: BVURLParameter? = $1.reduce(nil) {
               guard let prev = $0 else {
                 return $1
               }
@@ -172,10 +171,10 @@ extension BVQueryFilterable {
             }
             
             guard let filter = compose else {
-              return accum
+              return
             }
             
-            return accum + [filter]
+            $0 += [filter]
       }
     default:
       return []

@@ -223,14 +223,10 @@ extension BVAnalyticsEvent {
     /// be the last associated value in the enumeration value.
     let children = childMirror.children.dropLast(1)
     
-    let core: [String: Encodable] = children.reduce([:])
-    { (result: [String: Encodable],
-      arg: (label: String?, value: Any)) -> [String: Encodable] in
-      var copyResult: [String: Encodable] = result
-      
-      let (label, value) = arg
+    let core: [String: Encodable] = children.reduce(into: [:]) {
+      let (label, value) = $1
       guard let thisLabel: String = label else {
-        return copyResult
+        return
       }
       
       let valueMirror = Mirror(reflecting: value)
@@ -238,7 +234,7 @@ extension BVAnalyticsEvent {
       if let displayStyle = valueMirror.displayStyle,
         displayStyle == .optional,
         0 == valueMirror.children.count {
-        return copyResult
+        return
       }
       
       /// This is gloriously ridiculous. It appears that when in "mirror-land"
@@ -248,19 +244,17 @@ extension BVAnalyticsEvent {
       /// this little dance. (29 Jun 18) Swift 4.1
       switch value {
       case let valueOptional as [BVAnyEncodable]:
-        copyResult[thisLabel] = valueOptional
+        $0[thisLabel] = valueOptional
       case let valueOptional as [Encodable]:
         var wrapper = [BVAnyEncodable]()
         valueOptional.forEach { wrapper.append(BVAnyEncodable($0)) }
-        copyResult[thisLabel] = wrapper
+        $0[thisLabel] = wrapper
       case let valueOptional as Any?:
         if case let .some(thisValue) = valueOptional,
           let encoded = thisValue as? Encodable {
-          copyResult[thisLabel] = encoded
+          $0[thisLabel] = encoded
         }
       }
-      
-      return copyResult
     }
     
     return core + additional
