@@ -58,7 +58,7 @@ extension BVAnalyticsManager {
   
   internal func registerApplicationStateNotifications() {
     _ = NotificationCenter.default.addObserver(
-      forName: NSNotification.Name.UIApplicationDidFinishLaunching,
+      forName: UIApplication.didFinishLaunchingNotification,
       object: nil,
       queue: OperationQueue.main) { (notification: Notification) in
         
@@ -66,13 +66,13 @@ extension BVAnalyticsManager {
         
         switch notification.userInfo {
         case let .some(userInfo) where
-          nil != userInfo[UIApplicationLaunchOptionsKey.url]:
+          nil != userInfo[UIApplication.LaunchOptionsKey.url]:
           appState += ["appSubState": "url-initiated"]
         case let .some(userInfo) where
-          nil != userInfo[UIApplicationLaunchOptionsKey.sourceApplication]:
+          nil != userInfo[UIApplication.LaunchOptionsKey.sourceApplication]:
           appState += ["appSubState": "other-app-initiated"]
         case let .some(userInfo) where
-          nil != userInfo[UIApplicationLaunchOptionsKey.remoteNotification]:
+          nil != userInfo[UIApplication.LaunchOptionsKey.remoteNotification]:
           appState += ["appSubState": "remote-notification-initiated"]
         default:
           appState += ["appSubState": "user-initiated"]
@@ -82,14 +82,14 @@ extension BVAnalyticsManager {
     }
     
     _ = NotificationCenter.default.addObserver(
-      forName: NSNotification.Name.UIApplicationDidBecomeActive,
+      forName: UIApplication.didBecomeActiveNotification,
       object: nil,
       queue: OperationQueue.main) { (_: Notification) in
         self.enqueueAppStateEvent(["appState": "active"])
     }
     
     _ = NotificationCenter.default.addObserver(
-      forName: NSNotification.Name.UIApplicationDidEnterBackground,
+      forName: UIApplication.didEnterBackgroundNotification,
       object: nil,
       queue: OperationQueue.main) { (_: Notification) in
         self.enqueueAppStateEvent(["appState": "background"])

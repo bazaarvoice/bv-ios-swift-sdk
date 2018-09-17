@@ -5,6 +5,7 @@ disabled_rules:
   - opening_brace
   - trailing_whitespace
   - vertical_whitespace
+  - no_fallthrough_only
 included:
   - Sources
 excluded:
