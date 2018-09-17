@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name              = 'BVSwift'
-  s.version           = '0.2.0'
+  s.version           = '0.2.1'
   s.summary           = 'Simple Swift based iOS SDK to interact with the Bazaarvoice platform API.'
   s.description       = 'The Bazaarvoice Software Development Kit (SDK) is a Swift iOS library that provides an easy way to generate REST calls to the Bazaarvoice Developer API. Using this SDK, mobile developers can quickly integrate Bazaarvoice content into their native iOS apps for iPhone and iPad on iOS 8.0 or newer.'
 
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
   s.platform = :ios, '8.0'
-  s.swift_version = '4.0'
+  s.swift_version = '4.2'
   s.default_subspec = 'BVCommon'
 
   s.subspec 'BVCommon' do |common|
