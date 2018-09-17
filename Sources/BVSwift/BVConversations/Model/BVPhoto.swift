@@ -91,14 +91,14 @@ public struct BVPhoto: BVSubmissionable {
     var workingImage: UIImage = img
     
     guard var data =
-      UIImageJPEGRepresentation(workingImage, 1.0) else {
+      workingImage.jpegData(compressionQuality: 1.0) else {
         return nil
     }
     
     while BVPhoto.MaxImageBytes <= data.count {
       
       if let lossy: Data =
-        UIImageJPEGRepresentation(workingImage, 9.0) {
+        workingImage.jpegData(compressionQuality: 9.0) {
         data = lossy
       }
       
@@ -113,7 +113,7 @@ public struct BVPhoto: BVSubmissionable {
       
       guard let resizedImage: UIImage = workingImage.resize(resize),
         let resizedData: Data =
-        UIImageJPEGRepresentation(resizedImage, 1.0) else {
+        resizedImage.jpegData(compressionQuality: 1.0) else {
           return nil
       }
       

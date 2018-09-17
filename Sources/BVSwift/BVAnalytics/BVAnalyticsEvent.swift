@@ -313,10 +313,7 @@ extension BVAnalyticsEvent {
   }
   
   internal static func loadId(_ length: UInt = 10) -> [String: String]? {
-    guard let randomString = String.random(length) else {
-      return nil
-    }
-    return [loadIdKey: randomString]
+    return [loadIdKey: String.randomHex(length)]
   }
 }
 
