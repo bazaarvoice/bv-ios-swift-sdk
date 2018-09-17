@@ -129,29 +129,28 @@ internal extension String {
 }
 
 internal extension String {
-  static func random(_ length: UInt = 10) -> String? {
+  static func randomHex(_ length: UInt = 10) -> String {
     let byteCount = Int(length) /// Yep, pedantry, recast to Int
     let align = MemoryLayout<UInt8>.alignment
-    let buffer: UnsafeMutableRawPointer =
-      UnsafeMutableRawPointer.allocate(
-        byteCount: byteCount,
-        alignment: align)
+    let buffer = UnsafeMutableRawPointer.allocate(
+      byteCount: byteCount, alignment: align)
     
     defer {
       buffer.deallocate()
     }
     
-    guard errSecSuccess ==
-      SecRandomCopyBytes(kSecRandomDefault, byteCount, buffer) else {
-        return nil
+    if errSecSuccess !=
+      SecRandomCopyBytes(kSecRandomDefault, byteCount, buffer) {
+      /// We somehow failed here but nonetheless we can fallback to another,
+      /// albeit, less desirable entropy source
+      arc4random_buf(buffer, byteCount)
     }
     
     let bufferPointer =
       UnsafeRawBufferPointer(start: buffer, count: byteCount)
     
-    return bufferPointer.reduce(String.empty)
-    { (result: String, byte: UInt8) -> String in
-      result + String(format: "%x", byte)
+    return bufferPointer.reduce(into: String.empty) {
+      $0 += String(format: "%x", $1)
     }
   }
 }
@@ -364,7 +363,7 @@ internal extension UIView {
     _ forAll: T,
     addTarget: Any?,
     addTargetSelector: Selector,
-    forControlEvents: UIControlEvents = .touchUpInside) {
+    forControlEvents: UIControl.Event = .touchUpInside) {
     
     var subviewQueue: [UIView] = self.subviews
     
