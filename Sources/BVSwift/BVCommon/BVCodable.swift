@@ -234,7 +234,7 @@ internal struct BVCodableWrapper<T: Codable>: Codable {
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: BVCodingKey.self)
     
-    var found: T? = nil
+    var found: T?
     if let key = container.allKeys.first {
       let object: T = try container.decode(T.self, forKey: key)
       found = object

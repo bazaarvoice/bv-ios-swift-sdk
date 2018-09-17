@@ -23,25 +23,23 @@ internal struct BVRecommendationsStats: BVAuxiliaryable {
   public let RKT: Int?
   
   internal subscript(stat: CodingKeys) -> Int? {
-    get {
-      switch stat {
-      case .RKB:
-        return RKB
-      case .RKC:
-        return RKC
-      case .RKI:
-        return RKI
-      case .RKN:
-        return RKN
-      case .RKP:
-        return RKP
-      case .RKR:
-        return RKR
-      case .RKT:
-        return RKT
-      default:
-        return nil
-      }
+    switch stat {
+    case .RKB:
+      return RKB
+    case .RKC:
+      return RKC
+    case .RKI:
+      return RKI
+    case .RKN:
+      return RKN
+    case .RKP:
+      return RKP
+    case .RKR:
+      return RKR
+    case .RKT:
+      return RKT
+    default:
+      return nil
     }
   }
   
