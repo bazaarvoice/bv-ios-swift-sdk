@@ -74,11 +74,7 @@ internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
       let prefix = "----------"
       
       repeat {
-        guard let candidate = String.random(20) else {
-          continue
-        }
-        
-        boundary = prefix + candidate
+        boundary = prefix + String.randomHex(20)
         guard let boundaryData = boundary?.toUTF8Data(),
           nil == multipartData.range(of: boundaryData) else {
             tries -= 1
