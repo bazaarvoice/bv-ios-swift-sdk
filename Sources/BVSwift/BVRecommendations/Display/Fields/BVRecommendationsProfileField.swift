@@ -160,8 +160,9 @@ extension BVRecommendationsProfileField {
 
 // MARK: - BVRecommendationsProfileField: Hashable
 extension BVRecommendationsProfileField: Hashable {
-  public var hashValue: Int {
-    return description.hashValue ^ "\(representedValue)".djb2hash
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(description)
+    hasher.combine("\(representedValue)")
   }
   
   public static func == (lhs: BVRecommendationsProfileField,

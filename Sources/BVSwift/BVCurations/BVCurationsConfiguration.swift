@@ -135,26 +135,23 @@ extension BVCurationsConfiguration: Equatable {
 
 /// Conformance to Hashable
 extension BVCurationsConfiguration: Hashable {
-  public var hashValue: Int {
+  public func hash(into hasher: inout Hasher) {
     switch self {
     case let .all(clientKey, configType, analyticsConfig):
-      return
-        "all".djb2hash ^
-          clientKey.hashValue ^
-          configType.hashValue ^
-          analyticsConfig.hashValue
+      hasher.combine("all")
+      hasher.combine(clientKey)
+      hasher.combine(configType)
+      hasher.combine(analyticsConfig)
     case let .display(clientKey, configType, analyticsConfig):
-      return
-        "display".djb2hash ^
-          clientKey.hashValue ^
-          configType.hashValue ^
-          analyticsConfig.hashValue
+      hasher.combine("display")
+      hasher.combine(clientKey)
+      hasher.combine(configType)
+      hasher.combine(analyticsConfig)
     case let .submission(clientKey, configType, analyticsConfig):
-      return
-        "submission".djb2hash ^
-          clientKey.hashValue ^
-          configType.hashValue ^
-          analyticsConfig.hashValue
+      hasher.combine("submission")
+      hasher.combine(clientKey)
+      hasher.combine(configType)
+      hasher.combine(analyticsConfig)
     }
   }
 }
