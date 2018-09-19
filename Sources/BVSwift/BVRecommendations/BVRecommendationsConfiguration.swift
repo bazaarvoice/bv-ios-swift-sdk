@@ -86,14 +86,13 @@ extension BVRecommendationsConfiguration: Equatable {
 
 /// Conformance to Hashable
 extension BVRecommendationsConfiguration: Hashable {
-  public var hashValue: Int {
+  public func hash(into hasher: inout Hasher) {
     switch self {
     case let .display(clientKey, configType, analyticsConfig):
-      return
-        "display".djb2hash ^
-          clientKey.hashValue ^
-          configType.hashValue ^
-          analyticsConfig.hashValue
+      hasher.combine("display")
+      hasher.combine(clientKey)
+      hasher.combine(configType)
+      hasher.combine(analyticsConfig)
     }
   }
 }
