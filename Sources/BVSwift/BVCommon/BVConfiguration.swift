@@ -63,12 +63,14 @@ extension BVConfigurationType: Equatable {
 }
 
 extension  BVConfigurationType: Hashable {
-  public var hashValue: Int {
+  public func hash(into hasher: inout Hasher) {
     switch self {
     case let .production(clientId):
-      return "production".djb2hash ^ clientId.hashValue
+      hasher.combine("production")
+      hasher.combine(clientId)
     case let .staging(clientId):
-      return "staging".djb2hash ^ clientId.hashValue
+      hasher.combine("staging")
+      hasher.combine(clientId)
     }
   }
 }

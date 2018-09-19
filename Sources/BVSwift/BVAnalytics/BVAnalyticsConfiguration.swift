@@ -82,18 +82,17 @@ extension BVAnalyticsConfiguration: Equatable {
 
 /// Conformance to Hashable
 extension BVAnalyticsConfiguration: Hashable {
-  public var hashValue: Int {
+  public func hash(into hasher: inout Hasher) {
     switch self {
-    case let .configuration(locale, configType):
-      var localeHash: Int = 17
-      
-      if let lc = locale {
-        localeHash = lc.hashValue
-      }
-      
-      return localeHash ^ configType.hashValue
+    case let .configuration(.none, configType):
+      hasher.combine(17)
+      hasher.combine(configType)
+    case let .configuration(.some(locale), configType):
+      hasher.combine(locale)
+      hasher.combine(configType)
     case let .dryRun(configType):
-      return "dryRun".djb2hash ^ configType.hashValue
+      hasher.combine("dryRun")
+      hasher.combine(configType)
     }
   }
 }

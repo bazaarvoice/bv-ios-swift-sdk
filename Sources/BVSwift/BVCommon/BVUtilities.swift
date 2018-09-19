@@ -80,6 +80,14 @@ internal extension Date {
 }
 
 internal extension String {
+  static let hex = "0123456789abcdef"
+  static let rfc4648 =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+  static let rfc2046 =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'()+_,-./:=?"
+}
+
+internal extension String {
   internal static var empty: String = ""
   
   internal func toBVDate() -> Date? {
@@ -103,22 +111,6 @@ internal extension String {
   
   internal mutating func escape() {
     self = escaping()
-  }
-}
-
-internal extension String {
-  var djb2hash: Int {
-    let unicodeScalars = self.unicodeScalars.map { $0.value }
-    return unicodeScalars.reduce(5381) {
-      ($0 << 5) &+ $0 &+ Int($1)
-    }
-  }
-  
-  var sdbmhash: Int {
-    let unicodeScalars = self.unicodeScalars.map { $0.value }
-    return unicodeScalars.reduce(0) {
-      Int($1) &+ ($0 << 6) &+ ($0 << 16) - $0
-    }
   }
 }
 
@@ -155,18 +147,12 @@ internal extension String {
   }
 }
 
-internal extension Sequence where Iterator.Element == String {
-  var hashValue: Int {
-    var hash: Int = 0
-    var first: Bool = true
-    for str in self {
-      if first {
-        hash = str.djb2hash
-        first = false
-      }
-      hash ^= str.hashValue
+internal extension Array where Element: CustomStringConvertible {
+  func randomString(_ len: UInt = 1) -> String {
+    guard !isEmpty else {
+      return String.empty
     }
-    return hash
+    return (0..<len).map { _ in return "\(randomElement()!)" }.joined()
   }
 }
 
@@ -200,6 +186,10 @@ internal extension UnkeyedDecodingContainer {
 }
 
 internal extension URLRequest {
+  static func generateBoundary(_ length: UInt = 40) -> String {
+    return Array(String.rfc4648).randomString(length)
+  }
+  
   static func generateKeyValueForData(key: String, data: Data) -> Data? {
     guard !key.isEmpty && !data.isEmpty else {
       return nil
