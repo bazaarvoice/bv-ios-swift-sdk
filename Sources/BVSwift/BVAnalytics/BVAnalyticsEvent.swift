@@ -312,8 +312,8 @@ extension BVAnalyticsEvent {
     return ["client": BVAnyEncodable(clientId)]
   }
   
-  internal static func loadId(_ length: UInt = 10) -> [String: String]? {
-    return [loadIdKey: String.randomHex(length)]
+  internal static func loadId(_ length: UInt = 20) -> [String: String]? {
+    return [loadIdKey: Array(String.hex).randomString(length)]
   }
 }
 
