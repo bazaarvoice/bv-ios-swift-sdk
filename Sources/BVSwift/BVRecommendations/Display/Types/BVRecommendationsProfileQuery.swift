@@ -39,17 +39,27 @@ BVRecommendationsQuery<BVRecommendationsProfile> {
     super.init(BVRecommendationsProfile.self)
   }
   
-  final internal override var recommendationsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+  final internal override
+  var recommendationsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
     return
-      { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
+      { [weak self ] (completion: BVCompletionWithErrorsHandler?) -> Void in
         
-        guard let config = self.configuration else {
+        guard let config = self?.configuration else {
           fatalError(
             "BVRecommendationsQuery requires configuration before it " +
             "can be issued.")
         }
         
-        self.fields.forEach {
+        guard let fields = self?.fields else {
+          let noFieldsErr =
+            BVCommonError.unknown(
+              "No fields for BVRecommendationsProfileQuery, or object has " +
+              "been reaped early.")
+          completion?(noFieldsErr)
+          return
+        }
+        
+        fields.forEach {
           switch $0 {
           case .preferredCategory:
             fallthrough
@@ -59,15 +69,15 @@ BVRecommendationsQuery<BVRecommendationsProfile> {
             let composed: String =
               [config.type.clientId, "\($0.representedValue)"]
                 .joined(separator: "/").escaping()
-            self.update(.unsafe($0.description.escaping(), composed, nil))
+            self?.update(.unsafe($0.description.escaping(), composed, nil))
           case .include:
-            self.add(.field($0, nil), coalesce: true)
+            self?.add(.field($0, nil), coalesce: true)
             /*
              case .strategy:
              self.add(.field($0, nil), coalesce: true)
              */
           default:
-            self.update(.field($0, nil))
+            self?.update(.field($0, nil))
           }
         }
         

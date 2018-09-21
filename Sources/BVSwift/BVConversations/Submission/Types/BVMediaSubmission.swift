@@ -37,18 +37,21 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
   private var videos: [BVVideo] = [BVVideo]()
   
   /// Internal
-  final internal override var submissionPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+  final internal override
+  var submissionPreflightResultsClosure: BVURLRequestablePreflightHandler? {
     switch currentAction {
     case .submit:
-      let configurationHandler = { () -> BVConversationsConfiguration? in
-        return self.conversationsConfiguration
+      let configurationHandler = {
+        [weak self] () -> BVConversationsConfiguration? in
+        return self?.conversationsConfiguration
       }
       
-      let urlQueryItemHandler = { (urlQueryItems: [URLQueryItem]?) in
+      let urlQueryItemHandler = {
+        [weak self] (urlQueryItems: [URLQueryItem]?) in
         guard let items = urlQueryItems else {
           return
         }
-        self.submissionParameters ∪= items
+        self?.submissionParameters ∪= items
       }
       
       return getPhotoSubmissionHandler(
@@ -61,10 +64,10 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
   }
   
   final internal override var submissionPostflightResultsClosure: (
-    ([BVType]?) -> Swift.Void)? {
-    return { (results: [BVType]?) in
-      self.conversationsPostflightDidSubmitPhotoUpload(results)
-      self.conversationsPostflightDidSubmit(results)
+    ([BVType]?) -> Void)? {
+    return { [weak self] (results: [BVType]?) in
+      self?.conversationsPostflightDidSubmitPhotoUpload(results)
+      self?.conversationsPostflightDidSubmit(results)
     }
   }
   
@@ -124,7 +127,7 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
 extension BVMediaSubmission {
   internal func getPhotoSubmissionHandler(
     configurationHandler: ((() -> BVConversationsConfiguration?)?),
-    urlQueryItemHandler: (([URLQueryItem]?) -> Swift.Void)?) ->
+    urlQueryItemHandler: (([URLQueryItem]?) -> Void)?) ->
     BVURLRequestablePreflightHandler? {
       
       guard let config = configurationHandler?(),
@@ -132,10 +135,20 @@ extension BVMediaSubmission {
           return nil
       }
       
-      return { handlerCompletion in
+      return { [weak self] handlerCompletion in
         
-        self.submissionParameters ∪=
-          BVConversationsSubmissionMedia.videos(self.videos).urlQueryItems
+        guard let photos = self?.photos,
+          let videos = self?.videos else {
+            let noMediaError =
+              BVCommonError.unknown(
+                "BVMediaSubmission isn't properly initialized, or it was " +
+                "reaped before it could execute.")
+            handlerCompletion?(noMediaError)
+            return
+        }
+        
+        self?.submissionParameters ∪=
+          BVConversationsSubmissionMedia.videos(videos).urlQueryItems
         
         let concurrentQueue =
           DispatchQueue(
@@ -154,7 +167,7 @@ extension BVMediaSubmission {
           var returnedPhotos: [BVPhoto] = []
           var returnedErrors: [Error] = []
           
-          for actualPhoto in self.photos {
+          for actualPhoto in photos {
             
             guard let photoSubmission = BVPhotoSubmission(actualPhoto) else {
               continue

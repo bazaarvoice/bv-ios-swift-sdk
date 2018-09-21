@@ -26,8 +26,8 @@ public class BVRecommendationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     
     /// We have to make sure that we don't "own" ourself to create a retain
     /// cycle.
-    preflightHandler = { [unowned self] completion in
-      self.recommendationsQueryPreflight { (errors: Error?) in
+    preflightHandler = { [weak self] completion in
+      self?.recommendationsQueryPreflight { (errors: Error?) in
         /// First we call this subclass level to see if everything is alright.
         /// If not, then we call the completion handler to error out.
         guard nil == errors else {
@@ -62,17 +62,18 @@ public class BVRecommendationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    return {
-      return self.queryItems
+    return { [weak self] in
+      return self?.queryItems
     }
   }
   
-  internal var recommendationsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+  internal var
+  recommendationsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
     return nil
   }
   
   internal var recommendationsPostflightResultsClosure: (
-    ([RecommendationsPostflightResult]?) -> Swift.Void)? {
+    ([RecommendationsPostflightResult]?) -> Void)? {
     return nil
   }
 }
@@ -129,9 +130,9 @@ extension BVRecommendationsQuery: BVQueryActionable {
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
-    responseHandler = {
+    responseHandler = { [weak self] in
       
-      if self.ignoreCompletion {
+      if self?.ignoreCompletion ?? true {
         return
       }
       
@@ -169,7 +170,7 @@ extension BVRecommendationsQuery: BVQueryActionable {
         }
         
         completion(.success(response, [profile]))
-        self.recommendationsPostflight([profile])
+        self?.recommendationsPostflight([profile])
         
       case let .failure(errors):
         completion(.failure(errors))

@@ -35,9 +35,9 @@ public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
   /// Internal
   override var
   submissionPostflightResultsClosure: (([BVFeedback]?) -> Void)? {
-    return { (results: [BVFeedback]?) in
+    return { [weak self] (results: [BVFeedback]?) in
       guard nil != results,
-        let fb = self.feedback,
+        let fb = self?.feedback,
         let contentId = fb.contentId,
         let contentType = fb.contentType else {
           return
@@ -81,7 +81,7 @@ public class BVFeedbackSubmission: BVConversationsSubmission<BVFeedback> {
           additional: additional)
       BVPixel.track(
         analyticEvent,
-        analyticConfiguration: self.configuration?.analyticsConfiguration)
+        analyticConfiguration: self?.configuration?.analyticsConfiguration)
     }
   }
 }
