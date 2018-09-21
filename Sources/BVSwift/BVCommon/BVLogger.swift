@@ -10,7 +10,7 @@ import Foundation
 import os.log
 
 /// The logging redirect closure signature for proxying logs to another output.
-public typealias BVLoggerRedirectClosure = ((_ msg: String) -> Swift.Void)
+public typealias BVLoggerRedirectClosure = ((_ msg: String) -> Void)
 
 /// The global logger packaged with this module
 ///
@@ -174,7 +174,7 @@ public class BVLogger {
   
   /// Private
   lazy private var defaultLogClosure: BVLoggerRedirectClosure = {
-    return { (msg: String) -> Swift.Void in
+    return { (msg: String) -> Void in
       DispatchQueue.main.async {
         if #available(iOS 10.0, *) {
           

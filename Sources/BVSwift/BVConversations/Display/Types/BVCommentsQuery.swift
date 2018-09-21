@@ -59,19 +59,22 @@ public class BVCommentsQuery: BVConversationsQuery<BVComment> {
     add(reviewFilter)
     
     if 0 < limit {
-      let limitField: BVConversationsQueryLimitField = BVConversationsQueryLimitField(limit)
+      let limitField: BVConversationsQueryLimitField =
+        BVConversationsQueryLimitField(limit)
       add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVConversationsQueryOffsetField = BVConversationsQueryOffsetField(offset)
+      let offsetField: BVConversationsQueryOffsetField =
+        BVConversationsQueryOffsetField(offset)
       add(.field(offsetField, nil))
     }
   }
   
   /// Internal
-  final internal override var queryPostflightResultsClosure: (([BVComment]?) -> Swift.Void)? {
-    return { (results: [BVComment]?) in
+  final internal override var queryPostflightResultsClosure: (
+    ([BVComment]?) -> Void)? {
+    return { [weak self] (results: [BVComment]?) in
       if let comments = results {
         for comment in comments {
           if let contentId: String = comment.commentId,
@@ -89,7 +92,7 @@ public class BVCommentsQuery: BVConversationsQuery<BVComment> {
             BVPixel.track(
               commentImpressionEvent,
               analyticConfiguration:
-              self.configuration?.analyticsConfiguration)
+              self?.configuration?.analyticsConfiguration)
           }
         }
       }
