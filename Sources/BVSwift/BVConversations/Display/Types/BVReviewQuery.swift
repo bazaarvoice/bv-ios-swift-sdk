@@ -59,12 +59,21 @@ public class BVReviewQuery: BVConversationsQuery<BVReview> {
   }
   
   /// Internal
-  final internal override var queryPreflightResultsClosure: BVURLRequestablePreflightHandler? {
-    return { (completion: BVCompletionWithErrorsHandler?) -> Swift.Void in
+  final internal override
+  var queryPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+    return {
+      [weak self] (completion: BVCompletionWithErrorsHandler?) -> Void in
+      
+      guard let parameters = self?.parameters else {
+        /// Should we error here?
+        completion?(nil)
+        return
+      }
+      
       var hasProductInclude: Bool = false
       var hasFilteredInclude: Bool = false
       
-      self.parameters.forEach {
+      parameters.forEach {
         switch $0 {
         case .stats(_ as BVQueryFilteredStat, _):
           hasFilteredInclude = true
@@ -87,11 +96,11 @@ public class BVReviewQuery: BVConversationsQuery<BVReview> {
   }
   
   final internal override var queryPostflightResultsClosure: (
-    ([BVReview]?) -> Swift.Void)? {
-    return { (results: [BVReview]?) in
+    ([BVReview]?) -> Void)? {
+    return { [weak self] (results: [BVReview]?) in
       if let reviews = results,
         let firstReview = reviews.first,
-        let productId = self.productId {
+        let productId = self?.productId {
         for review in reviews {
           if let id = review.reviewId,
             let product: BVProduct = review.products?
@@ -115,7 +124,7 @@ public class BVReviewQuery: BVConversationsQuery<BVReview> {
             BVPixel.track(
               reviewImpressionEvent,
               analyticConfiguration:
-              self.configuration?.analyticsConfiguration)
+              self?.configuration?.analyticsConfiguration)
           }
         }
         
@@ -124,7 +133,7 @@ public class BVReviewQuery: BVConversationsQuery<BVReview> {
             guard let id: String = $0.productId else {
               return false
             }
-            return id == self.productId
+            return id == self?.productId
           }).first {
           
           let add = [ "numReviews": reviews.count ]
@@ -140,7 +149,7 @@ public class BVReviewQuery: BVConversationsQuery<BVReview> {
           BVPixel.track(
             reviewPageViewEvent,
             analyticConfiguration:
-            self.configuration?.analyticsConfiguration)
+            self?.configuration?.analyticsConfiguration)
         }
       }
     }
