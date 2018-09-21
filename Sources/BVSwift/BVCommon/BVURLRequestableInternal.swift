@@ -23,10 +23,10 @@ internal protocol BVURLRequestableInternal: BVURLRequestableCacheable {
 }
 
 internal typealias BVURLRequestableHandler =
-  ((BVURLRequestableResponseInternal) -> Swift.Void)
+  ((BVURLRequestableResponseInternal) -> Void)
 
 internal typealias BVURLRequestablePreflightHandler =
-  ((BVCompletionWithErrorsHandler?) -> Swift.Void)
+  ((BVCompletionWithErrorsHandler?) -> Void)
 
 internal typealias BVURLRequestablePostflightHandler = BVURLRequestableHandler
 

@@ -59,9 +59,9 @@ extension BVAnalyticsSubmission: BVSubmissionActionable {
   @discardableResult
   func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
-    responseHandler = {
+    responseHandler = { [weak self] in
       
-      if self.ignoreCompletion {
+      if self?.ignoreCompletion ?? true {
         return
       }
       

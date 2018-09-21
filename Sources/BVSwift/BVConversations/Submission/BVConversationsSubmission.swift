@@ -19,7 +19,8 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   
   /// Private
   private var ignoreCompletion: Bool = false
-  internal private(set) var conversationsConfiguration: BVConversationsConfiguration?
+  internal private(set)
+  var conversationsConfiguration: BVConversationsConfiguration?
   private var customSubmissionParameters: [URLQueryItem]?
   
   private func postSuperInit() {
@@ -29,8 +30,8 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
     
     /// We have to make sure that we don't "own" ourself to create a retain
     /// cycle.
-    preflightHandler = { [unowned self] completion in
-      self.conversationsSubmissionPreflight { (errors: Error?) in
+    preflightHandler = { [weak self] completion in
+      self?.conversationsSubmissionPreflight { (errors: Error?) in
         /// First we call this subclass level to see if everything is alright.
         /// If not, then we call the completion handler to error out.
         guard nil == errors else {
@@ -82,7 +83,7 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   
   override var contentBodyTypeClosure: (
     (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
-    return { (_) -> BVURLRequestBodyType? in
+    return { [weak self] (_) -> BVURLRequestBodyType? in
       
       guard var container: URLComponents =
         URLComponents(string: "http://bazaarvoice.com") else {
@@ -90,7 +91,7 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
       }
       
       container.queryItems =
-        (self.submissionParameters ∪ self.customSubmissionParameters)
+        self?.submissionParameters ∪ self?.customSubmissionParameters
       
       guard let query: Data = container.query?.data(using: .utf8) else {
         return nil
@@ -100,12 +101,13 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
     }
   }
   
-  internal var submissionPreflightResultsClosure: BVURLRequestablePreflightHandler? {
+  internal
+  var submissionPreflightResultsClosure: BVURLRequestablePreflightHandler? {
     return nil
   }
   
   internal var submissionPostflightResultsClosure: (
-    ([ConversationsSubmissionPostflightResult]?) -> Swift.Void)? {
+    ([ConversationsSubmissionPostflightResult]?) -> Void)? {
     return nil
   }
 }
@@ -205,9 +207,9 @@ extension BVConversationsSubmission: BVSubmissionActionable {
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
-    responseHandler = {
+    responseHandler = { [weak self] in
       
-      if self.ignoreCompletion {
+      if self?.ignoreCompletion ?? true {
         return
       }
       
@@ -246,7 +248,7 @@ extension BVConversationsSubmission: BVSubmissionActionable {
         }
         
         completion(.success(response, result))
-        self.conversationsSubmissionPostflight([result])
+        self?.conversationsSubmissionPostflight([result])
       case let .failure(errors):
         completion(.failure(errors))
       }

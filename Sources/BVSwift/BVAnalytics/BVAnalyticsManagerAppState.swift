@@ -60,7 +60,7 @@ extension BVAnalyticsManager {
     _ = NotificationCenter.default.addObserver(
       forName: UIApplication.didFinishLaunchingNotification,
       object: nil,
-      queue: OperationQueue.main) { (notification: Notification) in
+      queue: OperationQueue.main) { [weak self] (notification: Notification) in
         
         var appState: [String: String] = ["appState": "launched"]
         
@@ -78,21 +78,21 @@ extension BVAnalyticsManager {
           appState += ["appSubState": "user-initiated"]
         }
         
-        self.enqueueAppStateEvent(appState)
+        self?.enqueueAppStateEvent(appState)
     }
     
     _ = NotificationCenter.default.addObserver(
       forName: UIApplication.didBecomeActiveNotification,
       object: nil,
-      queue: OperationQueue.main) { (_: Notification) in
-        self.enqueueAppStateEvent(["appState": "active"])
+      queue: OperationQueue.main) { [weak self] (_: Notification) in
+        self?.enqueueAppStateEvent(["appState": "active"])
     }
     
     _ = NotificationCenter.default.addObserver(
       forName: UIApplication.didEnterBackgroundNotification,
       object: nil,
-      queue: OperationQueue.main) { (_: Notification) in
-        self.enqueueAppStateEvent(["appState": "background"])
+      queue: OperationQueue.main) { [weak self] (_: Notification) in
+        self?.enqueueAppStateEvent(["appState": "background"])
     }
   }
   

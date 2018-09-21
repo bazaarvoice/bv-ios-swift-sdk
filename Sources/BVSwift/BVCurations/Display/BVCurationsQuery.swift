@@ -25,12 +25,13 @@ public class BVCurationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    return {
-      return self.queryItems
+    return { [weak self] in
+      return self?.queryItems
     }
   }
   
-  internal var curationsPostflightResultsClosure: (([CurationsPostflightResult]?) -> Swift.Void)? {
+  internal var curationsPostflightResultsClosure: (
+    ([CurationsPostflightResult]?) -> Void)? {
     return nil
   }
 }
@@ -86,9 +87,9 @@ extension BVCurationsQuery: BVQueryActionable {
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
-    responseHandler = {
+    responseHandler = { [weak self] in
       
-      if self.ignoreCompletion {
+      if self?.ignoreCompletion ?? true {
         return
       }
       
@@ -129,7 +130,7 @@ extension BVCurationsQuery: BVQueryActionable {
           }
           
           completion(.success(response, response.results ?? []))
-          self.curationsPostflight(response.results)
+          self?.curationsPostflight(response.results)
           
         } catch {
           
