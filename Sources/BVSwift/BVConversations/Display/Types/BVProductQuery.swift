@@ -36,10 +36,11 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
   }
   
   /// Internal
-  final internal override var queryPostflightResultsClosure: (([BVProduct]?) -> Swift.Void)? {
-    return { (results: [BVProduct]?) in
+  final internal override var queryPostflightResultsClosure: (
+    ([BVProduct]?) -> Void)? {
+    return { [weak self] (results: [BVProduct]?) in
       if let product = results?.first,
-        let productId = self.productId {
+        let productId = self?.productId {
         
         if let reviews = product.reviews {
           for review in reviews {
@@ -65,7 +66,7 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
               BVPixel.track(
                 reviewImpressionEvent,
                 analyticConfiguration:
-                self.configuration?.analyticsConfiguration)
+                self?.configuration?.analyticsConfiguration)
             }
           }
         }
@@ -89,7 +90,7 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
               BVPixel.track(
                 questionImpressionEvent,
                 analyticConfiguration:
-                self.configuration?.analyticsConfiguration)
+                self?.configuration?.analyticsConfiguration)
             }
           }
         }
@@ -105,7 +106,7 @@ public class BVProductQuery: BVConversationsQuery<BVProduct> {
         
         BVPixel.track(
           productPageView,
-          analyticConfiguration: self.configuration?.analyticsConfiguration)
+          analyticConfiguration: self?.configuration?.analyticsConfiguration)
       }
     }
   }

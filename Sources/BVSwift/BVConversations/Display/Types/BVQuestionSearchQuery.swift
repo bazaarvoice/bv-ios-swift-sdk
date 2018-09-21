@@ -53,19 +53,22 @@ public class BVQuestionSearchQuery: BVConversationsQuery<BVQuestion> {
     
     add(productFilter)
     
-    let queryField: BVConversationsQuerySearchField = BVConversationsQuerySearchField(searchQuery)
+    let queryField: BVConversationsQuerySearchField =
+      BVConversationsQuerySearchField(searchQuery)
     let searchField: BVURLParameter =
       .field(queryField, nil)
     
     add(searchField)
     
     if 0 < limit {
-      let limitField: BVConversationsQueryLimitField = BVConversationsQueryLimitField(limit)
+      let limitField: BVConversationsQueryLimitField =
+        BVConversationsQueryLimitField(limit)
       add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVConversationsQueryOffsetField = BVConversationsQueryOffsetField(offset)
+      let offsetField: BVConversationsQueryOffsetField =
+        BVConversationsQueryOffsetField(offset)
       add(.field(offsetField, nil))
     }
   }

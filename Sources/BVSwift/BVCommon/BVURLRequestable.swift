@@ -9,8 +9,8 @@ import Foundation
 
 /// Typealiases for the most commmonly used closures througout the
 /// BVURLRequestable family of protocols.
-public typealias BVCompletionHandler = (() -> Swift.Void)
-public typealias BVCompletionWithErrorsHandler = ((Error?) -> Swift.Void)
+public typealias BVCompletionHandler = (() -> Void)
+public typealias BVCompletionWithErrorsHandler = ((Error?) -> Void)
 
 /// The main base protocol for BV based networking requests.
 public protocol BVURLRequestable {
