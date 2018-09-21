@@ -30,14 +30,20 @@ infix operator <+> : AdditionPrecedence
 infix operator ∪ : AdditionPrecedence
 infix operator ∪= : AssignmentPrecedence
 
-internal func ∪(lhs: [URLQueryItem], rhs: [URLQueryItem]?) -> [URLQueryItem] {
-  guard let right = rhs else {
-    return lhs
+internal func ∪(lhs: [URLQueryItem]?, rhs: [URLQueryItem]?) -> [URLQueryItem] {
+  switch (lhs, rhs) {
+  case let (.some(left), .none):
+    return left
+  case let (.none, .some(right)):
+    return right
+  case let (.some(left), .some(right)):
+    var union = left
+    let lhsNames: [String] = left.map { return $0.name }
+    right.forEach({ if !lhsNames.contains($0.name) { union.append($0) } })
+    return union
+  default:
+    return []
   }
-  var union = lhs
-  let lhsNames: [String] = lhs.map { return $0.name }
-  right.forEach({ if !lhsNames.contains($0.name) { union.append($0) } })
-  return union
 }
 
 internal func ∪=(lhs: inout [URLQueryItem], rhs: [URLQueryItem]?) {

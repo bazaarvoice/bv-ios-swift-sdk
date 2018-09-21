@@ -35,23 +35,24 @@ BVCurationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    return {
-      return self.queryItems
+    return { [weak self] in
+      return self?.queryItems
     }
   }
   
-  override var contentBodyTypeClosure: ((BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
-    return { (_) -> BVURLRequestBodyType? in
-      guard var submissionableType = self.submissionableInternal else {
+  override var contentBodyTypeClosure: (
+    (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
+    return { [weak self] (_) -> BVURLRequestBodyType? in
+      guard var submissionableType = self?.submissionableInternal else {
         return nil
       }
       
       var id: String?
-      if let config = self.configuration {
+      if let config = self?.configuration {
         id = config.type.clientId
       }
       
-      if let raw = self.rawConfiguration {
+      if let raw = self?.rawConfiguration {
         id = raw.type.clientId
       }
       
@@ -83,7 +84,8 @@ BVCurationsSubmission<BVType: BVSubmissionable>: BVSubmission {
     }
   }
   
-  internal var curationsPostflightResultsClosure: (([CurationsPostflightResult]?) -> Swift.Void)? {
+  internal var curationsPostflightResultsClosure: (
+    ([CurationsPostflightResult]?) -> Void)? {
     return nil
   }
   
@@ -153,9 +155,9 @@ extension BVCurationsSubmission: BVSubmissionActionable {
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
-    responseHandler = {
+    responseHandler = { [weak self] in
       
-      if self.ignoreCompletion {
+      if self?.ignoreCompletion ?? true {
         return
       }
       
@@ -192,8 +194,8 @@ extension BVCurationsSubmission: BVSubmissionActionable {
           
           completion(.success(response, Data()))
           
-          if let type = self.submissionable {
-            self.curationsPostflight([type])
+          if let type = self?.submissionable {
+            self?.curationsPostflight([type])
           }
           
         } catch {

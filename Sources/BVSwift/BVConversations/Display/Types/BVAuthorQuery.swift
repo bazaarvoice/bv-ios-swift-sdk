@@ -35,10 +35,11 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
   }
   
   /// Internal
-  final internal override var queryPostflightResultsClosure: (([BVAuthor]?) -> Swift.Void)? {
-    return { (results: [BVAuthor]?) in
+  final internal override var queryPostflightResultsClosure: (
+    ([BVAuthor]?) -> Void)? {
+    return { [weak self] (results: [BVAuthor]?) in
       if nil != results,
-        let authorId = self.authorId {
+        let authorId = self?.authorId {
         let authorFeatureEvent: BVAnalyticsEvent =
           .feature(
             bvProduct: .profile,
@@ -48,7 +49,7 @@ public class BVAuthorQuery: BVConversationsQuery<BVAuthor> {
             additional: ["page": authorId, "interaction": false])
         BVPixel.track(
           authorFeatureEvent,
-          analyticConfiguration: self.configuration?.analyticsConfiguration)
+          analyticConfiguration: self?.configuration?.analyticsConfiguration)
       }
     }
   }
