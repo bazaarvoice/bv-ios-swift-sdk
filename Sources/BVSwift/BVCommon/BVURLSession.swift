@@ -76,9 +76,9 @@ public extension URLSession {
     @escaping (
     Data?,
     URLResponse?,
-    Error?) -> Swift.Void) -> URLSessionDataTask? {
+    Error?) -> Void) -> URLSessionDataTask? {
     
-    let action = { (error: Error?) -> URLSessionDataTask? in
+    let action = { [weak self] (error: Error?) -> URLSessionDataTask? in
       
       /// Execute preflight and check for any errors
       if let err = error {
@@ -100,13 +100,13 @@ public extension URLSession {
         return nil
       }
       
-      let task: URLSessionDataTask = self.dataTask(with: request) {
+      let task: URLSessionDataTask? = self?.dataTask(with: request) {
         (data: Data?, response: URLResponse?, error: Error?) in
         requestable.process(
           request: request, data: data, urlResponse: response, error: error)
         completionHandler(data, response, error)
       }
-      task.resume()
+      task?.resume()
       
       return task
     }
@@ -143,9 +143,9 @@ public extension URLSession {
     @escaping (
     Data?,
     URLResponse?,
-    Error?) -> Swift.Void) -> URLSessionUploadTask? {
+    Error?) -> Void) -> URLSessionUploadTask? {
     
-    let action = { (error: Error?) -> URLSessionUploadTask? in
+    let action = { [weak self] (error: Error?) -> URLSessionUploadTask? in
       
       /// Execute preflight and check for any errors
       if let err = error {
@@ -172,14 +172,14 @@ public extension URLSession {
         return nil
       }
       
-      let task: URLSessionUploadTask =
-        self.uploadTask(with: request, fromFile: fileURL) {
+      let task: URLSessionUploadTask? =
+        self?.uploadTask(with: request, fromFile: fileURL) {
           (data: Data?, response: URLResponse?, error: Error?) in
           requestable.process(
             request: request, data: data, urlResponse: response, error: error)
           completionHandler(data, response, error)
       }
-      task.resume()
+      task?.resume()
       
       return task
     }
@@ -216,9 +216,9 @@ public extension URLSession {
     @escaping (
     Data?,
     URLResponse?,
-    Error?) -> Swift.Void) -> URLSessionUploadTask? {
+    Error?) -> Void) -> URLSessionUploadTask? {
     
-    let action = { (error: Error?) -> URLSessionUploadTask? in
+    let action = { [weak self] (error: Error?) -> URLSessionUploadTask? in
       
       /// Execute preflight and check for any errors
       if let err = error {
@@ -245,14 +245,14 @@ public extension URLSession {
         return nil
       }
       
-      let task: URLSessionUploadTask =
-        self.uploadTask(with: request, from: bodyData) {
+      let task: URLSessionUploadTask? =
+        self?.uploadTask(with: request, from: bodyData) {
           (data: Data?, response: URLResponse?, error: Error?) in
           requestable.process(
             request: request, data: data, urlResponse: response, error: error)
           completionHandler(data, response, error)
       }
-      task.resume()
+      task?.resume()
       
       return task
     }
@@ -286,9 +286,9 @@ internal extension URLSession {
     @escaping (
     URL?,
     URLResponse?,
-    Error?) -> Swift.Void) -> URLSessionDownloadTask? {
+    Error?) -> Void) -> URLSessionDownloadTask? {
     
-    let action = { (error: Error?) -> URLSessionDownloadTask? in
+    let action = { [weak self] (error: Error?) -> URLSessionDownloadTask? in
       
       /// Execute preflight and check for any errors
       if let err = error {
@@ -310,13 +310,13 @@ internal extension URLSession {
         return nil
       }
       
-      let task: URLSessionDownloadTask = self.downloadTask(with: request) {
+      let task: URLSessionDownloadTask? = self?.downloadTask(with: request) {
         (url: URL?, response: URLResponse?, error: Error?) in
         requestable.process(
           request: request, url: url, urlResponse: response, error: error)
         completionHandler(url, response, error)
       }
-      task.resume()
+      task?.resume()
       
       return task
     }

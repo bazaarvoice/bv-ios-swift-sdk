@@ -46,12 +46,14 @@ public class BVQuestionQuery: BVConversationsQuery<BVQuestion> {
     add(productFilter)
     
     if 0 < limit {
-      let limitField: BVConversationsQueryLimitField = BVConversationsQueryLimitField(limit)
+      let limitField: BVConversationsQueryLimitField =
+        BVConversationsQueryLimitField(limit)
       add(.field(limitField, nil))
     }
     
     if 0 < offset {
-      let offsetField: BVConversationsQueryOffsetField = BVConversationsQueryOffsetField(offset)
+      let offsetField: BVConversationsQueryOffsetField =
+        BVConversationsQueryOffsetField(offset)
       add(.field(offsetField, nil))
     }
   }

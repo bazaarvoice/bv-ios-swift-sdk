@@ -28,8 +28,8 @@ public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     
     /// We have to make sure that we don't "own" ourself to create a retain
     /// cycle.
-    preflightHandler = { [unowned self] completion in
-      self.conversationsQueryPreflight { (errors: Error?) in
+    preflightHandler = { [weak self] completion in
+      self?.conversationsQueryPreflight { (errors: Error?) in
         /// First we call this subclass level to see if everything is alright.
         /// If not, then we call the completion handler to error out.
         guard nil == errors else {
@@ -58,8 +58,8 @@ public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   }
   
   final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
-    return {
-      return self.queryItems
+    return { [weak self] in
+      return self?.queryItems
     }
   }
   
@@ -68,7 +68,7 @@ public class BVConversationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   }
   
   internal var queryPostflightResultsClosure: (
-    ([ConversationsQueryPostflightResult]?) -> Swift.Void)? {
+    ([ConversationsQueryPostflightResult]?) -> Void)? {
     return nil
   }
 }
@@ -92,9 +92,9 @@ extension BVConversationsQuery: BVQueryActionable {
   @discardableResult
   public func handler(completion: @escaping ((Response) -> Void)) -> Self {
     
-    responseHandler = {
+    responseHandler = { [weak self] in
       
-      if self.ignoreCompletion {
+      if self?.ignoreCompletion ?? true {
         return
       }
       
@@ -134,7 +134,7 @@ extension BVConversationsQuery: BVQueryActionable {
         }
         
         completion(.success(response, response.results ?? []))
-        self.conversationsQueryPostflight(response.results)
+        self?.conversationsQueryPostflight(response.results)
         
       case let .failure(errors):
         completion(.failure(errors))

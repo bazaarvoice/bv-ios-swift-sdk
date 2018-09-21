@@ -46,8 +46,9 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
   }
   
   /// Internal
-  final internal override var queryPostflightResultsClosure: (([BVComment]?) -> Swift.Void)? {
-    return { (results: [BVComment]?) in
+  final internal override var queryPostflightResultsClosure: (
+    ([BVComment]?) -> Void)? {
+    return { [weak self] (results: [BVComment]?) in
       if let comments = results {
         for comment in comments {
           if let contentId: String = comment.commentId,
@@ -65,7 +66,7 @@ public class BVCommentQuery: BVConversationsQuery<BVComment> {
             BVPixel.track(
               commentImpressionEvent,
               analyticConfiguration:
-              self.configuration?.analyticsConfiguration)
+              self?.configuration?.analyticsConfiguration)
           }
         }
       }

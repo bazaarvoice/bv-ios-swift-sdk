@@ -95,9 +95,9 @@ internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
   
   override internal var contentBodyTypeClosure: (
     (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
-    return {
-      guard let body = self.generateBodyContent($0),
-        let boundary = self.generateBoundary(body) else {
+    return { [weak self] in
+      guard let body = self?.generateBodyContent($0),
+        let boundary = self?.generateBoundary(body) else {
           return nil
       }
       return .multipart(content: body, boundary: boundary)
