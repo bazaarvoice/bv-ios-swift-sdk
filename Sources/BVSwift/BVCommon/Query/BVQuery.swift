@@ -135,9 +135,9 @@ extension BVQuery: BVURLRequestableWithHandlerInternal {
         box.responseHandler = nil
         return
       }
-      box.responseHandler = {
+      box.responseHandler = { [weak self] in
         cmp($0)
-        self.postflightHandler?($0)
+        self?.postflightHandler?($0)
       }
     }
   }
