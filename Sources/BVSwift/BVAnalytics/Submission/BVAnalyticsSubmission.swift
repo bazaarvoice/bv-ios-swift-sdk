@@ -15,6 +15,10 @@ internal class BVAnalyticsSubmission: BVSubmission {
     super.init(internalType: events)
   }
   
+  internal init(_ remoteLog: BVAnalyticsRemoteLog) {
+    super.init(internalType: remoteLog)
+  }
+  
   internal enum BVAnalyticsEventResponse {
     public var success: Bool {
       guard case .success = self else {

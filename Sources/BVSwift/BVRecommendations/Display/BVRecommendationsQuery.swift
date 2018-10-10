@@ -143,9 +143,15 @@ extension BVRecommendationsQuery: BVQueryActionable {
         do {
           let jsonObject =
             try JSONSerialization.jsonObject(with: jsonData, options: [])
-          BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
+          BVLogger.sharedLogger.debug(
+            BVLogMessage(
+              BVRecommendationsConstants.bvProduct,
+              msg: "RAW JSON:\n\(jsonObject)"))
         } catch {
-          BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+          BVLogger.sharedLogger.error(
+            BVLogMessage(
+              BVRecommendationsConstants.bvProduct,
+              msg: "JSON ERROR: \(error)"))
         }
         #endif
         
@@ -187,9 +193,10 @@ extension BVRecommendationsQuery: BVRecommendationsQueryPreflightable {
     _ preflight: BVCompletionWithErrorsHandler?) {
     /// We have to make sure to call through, else the preflight chain will not
     /// end up firing through to the superclass.
-    guard let preflightResultsClosure = recommendationsPreflightResultsClosure else {
-      preflight?(nil)
-      return
+    guard let preflightResultsClosure =
+      recommendationsPreflightResultsClosure else {
+        preflight?(nil)
+        return
     }
     preflightResultsClosure(preflight)
   }

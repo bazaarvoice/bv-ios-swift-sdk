@@ -72,7 +72,7 @@ public class BVManager {
   }
   
   /// The log level to be used globally
-  public var logLevel: BVLogger.BVLogLevel {
+  public var logLevel: BVLogger.LogLevel {
     get {
       return BVLogger.sharedLogger.logLevel
     }
@@ -160,5 +160,9 @@ internal extension BVManager {
     }()
     
     return T.init(active, keyValues: keyValues)
+  }
+  
+  func removeAllConfigurations() {
+    configurations?.removeAll()
   }
 }

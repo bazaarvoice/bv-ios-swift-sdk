@@ -19,7 +19,7 @@ extension BVAnalyticsEvent {
     var dict = toDict
     dict += BVAnalyticsEvent.commonAnalyticsValues { return false }
     
-    dict["cl"] = "Personalization"
+    dict[BVAnalyticsConstants.clKey] = "Personalization"
     dict["type"] = "ProfileMobile"
     dict["source"] = "ProfileMobile"
     
@@ -28,5 +28,16 @@ extension BVAnalyticsEvent {
     
     /// Convert everything to strings and type erase.
     return BVAnalyticsEvent.stringifyAndTypeErase(dict)
+  }
+  
+  internal func toPersonalizationDict() -> [String: Encodable] {
+    switch self {
+    case let .personalization(profileId, additional):
+      let nonOptional: [String: Encodable] = ["profileId": profileId]
+      let optional: [String: Encodable] = [:] + additional
+      return nonOptional + optional
+    default:
+      fatalError()
+    }
   }
 }

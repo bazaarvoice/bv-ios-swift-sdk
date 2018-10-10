@@ -221,9 +221,14 @@ extension BVConversationsSubmission: BVSubmissionActionable {
         do {
           let jsonObject =
             try JSONSerialization.jsonObject(with: jsonData, options: [])
-          BVLogger.sharedLogger.debug("RAW JSON: \(jsonObject)")
+          BVLogger.sharedLogger.debug(
+            BVLogMessage(
+              BVConversationsConstants.bvProduct,
+              msg: "RAW JSON: \(jsonObject)"))
         } catch {
-          BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+          BVLogger.sharedLogger.error(
+            BVLogMessage(
+              BVConversationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
         }
         #endif
         

@@ -31,7 +31,8 @@ public class BVQuery<BVType: BVQueryable> {
   
   internal var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
     #if DEBUG
-    BVLogger.sharedLogger.error("This needs to be overriden.")
+    BVLogger.sharedLogger.error(
+      BVLogMessage(BVConstants.bvProduct, msg: "This needs to be overriden."))
     #endif
     return nil
   }
