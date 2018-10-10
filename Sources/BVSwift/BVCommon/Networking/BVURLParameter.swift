@@ -7,6 +7,8 @@
 
 import Foundation
 
+internal typealias BVURLParameters = [String: String]
+
 // MARK: - BVURLParameter
 internal indirect enum BVURLParameter: BVParameter {
   case field(

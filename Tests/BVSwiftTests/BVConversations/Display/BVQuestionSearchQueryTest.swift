@@ -103,15 +103,16 @@ class BVQuestionSearchQueryTest: XCTestCase {
           XCTAssertEqual(questions.count, 6)
           
           XCTAssertEqual(
-            question.questionSummary, "Ut pellentesque volutpat placerat.")
+            question.questionSummary,
+            "Suspendisse elementum est vitae metus lacinia bibendum?")
           XCTAssertEqual(
             question.questionDetails,
-            "In vitae fringilla nisl? Proin adipiscing nisl eget augue " +
-            "mattis interdum. Quisque ullamcorper amet.")
-          XCTAssertEqual(question.userNickname, "Armand")
-          XCTAssertEqual(question.authorId, "563ox86lxc0")
+            "Pellentesque posuere tristique urna eget sodales. " +
+            "In at leo quis leo pulvinar imperdiet non id amet.")
+          XCTAssertEqual(question.userNickname, "PreciAmalia")
+          XCTAssertEqual(question.authorId, "ja9f8irjno8")
           XCTAssertEqual(question.moderationStatus, "APPROVED")
-          XCTAssertEqual(question.questionId, "14822")
+          XCTAssertEqual(question.questionId, "14826")
           
           let questionAnswers: [BVAnswer] =
             answers.filter { (answer: BVAnswer) -> Bool in
@@ -128,17 +129,17 @@ class BVQuestionSearchQueryTest: XCTestCase {
               return
           }
           
-          XCTAssertEqual(questionAnswers.count, 2)
+          XCTAssertEqual(questionAnswers.count, 7)
           
           XCTAssertEqual(
-            firstQuestionAnswer.userNickname, "vasdfaosdfimoasdifmsa")
-          XCTAssertEqual(firstQuestionAnswer.questionId, "14822")
-          XCTAssertEqual(firstQuestionAnswer.authorId, "iv5d43wqvc")
+            firstQuestionAnswer.userNickname, "asdfasdfasdf")
+          XCTAssertEqual(firstQuestionAnswer.questionId, "14826")
+          XCTAssertEqual(firstQuestionAnswer.authorId, "7jhyc8a44cg")
           XCTAssertEqual(firstQuestionAnswer.moderationStatus, "APPROVED")
-          XCTAssertEqual(firstQuestionAnswer.answerId, "16280")
+          XCTAssertEqual(firstQuestionAnswer.answerId, "16291")
           XCTAssertEqual(
             firstQuestionAnswer.answerText,
-            "asdf zoxjcovizmzo iamosdimfaosidmfaosdifmaosdimfasdf")
+            "asdjfoaisjdfo asdoifmaosidfmoasid mfoiamsdf imasodfmiasdf")
           
           questions.forEach { (question) in
             XCTAssertEqual(question.productId, "test1")

@@ -1,6 +1,6 @@
 //
 //
-//  BVUtilityTypes.swift
+//  BVWeakRef.swift
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
