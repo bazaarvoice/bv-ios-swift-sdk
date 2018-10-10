@@ -56,7 +56,7 @@ public class BVRecommendationsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     /// This entire set of client calls will leverage the cache
     usesURLCache = true
     
-    add(.unsafe(sdkVersionField, sdkVersion, nil))
+    add(.unsafe(BVConstants.sdkVersionField, Bundle.bvSdkVersion, nil))
     
     postSuperInit()
   }

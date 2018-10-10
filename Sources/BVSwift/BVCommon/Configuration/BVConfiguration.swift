@@ -23,7 +23,7 @@ public protocol BVConfiguration {
 
 /// The base configuration enum for all BVConfigurations
 public enum BVConfigurationType {
-  internal static let clientKey: String = apiClientId
+  internal static let clientKey: String = BVConstants.apiClientId
   
   /// THe production configuration with BV client id
   case production(clientId: String)
