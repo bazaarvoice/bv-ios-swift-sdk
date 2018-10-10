@@ -168,9 +168,13 @@ extension BVCurationsSubmission: BVSubmissionActionable {
         do {
           let jsonObject =
             try JSONSerialization.jsonObject(with: jsonData, options: [])
-          BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
+          BVLogger.sharedLogger.debug(
+            BVLogMessage(
+              BVCurationsConstants.bvProduct, msg: "RAW JSON:\n\(jsonObject)"))
         } catch {
-          BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+          BVLogger.sharedLogger.error(
+            BVLogMessage(
+              BVCurationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
         }
         #endif
         
@@ -208,7 +212,9 @@ extension BVCurationsSubmission: BVSubmissionActionable {
                   BVCurationsSubmissionResponseInternal.self,
                   from: jsonData)
           } catch {
-            BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+            BVLogger.sharedLogger.error(
+              BVLogMessage(
+                BVCurationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
           }
           #endif
           

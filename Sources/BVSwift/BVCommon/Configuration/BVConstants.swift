@@ -10,7 +10,8 @@ import Foundation
 internal let cfBundleVersionString = "CFBundleShortVersionString"
 
 internal struct BVConstants {
-  static let bvFrameworkBundleIndentifier = "BVSwift"
+  static let bvProduct: String = "Common"
+  static let bvFrameworkBundleIndentifier: String = "BVSwift"
   static let apiClientId: String = "clientId"
   static let apiVersionField: String = "apiversion"
   static let appIdField: String = "_appId"
@@ -26,7 +27,7 @@ internal extension Bundle {
       .filter({ $0.bundleIdentifier?
         .contains(BVConstants.bvFrameworkBundleIndentifier) ?? false })
       .first else {
-      fatalError("Improper configuration of BVSwift bundle")
+        fatalError("Improper configuration of BVSwift bundle")
     }
     return bundle
   }

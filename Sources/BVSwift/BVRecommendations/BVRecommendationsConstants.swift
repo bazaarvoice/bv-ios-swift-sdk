@@ -9,7 +9,7 @@
 import Foundation
 
 internal struct BVRecommendationsConstants {
-  
+  static let bvProduct: String = "Personalization"
   static let apiKey: String = "apiKeyShopperAdvertising"
   static let stagingEndpoint: String =
   "https://my.network-stg.bazaarvoice.com/"

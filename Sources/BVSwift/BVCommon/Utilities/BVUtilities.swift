@@ -65,6 +65,14 @@ internal func += (lhs: inout Data, rhs: Data?) {
   lhs = (lhs + rhs)
 }
 
+func unique<T>(_ generate: () -> T, _ condition: (T) -> Bool) -> T {
+  var unique = generate()
+  while !condition(unique) {
+    unique = generate()
+  }
+  return unique
+}
+
 extension AnyCollection {
   static var empty: AnyCollection<Element> {
     return AnyCollection([])
