@@ -8,7 +8,7 @@
 import Foundation
 
 internal struct BVConversationsConstants {
-  
+  static let apiVersionKey: String = "BVConversationsAPIVersion"
   static let apiKey: String = "apiKeyConversations"
   static let clientKey: String = "clientId"
   static let parameterKey: String = "passkey"
@@ -195,7 +195,6 @@ internal struct BVConversationsConstants {
   }
   
   internal struct BVProducts {
-    
     static let pluralKey: String = "Products"
     static let singularKey: String = "Product"
     static let getResource: String = "products.json"
@@ -219,6 +218,14 @@ internal struct BVConversationsConstants {
       static let totalQuestionCount: String = "TotalQuestionCount"
       static let totalReviewCount: String = "TotalReviewCount"
       static let totalStoryCount: String = "TotalStoryCount"
+    }
+  }
+  
+  internal struct BVPhoto {
+    internal struct Keys {
+      static let contentTypeKey: String = "contenttype"
+      static let dataKey: String = "photo"
+      static let passKey: String = "passkey"
     }
   }
   
@@ -333,7 +340,6 @@ internal struct BVConversationsConstants {
   }
   
   internal struct BVSyndicationSource {
-    
     internal struct Keys {
       static let logoImageUrl: String = "LogoImageUrl"
       static let contentLink: String = "ContentLink"
@@ -352,3 +358,23 @@ internal struct BVConversationsConstants {
     static let pluralKey: String = "Videos"
   }
 }
+
+internal extension Bundle {
+  class internal var conversationsApiVersion: String {
+    let apiKey = BVConversationsConstants.apiVersionKey
+    guard let version =
+      bvBundle.infoDictionary?[apiKey] as? String else {
+        fatalError("Improper configuration of BVSwift bundle version")
+    }
+    return version
+  }
+}
+
+internal let defaultSDKParameters: BVURLParameters =
+  [
+    BVConstants.apiVersionField: Bundle.conversationsApiVersion,
+    BVConstants.appIdField: Bundle.mainBundleIdentifier,
+    BVConstants.appVersionField: Bundle.releaseVersionNumber,
+    BVConstants.buildNumberField: Bundle.buildVersionNumber,
+    BVConstants.sdkVersionField: Bundle.bvSdkVersion
+]

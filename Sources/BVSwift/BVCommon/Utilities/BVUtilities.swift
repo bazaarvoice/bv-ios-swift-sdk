@@ -65,6 +65,12 @@ internal func += (lhs: inout Data, rhs: Data?) {
   lhs = (lhs + rhs)
 }
 
+extension AnyCollection {
+  static var empty: AnyCollection<Element> {
+    return AnyCollection([])
+  }
+}
+
 internal extension Sequence where Element: Equatable {
   var uniqueElements: [Element] {
     return self.reduce(into: []) {
@@ -128,28 +134,14 @@ internal extension String {
 
 internal extension String {
   static func randomHex(_ length: UInt = 10) -> String {
-    let byteCount = Int(length) /// Yep, pedantry, recast to Int
-    let align = MemoryLayout<UInt8>.alignment
-    let buffer = UnsafeMutableRawPointer.allocate(
-      byteCount: byteCount, alignment: align)
-    
-    defer {
-      buffer.deallocate()
+    let hex =
+      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+       "a", "b", "c", "d", "e", "f"]
+    var random: String = String.empty
+    for _ in 0..<length {
+      random += hex.randomElement()!
     }
-    
-    if errSecSuccess !=
-      SecRandomCopyBytes(kSecRandomDefault, byteCount, buffer) {
-      /// We somehow failed here but nonetheless we can fallback to another,
-      /// albeit, less desirable entropy source
-      arc4random_buf(buffer, byteCount)
-    }
-    
-    let bufferPointer =
-      UnsafeRawBufferPointer(start: buffer, count: byteCount)
-    
-    return bufferPointer.reduce(into: String.empty) {
-      $0 += String(format: "%x", $1)
-    }
+    return random
   }
 }
 
