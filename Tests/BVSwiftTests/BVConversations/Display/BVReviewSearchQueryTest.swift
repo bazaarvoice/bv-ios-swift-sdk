@@ -102,29 +102,39 @@ class BVReviewSearchQueryTest: XCTestCase {
           XCTAssertGreaterThanOrEqual(reviews.count, 10)
           XCTAssertEqual(review.rating, 5)
           XCTAssertEqual(
-            review.title,
-            "Nulla risus nibh; tincidunt at volutpat eget, commodo sit " +
-              "amet est. In hac habitasse platea dictumst. Donec a ante " +
-            "porttitor risus luctus turpis duis.")
+            review.title, "Caum sociis natoque penatibus et magnis dis pa")
           XCTAssertEqual(
             review.reviewText,
-            "Quisque quis ipsum quis diam pretium tempor quis in leo. " +
-              "Pellentesque non ipsum in nibh feugiat bibendum. Duis sit " +
-              "amet nibh justo. Pellentesque ultrices lacus bibendum mi " +
-              "cursus vehicula. Donec eu quam vitae velit adipiscing " +
-            "tincidunt eleifend amet.")
+            "In volutpat pretium leo, a ornare purus ultricieset. " +
+              "Phasellus quis ultricieslacus. " +
+              "Fusce tristique feugiat elit velviverra. " +
+              "Ut quam sapien, tempor at elementum a, ornare egetmi.\n\n" +
+              "Vivamus orci nibh, vulputate et malesuada eu, commodo nonest. " +
+              "Morbi semper facilisistincidunt. " +
+              "Caum sociis natoque penatibus et magnis dis parturient montes, " +
+              "nascetur ridiculusmus. " +
+              "Nunc iaculis porta dolor, et aliquam urna hendreritvel.\n\n" +
+              "Duis ut nibh ut mi tincidunt ornare nec necneque. " +
+              "Etiam ac volutpatmi. Praesent a scelerisquearcu. " +
+              "Sed fringilla malesuadarutrum.\n\n" +
+              "In accumsan temporscelerisque. Sed ac interdumlectus. " +
+              "Mauris mollis turpis sit amet neque porttitor ac " +
+              "venenatis mimollis. Pellentesque eget odioorci. " +
+              "Praesent sit amet turpis ullamcorper risus laciniaaliquet.\n\n" +
+              "Nam ut feliselit. Etiam feugiat sempervestibulum. " +
+            "Aliquam eratvolutpat.")
           XCTAssertEqual(review.moderationStatus, "APPROVED")
-          XCTAssertEqual(review.reviewId, "192435")
+          XCTAssertEqual(review.reviewId, "192444")
           XCTAssertEqual(review.productId, "test1")
           XCTAssertEqual(review.isRatingsOnly, false)
           XCTAssertEqual(review.isFeatured, false)
-          XCTAssertEqual(review.authorId, "dzmt783zu8o")
-          XCTAssertEqual(review.userNickname, "jljkljk")
-          XCTAssertNil(review.userLocation)
+          XCTAssertEqual(review.authorId, "7i7sa0ys2yo")
+          XCTAssertEqual(review.userNickname, "psg1r5xeUyzIZ3bVQt")
+          XCTAssertEqual(review.userLocation, "M")
           
-          XCTAssertEqual(photos.count, 1)
+          XCTAssertEqual(photos.count, 6)
           XCTAssertNil(firstPhoto.caption)
-          XCTAssertEqual(firstPhoto.photoId, "79886")
+          XCTAssertEqual(firstPhoto.photoId, "79913")
           XCTAssertNotNil(firstPhoto.photoSizes)
           
           let regexPhotoList =

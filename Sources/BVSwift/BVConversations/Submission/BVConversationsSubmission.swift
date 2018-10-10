@@ -55,7 +55,8 @@ BVConversationsSubmission<BVType: BVSubmissionable>: BVSubmission {
   
   /// Internal
   internal var submissionParameters: [URLQueryItem] =
-    [URLQueryItem(name: apiVersionField, value: apiVersion)]
+    [URLQueryItem(name: BVConstants.apiVersionField,
+                  value: Bundle.conversationsApiVersion)]
   
   internal var submissionable: BVType? {
     return submissionableInternal as? BVType

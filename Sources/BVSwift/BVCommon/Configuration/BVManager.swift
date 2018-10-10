@@ -40,12 +40,12 @@ public class BVManager {
     = {
       
       if let stg = BVManager.staging,
-        let clientId: String = stg[apiClientId] as? String {
+        let clientId: String = stg[BVConstants.apiClientId] as? String {
         return .staging(clientId: clientId)
       }
       
       if let prd = BVManager.production,
-        let clientId: String = prd[apiClientId] as? String {
+        let clientId: String = prd[BVConstants.apiClientId] as? String {
         return .production(clientId: clientId)
       }
       

@@ -39,10 +39,10 @@ internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
     }
     
     return [
-      apiVersionField: apiVersion,
-      "passkey": passKey,
-      "contenttype": contentType,
-      "photo": photoData
+      BVConstants.apiVersionField: Bundle.conversationsApiVersion,
+      BVConversationsConstants.BVPhoto.Keys.passKey: passKey,
+      BVConversationsConstants.BVPhoto.Keys.contentTypeKey: contentType,
+      BVConversationsConstants.BVPhoto.Keys.dataKey: photoData
     ]
   }
   
