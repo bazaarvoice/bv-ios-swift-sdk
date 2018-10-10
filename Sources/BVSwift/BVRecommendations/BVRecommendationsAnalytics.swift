@@ -9,7 +9,8 @@
 import UIKit
 
 internal struct BVRecommendationsAnalytics {
-  internal static let productName: String = "Personalization"
+  internal static let productName: String =
+    BVRecommendationsConstants.bvProduct
   
   internal static var mainParameters: [String: BVAnyEncodable] {
     
