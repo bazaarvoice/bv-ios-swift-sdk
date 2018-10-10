@@ -32,18 +32,24 @@ extension BVAnalyticsManager {
   
   internal static var defaultAppState: [String: String] = {
     var eventData = [
-      "cl": "Lifecycle",
-      "type": "MobileApp",
-      "source": "mobile-lifecycle",
-      "mobileOS": "ios",
-      "bvSDKVersion": sdkVersion,
-      "mobileDeviceName": UIDevice.current.machine,
-      "mobileOSVersion": UIDevice.current.systemVersion,
-      "mobileAppVersion": "\(Bundle.releaseVersionNumber).\(Bundle.buildVersionNumber)"
+      BVAnalyticsConstants.EventKeys.cl: BVAnalyticsConstants.lifecycleKey,
+      BVAnalyticsConstants.EventKeys.type: BVAnalyticsConstants.mobileAppKey,
+      BVAnalyticsConstants.EventKeys.source:
+        BVAnalyticsConstants.mobileLifeCycleKey,
+      BVAnalyticsConstants.EventKeys.mobileOS: BVAnalyticsConstants.mobileOS,
+      BVAnalyticsConstants.EventKeys.bvSDKVersion: Bundle.bvSdkVersion,
+      BVAnalyticsConstants.EventKeys.mobileDeviceName: UIDevice.current.machine,
+      BVAnalyticsConstants.EventKeys.mobileOSVersion:
+        UIDevice.current.systemVersion,
+      BVAnalyticsConstants.EventKeys.mobileAppVersion:
+      "\(Bundle.releaseVersionNumber).\(Bundle.buildVersionNumber)"
     ]
     
     if let bundleIdentifier = Bundle.main.bundleIdentifier {
-      eventData += [ "mobileAppIdentifier": bundleIdentifier ]
+      eventData += [
+        BVAnalyticsConstants.EventKeys.mobileAppIdentifier:
+        bundleIdentifier
+      ]
     }
     
     eventData += BVAnalyticsEvent.commonAnalyticsValues { return false }
@@ -62,20 +68,30 @@ extension BVAnalyticsManager {
       object: nil,
       queue: OperationQueue.main) { [weak self] (notification: Notification) in
         
-        var appState: [String: String] = ["appState": "launched"]
+        var appState: [String: String] =
+          [BVAnalyticsConstants.AppState.state:
+            BVAnalyticsConstants.AppState.launched]
         
         switch notification.userInfo {
         case let .some(userInfo) where
           nil != userInfo[UIApplication.LaunchOptionsKey.url]:
-          appState += ["appSubState": "url-initiated"]
+          appState +=
+            [BVAnalyticsConstants.AppState.subState:
+              BVAnalyticsConstants.AppState.urlInitiated]
         case let .some(userInfo) where
           nil != userInfo[UIApplication.LaunchOptionsKey.sourceApplication]:
-          appState += ["appSubState": "other-app-initiated"]
+          appState +=
+            [BVAnalyticsConstants.AppState.subState:
+              BVAnalyticsConstants.AppState.otherAppInitiated]
         case let .some(userInfo) where
           nil != userInfo[UIApplication.LaunchOptionsKey.remoteNotification]:
-          appState += ["appSubState": "remote-notification-initiated"]
+          appState +=
+            [BVAnalyticsConstants.AppState.subState:
+              BVAnalyticsConstants.AppState.remoteInitiated]
         default:
-          appState += ["appSubState": "user-initiated"]
+          appState +=
+            [BVAnalyticsConstants.AppState.subState:
+              BVAnalyticsConstants.AppState.userInitiated]
         }
         
         self?.enqueueAppStateEvent(appState)
@@ -85,14 +101,18 @@ extension BVAnalyticsManager {
       forName: UIApplication.didBecomeActiveNotification,
       object: nil,
       queue: OperationQueue.main) { [weak self] (_: Notification) in
-        self?.enqueueAppStateEvent(["appState": "active"])
+        self?.enqueueAppStateEvent(
+          [BVAnalyticsConstants.AppState.state:
+            BVAnalyticsConstants.AppState.active])
     }
     
     _ = NotificationCenter.default.addObserver(
       forName: UIApplication.didEnterBackgroundNotification,
       object: nil,
       queue: OperationQueue.main) { [weak self] (_: Notification) in
-        self?.enqueueAppStateEvent(["appState": "background"])
+        self?.enqueueAppStateEvent(
+          [BVAnalyticsConstants.AppState.state:
+            BVAnalyticsConstants.AppState.background])
     }
   }
   

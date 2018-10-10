@@ -120,7 +120,7 @@ class BVPhotoSubmissionTest: XCTestCase {
           return
       }
       
-      XCTAssertEqual(formFieldErrorName, "RandomError2")
+      XCTAssertEqual(formFieldErrorName, "RandomError1")
       XCTAssertEqual(formFieldError.code, "SOME_WEIRD_CODE")
       XCTAssertEqual(formFieldError.message, "This is a test.")
       
