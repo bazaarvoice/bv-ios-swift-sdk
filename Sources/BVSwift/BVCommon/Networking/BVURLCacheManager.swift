@@ -26,7 +26,7 @@ internal class BVURLCacheManager {
   
   private var nestedCache: [BVURLCacheToken: DispatchQueue] = [:]
   
-  private var listeners = [BVWeakRef]()
+  private var listeners = [BVURLCacheNotifier]()
   
   private var listenerQueue =
     DispatchQueue(label: "com.bvswift.BVURLCacheManager.listenerQueue")
@@ -269,20 +269,61 @@ internal protocol BVURLCacheListener: AnyObject {
   func miss(_ request: URLRequest)
 }
 
+internal struct BVURLCacheNotifier: Hashable {
+  static func == (lhs: BVURLCacheNotifier, rhs: BVURLCacheNotifier) -> Bool {
+    return lhs.ptrHash == rhs.ptrHash
+  }
+  
+  private var ptrHash: Int = 0x0
+  private let active: () -> Bool
+  private let call: (URLRequest, Bool) -> Void
+  
+  init(_ listener: BVURLCacheListener) {
+    active = { [weak listener] () -> Bool in
+      return nil != listener
+    }
+    
+    call = { [weak listener] (req: URLRequest, hit: Bool) -> Void in
+      if hit {
+        listener?.hit(req)
+      } else {
+        listener?.miss(req)
+      }
+    }
+    
+    var inst = listener
+    withUnsafePointer(to: &inst) {
+      ptrHash = $0.hashValue
+    }
+  }
+  
+  var hashValue: Int {
+    return ptrHash
+  }
+  
+  internal func isActive() -> Bool {
+    return active()
+  }
+  
+  internal func notify(_ request: URLRequest, hit: Bool = false) {
+    return call(request, hit)
+  }
+}
+
 extension BVURLCacheManager {
   func add(_ listener: BVURLCacheListener) {
     listenerQueue.sync {
-      let weak = BVWeakRef(listener)
-      if !listeners.contains(weak) {
-        listeners.append(weak)
+      let listener = BVURLCacheNotifier(listener)
+      if !listeners.contains(listener) {
+        listeners.append(listener)
       }
     }
   }
   
   func remove(_ listener: BVURLCacheListener) {
     listenerQueue.sync {
-      let weak = BVWeakRef(listener)
-      listeners = listeners.filter { $0 != weak }
+      let notifier = BVURLCacheNotifier(listener)
+      listeners = listeners.filter { $0 != notifier && $0.isActive() }
     }
   }
   
@@ -294,23 +335,22 @@ extension BVURLCacheManager {
   
   private func notify(_ request: URLRequest, hit: Bool = false) {
     listenerQueue.sync {
-      let urlCacheDelegates =
-        listeners.compactMap { (ref: BVWeakRef) -> BVURLCacheListener? in
-          return **ref as? BVURLCacheListener
-      }
+      listeners = listeners.filter { $0.isActive() }
       
-      urlCacheDelegates.forEach {
+      listeners.forEach {
         guard hit else {
           
-          BVLogger.sharedLogger.debug("CACHE MISS: \(request)")
+          BVLogger.sharedLogger.debug(
+            BVLogMessage(BVConstants.bvProduct, msg: "CACHE MISS: \(request)"))
           
-          $0.miss(request)
+          $0.notify(request)
           return
         }
         
-        BVLogger.sharedLogger.debug("CACHE HIT: \(request)")
+        BVLogger.sharedLogger.debug(BVLogMessage(
+          BVConstants.bvProduct, msg: "CACHE HIT: \(request)"))
         
-        $0.hit(request)
+        $0.notify(request, hit: true)
       }
     }
   }

@@ -256,15 +256,11 @@ class BVCurationsQueryTest: XCTestCase {
       .field(.productId(.string("2561970")))
       .handler { response in
         
-        guard case let .failure(errors) = response,
-          let firstError = errors.first as? BVCurationsError,
-          case let .query(error) = firstError else {
-            XCTFail()
-            expectation.fulfill()
-            return
+        guard case .failure = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
         }
-        
-        XCTAssertEqual(BVCurationsError.invalidPasskey, error)
         
         expectation.fulfill()
     }

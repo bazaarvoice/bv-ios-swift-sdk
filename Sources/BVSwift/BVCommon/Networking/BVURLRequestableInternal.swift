@@ -52,6 +52,7 @@ internal enum BVURLRequestableResponseInternal {
 // MARK: - BVURLRequestBodyType
 internal enum BVURLRequestBodyType {
   case multipart(content: [String: Any], boundary: String)
+  case json(Data)
   case urlencoded(Data)
 }
 
@@ -60,6 +61,8 @@ extension BVURLRequestBodyType: CustomStringConvertible {
     switch self {
     case let .multipart(_, boundary):
       return "multipart/form-data; boundary=" + boundary
+    case .json:
+      return "application/json"
     case .urlencoded:
       return "application/x-www-form-urlencoded"
     }
@@ -87,6 +90,8 @@ extension BVURLRequestBodyTypeable {
         }
       }
       return (multipartData + URLRequest.encloseMultipartData(boundary))
+    case let .some(.json(data)):
+      return data
     case let .some(.urlencoded(data)):
       return data
     default:
@@ -117,8 +122,6 @@ extension BVURLRequestableWithHandlerInternal {
     }
     
     if let err = error {
-      assert(false, err.localizedDescription)
-      
       responseHandler?(.failure([err]))
       return
     }
@@ -127,24 +130,29 @@ extension BVURLRequestableWithHandlerInternal {
       else {
         let err =
           BVCommonError.unknown("URLResponse wasn't an HTTPURLResponse")
-        assert(false, err.description)
-        
         responseHandler?(.failure([err]))
         return
     }
     
-    if let httpError: Error = error, 200 != httpResponse.statusCode {
+    BVLogger.sharedLogger.debug(
+      "HTTP RESPONSE: \(httpResponse), status: \(httpResponse.statusCode)")
+    
+    if let httpError: Error = error {
       let err = BVCommonError.network(
         httpResponse.statusCode, httpError.localizedDescription)
-      assert(false, err.description)
-      
+      responseHandler?(.failure([err]))
+      return
+    }
+    
+    if 300 <= httpResponse.statusCode {
+      let err = BVCommonError.network(
+        httpResponse.statusCode, "HTTP Response <= 300")
       responseHandler?(.failure([err]))
       return
     }
     
     guard let jsonData: Data = data else {
       let err = BVCommonError.noData
-      assert(false, err.description)
       responseHandler?(.failure([err]))
       return
     }
