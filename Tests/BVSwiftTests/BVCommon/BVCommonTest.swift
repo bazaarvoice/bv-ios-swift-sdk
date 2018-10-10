@@ -140,8 +140,93 @@ class BVCommonTest: XCTestCase {
     let bundles = Bundle.allFrameworks
     
     let frameworkBundle =
-      bundles.filter { $0.bundleIdentifier?.contains("BVSwift") ?? false }
+      bundles.filter {
+        $0.bundleIdentifier?.contains(
+          BVConstants.bvFrameworkBundleIndentifier) ?? false }
     
     XCTAssertTrue(!frameworkBundle.isEmpty)
+    
+    guard let bvswiftBundle = frameworkBundle.first else {
+      XCTFail()
+      return
+    }
+    
+    guard let version =
+      bvswiftBundle
+        .infoDictionary?[cfBundleVersionString] as? String else {
+          XCTFail()
+          return
+    }
+    
+    XCTAssertTrue(!version.isEmpty)
+  }
+  
+  func testLocks() {
+    let expectation =
+      self.expectation(description: "testLocks")
+    
+    let concurrentQueue = DispatchQueue(
+      label: "com.bvswifttests.BVCommonTest.concurrentEventQueue",
+      qos: .userInteractive,
+      attributes: .concurrent,
+      autoreleaseFrequency: .inherit,
+      target: nil)
+    
+    let lock = BVLock()
+    var lockTest = false
+    
+    concurrentQueue.async {
+      let flag = lock.sync { () -> Bool in
+        lockTest = true
+        return lockTest
+      }
+      
+      lock.lock()
+      XCTAssertTrue(flag)
+      expectation.fulfill()
+      lock.unlock()
+    }
+    
+    self.waitForExpectations(timeout: 5) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testRecursiveLocks() {
+    let expectation =
+      self.expectation(description: "testRecursiveLocks")
+    
+    let concurrentQueue = DispatchQueue(
+      label: "com.bvswifttests.BVCommonTest.concurrentEventQueue",
+      qos: .userInteractive,
+      attributes: .concurrent,
+      autoreleaseFrequency: .inherit,
+      target: nil)
+    
+    let lock = BVLock(.recursive)
+    var lockTest = false
+    
+    concurrentQueue.async {
+      let flag = lock.sync { () -> Bool in
+        
+        for _ in 0...10 {
+          lock.lock()
+        }
+        
+        lockTest = true
+        return lockTest
+      }
+      
+      lock.lock()
+      XCTAssertTrue(flag)
+      expectation.fulfill()
+      lock.unlock()
+    }
+    
+    self.waitForExpectations(timeout: 5) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
   }
 }
