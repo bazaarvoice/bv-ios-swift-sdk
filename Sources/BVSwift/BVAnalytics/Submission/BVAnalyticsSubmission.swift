@@ -10,6 +10,7 @@ import Foundation
 
 internal class BVAnalyticsSubmission: BVSubmission {
   private var ignoreCompletion: Bool = false
+  private var analyticsConfiguration: BVAnalyticsConfiguration?
   
   internal init(_ events: BVAnalyticsEventBatch) {
     super.init(internalType: events)
@@ -34,6 +35,12 @@ internal class BVAnalyticsSubmission: BVSubmission {
   override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
     return nil
   }
+  
+  override var userAgentClosure: (() -> String)? {
+    return { [weak self] in
+      return URLRequest.bvUserAgent(self?.analyticsConfiguration?.locale)
+    }
+  }
 }
 
 // MARK: - BVAnalyticsSubmission: BVConfigurable
@@ -42,6 +49,7 @@ extension BVAnalyticsSubmission: BVConfigurable {
   
   @discardableResult
   final func configure(_ config: BVAnalyticsConfiguration) -> Self {
+    analyticsConfiguration = config
     configureExistentially(config)
     return self
   }

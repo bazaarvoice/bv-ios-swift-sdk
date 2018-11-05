@@ -8,7 +8,10 @@
 import Foundation
 
 internal protocol BVInternalSubmissionDelegate:
-class, BVURLRequestBodyTypeable, BVURLQueryItemable { }
+class,
+BVURLRequestBodyTypeable,
+BVURLQueryItemable,
+BVURLRequestUserAgentable { }
 
 // MARK: - BVInternalSubmission
 internal class BVInternalSubmission: BVURLRequest {
@@ -29,6 +32,10 @@ internal class BVInternalSubmission: BVURLRequest {
   
   override var urlQueryItems: [URLQueryItem]? {
     return submissionBodyable?.urlQueryItems
+  }
+  
+  override var userAgent: String? {
+    return submissionBodyable?.userAgent
   }
   
   override internal var request: URLRequest? {
