@@ -4,21 +4,21 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import UIKit
 
 internal struct BVAnalyticsRemoteLog: BVSubmissionable {
   static let typeKey: String = "record"
   static let nameKey: String = "Error"
-  
+
   static var singularKey: String {
     return "log"
   }
   static var pluralKey: String {
     return "logs"
   }
-  
+
   private enum ErrorKey: String {
     case bvid
     case bvsid
@@ -47,23 +47,23 @@ internal struct BVAnalyticsRemoteLog: BVSubmissionable {
     case locale
     case bvproduct
   }
-  
+
   private enum CodingKeys: CodingKey {
     init?(stringValue: String) {
       return nil
     }
-    
+
     var intValue: Int? {
       return nil
     }
-    
+
     init?(intValue: Int) {
       return nil
     }
-    
+
     case commonKey(String)
     case key(ErrorKey)
-    
+
     var stringValue: String {
       switch self {
       case let .commonKey(key):
@@ -73,13 +73,13 @@ internal struct BVAnalyticsRemoteLog: BVSubmissionable {
       }
     }
   }
-  
+
   internal private(set) var client: String?
   internal private(set) var error: String?
   internal private(set) var locale: Locale?
   internal private(set) var log: String?
   internal private(set) var bvProduct: String?
-  
+
   internal init(
     client: String?,
     error: String? = nil,
@@ -92,9 +92,9 @@ internal struct BVAnalyticsRemoteLog: BVSubmissionable {
     self.log = log
     self.bvProduct = bvProduct
   }
-  
+
   public init(from decoder: Decoder) throws { }
-  
+
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(Bundle.bvSdkVersion, forKey: .key(.bvproductversion))
@@ -117,11 +117,11 @@ internal struct BVAnalyticsRemoteLog: BVSubmissionable {
     try container.encode(
       "false",
       forKey: .commonKey(BVAnalyticsConstants.hadPIIKey))
-    
+
     for (key, value) in BVAnalyticsConstants.commonValues {
       try container.encode(value, forKey: .commonKey(key))
     }
-    
+
     try container.encodeIfPresent(client, forKey: .key(.client))
     try container.encodeIfPresent(error, forKey: .key(.detail2))
     try container.encodeIfPresent(locale?.identifier, forKey: .key(.locale))
@@ -131,10 +131,10 @@ internal struct BVAnalyticsRemoteLog: BVSubmissionable {
 }
 
 extension BVAnalyticsRemoteLog: BVSubmissionableInternal {
-  
+
   internal static var postResource: String? {
     return "event"
   }
-  
+
   internal mutating func update(_ values: [String: Encodable]?) { }
 }
