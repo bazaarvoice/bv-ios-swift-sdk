@@ -78,6 +78,10 @@ public class BVSubmission {
   internal var postflightClosure: BVURLRequestableHandler? {
     return nil
   }
+  
+  internal var userAgentClosure: (() -> String)? {
+    return nil
+  }
 }
 
 // MARK: - BVSubmission: BVURLRequestable
@@ -212,18 +216,22 @@ extension BVSubmission: BVConfigureRaw {
 
 // MARK: - BVSubmission: BVInternalSubmissionDelegate
 extension BVSubmission: BVInternalSubmissionDelegate {
-  var urlQueryItems: [URLQueryItem]? {
+  internal var userAgent: String? {
+    return userAgentClosure?()
+  }
+  
+  internal var urlQueryItems: [URLQueryItem]? {
     return urlQueryItemsClosure?()
   }
   
-  var requestBodyType: BVURLRequestBodyType? {
+  internal var requestBodyType: BVURLRequestBodyType? {
     guard let type = submissionableInternal else {
       return nil
     }
     return contentBodyTypeClosure?(type)
   }
   
-  var submissionableInternal: BVSubmissionableInternal? {
+  internal var submissionableInternal: BVSubmissionableInternal? {
     return box.submissionableType
   }
 }

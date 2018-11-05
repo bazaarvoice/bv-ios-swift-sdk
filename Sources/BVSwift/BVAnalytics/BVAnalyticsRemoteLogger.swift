@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -129,12 +129,24 @@ extension BVAnalyticsRemoteLogger: BVLogListener {
       
       let liveLogSubmission = BVAnalyticsSubmission(liveLog)
         .configure(analyticsConfig)
-        .handler { (response: BVAnalyticsSubmission.BVAnalyticsEventResponse) in
+        .handler {
+          (response: BVAnalyticsSubmission.BVAnalyticsEventResponse) in
+          
+          #if DEBUG
+          
           guard case let .failure(errors) = response else {
             ephemeralSelf.remoteLogTestingCompletion?(liveLog, nil)
             return
           }
           ephemeralSelf.remoteLogTestingCompletion?(liveLog, errors)
+          
+          #else
+          
+          if .fault == logLevel {
+            fatalError(log)
+          }
+          
+          #endif /* DEBUG */
       }
       
       liveLogSubmission.async(

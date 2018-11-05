@@ -8,7 +8,8 @@
 
 import Foundation
 
-internal class BVURLRequest: BVURLRequestable, BVURLQueryItemable {
+internal class BVURLRequest:
+BVURLRequestable, BVURLQueryItemable, BVURLRequestUserAgentable {
   
   /// Private
   final private var rawConfig: BVRawConfiguration?
@@ -22,6 +23,10 @@ internal class BVURLRequest: BVURLRequestable, BVURLQueryItemable {
   internal var resource: String?
   
   internal var urlQueryItems: [URLQueryItem]? {
+    return nil
+  }
+  
+  internal var userAgent: String? {
     return nil
   }
   
@@ -51,7 +56,14 @@ internal class BVURLRequest: BVURLRequestable, BVURLQueryItemable {
     
     let cachePolicy: URLRequest.CachePolicy =
       usesURLCache ? .returnCacheDataElseLoad : .reloadIgnoringLocalCacheData
-    return URLRequest(url: url, cachePolicy: cachePolicy)
+    
+    var request = URLRequest(url: url, cachePolicy: cachePolicy)
+    
+    if let ua = userAgent {
+      request.setValue(ua, forHTTPHeaderField: "User-Agent")
+    }
+    
+    return request
   }
 }
 

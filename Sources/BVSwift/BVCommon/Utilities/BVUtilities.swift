@@ -278,6 +278,21 @@ internal extension URLRequest {
   }
 }
 
+internal extension URLRequest {
+  static func bvUserAgent(
+    _ locale: Locale? = Locale.autoupdatingCurrent) -> String {
+    let model = UIDevice.current.model
+    let systemVersion =
+      UIDevice.current.systemVersion.replacingOccurrences(of: ".", with: "_")
+    let localeIdentifier = locale?.identifier ?? "en_GB"
+    let version = "\(Bundle.releaseVersionNumber).\(Bundle.buildVersionNumber)"
+    return "Mozilla/5.0 (\(model); U; " +
+      "CPU \(model == "iPad" ? "OS" : "iPhone OS") \(systemVersion) " +
+      "like Mac OS X; \(localeIdentifier)) AppleWebKit/0.0.0 " +
+    "(KHTML, like Gecko) Version/\(version) Mobile/XXX Safari/0.0.0"
+  }
+}
+
 internal extension UIImage {
   func resize(_ newSize: CGSize) -> UIImage? {
     let rect: CGRect = CGRect(origin: CGPoint.zero, size: newSize)
@@ -310,7 +325,7 @@ internal extension Bundle {
   }
   
   class internal var releaseVersionNumber: String {
-    let error: String = "x.x.x"
+    let error: String = "0.0.0"
     guard let infoDict = self.main.infoDictionary else {
       return error
     }
@@ -324,7 +339,7 @@ internal extension Bundle {
   }
   
   class internal var buildVersionNumber: String {
-    let error: String = "-1"
+    let error: String = "0"
     guard let infoDict = self.main.infoDictionary else {
       return error
     }
