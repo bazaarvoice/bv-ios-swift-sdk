@@ -9,10 +9,6 @@
 import Foundation
 
 /// Internal Protocols
-internal protocol BVURLRequestBodyTypeable: BVURLRequestableWithBodyData {
-  var requestBodyType: BVURLRequestBodyType? { get }
-}
-
 internal protocol BVURLRequestableCacheable: BVURLRequestable {
   var usesURLCache: Bool { get set }
 }
@@ -20,6 +16,14 @@ internal protocol BVURLRequestableCacheable: BVURLRequestable {
 internal protocol BVURLRequestableInternal: BVURLRequestableCacheable {
   var bvPath: String { get }
   var commonEndpoint: String { get }
+}
+
+internal protocol BVURLRequestBodyTypeable: BVURLRequestableWithBodyData {
+  var requestBodyType: BVURLRequestBodyType? { get }
+}
+
+internal protocol BVURLRequestUserAgentable: BVURLRequestable {
+  var userAgent: String? { get }
 }
 
 internal typealias BVURLRequestableHandler =
