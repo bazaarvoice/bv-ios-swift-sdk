@@ -22,16 +22,28 @@ extension BVAnalyticsEvent {
       dict += loadId
     }
     
-    dict["cl"] = "Conversion"
+    dict[BVAnalyticsConstants.clKey] = "Conversion"
     
     if hasPII {
-      dict["hadPII"] = "true"
+      dict[BVAnalyticsConstants.hadPIIKey] = "true"
       if !nonPII {
-        dict["cl"] = "PIIConversion"
+        dict[BVAnalyticsConstants.clKey] = "PIIConversion"
       }
     }
     
     /// Convert everything to strings and type erase.
     return BVAnalyticsEvent.stringifyAndTypeErase(dict)
+  }
+  
+  internal func toConversionDict() -> [String: Encodable] {
+    switch self {
+    case let .conversion(type, value, label, additional):
+      let nonOptional: [String: Encodable] = ["type": type, "value": value]
+      let optional: [String: Encodable] =
+        [:] + label.map { ["label": $0] } + additional
+      return nonOptional + optional
+    default:
+      fatalError()
+    }
   }
 }

@@ -100,9 +100,13 @@ extension BVCurationsQuery: BVQueryActionable {
         do {
           let jsonObject =
             try JSONSerialization.jsonObject(with: jsonData, options: [])
-          BVLogger.sharedLogger.debug("RAW JSON:\n\(jsonObject)")
+          BVLogger.sharedLogger.debug(
+            BVLogMessage(
+              BVCurationsConstants.bvProduct, msg: "RAW JSON:\n\(jsonObject)"))
         } catch {
-          BVLogger.sharedLogger.error("JSON ERROR: \(error)")
+          BVLogger.sharedLogger.error(
+            BVLogMessage(
+              BVCurationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
         }
         #endif
         

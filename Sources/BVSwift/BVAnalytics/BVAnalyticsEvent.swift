@@ -212,99 +212,97 @@ extension BVAnalyticsEvent {
   }
   
   internal var toDict: [String: Encodable] {
-    let analyticsMirror: Mirror = Mirror(reflecting: self)
-    guard let child = analyticsMirror.children.first else {
-      return [:]
+    switch self {
+    case .conversion:
+      return toConversionDict()
+    case .feature:
+      return toFeatureDict()
+    case .impression:
+      return toImpressionDict()
+    case .inView:
+      return toInViewDict()
+    case .pageView:
+      return toPageViewDict()
+    case .personalization:
+      return toPersonalizationDict()
+    case .transaction:
+      return toTransactionDict()
+    case .viewed:
+      return toViewedDict()
     }
     
-    let childMirror = Mirror(reflecting: child.value)
-    
-    /// Super important to always have the supplimentary encodable dictionary
-    /// be the last associated value in the enumeration value.
-    let children = childMirror.children.dropLast(1)
-    
-    let core: [String: Encodable] = children.reduce(into: [:]) {
-      let (label, value) = $1
-      guard let thisLabel: String = label else {
-        return
-      }
-      
-      let valueMirror = Mirror(reflecting: value)
-      
-      if let displayStyle = valueMirror.displayStyle,
-        displayStyle == .optional,
-        0 == valueMirror.children.count {
-        return
-      }
-      
-      /// This is gloriously ridiculous. It appears that when in "mirror-land"
-      /// if you're more than one degree of separation from the concrete
-      /// encodable type, e.g., Array, Set, Optional, etc., swift doesn't like
-      /// it and gets grumpy about what type is encapsulated. So, we have to do
-      /// this little dance. (29 Jun 18) Swift 4.1
-      switch value {
-      case let valueOptional as [BVAnyEncodable]:
-        $0[thisLabel] = valueOptional
-      case let valueOptional as [Encodable]:
-        var wrapper = [BVAnyEncodable]()
-        valueOptional.forEach { wrapper.append(BVAnyEncodable($0)) }
-        $0[thisLabel] = wrapper
-      case let valueOptional as Any?:
-        if case let .some(thisValue) = valueOptional,
-          let encoded = thisValue as? Encodable {
-          $0[thisLabel] = encoded
-        }
-      }
-    }
-    
-    return core + additional
+    ///
+    ///     /// Leaving this here for posterity. Just in case Apple ever fixes
+    ///     /// these mirror bugs related to encodable
+    ///
+    ///    let analyticsMirror: Mirror = Mirror(reflecting: self)
+    ///    guard let child = analyticsMirror.children.first else {
+    ///      return [:]
+    ///    }
+    ///
+    ///    let childMirror = Mirror(reflecting: child.value)
+    ///
+    ///    /// Super important to always have the supplimentary encodable dictionary
+    ///    /// be the last associated value in the enumeration value.
+    ///    let children = childMirror.children.dropLast(1)
+    ///
+    ///    let core: [String: Encodable] = children.reduce(into: [:]) {
+    ///      let (label, value) = $1
+    ///      guard let thisLabel: String = label else {
+    ///        return
+    ///      }
+    ///
+    ///      let valueMirror = Mirror(reflecting: value)
+    ///
+    ///     if let displayStyle = valueMirror.displayStyle,
+    ///        displayStyle == .optional,
+    ///        0 == valueMirror.children.count {
+    ///        return
+    ///      }
+    ///
+    ///      /// This is gloriously ridiculous. It appears that when in "mirror-land"
+    ///      /// if you're more than one degree of separation from the concrete
+    ///      /// encodable type, e.g., Array, Set, Optional, etc., swift doesn't like
+    ///      /// it and gets grumpy about what type is encapsulated. So, we have to do
+    ///      /// this little dance. (29 Jun 18) Swift 4.1
+    ///      switch value {
+    ///      case let valueOptional as [BVAnyEncodable]:
+    ///        $0[thisLabel] = valueOptional
+    ///      case let valueOptional as [Encodable]:
+    ///        var wrapper = [BVAnyEncodable]()
+    ///        valueOptional.forEach { wrapper.append(BVAnyEncodable($0)) }
+    ///        $0[thisLabel] = wrapper
+    ///      case let valueOptional as Any?:
+    ///        if case let .some(thisValue) = valueOptional,
+    ///          let encoded = thisValue as? Encodable {
+    ///          $0[thisLabel] = encoded
+    ///        }
+    ///      }
+    ///    }
+    ///
+    ///    return core + additional
   }
 }
 
 extension BVAnalyticsEvent {
   
-  internal static var idfaKey: String = "advertisingId"
   internal static var loadIdKey: String = "loadId"
   
   internal static var whiteList: [String] {
-    return [
-      "orderId",
-      "affiliation",
-      "total",
-      "tax",
-      "shipping",
-      "city",
-      "state",
-      "country",
-      "currency",
-      "items",
-      "locale",
-      "type",
-      "label",
-      "value",
-      "proxy",
-      "partnerSource",
-      "TestCase",
-      "TestSession",
-      "dc",
-      "ref"
-    ]
+    return BVAnalyticsConstants.whiteList
   }
   
   internal static func commonAnalyticsValues(
     _ anonymous: () -> Bool) -> [String: String] {
     
     guard let idfa = BVFingerprint.shared.idfa, !anonymous() else {
-      return [idfaKey: BVFingerprint.shared.nontrackingIDFA]
+      return [
+        BVAnalyticsConstants.idfaKey: BVFingerprint.shared.nontrackingIDFA
+      ]
     }
     
-    return [
-      "mobileSource": "bv-ios-sdk",
-      "HashedIP": "default",
-      "source": "native-mobile-sdk",
-      "UA": BVFingerprint.shared.bvid,
-      idfaKey: idfa
-    ]
+    return BVAnalyticsConstants.commonValues +
+      [ BVAnalyticsConstants.idfaKey: idfa ]
   }
   
   internal static func clientIdentifier(

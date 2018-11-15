@@ -23,17 +23,46 @@ extension BVAnalyticsEvent {
       dict += loadId
     }
     
-    dict["cl"] = "Conversion"
+    dict[BVAnalyticsConstants.clKey] = "Conversion"
     dict["type"] = "Transaction"
     
     if hasPII {
-      dict["hadPII"] = "true"
+      dict[BVAnalyticsConstants.hadPIIKey] = "true"
       if !nonPII {
-        dict["cl"] = "PIIConversion"
+        dict[BVAnalyticsConstants.clKey] = "PIIConversion"
       }
     }
     
     /// Convert everything to strings and type erase.
     return BVAnalyticsEvent.stringifyAndTypeErase(dict)
+  }
+  
+  internal func toTransactionDict() -> [String: Encodable] {
+    switch self {
+    case let .transaction(
+      items,
+      orderId,
+      total,
+      city,
+      country,
+      currency,
+      shipping,
+      state,
+      tax,
+      additional):
+      let nonOptional: [String: Encodable] =
+        ["items": items, "orderId": orderId, "total": total]
+      let optional: [String: Encodable] =
+        [:] + city.map { ["city": $0] }
+          + country.map { ["country": $0] }
+          + currency.map { ["currency": $0] }
+          + shipping.map { ["shipping": $0] }
+          + state.map { ["state": $0] }
+          + tax.map { ["tax": $0] }
+          + additional
+      return nonOptional + optional
+    default:
+      fatalError()
+    }
   }
 }

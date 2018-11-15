@@ -19,10 +19,32 @@ extension BVAnalyticsEvent {
     var dict = toDict
     dict += BVAnalyticsEvent.commonAnalyticsValues { return false }
     
-    dict["cl"] = "PageView"
+    dict[BVAnalyticsConstants.clKey] = "PageView"
     dict["type"] = "Product"
     
     /// Convert everything to strings and type erase.
     return BVAnalyticsEvent.stringifyAndTypeErase(dict)
+  }
+  
+  internal func toPageViewDict() -> [String: Encodable] {
+    switch self {
+    case let .pageView(
+      bvProduct,
+      productId,
+      brand,
+      categoryId,
+      rootCategoryId,
+      additional):
+      let nonOptional: [String: Encodable] =
+        ["bvProduct": bvProduct, "productId": productId]
+      let optional: [String: Encodable] =
+        [:] + brand.map { ["brand": $0] }
+          + categoryId.map { ["categoryId": $0] }
+          + rootCategoryId.map { ["rootCategoryId": $0] }
+          + additional
+      return nonOptional + optional
+    default:
+      fatalError()
+    }
   }
 }

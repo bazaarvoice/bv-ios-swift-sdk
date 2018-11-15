@@ -80,7 +80,9 @@ internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
             tries -= 1
             
             BVLogger.sharedLogger.debug(
-              "Retrying multi-part boundary generation")
+              BVLogMessage(
+                BVConversationsConstants.bvProduct,
+                msg: "Retrying multi-part boundary generation"))
             
             continue
         }
