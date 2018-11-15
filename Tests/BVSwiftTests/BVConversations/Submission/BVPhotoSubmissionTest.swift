@@ -113,14 +113,11 @@ class BVPhotoSubmissionTest: XCTestCase {
       XCTAssertEqual(photoId, "38771tu37go1g7s11u0u8xwvt")
       XCTAssertEqual(photoSizes.count, 2)
       
-      guard let formFieldError = formFieldErrors.first,
-        let formFieldErrorName = formFieldError.name
-        else {
-          XCTFail()
-          return
+      guard let formFieldError = formFieldErrors.first else {
+        XCTFail()
+        return
       }
       
-      XCTAssertEqual(formFieldErrorName, "RandomError2")
       XCTAssertEqual(formFieldError.code, "SOME_WEIRD_CODE")
       XCTAssertEqual(formFieldError.message, "This is a test.")
       

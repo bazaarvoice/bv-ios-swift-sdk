@@ -175,7 +175,10 @@ extension BVMediaSubmission {
             
             concurrentGroup.enter()
             
-            BVLogger.sharedLogger.debug("Attempting to Upload Photo")
+            BVLogger.sharedLogger.debug(
+              BVLogMessage(
+                BVConversationsConstants.bvProduct,
+                msg: "Attempting to Upload Photo"))
             
             photoSubmission
               .configure(config)
@@ -193,7 +196,10 @@ extension BVMediaSubmission {
                     returnedPhotos.append(actualPhoto.merge(photo))
                   }
                   
-                  BVLogger.sharedLogger.debug("Uploaded Photo")
+                  BVLogger.sharedLogger.debug(
+                    BVLogMessage(
+                      BVConversationsConstants.bvProduct,
+                      msg: "Uploaded Photo"))
                 }
                 
                 concurrentGroup.leave()
