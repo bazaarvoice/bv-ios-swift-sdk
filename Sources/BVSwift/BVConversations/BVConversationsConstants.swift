@@ -8,6 +8,7 @@
 import Foundation
 
 internal struct BVConversationsConstants {
+  static let bvProduct: String = "Conversations"
   static let apiVersionKey: String = "BVConversationsAPIVersion"
   static let apiKey: String = "apiKeyConversations"
   static let clientKey: String = "clientId"
