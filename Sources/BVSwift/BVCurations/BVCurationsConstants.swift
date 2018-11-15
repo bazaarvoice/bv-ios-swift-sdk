@@ -10,7 +10,7 @@ import Foundation
 
 
 internal struct BVCurationsConstants {
-  
+  static let bvProduct: String = "Curations"
   static let apiKey: String = "apiKeyCurations"
   static let clientKey: String = "client"
   static let parameterKey: String = "passkey"

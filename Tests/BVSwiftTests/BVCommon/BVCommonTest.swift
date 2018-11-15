@@ -111,6 +111,7 @@ class BVCommonTest: XCTestCase {
     }
   }
   
+  /*
   func testAnalyticsEventAppStateSubmission() {
     
     let expectation =
@@ -135,6 +136,7 @@ class BVCommonTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+ */
   
   func testSDKVersionExistence() {
     let bundles = Bundle.allFrameworks
