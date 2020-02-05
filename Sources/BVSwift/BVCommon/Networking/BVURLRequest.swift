@@ -45,6 +45,27 @@ BVURLRequestable, BVURLQueryItemable, BVURLRequestUserAgentable {
     if let items = urlQueryItems,
       !items.isEmpty {
       urlComponents.queryItems = items
+        
+        // NOTE:- To make mock API work
+        if self.resource == "employee" {
+            if let index = urlComponents.queryItems?.firstIndex(where: {$0.name == "filter"}) {
+                let filter = urlComponents.queryItems![index]
+                
+                let newFilter = URLQueryItem(name: "filter", value: filter.value!.replacingOccurrences(of: "eq:", with: ""))
+                urlComponents.queryItems?.remove(at: index)
+                urlComponents.queryItems?.append(newFilter)
+            }
+            
+            if let index = urlComponents.queryItems?.firstIndex(where: {$0.name == "sort"}) {
+                let sort = urlComponents.queryItems![index]
+                
+                var newSortValue = sort.value?.replacingOccurrences(of: ":asc", with: "")
+                newSortValue = newSortValue?.replacingOccurrences(of: ":desc", with: "")
+                let newSort = URLQueryItem(name: "sort", value: newSortValue)
+                urlComponents.queryItems?.remove(at: index)
+                urlComponents.queryItems?.append(newSort)
+            }
+        }
     }
     
     guard let url: URL = urlComponents.url else {
@@ -140,6 +161,11 @@ extension BVURLRequest: BVURLRequestableInternal {
   final internal var commonEndpoint: String {
     if let raw = rawConfiguration {
       return raw.endpoint
+    }
+    
+    // NOTE:- check added for mock API
+    if resource == "employee" {
+        return "http://localhost:8080/"
     }
     return configuration?.endpoint ?? String.empty
   }

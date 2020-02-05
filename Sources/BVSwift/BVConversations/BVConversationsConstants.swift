@@ -119,6 +119,13 @@ internal struct BVConversationsConstants {
       static let userLocation: String = "UserLocation"
     }
   }
+    
+    internal struct BVEmployees {
+        static let singularKey: String = "Employee"
+        static let pluralKey: String = "Employees"
+        
+        static let getResource: String = "employee"
+    }
   
   internal struct BVBadge {
     
