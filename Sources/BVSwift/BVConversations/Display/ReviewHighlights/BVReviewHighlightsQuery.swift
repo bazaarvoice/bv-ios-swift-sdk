@@ -8,6 +8,10 @@
 
 import Foundation
 
-class BVReviewHighlightsQuery {
+class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
+    
+    private var ignoresCompletion: Bool = false
+    
+    
     
 }
