@@ -7,3 +7,16 @@
 // 
 
 import Foundation
+
+public struct BVReviewHighlight: BVQueryable {
+    
+    public static var singularKey: String {
+        return ""
+    }
+    
+    public static var pluralKey: String {
+        return ""
+    }
+    
+    
+}
