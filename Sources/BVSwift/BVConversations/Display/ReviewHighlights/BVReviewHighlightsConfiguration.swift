@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ReviewHighlightsConfiguration: BVConfiguration {
+public enum BVReviewHighlightsConfiguration: BVConfiguration {
     
     case display(
         clientKey: String,
