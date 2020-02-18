@@ -12,6 +12,8 @@
 		9F5B70EF23FA879E0057EC32 /* BVReviewHighlightsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B70EE23FA879E0057EC32 /* BVReviewHighlightsConfiguration.swift */; };
 		9F5B70F123FA9A590057EC32 /* BVReviewHighlightsQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B70F023FA9A590057EC32 /* BVReviewHighlightsQueryResponse.swift */; };
 		9F5B70F323FAA1570057EC32 /* ReviewHighlightsQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B70F223FAA1570057EC32 /* ReviewHighlightsQueryable.swift */; };
+		9F9A706523FBA03D00AB5CF3 /* BVReviewHighlights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A706423FBA03D00AB5CF3 /* BVReviewHighlights.swift */; };
+		9F9E39D023FB985700BB2BA0 /* BVProductReviewHighlightsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9E39CF23FB985700BB2BA0 /* BVProductReviewHighlightsQuery.swift */; };
 		B512EA1520EC0D3000531CA7 /* BVCurationsBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512EA1420EC0D3000531CA7 /* BVCurationsBrand.swift */; };
 		B52149DB20D179E000BF9D1B /* BVProductAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DA20D179E000BF9D1B /* BVProductAttribute.swift */; };
 		B52149DD20D17F1700BF9D1B /* BVCurationsProductAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DC20D17F1700BF9D1B /* BVCurationsProductAttribute.swift */; };
@@ -253,6 +255,8 @@
 		9F5B70EE23FA879E0057EC32 /* BVReviewHighlightsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewHighlightsConfiguration.swift; sourceTree = "<group>"; };
 		9F5B70F023FA9A590057EC32 /* BVReviewHighlightsQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewHighlightsQueryResponse.swift; sourceTree = "<group>"; };
 		9F5B70F223FAA1570057EC32 /* ReviewHighlightsQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHighlightsQueryable.swift; sourceTree = "<group>"; };
+		9F9A706423FBA03D00AB5CF3 /* BVReviewHighlights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewHighlights.swift; sourceTree = "<group>"; };
+		9F9E39CF23FB985700BB2BA0 /* BVProductReviewHighlightsQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductReviewHighlightsQuery.swift; sourceTree = "<group>"; };
 		B512EA1420EC0D3000531CA7 /* BVCurationsBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsBrand.swift; sourceTree = "<group>"; };
 		B52149DA20D179E000BF9D1B /* BVProductAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductAttribute.swift; sourceTree = "<group>"; };
 		B52149DC20D17F1700BF9D1B /* BVCurationsProductAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsProductAttribute.swift; sourceTree = "<group>"; };
@@ -503,12 +507,21 @@
 		9F5B70EB23FA84430057EC32 /* ReviewHighlights */ = {
 			isa = PBXGroup;
 			children = (
+				9F9E39CE23FB983700BB2BA0 /* Types */,
 				9F5B70E923FA843E0057EC32 /* BVReviewHighlightsQuery.swift */,
 				9F5B70EE23FA879E0057EC32 /* BVReviewHighlightsConfiguration.swift */,
 				9F5B70F023FA9A590057EC32 /* BVReviewHighlightsQueryResponse.swift */,
 				9F5B70F223FAA1570057EC32 /* ReviewHighlightsQueryable.swift */,
 			);
 			path = ReviewHighlights;
+			sourceTree = "<group>";
+		};
+		9F9E39CE23FB983700BB2BA0 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				9F9E39CF23FB985700BB2BA0 /* BVProductReviewHighlightsQuery.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		B53984B320D94F4D00EF77DA /* BVRecommendations */ = {
@@ -820,6 +833,7 @@
 				B5B31E9A20B373A3002DBEC8 /* BVUAS.swift */,
 				B5B31E8F20B373A3002DBEC8 /* BVVideo.swift */,
 				9F5B70EC23FA84A00057EC32 /* BVReviewHighlight.swift */,
+				9F9A706423FBA03D00AB5CF3 /* BVReviewHighlights.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1352,6 +1366,7 @@
 				B5EC2F7620CACF4B002F8233 /* BVCurationsConfiguration.swift in Sources */,
 				B5B31F1420B373A3002DBEC8 /* BVAnswerFilter.swift in Sources */,
 				B5B31E7F20B3739A002DBEC8 /* BVQueryDispatchQueueable.swift in Sources */,
+				9F9E39D023FB985700BB2BA0 /* BVProductReviewHighlightsQuery.swift in Sources */,
 				B57B83AA2180FC8E006B378E /* BVAnalyticsImpressionType.swift in Sources */,
 				B5FC4B7320D2E2F10072B354 /* BVCurationsCustomContent.swift in Sources */,
 				B5B31F2520B373A3002DBEC8 /* BVCommentSubmission.swift in Sources */,
@@ -1431,6 +1446,7 @@
 				B5B31F0020B373A3002DBEC8 /* BVReviewQuery.swift in Sources */,
 				B5EC2F8720CB048C002F8233 /* BVCurationsQueryable.swift in Sources */,
 				B53984E920E292F100EF77DA /* BVCurationsDistributionElement.swift in Sources */,
+				9F9A706523FBA03D00AB5CF3 /* BVReviewHighlights.swift in Sources */,
 				B5B31E8720B3739A002DBEC8 /* BVSubmissionable.swift in Sources */,
 				B5B31E4C20B37383002DBEC8 /* BVAnalyticsEventPageView.swift in Sources */,
 				B5FC4B8320D839220072B354 /* BVManagerCurationsSubmission.swift in Sources */,

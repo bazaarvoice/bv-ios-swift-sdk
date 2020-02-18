@@ -9,9 +9,7 @@
 import Foundation
 
 class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
-    
-    public var productId: String?
-    
+        
     private var ignoreCompletion: Bool = false
     private var reviewHighlightsConfiguration: BVReviewHighlightsConfiguration?
     
