@@ -14,6 +14,10 @@ class BVProductReviewHighlightsQuery: BVReviewHighlightsQuery<BVReviewHighlight>
     
     public init(productId: String) {
         self.productId = productId
+        
+        BVReviewHighlights.productId = productId
+        BVReviewHighlights.clientId = "1800petmeds"
+        
         super.init(BVReviewHighlights.self)
     }
 }
