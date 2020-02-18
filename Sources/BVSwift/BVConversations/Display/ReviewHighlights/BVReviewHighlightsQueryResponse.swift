@@ -11,7 +11,7 @@ import Foundation
 public protocol BVReviewHighlightsQueryMeta { }
 
 public enum BVReviewHighlightsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
-    public typealias ResponseType = [BVType]
+    public typealias ResponseType = BVType
     
     public typealias MetaType = BVReviewHighlightsQueryMeta
     
