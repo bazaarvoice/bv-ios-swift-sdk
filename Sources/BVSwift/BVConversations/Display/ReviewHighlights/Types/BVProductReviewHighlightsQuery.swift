@@ -15,5 +15,5 @@ class BVProductReviewHighlightsQuery: BVReviewHighlightsQuery<BVReviewHighlight>
     public init(productId: String) {
         self.productId = productId
         super.init(BVReviewHighlights.self)
-    } 
+    }
 }

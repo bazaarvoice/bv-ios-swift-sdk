@@ -127,7 +127,26 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
 }
 
 
-
+extension BVReviewHighlightsQuery: BVConfigurable {
+    
+    typealias Configuration = BVReviewHighlightsConfiguration
+    
+    @discardableResult
+    func configure(_ config: BVReviewHighlightsConfiguration) -> Self {
+        assert(nil == reviewHighlightsConfiguration)
+        reviewHighlightsConfiguration = config
+        
+        update(
+          .unsafe(
+            BVConversationsConstants.parameterKey,
+            config.configurationKey, nil))
+        
+        configureExistentially(config)
+        
+        return self
+    }
+    
+}
 
 // MARK: - BVReviewHighlightsQuery: BVReviewHighlightsQueryPreflightable
 extension BVReviewHighlightsQuery: BVReviewHighlightsQueryPreflightable {
