@@ -9,6 +9,10 @@
 import Foundation
 
 class BVReviewHighlights: BVQueryable {
+    
+    static var productId: String?
+    static var clientId: String?
+    
     static var singularKey: String {
         return "subject"
     }
@@ -26,6 +30,7 @@ class BVReviewHighlights: BVQueryable {
 
 extension BVReviewHighlights: BVQueryableInternal {
     internal static var getResource: String? {
-        return "/highlights/v3/1/"
+        
+        return "/highlights/v3/1/" + "\(clientId ?? "")/" + "\(productId ?? "")"
     }
 }
