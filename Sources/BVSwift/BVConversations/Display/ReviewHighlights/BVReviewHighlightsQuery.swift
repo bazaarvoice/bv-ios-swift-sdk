@@ -10,7 +10,7 @@ import Foundation
 
 class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     
-    public let productId: String?
+    public var productId: String?
     
     private var ignoreCompletion: Bool = false
     private var reviewHighlightsConfiguration: BVReviewHighlightsConfiguration?
@@ -26,10 +26,10 @@ class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     }
     
     
-    public init(productId: String) {
-        self.productId = productId
-        super.init(BVReviewHighlightsQueryResponse.self)
-    }
+//    public init(productId: String) {
+//        self.productId = productId
+//        super.init(BVReviewHighlightsQueryResponse.self)
+//    }
     
     internal override init<BVTypeInternal: BVQueryableInternal>(
       _ type: BVTypeInternal.Type) {
