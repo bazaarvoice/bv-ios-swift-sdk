@@ -82,6 +82,7 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
         do {
           let jsonObject =
             try JSONSerialization.jsonObject(with: jsonData, options: [])
+            print(jsonObject)
           BVLogger.sharedLogger.debug(
             BVLogMessage(
               BVRecommendationsConstants.bvProduct,
@@ -94,18 +95,18 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
         }
         #endif
         
-//        guard let response: BVRecommendationsQueryResponseInternal<BVType> =
-//          try? JSONDecoder()
-//            .decode(
-//              BVRecommendationsQueryResponseInternal<BVType>.self,
-//              from: jsonData) else {
-//                completion(
-//                  .failure(
-//                    [BVCommonError.unknown(
-//                      "An Unknown parse error occurred")]))
-//                return
-//        }
-//
+        guard let response: BVReviewHighlightsQueryResponseInternal<BVType> =
+          try? JSONDecoder()
+            .decode(
+             BVReviewHighlightsQueryResponseInternal<BVType>.self,
+              from: jsonData) else {
+                completion(
+                  .failure(
+                    [BVCommonError.unknown(
+                      "An Unknown parse error occurred")]))
+                return
+        }
+
 //        guard let profile = response.profile else {
 //          completion(
 //            .failure(
@@ -135,11 +136,6 @@ extension BVReviewHighlightsQuery: BVConfigurable {
     func configure(_ config: BVReviewHighlightsConfiguration) -> Self {
         assert(nil == reviewHighlightsConfiguration)
         reviewHighlightsConfiguration = config
-        
-        update(
-          .unsafe(
-            BVConversationsConstants.parameterKey,
-            config.configurationKey, nil))
         
         configureExistentially(config)
         
