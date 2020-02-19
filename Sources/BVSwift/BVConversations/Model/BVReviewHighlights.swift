@@ -8,20 +8,21 @@
 
 import Foundation
 
-class BVReviewHighlights: BVQueryable {
+public struct BVReviewHighlights: BVQueryable {
     
     static var productId: String?
     static var clientId: String?
     
-    static var singularKey: String {
+    public static var singularKey: String {
         return "subjects"
     }
     
-    static var pluralKey: String {
+    public static var pluralKey: String {
         return "subjects"
     }
     
-    public var reviewHighlights: [String: BVReviewHighlight]?
+    public var reviewHighlights: [String: [String: BVReviewHighlight]]?
+    
     
     private enum CodingKeys: String, CodingKey {
       case reviewHighlights = "subjects"
