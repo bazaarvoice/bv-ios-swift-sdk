@@ -21,11 +21,12 @@ public struct BVReviewHighlights: BVQueryable {
         return "subjects"
     }
     
-    public var reviewHighlights: [String: [String: BVReviewHighlight]]?
-    
+    public let positive: [String: BVReviewHighlight]
+    public let negative: [String: BVReviewHighlight]
     
     private enum CodingKeys: String, CodingKey {
-      case reviewHighlights = "subjects"
+        case positive = "positive"
+        case negative = "negative"
     }
 }
 
