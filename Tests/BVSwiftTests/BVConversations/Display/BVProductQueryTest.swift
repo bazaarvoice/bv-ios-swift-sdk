@@ -75,7 +75,7 @@ func testReviewHighlights() {
                             analyticsConfig: .dryRun(
                                 configType: .staging(clientId: "1800petmeds"))))
         
-        .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlight>) in
+        .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlights>) in
             
             print(response)
     }

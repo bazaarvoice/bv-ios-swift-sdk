@@ -95,16 +95,22 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
         }
         #endif
         
-        guard let response: BVReviewHighlightsQueryResponseInternal<BVType> =
-          try? JSONDecoder()
-            .decode(
-             BVReviewHighlightsQueryResponseInternal<BVType>.self,
-              from: jsonData) else {
-                completion(
-                  .failure(
-                    [BVCommonError.unknown(
-                      "An Unknown parse error occurred")]))
-                return
+        do {
+            guard let response: BVReviewHighlightsQueryResponseInternal<BVType> =
+              try? JSONDecoder()
+                .decode(
+                 BVReviewHighlightsQueryResponseInternal<BVType>.self,
+                  from: jsonData) else {
+                    completion(
+                      .failure(
+                        [BVCommonError.unknown(
+                          "An Unknown parse error occurred")]))
+                    return
+            }
+            print(response)
+        }
+        catch {
+            print(error)
         }
 
 //        guard let profile = response.profile else {
