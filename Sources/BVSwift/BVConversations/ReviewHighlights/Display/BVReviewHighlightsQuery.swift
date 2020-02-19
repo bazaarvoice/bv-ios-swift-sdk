@@ -95,23 +95,30 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
         }
         #endif
         
-        do {
-            guard let response: BVReviewHighlightsQueryResponseInternal<BVType> =
-              try? JSONDecoder()
+        guard let response: BVReviewHighlightsQueryResponseInternal<BVType> =
+            try? JSONDecoder()
                 .decode(
-                 BVReviewHighlightsQueryResponseInternal<BVType>.self,
-                  from: jsonData) else {
-                    completion(
-                      .failure(
-                        [BVCommonError.unknown(
-                          "An Unknown parse error occurred")]))
-                    return
-            }
-            print(response)
+                    BVReviewHighlightsQueryResponseInternal<BVType>.self,
+                    from: jsonData) else {
+                        completion(
+                            .failure(
+                                [BVCommonError.unknown(
+                                    "An Unknown parse error occurred")]))
+                        return
         }
-        catch {
-            print(error)
+        
+        guard let reviewHighlights = response.reviewHighlights else {
+            completion(
+            .failure(
+                [BVCommonError.unknown(
+                    "An Unknown parse error occurred")])
+            )
+            return
         }
+
+        completion(.success(reviewHighlights))
+        print(response)
+
 
 //        guard let profile = response.profile else {
 //          completion(
@@ -124,8 +131,8 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
 //        completion(.success(response, [profile]))
 //        self?.recommendationsPostflight([profile])
         
-      case let .failure(errors): break
-        //completion(.failure(errors))
+      case let .failure(errors):
+        completion(.failure(errors))
       }
     }
     
