@@ -14,14 +14,14 @@ class BVReviewHighlights: BVQueryable {
     static var clientId: String?
     
     static var singularKey: String {
-        return "subject"
+        return "subjects"
     }
     
     static var pluralKey: String {
         return "subjects"
     }
     
-    public let reviewHighlights: [BVReviewHighlight]?
+    public var reviewHighlights: [String: BVReviewHighlight]?
     
     private enum CodingKeys: String, CodingKey {
       case reviewHighlights = "subjects"

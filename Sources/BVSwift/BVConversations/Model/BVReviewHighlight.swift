@@ -17,6 +17,5 @@ public struct BVReviewHighlight: BVQueryable {
     public static var pluralKey: String {
         return ""
     }
-    
-    
+        
 }
