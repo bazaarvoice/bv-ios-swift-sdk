@@ -10,6 +10,7 @@ import Foundation
 
 internal struct BVReviewHighlightsConstants {
     
+    // TODO:- Add staging endpoint
     static let stagingEndpoint: String = ""
     static let productionEndpoint: String = "https://rh.nexus.bazaarvoice.com/"
     
