@@ -32,7 +32,7 @@ public enum BVReviewHighlightsQueryResponse<BVType: BVQueryable>: BVURLRequestab
       return errors
     }
     
-    case success(MetaType, ResponseType)
+    case success(ResponseType)
     case failure([Error])
 }
 
