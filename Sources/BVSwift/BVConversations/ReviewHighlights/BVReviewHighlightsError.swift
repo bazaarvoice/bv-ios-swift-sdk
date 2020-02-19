@@ -7,3 +7,7 @@
 // 
 
 import Foundation
+
+public enum BVReviewHighlightsError: Error {
+    // TODO:- Add all error cases here
+}
