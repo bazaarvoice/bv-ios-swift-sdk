@@ -506,16 +506,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9F5B70EB23FA84430057EC32 /* ReviewHighlights */ = {
+		9F9B49ED23FD3DD900657163 /* ReviewHighlights */ = {
 			isa = PBXGroup;
 			children = (
-				9F9E39CE23FB983700BB2BA0 /* Types */,
-				9F5B70E923FA843E0057EC32 /* BVReviewHighlightsQuery.swift */,
 				9F5B70EE23FA879E0057EC32 /* BVReviewHighlightsConfiguration.swift */,
-				9F5B70F023FA9A590057EC32 /* BVReviewHighlightsQueryResponse.swift */,
-				9F5B70F223FAA1570057EC32 /* ReviewHighlightsQueryable.swift */,
+				9F9B49EE23FD3DEB00657163 /* Display */,
+				9F9B49EF23FD3DF300657163 /* Model */,
 			);
 			path = ReviewHighlights;
+			sourceTree = "<group>";
+		};
+		9F9B49EE23FD3DEB00657163 /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				9F5B70E923FA843E0057EC32 /* BVReviewHighlightsQuery.swift */,
+				9F5B70F023FA9A590057EC32 /* BVReviewHighlightsQueryResponse.swift */,
+				9F5B70F223FAA1570057EC32 /* ReviewHighlightsQueryable.swift */,
+				9F9E39CE23FB983700BB2BA0 /* Types */,
+			);
+			path = Display;
+			sourceTree = "<group>";
+		};
+		9F9B49EF23FD3DF300657163 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9F5B70EC23FA84A00057EC32 /* BVReviewHighlight.swift */,
+				9F9A706423FBA03D00AB5CF3 /* BVReviewHighlights.swift */,
+				9F9B49EB23FD1A5400657163 /* BVReviewHighlightsReview.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9F9E39CE23FB983700BB2BA0 /* Types */ = {
@@ -792,6 +811,7 @@
 		B5B31E8920B373A3002DBEC8 /* BVConversations */ = {
 			isa = PBXGroup;
 			children = (
+				9F9B49ED23FD3DD900657163 /* ReviewHighlights */,
 				B5B31E8B20B373A3002DBEC8 /* BVConversationsConfiguration.swift */,
 				B5B31E8A20B373A3002DBEC8 /* BVConversationsConstants.swift */,
 				B5B31E8D20B373A3002DBEC8 /* BVConversationsError.swift */,
@@ -834,9 +854,6 @@
 				B5B31E9920B373A3002DBEC8 /* BVSyndicationSource.swift */,
 				B5B31E9A20B373A3002DBEC8 /* BVUAS.swift */,
 				B5B31E8F20B373A3002DBEC8 /* BVVideo.swift */,
-				9F5B70EC23FA84A00057EC32 /* BVReviewHighlight.swift */,
-				9F9A706423FBA03D00AB5CF3 /* BVReviewHighlights.swift */,
-				9F9B49EB23FD1A5400657163 /* BVReviewHighlightsReview.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -844,7 +861,6 @@
 		B5B31EA720B373A3002DBEC8 /* Display */ = {
 			isa = PBXGroup;
 			children = (
-				9F5B70EB23FA84430057EC32 /* ReviewHighlights */,
 				B5B31EB320B373A3002DBEC8 /* BVConversationsQuery.swift */,
 				B5B31ECD20B373A3002DBEC8 /* BVConversationsQueryable.swift */,
 				B5B31ECE20B373A3002DBEC8 /* BVConversationsQueryResponse.swift */,
