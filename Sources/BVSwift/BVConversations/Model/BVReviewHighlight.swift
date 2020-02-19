@@ -8,14 +8,11 @@
 
 import Foundation
 
-public struct BVReviewHighlight: BVQueryable {
+public struct BVReviewHighlight: BVAuxiliaryable {
     
-    public static var singularKey: String {
-        return ""
-    }
+    public let mentionsCount: Int
     
-    public static var pluralKey: String {
-        return ""
+    private enum CodingKeys: String, CodingKey {
+      case mentionsCount = "mentionsCount"
     }
-        
 }
