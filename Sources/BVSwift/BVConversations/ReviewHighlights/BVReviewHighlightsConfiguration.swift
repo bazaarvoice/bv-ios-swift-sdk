@@ -79,7 +79,7 @@ extension BVReviewHighlightsConfiguration: Hashable {
 
 extension BVReviewHighlightsConfiguration: BVConfigurationInternal {
   
-  /// The only sub-configuration that exists for converrsations is the
+  /// The only sub-configuration that exists for reviewHighlights is the
   /// BVAnalyticsConfiguration.
   internal var subConfigurations: [BVConfigurationInternal]? {
     return [analyticsConfiguration]
