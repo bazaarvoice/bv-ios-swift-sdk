@@ -32,7 +32,6 @@ public struct BVReviewHighlights: BVQueryable {
 
 extension BVReviewHighlights: BVQueryableInternal {
     internal static var getResource: String? {
-        
-        return "/highlights/v3/1/" + "\(clientId ?? "")/" + "\(productId ?? "")"
+        return BVReviewHighlightsConstants.BVReviewHighlights.getResource + "\(clientId ?? "")/" + "\(productId ?? "")"
     }
 }
