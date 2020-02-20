@@ -20,7 +20,11 @@ public enum BVReviewHighlightsConfiguration: BVConfiguration {
     }
     
     public var endpoint: String {
-        return "https://rh.nexus.bazaarvoice.com"
+        guard case .staging(_) = self.type else {
+            return BVReviewHighlightsConstants.productionEndpoint
+            
+        }
+        return BVReviewHighlightsConstants.stagingEndpoint
     }
     
     public var type: BVConfigurationType {
