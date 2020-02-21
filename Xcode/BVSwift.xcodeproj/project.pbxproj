@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9FE00E7D23E83571002D3401 /* BVUASSubmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE00E7C23E83571002D3401 /* BVUASSubmissionTests.swift */; };
 		B512EA1520EC0D3000531CA7 /* BVCurationsBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512EA1420EC0D3000531CA7 /* BVCurationsBrand.swift */; };
 		B52149DB20D179E000BF9D1B /* BVProductAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DA20D179E000BF9D1B /* BVProductAttribute.swift */; };
 		B52149DD20D17F1700BF9D1B /* BVCurationsProductAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52149DC20D17F1700BF9D1B /* BVCurationsProductAttribute.swift */; };
@@ -243,6 +244,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9FE00E7C23E83571002D3401 /* BVUASSubmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVUASSubmissionTests.swift; sourceTree = "<group>"; };
 		B512EA1420EC0D3000531CA7 /* BVCurationsBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsBrand.swift; sourceTree = "<group>"; };
 		B52149DA20D179E000BF9D1B /* BVProductAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductAttribute.swift; sourceTree = "<group>"; };
 		B52149DC20D17F1700BF9D1B /* BVCurationsProductAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCurationsProductAttribute.swift; sourceTree = "<group>"; };
@@ -969,6 +971,7 @@
 				B5B31F3B20B373D8002DBEC8 /* BVPhotoSubmissionTest.swift */,
 				B5B31F3E20B373D8002DBEC8 /* BVQuestionSubmissionTest.swift */,
 				B5B31F3F20B373D8002DBEC8 /* BVReviewSubmissionTest.swift */,
+				9FE00E7C23E83571002D3401 /* BVUASSubmissionTests.swift */,
 			);
 			path = Submission;
 			sourceTree = "<group>";
@@ -1444,6 +1447,7 @@
 				B5B31F5E20B37416002DBEC8 /* BVProductQueryTest.swift in Sources */,
 				B5B31F6620B3741D002DBEC8 /* BVFeedbackSubmissionTest.swift in Sources */,
 				B5B31F6020B37416002DBEC8 /* BVURLParameterTest.swift in Sources */,
+				9FE00E7D23E83571002D3401 /* BVUASSubmissionTests.swift in Sources */,
 				B5B31F6120B37416002DBEC8 /* BVReviewQueryTest.swift in Sources */,
 				B5B31F5D20B37416002DBEC8 /* BVCommentQueryTest.swift in Sources */,
 				B5B31F6720B3741D002DBEC8 /* BVQuestionSubmissionTest.swift in Sources */,
