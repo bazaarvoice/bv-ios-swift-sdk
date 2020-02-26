@@ -1,0 +1,4 @@
+framework module BVSwift {
+    header "BVSwift-Swift.h"
+    requires objc
+}
