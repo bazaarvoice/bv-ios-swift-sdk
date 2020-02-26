@@ -526,9 +526,8 @@
 			children = (
 				98686D702407157A00D67889 /* BVRecommendationsQueryTest.swift */,
 			);
-			name = BVRecommendations;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwiftTests/BVRecommendations";
-			sourceTree = "<absolute>";
+			path = BVRecommendations;
+			sourceTree = "<group>";
 		};
 		B53984B520D9505500EF77DA /* Display */ = {
 			isa = PBXGroup;
@@ -681,9 +680,8 @@
 				B53984B320D94F4D00EF77DA /* BVRecommendations */,
 				B5B31F6A20B375DC002DBEC8 /* Support */,
 			);
-			name = BVSwift;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwift";
-			sourceTree = "<absolute>";
+			path = BVSwift;
+			sourceTree = "<group>";
 		};
 		B5B31E3320B37383002DBEC8 /* BVAnalytics */ = {
 			isa = PBXGroup;
@@ -701,9 +699,8 @@
 				B5BB14632182154E005A6246 /* Submission */,
 				B5B31E3520B37383002DBEC8 /* Types */,
 			);
-			name = BVAnalytics;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwift/BVAnalytics";
-			sourceTree = "<absolute>";
+			path = BVAnalytics;
+			sourceTree = "<group>";
 		};
 		B5B31E3520B37383002DBEC8 /* Types */ = {
 			isa = PBXGroup;
@@ -744,9 +741,8 @@
 				B5B31E6E20B3739A002DBEC8 /* Submission */,
 				B57B837B216519A2006B378E /* Utilities */,
 			);
-			name = BVCommon;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwift/BVCommon";
-			sourceTree = "<absolute>";
+			path = BVCommon;
+			sourceTree = "<group>";
 		};
 		B5B31E6720B3739A002DBEC8 /* Query */ = {
 			isa = PBXGroup;
@@ -783,9 +779,8 @@
 				B5B31E8E20B373A3002DBEC8 /* Model */,
 				B5B31ECF20B373A3002DBEC8 /* Submission */,
 			);
-			name = BVConversations;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwift/BVConversations";
-			sourceTree = "<absolute>";
+			path = BVConversations;
+			sourceTree = "<group>";
 		};
 		B5B31E8E20B373A3002DBEC8 /* Model */ = {
 			isa = PBXGroup;
@@ -926,9 +921,8 @@
 				B5B31F2820B373D8002DBEC8 /* MockData */,
 				B5B31F6920B3756E002DBEC8 /* Support */,
 			);
-			name = BVSwiftTests;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwiftTests";
-			sourceTree = "<absolute>";
+			path = BVSwiftTests;
+			sourceTree = "<group>";
 		};
 		B5B31F2820B373D8002DBEC8 /* MockData */ = {
 			isa = PBXGroup;
@@ -948,9 +942,8 @@
 				98686D49240714A000D67889 /* BVCommonTest.swift */,
 				98686D48240714A000D67889 /* BVURLParameterTest.swift */,
 			);
-			name = BVCommon;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwiftTests/BVCommon";
-			sourceTree = "<absolute>";
+			path = BVCommon;
+			sourceTree = "<group>";
 		};
 		B5B31F2F20B373D8002DBEC8 /* BVConversations */ = {
 			isa = PBXGroup;
@@ -998,9 +991,8 @@
 				98686D452407149000D67889 /* BVAnalyticsCommonTest.swift */,
 				98686D442407149000D67889 /* BVPixelTest.swift */,
 			);
-			name = BVAnalytics;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwiftTests/BVAnalytics";
-			sourceTree = "<absolute>";
+			path = BVAnalytics;
+			sourceTree = "<group>";
 		};
 		B5B31F6920B3756E002DBEC8 /* Support */ = {
 			isa = PBXGroup;
@@ -1041,9 +1033,8 @@
 				B5EC2F8120CAE11F002F8233 /* Model */,
 				B5EC2F7320CACE84002F8233 /* Submission */,
 			);
-			name = BVCurations;
-			path = "/Users/cameron.ollivierre/bv-ios-sdk-swift-dev/BVSwift/BVCurations";
-			sourceTree = "<absolute>";
+			path = BVCurations;
+			sourceTree = "<group>";
 		};
 		B5EC2F7320CACE84002F8233 /* Submission */ = {
 			isa = PBXGroup;
