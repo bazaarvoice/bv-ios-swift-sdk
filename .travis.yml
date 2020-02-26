@@ -1,0 +1,20 @@
+language: objective-c
+osx_image: xcode10.2
+
+git:
+  depth: 1
+
+env:
+  matrix:
+    - TEST_TYPE=build_framework
+    - TEST_TYPE=unit_tests
+
+before_install:
+  - set -e
+  - set -o pipefail
+  - gem install xcpretty --no-document --quiet
+
+script:
+  - '[ "$TEST_TYPE" != unit_tests ] || ./ci_scripts/run_tests.sh'
+  - '[ "$TEST_TYPE" != build_framework ] || ./ci_scripts/build_framework.sh'
+
