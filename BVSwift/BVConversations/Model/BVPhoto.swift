@@ -36,8 +36,7 @@ public struct BVPhoto: BVSubmissionable {
   private let photoSizesArray: BVCodableDictionary<BVPhotoSize>?
   
   public func encode(to encoder: Encoder) throws {
-    try? convertImageToValidFormat()?.encode(to: encoder)
-  }
+    ((try? convertImageToValidFormat()?.encode(to: encoder)) as ()??)  }
   
   public init(from decoder: Decoder) throws {
     image = nil

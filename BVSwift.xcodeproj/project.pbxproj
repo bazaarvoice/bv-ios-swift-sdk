@@ -244,6 +244,18 @@
 		98686D792407159400D67889 /* skelly_android.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98686D742407159400D67889 /* skelly_android.jpg */; };
 		98686D7A2407159400D67889 /* testJPEGPhotoResourceDecode.json in Resources */ = {isa = PBXBuildFile; fileRef = 98686D752407159400D67889 /* testJPEGPhotoResourceDecode.json */; };
 		98686D7B2407159400D67889 /* testSyndicationSource.json in Resources */ = {isa = PBXBuildFile; fileRef = 98686D762407159400D67889 /* testSyndicationSource.json */; };
+		98686D7D240804B800D67889 /* BVMultiproduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D7C240804B800D67889 /* BVMultiproduct.swift */; };
+		98686D7F240804DB00D67889 /* BVMultiProductFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D7E240804DB00D67889 /* BVMultiProductFormData.swift */; };
+		98686D812408052F00D67889 /* BVMultiProductReviewSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D802408052F00D67889 /* BVMultiProductReviewSummary.swift */; };
+		98686D83240805A900D67889 /* BVMultiProductError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D82240805A900D67889 /* BVMultiProductError.swift */; };
+		98686D852408067100D67889 /* BVMultiProductQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D842408067100D67889 /* BVMultiProductQuery.swift */; };
+		98686D872408069600D67889 /* BVMultiProductQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D862408069600D67889 /* BVMultiProductQueryResponse.swift */; };
+		98686D892408089E00D67889 /* ProgressiveSubmissionReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D882408089E00D67889 /* ProgressiveSubmissionReview.swift */; };
+		98686D8B240808BD00D67889 /* BVProgressiveReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D8A240808BD00D67889 /* BVProgressiveReview.swift */; };
+		98686D8D240808F300D67889 /* BVProgressiveReviewFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */; };
+		98686D8F2408091F00D67889 /* BVProgressiveReviewSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D8E2408091F00D67889 /* BVProgressiveReviewSubmission.swift */; };
+		98686D9124080D0900D67889 /* BVMultiProductQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */; };
+		98686D9324080D5E00D67889 /* BVProgressiveSubmissionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */; };
 		B5B31E1D20B36ABD002DBEC8 /* BVSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -481,6 +493,18 @@
 		98686D742407159400D67889 /* skelly_android.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = skelly_android.jpg; sourceTree = "<group>"; };
 		98686D752407159400D67889 /* testJPEGPhotoResourceDecode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testJPEGPhotoResourceDecode.json; sourceTree = "<group>"; };
 		98686D762407159400D67889 /* testSyndicationSource.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testSyndicationSource.json; sourceTree = "<group>"; };
+		98686D7C240804B800D67889 /* BVMultiproduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiproduct.swift; sourceTree = "<group>"; };
+		98686D7E240804DB00D67889 /* BVMultiProductFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductFormData.swift; sourceTree = "<group>"; };
+		98686D802408052F00D67889 /* BVMultiProductReviewSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductReviewSummary.swift; sourceTree = "<group>"; };
+		98686D82240805A900D67889 /* BVMultiProductError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductError.swift; sourceTree = "<group>"; };
+		98686D842408067100D67889 /* BVMultiProductQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductQuery.swift; sourceTree = "<group>"; };
+		98686D862408069600D67889 /* BVMultiProductQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductQueryResponse.swift; sourceTree = "<group>"; };
+		98686D882408089E00D67889 /* ProgressiveSubmissionReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressiveSubmissionReview.swift; sourceTree = "<group>"; };
+		98686D8A240808BD00D67889 /* BVProgressiveReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveReview.swift; sourceTree = "<group>"; };
+		98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveReviewFields.swift; sourceTree = "<group>"; };
+		98686D8E2408091F00D67889 /* BVProgressiveReviewSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveReviewSubmission.swift; sourceTree = "<group>"; };
+		98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductQueryTest.swift; sourceTree = "<group>"; };
+		98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveSubmissionTest.swift; sourceTree = "<group>"; };
 		B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BVSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B31E1720B36ABD002DBEC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5B31E1C20B36ABD002DBEC8 /* BVSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BVSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -810,6 +834,13 @@
 				98686C942407113100D67889 /* BVSyndicationSource.swift */,
 				98686C932407113000D67889 /* BVUAS.swift */,
 				98686C842407112F00D67889 /* BVVideo.swift */,
+				98686D7C240804B800D67889 /* BVMultiproduct.swift */,
+				98686D7E240804DB00D67889 /* BVMultiProductFormData.swift */,
+				98686D802408052F00D67889 /* BVMultiProductReviewSummary.swift */,
+				98686D82240805A900D67889 /* BVMultiProductError.swift */,
+				98686D882408089E00D67889 /* ProgressiveSubmissionReview.swift */,
+				98686D8A240808BD00D67889 /* BVProgressiveReview.swift */,
+				98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -840,6 +871,8 @@
 				98686C692407110200D67889 /* BVQuestionSearchQuery.swift */,
 				98686C6A2407110200D67889 /* BVReviewQuery.swift */,
 				98686C702407110300D67889 /* BVReviewSearchQuery.swift */,
+				98686D842408067100D67889 /* BVMultiProductQuery.swift */,
+				98686D862408069600D67889 /* BVMultiProductQueryResponse.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -906,6 +939,7 @@
 				98686CB52407117300D67889 /* BVQuestionSubmission.swift */,
 				98686CB72407117300D67889 /* BVReviewSubmission.swift */,
 				98686CBB2407117400D67889 /* BVUASSubmission.swift */,
+				98686D8E2408091F00D67889 /* BVProgressiveReviewSubmission.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -967,6 +1001,7 @@
 				98686D4C240714D000D67889 /* BVQuestionQueryTest.swift */,
 				98686D4D240714D000D67889 /* BVReviewSearchQueryTest.swift */,
 				98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */,
+				98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -981,6 +1016,7 @@
 				98686D602407151600D67889 /* BVQuestionSubmissionTest.swift */,
 				98686D642407151600D67889 /* BVReviewSubmissionTest.swift */,
 				98686D5E2407151500D67889 /* BVUASSubmissionTests.swift */,
+				98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */,
 			);
 			path = Submission;
 			sourceTree = "<group>";
@@ -1288,6 +1324,7 @@
 				98686C092407100900D67889 /* BVURLParameterable.swift in Sources */,
 				98686BFB24070FE600D67889 /* BVLogMessage.swift in Sources */,
 				98686CA12407113100D67889 /* BVAuthor.swift in Sources */,
+				98686D872408069600D67889 /* BVMultiProductQueryResponse.swift in Sources */,
 				98686C61240710AE00D67889 /* BVProductFilter.swift in Sources */,
 				98686D19240712BB00D67889 /* BVCodable.swift in Sources */,
 				98686C59240710AE00D67889 /* BVProductSort.swift in Sources */,
@@ -1313,6 +1350,7 @@
 				98686BCB24070EC700D67889 /* BVAnalyticsEvent.swift in Sources */,
 				98686C57240710AE00D67889 /* BVAnswerSort.swift in Sources */,
 				98686BF424070FC300D67889 /* BVManager.swift in Sources */,
+				98686D8D240808F300D67889 /* BVProgressiveReviewFields.swift in Sources */,
 				98686C62240710AE00D67889 /* BVReviewStat.swift in Sources */,
 				98686D412407136400D67889 /* BVRecommendationsProduct.swift in Sources */,
 				98686BFC24070FE600D67889 /* BVLogNotifier.swift in Sources */,
@@ -1337,13 +1375,16 @@
 				98686C212407103D00D67889 /* BVSubmissionable.swift in Sources */,
 				98686C102407100900D67889 /* BVNetworkingManager.swift in Sources */,
 				98686C322407108600D67889 /* BVConversationsQueryable.swift in Sources */,
+				98686D83240805A900D67889 /* BVMultiProductError.swift in Sources */,
 				98686C282407106B00D67889 /* BVManagerConversationsSubmission.swift in Sources */,
+				98686D7D240804B800D67889 /* BVMultiproduct.swift in Sources */,
 				98686C162407102700D67889 /* BVQueryable.swift in Sources */,
 				98686CA82407113100D67889 /* BVFormField.swift in Sources */,
 				98686CA42407113100D67889 /* BVBadge.swift in Sources */,
 				98686CA22407113100D67889 /* BVDistributionValue.swift in Sources */,
 				98686D17240712BB00D67889 /* BVExpungeable.swift in Sources */,
 				98686D1F240712BB00D67889 /* BVXMLParser.swift in Sources */,
+				98686D892408089E00D67889 /* ProgressiveSubmissionReview.swift in Sources */,
 				98686C52240710AE00D67889 /* BVReviewInclude.swift in Sources */,
 				98686CF32407120700D67889 /* BVCurationsCoordinates.swift in Sources */,
 				98686C65240710AE00D67889 /* BVReviewFilteredStat.swift in Sources */,
@@ -1361,6 +1402,7 @@
 				98686BE824070F7D00D67889 /* BVAnalyticsEventPageView.swift in Sources */,
 				98686CF82407120700D67889 /* BVCurationsChannelContent.swift in Sources */,
 				98686BF324070FC300D67889 /* BVConfiguration.swift in Sources */,
+				98686D812408052F00D67889 /* BVMultiProductReviewSummary.swift in Sources */,
 				98686CA52407113100D67889 /* BVQAStatistics.swift in Sources */,
 				98686D012407122D00D67889 /* BVCurationsSubmissionResponse.swift in Sources */,
 				98686BC824070EC700D67889 /* BVAnalyticsLocaleService.swift in Sources */,
@@ -1369,8 +1411,10 @@
 				98686D29240712F700D67889 /* BVRecommendationsAnalytics.swift in Sources */,
 				98686C54240710AE00D67889 /* BVAuthorFilter.swift in Sources */,
 				98686CBC2407117400D67889 /* BVAnswerSubmission.swift in Sources */,
+				98686D7F240804DB00D67889 /* BVMultiProductFormData.swift in Sources */,
 				98686C312407108600D67889 /* BVConversationsQuery.swift in Sources */,
 				98686BEC24070F7D00D67889 /* BVAnalyticsEventImpression.swift in Sources */,
+				98686D8F2408091F00D67889 /* BVProgressiveReviewSubmission.swift in Sources */,
 				98686BC924070EC700D67889 /* BVAnalyticsConfiguration.swift in Sources */,
 				98686BDA24070F3800D67889 /* BVAnalyticsFeatureType.swift in Sources */,
 				98686C732407110300D67889 /* BVProductStatisticsQuery.swift in Sources */,
@@ -1444,9 +1488,11 @@
 				98686BCA24070EC700D67889 /* BVAnalyticsConstants.swift in Sources */,
 				98686C082407100900D67889 /* BVURLRequest.swift in Sources */,
 				98686D26240712F700D67889 /* BVRecommendationsConstants.swift in Sources */,
+				98686D852408067100D67889 /* BVMultiProductQuery.swift in Sources */,
 				98686BEE24070F7D00D67889 /* BVAnalyticsEventPersonalization.swift in Sources */,
 				98686C5F240710AE00D67889 /* BVReviewFilter.swift in Sources */,
 				98686C9E2407113100D67889 /* BVFeedback.swift in Sources */,
+				98686D8B240808BD00D67889 /* BVProgressiveReview.swift in Sources */,
 				98686C992407113100D67889 /* BVBrand.swift in Sources */,
 				98686BFD24070FE600D67889 /* BVLogger.swift in Sources */,
 				98686D062407123F00D67889 /* BVCurationsChannelContentSubmission.swift in Sources */,
@@ -1482,6 +1528,7 @@
 				98686D52240714D100D67889 /* BVQuestionQueryTest.swift in Sources */,
 				98686D472407149100D67889 /* BVPixelTest.swift in Sources */,
 				98686D54240714D100D67889 /* BVProductQueryTest.swift in Sources */,
+				98686D9124080D0900D67889 /* BVMultiProductQueryTest.swift in Sources */,
 				98686D6F2407153C00D67889 /* BVCurationsSubmissionTest.swift in Sources */,
 				98686D4B240714A000D67889 /* BVURLParameterTest.swift in Sources */,
 				98686D53240714D100D67889 /* BVReviewSearchQueryTest.swift in Sources */,
@@ -1494,6 +1541,7 @@
 				98686D652407151600D67889 /* BVUASSubmissionTests.swift in Sources */,
 				98686D55240714D100D67889 /* BVQueryTest.swift in Sources */,
 				98686D712407157A00D67889 /* BVRecommendationsQueryTest.swift in Sources */,
+				98686D9324080D5E00D67889 /* BVProgressiveSubmissionTest.swift in Sources */,
 				98686D4A240714A000D67889 /* BVCommonTest.swift in Sources */,
 				98686D6B2407151600D67889 /* BVReviewSubmissionTest.swift in Sources */,
 				98686D5A240714DF00D67889 /* BVReviewQueryTest.swift in Sources */,
