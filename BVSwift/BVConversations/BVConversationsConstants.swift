@@ -300,6 +300,21 @@ internal struct BVConversationsConstants {
       static let notEqualTo: String = "neq"
     }
   }
+    
+      
+  internal struct BVMultiProductQuery {
+       static let singularKey: String = "response"
+       static let pluralKey: String = "responses"
+       static let postResource: String = "initiateSubmit.json"
+      }
+      
+ internal struct BVProgressiveReviewSubmission {
+        static let singularKey: String = "response"
+        static let pluralKey: String = "responses"
+        static let postResource: String = "progressiveSubmit.json"
+      }
+      
+
   
   internal struct BVReviews {
     static let singularKey: String = "Review"

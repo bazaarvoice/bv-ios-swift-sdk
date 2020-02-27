@@ -68,10 +68,10 @@ Codable, BVCurationsSubmissionMetaData {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     if let statusCode =
-      try? container.decodeIfPresent(Int.self, forKey: .statusCode) {
+      ((try? container.decodeIfPresent(Int.self, forKey: .statusCode)) as Int??) {
       code = statusCode
     } else if let intCode =
-      try? container.decodeIfPresent(Int.self, forKey: .code) {
+      ((try? container.decodeIfPresent(Int.self, forKey: .code)) as Int??) {
       code = intCode
     } else {
       code = nil
@@ -79,7 +79,7 @@ Codable, BVCurationsSubmissionMetaData {
     
     var msg: String = ""
     if let statusString =
-      try? container.decodeIfPresent(String.self, forKey: .code) {
+      ((try? container.decodeIfPresent(String.self, forKey: .code)) as String??) {
       msg += (statusString ?? "")
     }
     
