@@ -39,6 +39,39 @@ public struct BVFormField: BVAuxiliaryable {
   }
 }
 
+public struct BVMultiProductFormField: BVAuxiliaryable {
+  private let type: String?
+  public var formInputType: BVFormInputType {
+    return BVFormInputType(rawValue: type)
+  }
+  public let identifier: String?
+  public let isDefault: Bool?
+  public let label: String?
+  public let classification: String?
+  public let maxLength: Int?
+  public let minLength: Int?
+  public let hidden: Bool?
+  public let required: Bool?
+  public let autoPopulate: Bool?
+  public let value: String?
+  public let valuesLabel: [String:String]?
+  
+  private enum CodingKeys: String, CodingKey {
+    case identifier = "id"
+    case isDefault = "default"
+    case label = "label"
+    case classification = "class"
+    case maxLength = "maxLength"
+    case minLength = "minLength"
+    case hidden = "hidden"
+    case required = "required"
+    case autoPopulate = "autoPopulate"
+    case type = "type"
+    case value = "value"
+    case valuesLabel = "valuesLabel"
+  }
+}
+
 public struct BVFormFieldError: Codable {
   public let codeString: String?
   public let messageString: String?

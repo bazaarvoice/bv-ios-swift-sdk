@@ -148,7 +148,7 @@ extension BVURLRequestableWithHandlerInternal {
       return
     }
     
-    if 300 <= httpResponse.statusCode {
+    if 400 < httpResponse.statusCode {
       let err = BVCommonError.network(
         httpResponse.statusCode, "HTTP Response <= 300")
       responseHandler?(.failure([err]))
