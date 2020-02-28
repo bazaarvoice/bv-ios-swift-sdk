@@ -376,7 +376,7 @@ internal struct BVConversationsConstants {
 }
 
 internal extension Bundle {
-  class internal var conversationsApiVersion: String {
+    class var conversationsApiVersion: String {
     let apiKey = BVConversationsConstants.apiVersionKey
     guard let version =
       bvBundle.infoDictionary?[apiKey] as? String else {

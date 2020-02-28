@@ -21,7 +21,7 @@ public extension URLSession {
   /// - Parameters:
   ///   - requestable: BVURLRequestable to be invoked
   @discardableResult
-  public func dataTask(
+    func dataTask(
     with requestable: BVURLRequestable) -> URLSessionDataTask? {
     return dataTask(with: requestable) { (_, _, _) in }
   }
@@ -30,7 +30,7 @@ public extension URLSession {
   /// - Parameters:
   ///   - requestable: BVURLRequestableWithFileURL to be invoked
   @discardableResult
-  public func uploadTask(
+    func uploadTask(
     with requestable: BVURLRequestableWithFileURL) -> URLSessionUploadTask? {
     return uploadTask(with: requestable) { (_, _, _) in }
   }
@@ -39,7 +39,7 @@ public extension URLSession {
   /// - Parameters:
   ///   - requestable: BVURLRequestableWithBodyData to be invoked
   @discardableResult
-  public func uploadTask(
+    func uploadTask(
     with requestable: BVURLRequestableWithBodyData) -> URLSessionUploadTask? {
     return uploadTask(with: requestable) { (_, _, _) in }
   }
@@ -70,7 +70,7 @@ public extension URLSession {
   /// figure out some way to defer in which case we'll have to change the
   /// function signature to be less "pure" with respect to the original.
   @discardableResult
-  public func dataTask(
+    func dataTask(
     with requestable: BVURLRequestable,
     completionHandler:
     @escaping (
@@ -137,7 +137,7 @@ public extension URLSession {
   /// figure out some way to defer in which case we'll have to change the
   /// function signature to be less "pure" with respect to the original.
   @discardableResult
-  public func uploadTask(
+    func uploadTask(
     with requestable: BVURLRequestableWithFileURL,
     completionHandler:
     @escaping (
@@ -210,7 +210,7 @@ public extension URLSession {
   /// figure out some way to defer in which case we'll have to change the
   /// function signature to be less "pure" with respect to the original.
   @discardableResult
-  public func uploadTask(
+    func uploadTask(
     with requestable: BVURLRequestableWithBodyData,
     completionHandler:
     @escaping (
