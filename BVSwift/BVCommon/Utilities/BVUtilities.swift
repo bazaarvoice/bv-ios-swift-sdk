@@ -108,28 +108,28 @@ internal extension String {
 }
 
 internal extension String {
-  internal static var empty: String = ""
+    static var empty: String = ""
   
-  internal func toBVDate() -> Date? {
+    func toBVDate() -> Date? {
     let df: DateFormatter = DateFormatter()
     df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
     return df.date(from: self)
   }
   
-  internal func escaping() -> String {
+    func escaping() -> String {
     return self
       .replacingOccurrences(of: ",", with: "\\,")
       .replacingOccurrences(of: ":", with: "\\:")
       .replacingOccurrences(of: "&", with: "%26")
   }
   
-  internal func urlEncode() -> String? {
+    func urlEncode() -> String? {
     var set: CharacterSet = CharacterSet.urlQueryAllowed
     set.remove(charactersIn: "+&")
     return addingPercentEncoding(withAllowedCharacters: set)
   }
   
-  internal mutating func escape() {
+    mutating func escape() {
     self = escaping()
   }
 }
@@ -180,7 +180,7 @@ Iterator.Element == (key: String, value: String) {
 }
 
 internal extension UnkeyedDecodingContainer {
-  internal mutating func decodeArray<T>(_ type: T.Type)
+    mutating func decodeArray<T>(_ type: T.Type)
     throws -> [T] where T: Decodable {
       var array: [T] = [T]()
       while !self.isAtEnd {
@@ -320,11 +320,11 @@ internal extension UIDevice {
 
 internal extension Bundle {
   
-  class internal var mainBundleIdentifier: String {
+    class var mainBundleIdentifier: String {
     return Bundle.main.bundleIdentifier ?? "unknown"
   }
   
-  class internal var releaseVersionNumber: String {
+    class var releaseVersionNumber: String {
     let error: String = "0.0.0"
     guard let infoDict = self.main.infoDictionary else {
       return error
@@ -338,7 +338,7 @@ internal extension Bundle {
     return releaseNumber
   }
   
-  class internal var buildVersionNumber: String {
+    class var buildVersionNumber: String {
     let error: String = "0"
     guard let infoDict = self.main.infoDictionary else {
       return error
@@ -353,7 +353,7 @@ internal extension Bundle {
     return buildNumber
   }
   
-  class internal func loadJSONFileFromMain(
+    class func loadJSONFileFromMain(
     name: String, fileExtension: String) -> [String: Any]? {
     if let path =
       Bundle.main.url(

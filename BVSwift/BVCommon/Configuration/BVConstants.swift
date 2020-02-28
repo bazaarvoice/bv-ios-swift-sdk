@@ -21,7 +21,7 @@ internal struct BVConstants {
 }
 
 internal extension Bundle {
-  class internal var bvBundle: Bundle {
+    class var bvBundle: Bundle {
     guard let bundle = Bundle
       .allFrameworks
       .filter({ $0.bundleIdentifier?
@@ -32,7 +32,7 @@ internal extension Bundle {
     return bundle
   }
   
-  class internal var bvSdkVersion: String {
+    class var bvSdkVersion: String {
     guard let version =
       bvBundle.infoDictionary?[cfBundleVersionString] as? String else {
         fatalError("Improper configuration of BVSwift bundle version")
