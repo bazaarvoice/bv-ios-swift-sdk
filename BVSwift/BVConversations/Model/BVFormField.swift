@@ -126,7 +126,7 @@ public enum BVFormInputType {
 }
 
 internal extension BVFormInputType {
-  internal init(rawValue: String?) {
+    init(rawValue: String?) {
     switch rawValue {
     case let .some(value) where "BooleanInput" == value:
       self = .boolean

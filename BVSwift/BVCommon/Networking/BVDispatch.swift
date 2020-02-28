@@ -12,7 +12,7 @@ import Foundation
 public extension DispatchWorkItem {
   
   /// DispatchWorkItem wrapper for the base BVURLRequestable
-  public convenience init(
+    convenience init(
     qos: DispatchQoS = .default,
     flags: DispatchWorkItemFlags = [],
     urlSession: URLSession = URLSession.shared,
@@ -23,7 +23,7 @@ public extension DispatchWorkItem {
   }
   
   /// DispatchWorkItem wrapper for the base BVURLRequestableWithBodyData
-  public convenience init(
+    convenience init(
     qos: DispatchQoS = .default,
     flags: DispatchWorkItemFlags = [],
     urlSession: URLSession = URLSession.shared,
