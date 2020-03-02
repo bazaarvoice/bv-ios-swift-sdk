@@ -11,9 +11,9 @@ import Foundation
 public struct BVReviewHighlight: BVAuxiliaryable {
     
     public var title: String?
-    public let presenceCount: Int
-    public let mentionsCount: Int
-    public let bestExamples: [BVReviewHighlightsReview]
+    public let presenceCount: Int?
+    public let mentionsCount: Int?
+    public let bestExamples: [BVReviewHighlightsReview]?
     
     private enum CodingKeys: String, CodingKey {
       case presenceCount = "presenceCount"
