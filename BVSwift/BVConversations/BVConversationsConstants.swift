@@ -179,7 +179,18 @@ internal struct BVConversationsConstants {
       static let productId: String = "ProductId"
     }
   }
-  
+    
+    internal struct BVReviewHighlights {
+        
+        static let stagingEndpoint: String = "https://rh-stg.nexus.bazaarvoice.com/"
+        static let productionEndpoint: String = "https://rh.nexus.bazaarvoice.com/"
+        
+        static let getResource: String = "highlights/v3/1/"
+
+        static let singularKey: String = "subjects"
+        static let pluralKey: String = "subjects"
+    }
+    
   internal struct BVFeedback {
     static let singularKey: String = "Feedback"
     static let pluralKey: String = "Feedbacks"
