@@ -6,15 +6,15 @@
 [![License](https://img.shields.io/cocoapods/l/BVSwift.svg?style=flat)](https://cocoapods.org/pods/BVSwift)
 [![Platform](https://img.shields.io/cocoapods/p/BVSwift.svg?style=flat)](https://cocoapods.org/pods/BVSwift)
 ## Introduction
-BVSwift is currently in **α** stage of development, therefore, is a work in progress and everything is subject to change until it reaches **β** stage. If you can't find something here then it's probably best to first go to [the objc library](https://github.com/bazaarvoice/bv-ios-sdk) as well as check the [public documentation](https://developer.bazaarvoice.com/mobile-sdks/ios).
+BVSwift is currently in **α** stage of development, therefore, is a work in progress and everything is subject to change until it reaches **β** stage. If you can't find something here then it's probably best to first go to [the objc library](https://github.com/bazaarvoice/bv-ios-swift-sdk) as well as check the [public documentation](https://developer.bazaarvoice.com/mobile-sdks/ios).
 ## Supported Modules
- - [BVAnalytics](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVAnalytics)
- - [BVConversations](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVConversations)
- - [BVCurations](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVCurations)
- - [BVRecommendations](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVRecommendations)
+ - [BVAnalytics](https://github.com/bazaarvoice/bv-ios-swift-sdk/tree/master/BVSwift/BVAnalytics)
+ - [BVConversations](https://github.com/bazaarvoice/bv-ios-swift-sdk/tree/master/BVSwift/BVConversations)
+ - [BVCurations](https://github.com/bazaarvoice/bv-ios-swift-sdk/tree/master/BVSwift/BVCurations)
+ - [BVRecommendations](https://github.com/bazaarvoice/bv-ios-swift-sdk/tree/master/BVSwift/BVRecommendations)
 ## How To Get Started
 - Read [this](https://developer.bazaarvoice.com/mobile-sdks/ios/getting-started). Some of it will only be pertinent to the objc library but most of it is apropos.
-- [Download BVSwift](https://github.com/bazaarvoice/BVSwift/archive/master.zip) and peruse the various examples (currently only tests).
+- [Download BVSwift](https://github.com/bazaarvoice/bv-ios-swift-sdk/archive/master.zip) and peruse the various examples (currently only tests).
 ## Communication
 - If you **need help**, contact: support@bazaarvoice.com
 - If you **found a bug**, _and can provide steps to reliably reproduce it_, open an issue.
@@ -49,10 +49,10 @@ $ pod install
 ## Configuration
  1. Via the [existing configuration file](https://developer.bazaarvoice.com/mobile-sdks/ios/getting-started/installation#configuring-the-bvsdk)
  2. Via directly interacting with the BVManager, for example: `BVManager.sharedManager.addConfiguration(configuration)`
- 3. Via configuring objects directly _([example](https://github.com/bazaarvoice/BVSwift/tree/master/Sources/BVSwift/BVConversations))_
+ 3. Via configuring objects directly _([example](https://github.com/bazaarvoice/bv-ios-swift-sdk/tree/master/BVSwift/BVConversations))_
 
 > The above configuration precedence is followed by the order in which they are discussed above, e.g., if you've configured via (1) but apply a configuration directly to the object (3) the SDK will use what was provided in (3). Also, **development configurations** take precedence if multiple configurations are found at the same level.
 ## Author
 Bazaarvoice, support@bazaarvoice.com
 ## License
-BVSwift is available under Commercial license. See the [LICENSE](https://github.com/bazaarvoice/BVSwift/blob/master/LICENSE) file for more info.
+BVSwift is available under Commercial license. See the [LICENSE](https://github.com/bazaarvoice/bv-ios-swift-sdk/blob/master/LICENSE) file for more info.
