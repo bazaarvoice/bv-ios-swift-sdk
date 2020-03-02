@@ -10,6 +10,7 @@ import Foundation
 
 public struct BVReviewHighlights: BVQueryable {
     
+    // TODO:- Added as a workaround. Need to figure out a way to pass these properties.
     static var productId: String?
     static var clientId: String?
     
@@ -21,8 +22,8 @@ public struct BVReviewHighlights: BVQueryable {
         return "subjects"
     }
     
-    public let positives: [BVReviewHighlight]
-    public let negatives: [BVReviewHighlight]
+    public let positives: [BVReviewHighlight]?
+    public let negatives: [BVReviewHighlight]?
     
     private enum CodingKeys: String, CodingKey {
         case positives = "positive"
