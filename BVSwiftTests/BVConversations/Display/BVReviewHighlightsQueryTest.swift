@@ -12,6 +12,12 @@ import XCTest
 
 class BVReviewHighlightsQueryTest: XCTestCase {
 
+    private static var config: BVReviewHighlightsConfiguration = { () -> BVReviewHighlightsConfiguration in
+        let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .staging(clientId: "1800petmeds"))
+        
+        return BVReviewHighlightsConfiguration.display(configType: .staging(clientId: "1800petmeds"), analyticsConfig: analyticsConfig)
+    }()
+    
     private static var privateSession:URLSession = {
       return URLSession(configuration: .default)
     }()
@@ -29,13 +35,11 @@ class BVReviewHighlightsQueryTest: XCTestCase {
         let expectation = self.expectation(description: "testReviewHighlights")
         
         let reviewHighlightsQuery = BVProductReviewHighlightsQuery(productId: "prod10002")
-            .configure(.display(configType: .staging(clientId: "1800petmeds"),
-                                analyticsConfig: .dryRun(
-                                    configType: .staging(clientId: "1800petmeds"))))
-            
+            .configure(BVReviewHighlightsQueryTest.config)
             .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlights>) in
                 
                 print(response)
+                // TODO:- Add assertion statements
         }
         
         
@@ -45,9 +49,11 @@ class BVReviewHighlightsQueryTest: XCTestCase {
           return
         }
         
+        print(req)
+        
         reviewHighlightsQuery.async(urlSession: BVReviewHighlightsQueryTest.privateSession)
         
-        self.waitForExpectations(timeout: 20000) { (error) in
+        self.waitForExpectations(timeout: 10) { (error) in
           XCTAssertNil(
             error, "Something went horribly wrong, request took too long.")
         }
