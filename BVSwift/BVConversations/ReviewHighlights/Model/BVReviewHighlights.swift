@@ -21,12 +21,36 @@ public struct BVReviewHighlights: BVQueryable {
         return "subjects"
     }
     
-    public let positive: [String: BVReviewHighlight]
-    public let negative: [String: BVReviewHighlight]
+    public let positives: [BVReviewHighlight]
+    public let negatives: [BVReviewHighlight]
     
     private enum CodingKeys: String, CodingKey {
-        case positive = "positive"
-        case negative = "negative"
+        case positives = "positive"
+        case negatives = "negative"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // TODO:- Review from Cameron on using BVCodableDictionary instead. Need to check on how to set the title though.
+        var positiveReviewHighlights: [BVReviewHighlight] = []
+        if let positives = try values.decodeIfPresent([String: BVReviewHighlight].self, forKey: .positives) {
+            for var positive in positives {
+                positive.value.title = positive.key
+                positiveReviewHighlights.append(positive.value)
+            }
+        }
+        self.positives = positiveReviewHighlights
+
+        // TODO:- Review from Cameron on using BVCodableDictionary instead. Need to check on how to set the title though.
+        var negativeReviewHighlights: [BVReviewHighlight] = []
+        if let negatives = try values.decodeIfPresent([String: BVReviewHighlight].self, forKey: .negatives) {
+            for var negative in negatives {
+                negative.value.title = negative.key
+                negativeReviewHighlights.append(negative.value)
+            }
+        }
+        self.negatives = negativeReviewHighlights
     }
 }
 
