@@ -14,17 +14,17 @@ public enum BVReviewHighlightsConfiguration: BVConfiguration {
         configType: BVConfigurationType,
         analyticsConfig: BVAnalyticsConfiguration)
     
-    // TODO:- Configuration Key is not required for ReviewHighlights
+    // TODO:- Configuration Key is not required for ReviewHighlights. Need to confirm.
     public var configurationKey: String {
         return ""
     }
     
     public var endpoint: String {
         guard case .staging(_) = self.type else {
-            return BVReviewHighlightsConstants.productionEndpoint
+            return BVConversationsConstants.BVReviewHighlights.productionEndpoint
             
         }
-        return BVReviewHighlightsConstants.stagingEndpoint
+        return BVConversationsConstants.BVReviewHighlights.stagingEndpoint
     }
     
     public var type: BVConfigurationType {
