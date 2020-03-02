@@ -13,6 +13,7 @@ public struct BVReviewHighlightsReview: BVAuxiliaryable {
     public let rating: UInt
     public let about: String
     public let reviewText: String
+    public let author: String?
     public let snippetId: String
     public let reviewId: String
     public let summary: String
