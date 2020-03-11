@@ -9,7 +9,7 @@ import Foundation
 
 internal struct BVConversationsConstants {
   static let bvProduct: String = "Conversations"
-  static let apiVersionKey: String = "BVConversationsAPIVersion"
+  static let apiVersion: String = "5.4"
   static let apiKey: String = "apiKeyConversations"
   static let clientKey: String = "clientId"
   static let parameterKey: String = "passkey"
@@ -377,12 +377,7 @@ internal struct BVConversationsConstants {
 
 internal extension Bundle {
     class var conversationsApiVersion: String {
-    let apiKey = BVConversationsConstants.apiVersionKey
-    guard let version =
-      bvBundle.infoDictionary?[apiKey] as? String else {
-        fatalError("Improper configuration of BVSwift bundle version")
-    }
-    return version
+      return BVConversationsConstants.apiVersion
   }
 }
 
