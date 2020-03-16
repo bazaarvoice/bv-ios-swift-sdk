@@ -19,19 +19,33 @@ class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
         
         preflightHandler = { [weak self] completion in
             
-            
+            self?.reviewHighlightsQueryPreflight({ (errors: Error?) in
+                /// First we call this subclass level to see if everything is alright.
+                /// If not, then we call the completion handler to error out.
+                guard nil == errors else {
+                  completion?(errors)
+                  return
+                }
+                
+                /// There doesn't exist any super preflight, therefore, we just pass
+                /// through no errors up through the completion handler.
+                guard let superPreflight = superPreflightHandler else {
+                  completion?(nil)
+                  return
+                }
+                
+                /// If everything is alright, then drop down to the superclass level
+                /// and let it determine the fate of the preflight check.
+                superPreflight(completion)
+            })
         }
     }
-    
-    
-//    public init(productId: String) {
-//        self.productId = productId
-//        super.init(BVReviewHighlightsQueryResponse.self)
-//    }
     
     internal override init<BVTypeInternal: BVQueryableInternal>(
       _ type: BVTypeInternal.Type) {
       super.init(type)
+        
+     postSuperInit()
     }
     
     final internal override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
@@ -85,12 +99,12 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
             print(jsonObject)
           BVLogger.sharedLogger.debug(
             BVLogMessage(
-              BVRecommendationsConstants.bvProduct,
+              BVConversationsConstants.bvProduct,
               msg: "RAW JSON:\n\(jsonObject)"))
         } catch {
           BVLogger.sharedLogger.error(
             BVLogMessage(
-              BVRecommendationsConstants.bvProduct,
+              BVConversationsConstants.bvProduct,
               msg: "JSON ERROR: \(error)"))
         }
         #endif
