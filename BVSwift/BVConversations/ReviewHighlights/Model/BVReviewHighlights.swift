@@ -33,7 +33,7 @@ public struct BVReviewHighlights: BVQueryable {
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        // TODO:- Review from Cameron on using BVCodableDictionary instead. Need to check on how to set the title though.
+        // Create objects of type BVReviewHighlight and add it to positives array.
         var positiveReviewHighlights: [BVReviewHighlight] = []
         if let positives = try values.decodeIfPresent([String: BVReviewHighlight].self, forKey: .positives) {
             for var positive in positives {
@@ -43,7 +43,7 @@ public struct BVReviewHighlights: BVQueryable {
         }
         self.positives = positiveReviewHighlights
 
-        // TODO:- Review from Cameron on using BVCodableDictionary instead. Need to check on how to set the title though.
+        // Create objects of type BVReviewHighlight and add it to negatives array.
         var negativeReviewHighlights: [BVReviewHighlight] = []
         if let negatives = try values.decodeIfPresent([String: BVReviewHighlight].self, forKey: .negatives) {
             for var negative in negatives {
