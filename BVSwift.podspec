@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name              = 'BVSwift'
-  s.version           = '1.0.0'
+  s.version           = '1.0.2'
   s.summary           = 'Simple Swift based iOS SDK to interact with the Bazaarvoice platform API.'
   s.description       = 'The Bazaarvoice Software Development Kit (SDK) is a Swift iOS library that provides an easy way to generate REST calls to the Bazaarvoice Developer API. Using this SDK, mobile developers can quickly integrate Bazaarvoice content into their native iOS apps for iPhone and iPad on iOS 8.0 or newer.'
 
@@ -24,28 +24,28 @@ Pod::Spec.new do |s|
   s.default_subspec = 'BVCommon'
 
   s.subspec 'BVCommon' do |common|
-   common.source_files = 'Sources/BVSwift/BVCommon/**/*.swift'
+   common.source_files = 'BVSwift/BVCommon/**/*.swift'
   end
 
   s.subspec 'BVAnalytics' do |analytics|
-    analytics.source_files = 'Sources/BVSwift/BVAnalytics/**/*.swift'
+    analytics.source_files = 'BVSwift/BVAnalytics/**/*.swift'
     analytics.dependency 'BVSwift/BVCommon'
   end
 
   s.subspec 'BVConversations' do |conversations|
-    conversations.source_files = 'Sources/BVSwift/BVConversations/**/*.swift'
+    conversations.source_files = 'BVSwift/BVConversations/**/*.swift'
     conversations.dependency 'BVSwift/BVCommon'
     conversations.dependency 'BVSwift/BVAnalytics'
   end
 
   s.subspec 'BVCurations' do |curations|
-    curations.source_files = 'Sources/BVSwift/BVCurations/**/*.swift'
+    curations.source_files = 'BVSwift/BVCurations/**/*.swift'
     curations.dependency 'BVSwift/BVCommon'
     curations.dependency 'BVSwift/BVAnalytics'
   end
 
   s.subspec 'BVRecommendations' do |recommendations|
-    recommendations.source_files = 'Sources/BVSwift/BVRecommendations/**/*.swift'
+    recommendations.source_files = 'BVSwift/BVRecommendations/**/*.swift'
     recommendations.dependency 'BVSwift/BVCommon'
     recommendations.dependency 'BVSwift/BVAnalytics'
   end
