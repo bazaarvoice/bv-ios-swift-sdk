@@ -121,6 +121,11 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
                         return
         }
         
+        if let errorMessage = response.error {
+            completion(.failure([BVCommonError.unknown(errorMessage)]))
+            return
+        }
+        
         guard let reviewHighlights = response.reviewHighlights else {
             completion(
             .failure(
