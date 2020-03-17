@@ -9,14 +9,10 @@
 import Foundation
 
 public class BVProductReviewHighlightsQuery: BVReviewHighlightsQuery<BVReviewHighlights> {
-    
-    public var productId: String?
-    
-    public init(productId: String) {
-        self.productId = productId
         
-        BVReviewHighlights.productId = productId
-        BVReviewHighlights.clientId = "1800petmeds"
+    public init(clientId: String, productId: String) {
+
+        BVReviewHighlights.set(clientId: clientId, productId: productId)
         
         super.init(BVReviewHighlights.self)
     }
