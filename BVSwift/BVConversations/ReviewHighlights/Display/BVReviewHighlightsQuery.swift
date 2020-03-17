@@ -154,6 +154,13 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
   }
 }
 
+// MARK: - BVRecommendationsQuery: BVConfigurableInternal
+extension BVReviewHighlightsQuery: BVConfigurableInternal {
+  var configuration: BVReviewHighlightsConfiguration? {
+    return reviewHighlightsConfiguration
+  }
+}
+
 
 extension BVReviewHighlightsQuery: BVConfigurable {
     

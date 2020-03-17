@@ -7,3 +7,11 @@
 // 
 
 import Foundation
+
+// MARK: - BVManager: BVReviewHighlightsConfiguration
+extension BVManager {
+  internal static
+  var reviewHighlightsConfiguration: BVReviewHighlightsConfiguration? {
+    return BVManager.sharedManager.getConfiguration()
+  }
+}
