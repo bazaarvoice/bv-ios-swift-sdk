@@ -38,6 +38,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
             .configure(BVReviewHighlightsQueryTest.config)
             .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlights>) in
                 
+                expectation.fulfill()
                 print(response)
                 // TODO:- Add assertion statements
         }
