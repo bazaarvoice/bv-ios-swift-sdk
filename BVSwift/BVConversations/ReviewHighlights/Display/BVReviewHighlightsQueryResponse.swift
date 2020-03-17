@@ -39,8 +39,10 @@ public enum BVReviewHighlightsQueryResponse<BVType: BVQueryable>: BVURLRequestab
 internal struct BVReviewHighlightsQueryResponseInternal
 <BVType: BVQueryable>: Codable, BVReviewHighlightsQueryMeta {
   let reviewHighlights: BVType?
-  
+  let error: String?
+    
   private enum CodingKeys: String, CodingKey {
     case reviewHighlights = "subjects"
+    case error = "error"
   }
 }
