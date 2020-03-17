@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
+public class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
         
     private var ignoreCompletion: Bool = false
     private var reviewHighlightsConfiguration: BVReviewHighlightsConfiguration?
@@ -164,10 +164,10 @@ extension BVReviewHighlightsQuery: BVConfigurableInternal {
 
 extension BVReviewHighlightsQuery: BVConfigurable {
     
-    typealias Configuration = BVReviewHighlightsConfiguration
+    public typealias Configuration = BVReviewHighlightsConfiguration
     
     @discardableResult
-    func configure(_ config: BVReviewHighlightsConfiguration) -> Self {
+    final public func configure(_ config: BVReviewHighlightsConfiguration) -> Self {
         assert(nil == reviewHighlightsConfiguration)
         reviewHighlightsConfiguration = config
         
