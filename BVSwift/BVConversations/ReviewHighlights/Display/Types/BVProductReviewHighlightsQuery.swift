@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BVProductReviewHighlightsQuery: BVReviewHighlightsQuery<BVReviewHighlights> {
+public class BVProductReviewHighlightsQuery: BVReviewHighlightsQuery<BVReviewHighlights> {
     
     public var productId: String?
     
