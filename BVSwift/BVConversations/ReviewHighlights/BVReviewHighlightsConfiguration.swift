@@ -15,10 +15,12 @@ public enum BVReviewHighlightsConfiguration: BVConfiguration {
         analyticsConfig: BVAnalyticsConfiguration)
     
     // TODO:- Configuration Key is not required for ReviewHighlights. Need to confirm.
+    /// See Protocol Definition for more info
     public var configurationKey: String {
         return ""
     }
     
+    /// See Protocol Definition for more info
     public var endpoint: String {
         guard case .staging(_) = self.type else {
             return BVConversationsConstants.BVReviewHighlights.productionEndpoint
@@ -27,6 +29,7 @@ public enum BVReviewHighlightsConfiguration: BVConfiguration {
         return BVConversationsConstants.BVReviewHighlights.stagingEndpoint
     }
     
+    /// See Protocol Definition for more info
     public var type: BVConfigurationType {
         switch self {
         case let .display(configType, _):
