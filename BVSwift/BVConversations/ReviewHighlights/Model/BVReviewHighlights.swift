@@ -11,8 +11,8 @@ import Foundation
 public struct BVReviewHighlights: BVQueryable {
     
     // TODO:- Added as a workaround. Need to figure out a way to pass these properties.
-    static var productId: String?
-    static var clientId: String?
+    private static var productId: String?
+    private static var clientId: String?
     
     public static var singularKey: String {
         return "subjects"
@@ -28,6 +28,11 @@ public struct BVReviewHighlights: BVQueryable {
     private enum CodingKeys: String, CodingKey {
         case positives = "positive"
         case negatives = "negative"
+    }
+    
+    public static func set(clientId: String, productId: String) {
+        BVReviewHighlights.clientId = clientId
+        BVReviewHighlights.productId = productId
     }
     
     public init(from decoder: Decoder) throws {
@@ -57,6 +62,8 @@ public struct BVReviewHighlights: BVQueryable {
 
 extension BVReviewHighlights: BVQueryableInternal {
     internal static var getResource: String? {
-        return BVConversationsConstants.BVReviewHighlights.getResource + "\(clientId ?? "")/" + "\(productId ?? "")"
+        return BVConversationsConstants.BVReviewHighlights.getResource +
+            "\(BVReviewHighlights.clientId ?? "")/" +
+            "\(BVReviewHighlights.productId ?? "")"
     }
 }

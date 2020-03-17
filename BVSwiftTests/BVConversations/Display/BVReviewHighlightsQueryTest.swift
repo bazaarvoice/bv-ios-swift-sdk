@@ -34,7 +34,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
         
         let expectation = self.expectation(description: "testReviewHighlights")
         
-        let reviewHighlightsQuery = BVProductReviewHighlightsQuery(productId: "prod10002")
+        let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: "1800petmeds", productId: "prod10002")
             .configure(BVReviewHighlightsQueryTest.config)
             .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlights>) in
                 
