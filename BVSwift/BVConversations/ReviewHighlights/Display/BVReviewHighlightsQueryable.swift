@@ -20,5 +20,5 @@ internal protocol BVReviewHighlightsQueryPreflightable: BVQueryActionable {
 // MARK: - BVRecommendationsQueryPostflightable
 internal protocol BVReviewHighlightsQueryPostflightable: BVQueryActionable {
   associatedtype ReviewHighlightsPostflightResult: BVQueryable
-  func reviewHighlightsPostflight(_ results: [ReviewHighlightsPostflightResult]?)
+  func reviewHighlightsPostflight(_ reviewHighlights: ReviewHighlightsPostflightResult?)
 }

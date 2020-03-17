@@ -60,7 +60,7 @@ public class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     }
     
     internal var reviewHighlightsPostflightResultsClosure: (
-      ([ReviewHighlightsPostflightResult]?) -> Void)? {
+      (ReviewHighlightsPostflightResult?) -> Void)? {
       return nil
     }
 }
@@ -120,6 +120,7 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
                                     "An Unknown parse error occurred")]))
                         return
         }
+        print(response)
         
         if let errorMessage = response.error {
             completion(.failure([BVCommonError.unknown(errorMessage)]))
@@ -136,19 +137,7 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
         }
 
         completion(.success(reviewHighlights))
-        print(response)
-
-
-//        guard let profile = response.profile else {
-//          completion(
-//            .failure(
-//              [BVCommonError.unknown(
-//                "An Unknown parse error occurred")]))
-//          return
-//        }
-//
-//        completion(.success(response, [profile]))
-//        self?.recommendationsPostflight([profile])
+        self?.reviewHighlightsPostflight(reviewHighlights)
         
       case let .failure(errors):
         completion(.failure(errors))
@@ -200,7 +189,7 @@ extension BVReviewHighlightsQuery: BVReviewHighlightsQueryPreflightable {
 extension BVReviewHighlightsQuery: BVReviewHighlightsQueryPostflightable {
   internal typealias ReviewHighlightsPostflightResult = BVType
   
-  func reviewHighlightsPostflight(_ results: [BVType]?) {
-   reviewHighlightsPostflightResultsClosure?(results)
+  func reviewHighlightsPostflight(_ reviewHighlights: BVType?) {
+   reviewHighlightsPostflightResultsClosure?(reviewHighlights)
   }
 }
