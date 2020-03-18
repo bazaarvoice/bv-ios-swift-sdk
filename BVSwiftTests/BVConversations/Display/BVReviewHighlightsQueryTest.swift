@@ -96,7 +96,6 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     return
                 }
                 
-                XCTAssertNotNil(reviewHighlights)
                 XCTAssertNotNil(reviewHighlights.negatives)
                 XCTAssertNotNil(reviewHighlights.positives)
                 
@@ -157,7 +156,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     return
                 }
                 
-                XCTAssertNotNil(reviewHighlights)
+                
                 XCTAssertNotNil(reviewHighlights.positives)
                 
                 if let positives = reviewHighlights.positives {
@@ -214,7 +213,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     return
                 }
                 
-                XCTAssertNotNil(reviewHighlights)
+                
                 XCTAssertNotNil(reviewHighlights.negatives)
                 
                 if let negatives = reviewHighlights.negatives {
@@ -314,7 +313,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     return
                 }
                 
-                XCTAssertNotNil(reviewHighlights)
+                
                 XCTAssertNotNil(reviewHighlights.positives)
                 XCTAssertNotNil(reviewHighlights.negatives)
                 
@@ -503,7 +502,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     return
                 }
                 
-                XCTAssertNotNil(reviewHighlights)
+                
                 XCTAssertNotNil(reviewHighlights.negatives)
                 XCTAssertNotNil(reviewHighlights.positives)
                 
@@ -565,7 +564,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     return
                 }
                 
-                XCTAssertNotNil(reviewHighlights)
+                
                 XCTAssertNotNil(reviewHighlights.negatives)
                 XCTAssertNotNil(reviewHighlights.positives)
                 
