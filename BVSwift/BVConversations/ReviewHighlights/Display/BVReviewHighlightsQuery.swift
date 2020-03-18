@@ -96,7 +96,6 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
         do {
           let jsonObject =
             try JSONSerialization.jsonObject(with: jsonData, options: [])
-            print(jsonObject)
           BVLogger.sharedLogger.debug(
             BVLogMessage(
               BVConversationsConstants.bvProduct,
@@ -120,7 +119,6 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
                                     "An Unknown parse error occurred")]))
                         return
         }
-        print(response)
         
         if let errorMessage = response.error {
             completion(.failure([BVCommonError.unknown(errorMessage)]))
