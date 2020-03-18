@@ -110,36 +110,6 @@ class BVReviewHighlightsQueryTest: XCTestCase {
         
     }
     
-    func testReviewHighlights() {
-        
-        let expectation = self.expectation(description: "testReviewHighlights")
-        let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: "1800petmeds", productId: "prod10002")
-            .configure(BVReviewHighlightsQueryTest.config)
-            .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlights>) in
-                
-                //Remove this
-                expectation.fulfill()
-                print(response)
-                // TODO:- Add assertion statements
-        }
-        
-        
-        guard let req = reviewHighlightsQuery.request else {
-            XCTFail()
-            expectation.fulfill()
-            return
-        }
-        
-        print(req)
-        
-        reviewHighlightsQuery.async(urlSession: BVReviewHighlightsQueryTest.privateSession)
-        
-        self.waitForExpectations(timeout: 10) { (error) in
-            XCTAssertNil(
-                error, "Something went horribly wrong, request took too long.")
-        }
-    }
-    
     //Both Pros and Cons are returned for a valid productId and clientId.
     func testProsAndCons() {
         
