@@ -8,9 +8,14 @@
 
 import Foundation
 
+/// The definition for the BVReviewHighlights type
+/// - Note:
+/// \
+/// It conforms to BVQueryable, therefore, it is used only for
+/// BVQuery.
 public struct BVReviewHighlights: BVQueryable {
     
-    // TODO:- Added as a workaround. Need to figure out a way to pass these properties.
+    /// Properties required as params for the request
     private static var productId: String?
     private static var clientId: String?
     

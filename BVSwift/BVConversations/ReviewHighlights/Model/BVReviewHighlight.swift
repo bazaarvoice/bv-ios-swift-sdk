@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVReviewHighlight type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVReviewHighlight: BVAuxiliaryable {
     
     public var title: String?

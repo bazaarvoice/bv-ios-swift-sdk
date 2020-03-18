@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The definition for the BVReviewHighlightsReview type
+/// - Note:
+/// \
+/// It conforms to BVAuxiliaryable (see BVAuxiliaryable notes for more).
 public struct BVReviewHighlightsReview: BVAuxiliaryable {
     
     public let rating: UInt?
