@@ -120,6 +120,7 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
                         return
         }
         
+        // error handling
         if let errorMessage = response.error {
             completion(.failure([BVCommonError.unknown(errorMessage)]))
             return
