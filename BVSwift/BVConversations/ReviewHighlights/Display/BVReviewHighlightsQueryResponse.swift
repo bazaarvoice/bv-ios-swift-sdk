@@ -8,8 +8,14 @@
 
 import Foundation
 
+/// Protocol defining the meta-data header for queries
+/// There is no meta for Review Highlights Query
 public protocol BVReviewHighlightsQueryMeta { }
 
+/// Public return type for all BVReviewHighlights Queries
+/// - Note:
+/// \
+/// The result type must always be a BVQueryable type.
 public enum BVReviewHighlightsQueryResponse<BVType: BVQueryable>: BVURLRequestableResponse {
     public typealias ResponseType = BVType
     
