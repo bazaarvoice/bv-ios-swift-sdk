@@ -8,13 +8,24 @@
 
 import Foundation
 
+/// The main BVConfiguration implementation for ReviewHighlights
+///
+/// - Note:
+/// \
+/// The reviewHighlights configuration has a single sub-configuration dependency
+/// on BVAnalytics.
 public enum BVReviewHighlightsConfiguration: BVConfiguration {
     
+    /// This configuration allows for ONLY display request configurations.
+    /// - Parameters:
+    ///   - configType: The base BVConfigurationType for this reviewHighlights
+    ///     configuration.
+    ///   - analyticsConfig: The BVAnalyticsConfiguration used mosty for
+    ///     debugging as well as setting proper locales for user data policies.
     case display(
         configType: BVConfigurationType,
         analyticsConfig: BVAnalyticsConfiguration)
     
-    // TODO:- Configuration Key is not required for ReviewHighlights. Need to confirm.
     /// See Protocol Definition for more info
     public var configurationKey: String {
         return ""

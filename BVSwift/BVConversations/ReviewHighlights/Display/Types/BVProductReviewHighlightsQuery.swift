@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Public class for handling BVProductReviewHighlights Queries
 public class BVProductReviewHighlightsQuery: BVReviewHighlightsQuery<BVReviewHighlights> {
         
     public init(clientId: String, productId: String) {

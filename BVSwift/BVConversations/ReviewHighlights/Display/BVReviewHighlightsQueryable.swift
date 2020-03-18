@@ -8,16 +8,16 @@
 
 import Foundation
 
-// MARK: - BVRecommendationsQueryValue
+// MARK: - BVReviewHighlightsQueryValue
 internal protocol BVReviewHighlightsQueryValue: BVCustomStringConvertible { }
 
-// MARK: - BVRecommendationsQueryPreflightable
+// MARK: - BVReviewHighlightsQueryPreflightable
 internal protocol BVReviewHighlightsQueryPreflightable: BVQueryActionable {
   func reviewHighlightsQueryPreflight(
     _ preflight: BVCompletionWithErrorsHandler?)
 }
 
-// MARK: - BVRecommendationsQueryPostflightable
+// MARK: - BVReviewHighlightsQueryPostflightable
 internal protocol BVReviewHighlightsQueryPostflightable: BVQueryActionable {
   associatedtype ReviewHighlightsPostflightResult: BVQueryable
   func reviewHighlightsPostflight(_ reviewHighlights: ReviewHighlightsPostflightResult?)
