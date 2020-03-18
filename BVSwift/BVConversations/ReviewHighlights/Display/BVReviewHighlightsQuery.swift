@@ -8,6 +8,13 @@
 
 import Foundation
 
+/// Base public class for handling Review Highlights Queries
+/// - Note:
+/// \
+/// This really only exists publicly as a convenience to the actual type
+/// specific queries. There shouldn't be any need to subclass this if you're an
+/// external developer; unless of course you're fixing bugs or extending
+/// something that you want to see being made public :)
 public class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
         
     private var ignoreCompletion: Bool = false
@@ -15,8 +22,12 @@ public class BVReviewHighlightsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     
     private func postSuperInit() {
         
+        /// We do this after super.init() so that in the future we can capture any
+        /// call being set from below.
         let superPreflightHandler = preflightHandler
         
+        /// We have to make sure that we don't "own" ourself to create a retain
+        /// cycle.
         preflightHandler = { [weak self] completion in
             
             self?.reviewHighlightsQueryPreflight({ (errors: Error?) in
@@ -147,14 +158,15 @@ extension BVReviewHighlightsQuery: BVQueryActionable {
   }
 }
 
-// MARK: - BVRecommendationsQuery: BVConfigurableInternal
+// MARK: - BVReviewHighlightsQuery: BVConfigurableInternal
 extension BVReviewHighlightsQuery: BVConfigurableInternal {
   var configuration: BVReviewHighlightsConfiguration? {
     return reviewHighlightsConfiguration
   }
 }
 
-
+/// Conformance with BVConfigurable. Please see protocol definition for more
+/// information.
 extension BVReviewHighlightsQuery: BVConfigurable {
     
     public typealias Configuration = BVReviewHighlightsConfiguration
@@ -164,6 +176,7 @@ extension BVReviewHighlightsQuery: BVConfigurable {
         assert(nil == reviewHighlightsConfiguration)
         reviewHighlightsConfiguration = config
         
+        /// Make sure we call through to the superclass
         configureExistentially(config)
         
         return self
@@ -175,6 +188,8 @@ extension BVReviewHighlightsQuery: BVConfigurable {
 extension BVReviewHighlightsQuery: BVReviewHighlightsQueryPreflightable {
     
     func reviewHighlightsQueryPreflight(_ preflight: BVCompletionWithErrorsHandler?) {
+        /// We have to make sure to call through, else the preflight chain will not
+        /// end up firing through to the superclass.
         guard let preflightResultsClosure =
           reviewHighlightsPreflightResultsClosure else {
             preflight?(nil)
