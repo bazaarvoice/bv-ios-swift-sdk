@@ -28,7 +28,7 @@ public enum BVReviewHighlightsConfiguration: BVConfiguration {
     
     /// See Protocol Definition for more info
     public var configurationKey: String {
-        return ""
+        return String.empty
     }
     
     /// See Protocol Definition for more info
