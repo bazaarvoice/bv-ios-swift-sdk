@@ -13,4 +13,9 @@ extension BVManager {
   var conversationsConfiguration: BVConversationsConfiguration? {
     return BVManager.sharedManager.getConfiguration()
   }
+    
+    internal static
+    var reviewHighlightsConfiguration: BVReviewHighlightsConfiguration? {
+      return BVManager.sharedManager.getConfiguration()
+    }
 }
