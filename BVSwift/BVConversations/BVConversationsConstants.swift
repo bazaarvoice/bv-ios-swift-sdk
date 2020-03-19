@@ -187,7 +187,7 @@ internal struct BVConversationsConstants {
         
         static let getResource: String = "highlights/v3/1/"
 
-        static let singularKey: String = "subjects"
+        static let singularKey: String = "subject"
         static let pluralKey: String = "subjects"
     }
     
