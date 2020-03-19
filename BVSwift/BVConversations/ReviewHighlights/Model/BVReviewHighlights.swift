@@ -20,11 +20,11 @@ public struct BVReviewHighlights: BVQueryable {
     private static var clientId: String?
     
     public static var singularKey: String {
-        return "subjects"
+        return BVConversationsConstants.BVReviewHighlights.pluralKey
     }
     
     public static var pluralKey: String {
-        return "subjects"
+        return BVConversationsConstants.BVReviewHighlights.pluralKey
     }
     
     public let positives: [BVReviewHighlight]?
