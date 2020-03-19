@@ -95,6 +95,13 @@ public protocol BVConversationsQueryGenerator {
     searchQuery: String,
     limit: UInt16,
     offset: UInt16) -> BVReviewSearchQuery?
+    
+    /// Generator for BVProductReviewHighlightsQuery
+    /// - Parameters:
+    ///   - clientId: Client id to query against
+    ///   - productId: Product id to query against
+    func query(clientId: String,
+               productId: String) -> BVProductReviewHighlightsQuery?
 }
 
 /// BVManager's conformance to the BVConversationsQueryGenerator protocol
@@ -246,4 +253,15 @@ extension BVManager: BVConversationsQueryGenerator {
         offset: offset)
         .configure(config)
   }
+    
+    public func query(clientId: String,
+                      productId: String) -> BVProductReviewHighlightsQuery? {
+        guard let config = BVManager.reviewHighlightsConfiguration else {
+          return nil
+        }
+        
+        return
+            BVProductReviewHighlightsQuery(clientId: clientId, productId: productId)
+            .configure(config)
+    }
 }
