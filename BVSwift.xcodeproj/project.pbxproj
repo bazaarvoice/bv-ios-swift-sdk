@@ -256,6 +256,7 @@
 		98686D8F2408091F00D67889 /* BVProgressiveReviewSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D8E2408091F00D67889 /* BVProgressiveReviewSubmission.swift */; };
 		98686D9124080D0900D67889 /* BVMultiProductQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */; };
 		98686D9324080D5E00D67889 /* BVProgressiveSubmissionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */; };
+		9F5063C5242B915E005DE36B /* integrate-dynamic-framework.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9F5063C4242B915E005DE36B /* integrate-dynamic-framework.sh */; };
 		B5B31E1D20B36ABD002DBEC8 /* BVSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -505,6 +506,7 @@
 		98686D8E2408091F00D67889 /* BVProgressiveReviewSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveReviewSubmission.swift; sourceTree = "<group>"; };
 		98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductQueryTest.swift; sourceTree = "<group>"; };
 		98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveSubmissionTest.swift; sourceTree = "<group>"; };
+		9F5063C4242B915E005DE36B /* integrate-dynamic-framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "integrate-dynamic-framework.sh"; sourceTree = "<group>"; };
 		B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BVSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B31E1720B36ABD002DBEC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5B31E1C20B36ABD002DBEC8 /* BVSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BVSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1042,6 +1044,7 @@
 		B5B31F6A20B375DC002DBEC8 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				9F5063C4242B915E005DE36B /* integrate-dynamic-framework.sh */,
 				B5B31E1720B36ABD002DBEC8 /* Info.plist */,
 			);
 			path = Support;
@@ -1252,6 +1255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F5063C5242B915E005DE36B /* integrate-dynamic-framework.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
