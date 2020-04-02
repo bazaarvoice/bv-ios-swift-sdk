@@ -365,7 +365,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
         submissionFields.isRecommended = true
         
         var submission = BVProgressiveReview(productId:"product10", submissionFields: submissionFields)
-        submission.submissionSessionToken = "26oas7i23gho9qllcv30mwdgw_e50a2e1578cc0a8f6761664563a22f675da215466d6459fdfc823845f6048642_S6I5LIoagt8="
+        submission.submissionSessionToken = "C0Rs5OUk0p3E6rJxhOxxM4HwzgSvUp1fRHHGTuhKo5Jp9fxcZkbHae7CkpLDtxQVy/WMDc4ymsZ0cvj8zqZP651ZZXv2yp6ZGCUckgNNYlo=" 
         submission.locale = "en_US"
         submission.userToken = "6851e5f974485291cd2c32bfbc4d00774e6d298910c3b0c674e553a4cc48562d6d61786167653d33353626484f535445443d564552494649454426646174653d323031393037323526656d61696c616464726573733d42564061696c2e636f6d267573657269643d74657374313039"
         return submission
