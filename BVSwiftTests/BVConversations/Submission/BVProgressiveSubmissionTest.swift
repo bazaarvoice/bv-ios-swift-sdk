@@ -365,7 +365,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
         submissionFields.isRecommended = true
         
         var submission = BVProgressiveReview(productId:"product10", submissionFields: submissionFields)
-        submission.submissionSessionToken = "TOKEN_REMOVED"
+        submission.submissionSessionToken = "TOKEN_REMOVED" 
         submission.locale = "en_US"
         submission.userToken = "SECRET_REMOVED"
         return submission
