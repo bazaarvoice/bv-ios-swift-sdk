@@ -51,6 +51,12 @@ public struct BVReviewHighlights: BVQueryable {
                 positiveReviewHighlights.append(positive.value)
             }
         }
+        
+        //Sort by MentionsCount
+        positiveReviewHighlights.sort {
+            return $0.mentionsCount! > $1.mentionsCount!
+        }
+    
         self.positives = positiveReviewHighlights
 
         // Create objects of type BVReviewHighlight and add it to negatives array.
@@ -61,6 +67,12 @@ public struct BVReviewHighlights: BVQueryable {
                 negativeReviewHighlights.append(negative.value)
             }
         }
+        
+        //Sort by MentionsCount
+        negativeReviewHighlights.sort {
+            return $0.mentionsCount! > $1.mentionsCount!
+        }
+        
         self.negatives = negativeReviewHighlights
     }
 }
