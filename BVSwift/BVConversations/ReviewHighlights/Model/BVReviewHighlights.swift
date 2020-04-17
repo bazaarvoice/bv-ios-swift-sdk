@@ -54,11 +54,12 @@ public struct BVReviewHighlights: BVQueryable {
         
         //Sort by MentionsCount
         positiveReviewHighlights.sort {
-            return $0.mentionsCount! > $1.mentionsCount!
+            guard let mentionsCount0 = $0.mentionsCount, let mentionsCount1 = $1.mentionsCount else { return false }
+            return mentionsCount0 > mentionsCount1
         }
-    
+        
         self.positives = positiveReviewHighlights
-
+        
         // Create objects of type BVReviewHighlight and add it to negatives array.
         var negativeReviewHighlights: [BVReviewHighlight] = []
         if let negatives = try values.decodeIfPresent([String: BVReviewHighlight].self, forKey: .negatives) {
@@ -70,7 +71,9 @@ public struct BVReviewHighlights: BVQueryable {
         
         //Sort by MentionsCount
         negativeReviewHighlights.sort {
-            return $0.mentionsCount! > $1.mentionsCount!
+            guard let mentionsCount0 = $0.mentionsCount, let mentionsCount1 = $1.mentionsCount else { return false }
+            return mentionsCount0 > mentionsCount1
+            
         }
         
         self.negatives = negativeReviewHighlights
