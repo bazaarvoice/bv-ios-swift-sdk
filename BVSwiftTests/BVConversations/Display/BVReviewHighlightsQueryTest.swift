@@ -89,7 +89,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                     XCTAssertNotNil(negative.title)
                 }
             }
-
+            
             expectation.fulfill()
         }
         
@@ -478,6 +478,10 @@ class BVReviewHighlightsQueryTest: XCTestCase {
     func testProsAndConsSequence() {
         
         let expectation = self.expectation(description: "testProsAndConsSequence")
+        
+        let expectedPositives: [String] = ["cleaning", "satisfaction", "ease of use"] // array of expected positives
+        let expectedNegatives: [String] = ["small", "large"] // array of expected negatives
+        
         let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: "1800petmeds", productId: "prod1011")
             .configure(BVReviewHighlightsQueryTest.config)
             .handler { (response: BVReviewHighlightsQueryResponse<BVReviewHighlights>) in
@@ -501,10 +505,22 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                 
                 if let negatives = reviewHighlights.negatives {
                     XCTAssertFalse(negatives.isEmpty)
+                    
+                    for (index, negative) in negatives.enumerated() {
+                        XCTAssertNotNil(negative.title)
+                        XCTAssertEqual(negative.title, expectedNegatives[index])
+                    }
+                    
                 }
                 
                 if let positives = reviewHighlights.positives {
                     XCTAssertFalse(positives.isEmpty)
+                    
+                    for (index, positive) in positives.enumerated() {
+                        XCTAssertNotNil(positive.title)
+                        XCTAssertEqual(positive.title, expectedPositives[index])
+                    }
+                    
                 }
                 
                 expectation.fulfill()
