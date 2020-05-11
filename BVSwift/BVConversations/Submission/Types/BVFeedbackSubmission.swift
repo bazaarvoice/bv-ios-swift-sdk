@@ -100,3 +100,90 @@ extension BVFeedbackSubmission: BVConversationsSubmissionUserInformationable {
     return self
   }
 }
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionUserAuthenticatedStringable
+extension BVFeedbackSubmission:
+BVConversationsSubmissionUserAuthenticatedStringable {
+  @discardableResult
+  public func add(
+    _ uas: BVConversationsSubmissionUserAuthenticatedString) -> Self {
+    submissionParameters ∪= uas.urlQueryItems
+    return self
+  }
+}
+
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionAlertable
+extension BVFeedbackSubmission: BVConversationsSubmissionAlertable {
+  @discardableResult
+  public func add(_ alert: BVConversationsSubmissionAlerts) -> Self {
+    submissionParameters ∪= alert.urlQueryItems
+    return self
+  }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionAuthenticityable
+extension BVFeedbackSubmission: BVConversationsSubmissionAuthenticityable {
+    @discardableResult
+    public func add(
+        _ authenticity: BVConversationsSubmissionAuthenticity) -> Self {
+        submissionParameters ∪= authenticity.urlQueryItems
+        return self
+    }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionFieldTypeable
+extension BVFeedbackSubmission: BVConversationsSubmissionFieldTypeable {
+    @discardableResult
+    public func add(_ fieldType: BVConversationsSubmissionFieldTypes) -> Self {
+        submissionParameters ∪= fieldType.urlQueryItems
+        return self
+    }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionHostedAuthenticatable
+extension BVFeedbackSubmission: BVConversationsSubmissionHostedAuthenticatable {
+    @discardableResult
+    public func add(
+        _ hostedAuth: BVConversationsSubmissionHostedAuthenticated) -> Self {
+        submissionParameters ∪= hostedAuth.urlQueryItems
+        return self
+    }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionLocaleable
+extension BVFeedbackSubmission: BVConversationsSubmissionLocaleable {
+    @discardableResult
+    public func add(_ locale: BVConversationsSubmissionLocale) -> Self {
+        submissionParameters ∪= locale.urlQueryItems
+        return self
+    }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionRatable
+extension BVFeedbackSubmission: BVConversationsSubmissionRatable {
+    @discardableResult
+    public func add(_ rate: BVConversationsSubmissionRating) -> Self {
+        submissionParameters ∪= rate.urlQueryItems
+        return self
+    }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionTaggable
+extension BVFeedbackSubmission: BVConversationsSubmissionTaggable {
+    @discardableResult
+    public func add(_ tag: BVConversationsSubmissionTag) -> Self {
+        submissionParameters ∪= tag.urlQueryItems
+        return self
+    }
+}
+
+// MARK: - BVFeedbackSubmission: BVConversationsSubmissionTermsAndConditionsable
+extension BVFeedbackSubmission: BVConversationsSubmissionTermsAndConditionsable {
+    @discardableResult
+    public func add(
+        _ termsAndConditions: BVConversationsSubmissionTermsAndConditions) -> Self {
+        submissionParameters ∪= termsAndConditions.urlQueryItems
+        return self
+    }
+}
