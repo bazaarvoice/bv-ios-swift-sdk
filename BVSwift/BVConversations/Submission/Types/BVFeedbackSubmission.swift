@@ -132,15 +132,6 @@ extension BVFeedbackSubmission: BVConversationsSubmissionAuthenticityable {
     }
 }
 
-// MARK: - BVFeedbackSubmission: BVConversationsSubmissionFieldTypeable
-extension BVFeedbackSubmission: BVConversationsSubmissionFieldTypeable {
-    @discardableResult
-    public func add(_ fieldType: BVConversationsSubmissionFieldTypes) -> Self {
-        submissionParameters ∪= fieldType.urlQueryItems
-        return self
-    }
-}
-
 // MARK: - BVFeedbackSubmission: BVConversationsSubmissionHostedAuthenticatable
 extension BVFeedbackSubmission: BVConversationsSubmissionHostedAuthenticatable {
     @discardableResult
@@ -156,15 +147,6 @@ extension BVFeedbackSubmission: BVConversationsSubmissionLocaleable {
     @discardableResult
     public func add(_ locale: BVConversationsSubmissionLocale) -> Self {
         submissionParameters ∪= locale.urlQueryItems
-        return self
-    }
-}
-
-// MARK: - BVFeedbackSubmission: BVConversationsSubmissionRatable
-extension BVFeedbackSubmission: BVConversationsSubmissionRatable {
-    @discardableResult
-    public func add(_ rate: BVConversationsSubmissionRating) -> Self {
-        submissionParameters ∪= rate.urlQueryItems
         return self
     }
 }
