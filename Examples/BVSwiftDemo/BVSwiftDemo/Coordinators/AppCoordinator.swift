@@ -11,6 +11,12 @@ import UIKit
 
 class AppCoordinator: Coordinator {
     
+    enum ModuleNavigation: AppNavigator {
+        case conversations
+        case curations
+        case recommendations
+    }
+    
     var childCoordinators: [Coordinator] = [Coordinator]()
     
     var navigationController: UINavigationController
@@ -21,7 +27,38 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let mainViewController = ViewController.instantiate()
+        let mainViewController = HomeViewController.instantiate()
         self.navigationController.pushViewController(mainViewController, animated: true)
+    }
+    
+    func navigateTo(_ scene: AppNavigator) {
+        
+        guard let navigationScene = scene as? ModuleNavigation else { return }
+        
+        switch navigationScene {
+            
+        case .conversations:
+            self.showConversationsModule()
+            
+        case .curations:
+            self.showCurationsModule()
+            
+        case .recommendations:
+            self.showRecommendationsModule()
+        }
+        
+    }
+    
+    // MARK:- Private methods
+    private func showConversationsModule() {
+        
+    }
+    
+    private func showCurationsModule() {
+        
+    }
+    
+    private func showRecommendationsModule() {
+        
     }
 }
