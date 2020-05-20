@@ -14,20 +14,48 @@ protocol ConversationsAPIListViewControllerDelegate: class {
 
 class ConversationsAPIListViewController: UIViewController, Storyboarded {
 
+    // MARK:- IBOutlets
+    @IBOutlet weak var conversationsAPIListTableView: UITableView!
+    
+    // MARK:- Constants
+    private static let CELL_IDENTIFIER = "ConversationsAPICell"
+    
     // MARK:- Variables
-    var viewModel: ConversationsAPIListViewModelDelegate?
+    var viewModel: ConversationsAPIListViewModelDelegate!
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.viewModel?.getData()
     }
     
 
 }
 
+// MARK:- UITableViewDataSource methods
+extension ConversationsAPIListViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.viewModel.numberOfSections
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.viewModel.numberOfRows
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsAPIListViewController.CELL_IDENTIFIER) else {
+            return UITableViewCell()
+        }
+        
+        cell.textLabel?.text = self.viewModel.titleForRowAtIndexPath(indexPath)
+        return cell
+    }
+}
+
+// MARK:- ConversationsAPIListViewControllerDelegate methods
 extension ConversationsAPIListViewController: ConversationsAPIListViewControllerDelegate {
     
 }
