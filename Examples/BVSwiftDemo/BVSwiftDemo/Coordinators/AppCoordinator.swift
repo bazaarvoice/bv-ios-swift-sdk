@@ -38,7 +38,7 @@ class AppCoordinator: Coordinator {
         
         // 2. Create View Model
         let viewModel = ConversationsAPIListViewModel()
-        viewModel.viewControllerDelegate = mainViewController
+        viewModel.viewController = mainViewController
         viewModel.coordinator = self
         
         // 3. Assign View Model and Push View Controller

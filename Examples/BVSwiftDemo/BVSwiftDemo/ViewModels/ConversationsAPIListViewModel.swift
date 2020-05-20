@@ -14,9 +14,9 @@ protocol ConversationsAPIListViewModelDelegate: class {
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String
 }
 
-class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
+class ConversationsAPIListViewModel: BVSwiftViewModelType {    
     
-    weak var viewControllerDelegate: ConversationsAPIListViewControllerDelegate?
+    weak var viewController: ConversationsAPIListViewControllerDelegate?
     
     weak var coordinator: Coordinator?
     
@@ -25,7 +25,9 @@ class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
         case review = "Review"
         case reviewHighlights = "Review Highlights"
     }
-    
+}
+
+extension ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
     var numberOfSections: Int {
         return 1
     }
