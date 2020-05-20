@@ -29,9 +29,37 @@
                     <view key="view" contentMode="scaleToFill" id="Unm-a1-QeI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TFR-R1-889">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConversationsAPICell" id="AY0-BW-VUk">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AY0-BW-VUk" id="K8a-Cz-nA9">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="PSd-cP-aig" id="96s-hS-D4F"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Qod-gn-nu8" firstAttribute="trailing" secondItem="TFR-R1-889" secondAttribute="trailing" id="FBt-CK-Jgm"/>
+                            <constraint firstItem="Qod-gn-nu8" firstAttribute="bottom" secondItem="TFR-R1-889" secondAttribute="bottom" id="YD8-Au-MFJ"/>
+                            <constraint firstItem="TFR-R1-889" firstAttribute="leading" secondItem="Qod-gn-nu8" secondAttribute="leading" id="ecZ-tT-ctD"/>
+                            <constraint firstItem="TFR-R1-889" firstAttribute="top" secondItem="Qod-gn-nu8" secondAttribute="top" id="nfn-ZJ-FA2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Qod-gn-nu8"/>
                     </view>
+                    <connections>
+                        <outlet property="conversationsAPIListTableView" destination="TFR-R1-889" id="F8Z-uh-P9V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0G-rC-OrG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
