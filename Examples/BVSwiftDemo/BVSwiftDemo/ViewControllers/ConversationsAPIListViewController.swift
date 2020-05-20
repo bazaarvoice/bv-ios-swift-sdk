@@ -12,7 +12,7 @@ protocol ConversationsAPIListViewControllerDelegate: class {
     
 }
 
-class ConversationsAPIListViewController: UIViewController, Storyboarded {
+class ConversationsAPIListViewController: UIViewController, BVSwiftViewControllerType {
 
     // MARK:- IBOutlets
     @IBOutlet weak var conversationsAPIListTableView: UITableView!
