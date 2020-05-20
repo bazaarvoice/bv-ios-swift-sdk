@@ -10,7 +10,5 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    static func bazaarvoiceNavy() -> UIColor {
-      return #colorLiteral(red: 0, green: 0.2392156863, blue: 0.3019607843, alpha: 1)
-    }
+    class var bazaarvoiceNavy: UIColor { return #colorLiteral(red: 0, green: 0.2392156863, blue: 0.3019607843, alpha: 1) }
 }
