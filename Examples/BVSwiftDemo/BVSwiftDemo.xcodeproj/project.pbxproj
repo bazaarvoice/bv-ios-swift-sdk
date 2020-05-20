@@ -15,6 +15,8 @@
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */; };
 		9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */; };
+		9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */; };
+		9FA659852474F48600D9498F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659842474F48600D9498F /* Utils.swift */; };
 		9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB962473C2B0007FD337 /* Coordinator.swift */; };
 		9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB982473C346007FD337 /* AppCoordinator.swift */; };
 		9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */; };
@@ -31,6 +33,8 @@
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsAPIListViewController.swift; sourceTree = "<group>"; };
 		9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsAPIListViewModel.swift; sourceTree = "<group>"; };
+		9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSwiftDemoNavigationController.swift; sourceTree = "<group>"; };
+		9FA659842474F48600D9498F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		9FF7EB962473C2B0007FD337 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9FF7EB982473C346007FD337 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 				9FF7EB9A2473D9D4007FD337 /* Managers */,
 				9FF7EB942473C16E007FD337 /* Storyboards */,
 				9FF7EB952473C1AA007FD337 /* Resources */,
+				9FA659842474F48600D9498F /* Utils.swift */,
 			);
 			path = BVSwiftDemo;
 			sourceTree = "<group>";
@@ -85,6 +90,7 @@
 			children = (
 				42BC40E62473BB4E00008434 /* HomeViewController.swift */,
 				9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */,
+				9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -217,10 +223,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */,
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
 				9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */,
+				9FA659852474F48600D9498F /* Utils.swift in Sources */,
 				9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */,
 				42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */,
 				9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */,
