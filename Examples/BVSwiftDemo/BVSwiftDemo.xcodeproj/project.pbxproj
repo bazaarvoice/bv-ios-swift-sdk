@@ -18,6 +18,8 @@
 		9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */; };
 		9FA659852474F48600D9498F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659842474F48600D9498F /* Utils.swift */; };
 		9FA6598724750ED800D9498F /* ViewControllerModelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598624750ED800D9498F /* ViewControllerModelable.swift */; };
+		9FA6598A247513A900D9498F /* ViewModelCoordinated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA65989247513A900D9498F /* ViewModelCoordinated.swift */; };
+		9FA6598C247513C900D9498F /* ViewModelControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598B247513C900D9498F /* ViewModelControllerDelegate.swift */; };
 		9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB962473C2B0007FD337 /* Coordinator.swift */; };
 		9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB982473C346007FD337 /* AppCoordinator.swift */; };
 		9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */; };
@@ -37,6 +39,8 @@
 		9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSwiftDemoNavigationController.swift; sourceTree = "<group>"; };
 		9FA659842474F48600D9498F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		9FA6598624750ED800D9498F /* ViewControllerModelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerModelable.swift; sourceTree = "<group>"; };
+		9FA65989247513A900D9498F /* ViewModelCoordinated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelCoordinated.swift; sourceTree = "<group>"; };
+		9FA6598B247513C900D9498F /* ViewModelControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelControllerDelegate.swift; sourceTree = "<group>"; };
 		9FF7EB962473C2B0007FD337 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9FF7EB982473C346007FD337 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
@@ -86,6 +90,15 @@
 			path = BVSwiftDemo;
 			sourceTree = "<group>";
 		};
+		9FA659882475139000D9498F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9FA65989247513A900D9498F /* ViewModelCoordinated.swift */,
+				9FA6598B247513C900D9498F /* ViewModelControllerDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		9FF7EB8F2473C089007FD337 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +113,7 @@
 		9FF7EB902473C096007FD337 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9FA659882475139000D9498F /* Protocols */,
 				9F1628852473F54600959C78 /* HomeViewModel.swift */,
 				9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */,
 			);
@@ -234,7 +248,9 @@
 				9FA659852474F48600D9498F /* Utils.swift in Sources */,
 				9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */,
 				42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */,
+				9FA6598C247513C900D9498F /* ViewModelControllerDelegate.swift in Sources */,
 				9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */,
+				9FA6598A247513A900D9498F /* ViewModelCoordinated.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerModelable.swift in Sources */,
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
 			);
