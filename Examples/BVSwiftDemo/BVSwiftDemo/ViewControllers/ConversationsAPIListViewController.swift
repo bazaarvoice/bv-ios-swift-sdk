@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ConversationsAPIListViewControllerDelegate: class {
+    
+}
+
 class ConversationsAPIListViewController: UIViewController {
 
+    weak var viewModelDelegate: ConversationsAPIListViewModelDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
