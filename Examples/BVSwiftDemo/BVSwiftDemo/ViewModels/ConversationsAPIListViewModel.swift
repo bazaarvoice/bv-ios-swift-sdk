@@ -8,6 +8,13 @@
 
 import Foundation
 
-class ConversationsAPIListViewModel {
+protocol ConversationsAPIListViewModelDelegate: class {
     
+}
+
+class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
+    
+    weak var viewControllerDelegate: ConversationsAPIListViewControllerDelegate?
+    
+    weak var coordinator: Coordinator?
 }
