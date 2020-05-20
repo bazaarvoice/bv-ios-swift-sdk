@@ -23,7 +23,7 @@ class HomeViewController: UIViewController, Storyboarded {
         titleLabel.text = "bazaarvoice:";
         titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
-        titleLabel.font = UIFont(name: "ForalPro-Regular", size: 36)
+        titleLabel.font = UIFont.systemFont(ofSize: 34)
         return titleLabel
     }
 

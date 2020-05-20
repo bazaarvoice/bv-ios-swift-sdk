@@ -16,7 +16,7 @@ class BVSwiftDemoNavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = false
-        self.navigationBar.barTintColor = UIColor.bazaarvoiceNavy()
+        self.navigationBar.barTintColor = UIColor.bazaarvoiceNavy
         self.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8470588235)
         self.navigationBar.barStyle = .black;
     }
