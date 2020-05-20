@@ -28,6 +28,7 @@ class AppCoordinator: Coordinator {
     
     func start() {
         let mainViewController = HomeViewController.instantiate()
+        mainViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
         self.navigationController.pushViewController(mainViewController, animated: true)
     }
     
