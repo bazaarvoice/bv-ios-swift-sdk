@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ConversationsAPIListViewModelDelegate: class {
-    
+    func getData()
 }
 
 class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
@@ -17,4 +17,14 @@ class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
     weak var viewControllerDelegate: ConversationsAPIListViewControllerDelegate?
     
     weak var coordinator: Coordinator?
+    
+    private enum ConversationsAPI {
+        case author
+        case review
+        case reviewHighlights
+    }
+    
+    func getData() {
+        print("Inside getData")
+    }
 }

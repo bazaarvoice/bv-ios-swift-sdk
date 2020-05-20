@@ -27,9 +27,24 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let mainViewController = HomeViewController.instantiate()
+        // TODO:- Need to create child coordinator for conversations module
+//        let mainViewController = HomeViewController.instantiate()
+//        mainViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
+//        self.navigationController.pushViewController(mainViewController, animated: true)
+        
+        // 1. Create View Controller
+        let mainViewController = ConversationsAPIListViewController.instantiate()
         mainViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
+        
+        // 2. Create View Model
+        let viewModel = ConversationsAPIListViewModel()
+        viewModel.viewControllerDelegate = mainViewController
+        viewModel.coordinator = self
+        
+        // 3. Assign View Model and Push View Controller
+        mainViewController.viewModel = viewModel
         self.navigationController.pushViewController(mainViewController, animated: true)
+        
     }
     
     func navigateTo(_ scene: AppNavigator) {
