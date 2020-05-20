@@ -9,7 +9,9 @@
 import Foundation
 
 protocol ConversationsAPIListViewModelDelegate: class {
-    func getData()
+    var numberOfSections: Int { get }
+    var numberOfRows: Int { get }
+    func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String
 }
 
 class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
@@ -18,13 +20,21 @@ class ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
     
     weak var coordinator: Coordinator?
     
-    private enum ConversationsAPI {
-        case author
-        case review
-        case reviewHighlights
+    private enum ConversationsAPI: String, CaseIterable {
+        case author = "Author"
+        case review = "Review"
+        case reviewHighlights = "Review Highlights"
     }
     
-    func getData() {
-        print("Inside getData")
+    var numberOfSections: Int {
+        return 1
+    }
+    
+    var numberOfRows: Int {
+        return ConversationsAPI.allCases.count
+    }
+    
+    func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
+        return ConversationsAPI.allCases[indexPath.row].rawValue
     }
 }
