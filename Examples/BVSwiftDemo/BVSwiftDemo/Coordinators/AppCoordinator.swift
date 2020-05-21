@@ -34,6 +34,7 @@ class AppCoordinator: Coordinator {
         let viewModel = HomeViewModel()
         viewModel.coordinator = self
         
+        // 3. Assign View Model and Push View Controller
         homeViewController.viewModel = viewModel
         self.navigationController.pushViewController(homeViewController, animated: true)        
     }
