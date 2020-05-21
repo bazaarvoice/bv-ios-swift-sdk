@@ -20,16 +20,16 @@ class ConversationsCoordinator: Coordinator {
         super.start()
     
         // 1. Create View Controller
-        let mainViewController = ConversationsAPIListViewController.instantiate()
+        let conversationsAPIListViewController = ConversationsAPIListViewController.instantiate()
         
         // 2. Create View Model
         let viewModel = ConversationsAPIListViewModel()
-        viewModel.viewController = mainViewController
+        viewModel.viewController = conversationsAPIListViewController
         viewModel.coordinator = self
         
         // 3. Assign View Model and Push View Controller
-        mainViewController.viewModel = viewModel
-        self.navigationController.pushViewController(mainViewController, animated: true)
+        conversationsAPIListViewController.viewModel = viewModel
+        self.navigationController.pushViewController(conversationsAPIListViewController, animated: true)
     }
     
     override func navigateTo(_ scene: AppNavigator) {

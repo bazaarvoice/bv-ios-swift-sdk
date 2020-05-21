@@ -17,14 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let navController = BVSwiftDemoNavigationController()
-        coordinator = AppCoordinator(navigationController: navController)
+        let navigationController = BVSwiftDemoNavigationController()
+        coordinator = AppCoordinator(navigationController: navigationController)
         coordinator?.start()
 
         // create a basic UIWindow and activate it
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
         return true
     }
 
