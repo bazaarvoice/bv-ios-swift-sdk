@@ -20,6 +20,7 @@
 		9FA6598724750ED800D9498F /* ViewControllerModelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598624750ED800D9498F /* ViewControllerModelable.swift */; };
 		9FA6598A247513A900D9498F /* ViewModelCoordinated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA65989247513A900D9498F /* ViewModelCoordinated.swift */; };
 		9FA6598C247513C900D9498F /* ViewModelControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598B247513C900D9498F /* ViewModelControllerDelegate.swift */; };
+		9FA6598E2475278600D9498F /* ConversationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598D2475278600D9498F /* ConversationsCoordinator.swift */; };
 		9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB962473C2B0007FD337 /* Coordinator.swift */; };
 		9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB982473C346007FD337 /* AppCoordinator.swift */; };
 		9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */; };
@@ -41,6 +42,7 @@
 		9FA6598624750ED800D9498F /* ViewControllerModelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerModelable.swift; sourceTree = "<group>"; };
 		9FA65989247513A900D9498F /* ViewModelCoordinated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelCoordinated.swift; sourceTree = "<group>"; };
 		9FA6598B247513C900D9498F /* ViewModelControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelControllerDelegate.swift; sourceTree = "<group>"; };
+		9FA6598D2475278600D9498F /* ConversationsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsCoordinator.swift; sourceTree = "<group>"; };
 		9FF7EB962473C2B0007FD337 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9FF7EB982473C346007FD337 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				9FF7EB962473C2B0007FD337 /* Coordinator.swift */,
 				9FF7EB982473C346007FD337 /* AppCoordinator.swift */,
+				9FA6598D2475278600D9498F /* ConversationsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				9FA6598A247513A900D9498F /* ViewModelCoordinated.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerModelable.swift in Sources */,
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
+				9FA6598E2475278600D9498F /* ConversationsCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
