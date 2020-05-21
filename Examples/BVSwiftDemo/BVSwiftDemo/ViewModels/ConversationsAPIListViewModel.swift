@@ -14,7 +14,7 @@ protocol ConversationsAPIListViewModelDelegate: class {
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String
 }
 
-class ConversationsAPIListViewModel: BVSwiftViewModelType {    
+class ConversationsAPIListViewModel: ViewModelType {    
     
     weak var viewController: ConversationsAPIListViewControllerDelegate?
     
