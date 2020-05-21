@@ -9,11 +9,8 @@
 import Foundation
 import UIKit
 
-
-protocol AppNavigator {
-    
-}
-
+/// protocol to be implemented by navigation enums inside Coordinators
+protocol AppNavigator { }
 
 class Coordinator: NSObject, UINavigationControllerDelegate {
     
@@ -21,7 +18,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
     
     var navigationController: UINavigationController
     
-    var parentCoordinator: Coordinator?
+    weak var parentCoordinator: Coordinator?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -35,6 +32,17 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
         
     }
     
+    func childDidFinish(_ child: Coordinator?) {
+        for (index, coordinator) in self.childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                self.navigationController.delegate = self
+                break
+            }
+        }
+    }
+    
+    // MARK:- UINavigationControllerDelegate methods
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 
         guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
@@ -51,15 +59,5 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
             self.parentCoordinator?.childDidFinish(self)
         }
 
-    }
-
-    func childDidFinish(_ child: Coordinator?) {
-        for (index, coordinator) in self.childCoordinators.enumerated() {
-            if coordinator === child {
-                childCoordinators.remove(at: index)
-                self.navigationController.delegate = self
-                break
-            }
-        }
     }
 }

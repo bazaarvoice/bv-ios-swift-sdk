@@ -12,11 +12,11 @@ protocol ViewModelCoodinated {
     var coordinator: Coordinator? { get set }
 }
 
-protocol ViewModelControllerDelegate {
+protocol ViewModelControllerNotifiable {
     
     associatedtype ViewControllerDelegate
     
     var viewController: ViewControllerDelegate { get set }
 }
 
-typealias ViewModelType = ViewModelCoodinated & ViewModelControllerDelegate
+typealias ViewModelType = ViewModelCoodinated & ViewModelControllerNotifiable

@@ -27,15 +27,15 @@ class AppCoordinator: Coordinator {
         super.start()
 
         // 1. Create View Controller
-        let mainViewController = HomeViewController.instantiate()
-        mainViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
+        let homeViewController = HomeViewController.instantiate()
+        homeViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
         
         // 2. Create View Model
         let viewModel = HomeViewModel()
         viewModel.coordinator = self
         
-        mainViewController.viewModel = viewModel
-        self.navigationController.pushViewController(mainViewController, animated: true)        
+        homeViewController.viewModel = viewModel
+        self.navigationController.pushViewController(homeViewController, animated: true)        
     }
     
     override func navigateTo(_ scene: AppNavigator) {
