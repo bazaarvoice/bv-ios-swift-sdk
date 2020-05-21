@@ -12,7 +12,7 @@ protocol HomeViewModelDelegate: class {
     func didTapShowNextButton()
 }
 
-class HomeViewModel: BVSwiftViewModelType {
+class HomeViewModel: ViewModelType {
     weak var viewController: HomeViewModelDelegate?
     
     weak var coordinator: Coordinator?
