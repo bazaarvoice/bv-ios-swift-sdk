@@ -9,8 +9,6 @@
 import UIKit
 
 class HomeViewController: UIViewController, ViewControllerType {
-
-    weak var coordinator: Coordinator?
     
     var viewModel: HomeViewModelDelegate!
     
