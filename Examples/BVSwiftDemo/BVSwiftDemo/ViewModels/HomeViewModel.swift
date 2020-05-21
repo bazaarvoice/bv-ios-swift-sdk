@@ -13,6 +13,7 @@ protocol HomeViewModelDelegate: class {
 }
 
 class HomeViewModel: ViewModelType {
+    
     weak var viewController: HomeViewModelDelegate?
     
     weak var coordinator: Coordinator?
