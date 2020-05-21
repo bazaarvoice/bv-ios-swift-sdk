@@ -35,9 +35,7 @@ class AppCoordinator: Coordinator {
         viewModel.coordinator = self
         
         mainViewController.viewModel = viewModel
-        self.navigationController.pushViewController(mainViewController, animated: true)
-        self.navigationController.delegate = self
-        
+        self.navigationController.pushViewController(mainViewController, animated: true)        
     }
     
     override func navigateTo(_ scene: AppNavigator) {
