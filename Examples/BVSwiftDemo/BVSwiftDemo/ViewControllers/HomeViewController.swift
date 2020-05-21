@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, BVSwiftViewControllerType {
+class HomeViewController: UIViewController, ViewControllerType {
 
     weak var coordinator: Coordinator?
     

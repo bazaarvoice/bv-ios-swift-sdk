@@ -15,4 +15,4 @@ protocol ViewControllerModelable {
     var viewModel: ViewModelType! { get set }
 }
 
-typealias BVSwiftViewControllerType = ViewControllerModelable & Storyboarded
+typealias ViewControllerType = ViewControllerModelable & Storyboarded
