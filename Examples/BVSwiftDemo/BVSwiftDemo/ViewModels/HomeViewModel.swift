@@ -8,6 +8,18 @@
 
 import Foundation
 
-class HomeViewModel {
+protocol HomeViewModelDelegate: class {
+    func didTapShowNextButton()
+}
+
+class HomeViewModel: BVSwiftViewModelType {
+    weak var viewController: HomeViewModelDelegate?
     
+    weak var coordinator: Coordinator?
+}
+
+extension HomeViewModel: HomeViewModelDelegate {
+    func didTapShowNextButton() {
+        coordinator?.navigateTo(AppCoordinator.ModuleNavigation.conversations)
+    }
 }
