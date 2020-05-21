@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		428E6FA32476C9B200086D1A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428E6FA22476C9B100086D1A /* Config.swift */; };
 		42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E22473BB4E00008434 /* AppDelegate.swift */; };
 		42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E62473BB4E00008434 /* HomeViewController.swift */; };
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
+		428E6FA22476C9B100086D1A /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		42BC40DF2473BB4E00008434 /* BVSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42BC40E22473BB4E00008434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42BC40E62473BB4E00008434 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -70,8 +72,15 @@
 				699334E2CF660A41F330A31F /* Pods-BVSwiftDemo.debug.xcconfig */,
 				1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		428E6FA12476C8D100086D1A /* Scheme Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				428E6FA22476C9B100086D1A /* Config.swift */,
+			);
+			path = "Scheme Configuration";
 			sourceTree = "<group>";
 		};
 		42BC40D62473BB4E00008434 = {
@@ -95,6 +104,7 @@
 		42BC40E12473BB4E00008434 /* BVSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
+				428E6FA12476C8D100086D1A /* Scheme Configuration */,
 				42BC40F02473BB5100008434 /* Info.plist */,
 				42BC40E22473BB4E00008434 /* AppDelegate.swift */,
 				9FF7EB902473C096007FD337 /* ViewModels */,
@@ -314,6 +324,7 @@
 			files = (
 				9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */,
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
+				428E6FA32476C9B200086D1A /* Config.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
 				9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */,
@@ -351,6 +362,85 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		428E6F9F2476C80C00086D1A /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Staging;
+		};
+		428E6FA02476C80C00086D1A /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 699334E2CF660A41F330A31F /* Pods-BVSwiftDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BVSwiftDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazaarvoice.BVSwiftDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Staging;
+		};
 		42BC40F12473BB5100008434 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -510,6 +600,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				42BC40F12473BB5100008434 /* Debug */,
+				428E6F9F2476C80C00086D1A /* Staging */,
 				42BC40F22473BB5100008434 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -519,6 +610,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				42BC40F42473BB5100008434 /* Debug */,
+				428E6FA02476C80C00086D1A /* Staging */,
 				42BC40F52473BB5100008434 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
