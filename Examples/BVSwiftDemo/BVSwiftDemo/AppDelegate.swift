@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        Config.sharedInstance.setConfiguration()
+        
         let navController = BVSwiftDemoNavigationController()
         coordinator = AppCoordinator(navigationController: navController)
         coordinator?.start()

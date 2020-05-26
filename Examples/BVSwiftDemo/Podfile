@@ -7,6 +7,10 @@ target 'BVSwiftDemo' do
 
   # Pods for BVSwiftDemo
 
-  pod 'BVSwift', :path => "../../"
+  pod 'BVSwift/BVAnalytics', :path => "../../"
+  pod 'BVSwift/BVCommon', :path => "../../"
+  pod 'BVSwift/BVConversations', :path => "../../"
+  pod 'BVSwift/BVCurations', :path => "../../"
+  pod 'BVSwift/BVRecommendations', :path => "../../"
 
 end
