@@ -28,6 +28,7 @@ class ConversationsAPIListViewController: UIViewController, ViewControllerType {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.conversationsAPIListTableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
 
