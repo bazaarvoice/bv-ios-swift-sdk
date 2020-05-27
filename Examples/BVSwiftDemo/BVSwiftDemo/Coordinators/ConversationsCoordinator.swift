@@ -10,33 +10,29 @@ import Foundation
 import UIKit
 
 class ConversationsCoordinator: Coordinator {
-    var childCoordinators: [Coordinator] = [Coordinator]()
     
-    var navigationController: UINavigationController
-    
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    override init(navigationController: UINavigationController) {
+        super.init(navigationController: navigationController)
     }
     
-    func start() {
+    override func start() {
         
-      //  self.navigationController.delegate = self
-        
+        super.start()
+    
         // 1. Create View Controller
-        let mainViewController = ConversationsAPIListViewController.instantiate()
-        mainViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
+        let conversationsAPIListViewController = ConversationsAPIListViewController.instantiate()
         
         // 2. Create View Model
         let viewModel = ConversationsAPIListViewModel()
-        viewModel.viewController = mainViewController
+        viewModel.viewController = conversationsAPIListViewController
         viewModel.coordinator = self
         
         // 3. Assign View Model and Push View Controller
-        mainViewController.viewModel = viewModel
-        self.navigationController.pushViewController(mainViewController, animated: true)
+        conversationsAPIListViewController.viewModel = viewModel
+        self.navigationController.pushViewController(conversationsAPIListViewController, animated: true)
     }
     
-    func navigateTo(_ scene: AppNavigator) {
+    override func navigateTo(_ scene: AppNavigator) {
         
     }
 }

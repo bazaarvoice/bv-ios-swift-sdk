@@ -8,9 +8,9 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, Storyboarded {
-
-    weak var coordinator: Coordinator?
+class HomeViewController: UIViewController, ViewControllerType {
+    
+    var viewModel: HomeViewModelDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,11 @@ class HomeViewController: UIViewController, Storyboarded {
         titleLabel.font = UIFont.systemFont(ofSize: 34)
         return titleLabel
     }
+    
+    @IBAction func showNextTapped(_ sender: Any) {
+        self.viewModel.didTapShowNextButton()
+    }
+    
 
 }
 

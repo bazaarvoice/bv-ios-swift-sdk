@@ -14,7 +14,25 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0go-Y0-6U3">
+                                <rect key="frame" x="170" y="433" width="74" height="30"/>
+                                <state key="normal" title="Show Next"/>
+                                <connections>
+                                    <action selector="showNextTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ur8-sd-Qmd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUb-ey-LaW">
+                                <rect key="frame" x="164" y="563" width="86" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Show Segue"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0go-Y0-6U3" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5dz-SM-FOA"/>
+                            <constraint firstItem="0go-Y0-6U3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hPb-XW-Ge0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -64,6 +82,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0G-rC-OrG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1041" y="138"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="h4p-h1-FPa">
+            <objects>
+                <viewController id="gni-2w-UDQ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ycw-L1-XBZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="RvC-Qx-wz1"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Fke-78-HWl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3DR-sA-mKh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138" y="844"/>
         </scene>
     </scenes>
 </document>
