@@ -60,11 +60,12 @@ extension ConversationsAPIListViewController: UITableViewDataSource {
     }
 }
 
+// MARK:- UITableViewDelegate methods
 extension ConversationsAPIListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel.didSelectRowAtIndexPath(indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
+        self.viewModel.didSelectRowAtIndexPath(indexPath)
     }
 }
 
