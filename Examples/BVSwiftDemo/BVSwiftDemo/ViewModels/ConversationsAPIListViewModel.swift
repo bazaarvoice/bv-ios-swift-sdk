@@ -19,12 +19,6 @@ class ConversationsAPIListViewModel: ViewModelType {
     weak var viewController: ConversationsAPIListViewControllerDelegate?
     
     weak var coordinator: Coordinator?
-    
-    private enum ConversationsAPI: String, CaseIterable {
-        case author = "Author"
-        case review = "Review"
-        case reviewHighlights = "Review Highlights"
-    }
 }
 
 extension ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
@@ -33,10 +27,10 @@ extension ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
     }
     
     var numberOfRows: Int {
-        return ConversationsAPI.allCases.count
+        return ConversationsAPIs.allCases.count
     }
     
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
-        return ConversationsAPI.allCases[indexPath.row].rawValue
+        return ConversationsAPIs.allCases[indexPath.row].titleText
     }
 }
