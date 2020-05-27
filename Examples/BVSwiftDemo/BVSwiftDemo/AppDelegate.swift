@@ -19,14 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Config.sharedInstance.setConfiguration()
         
-        let navController = BVSwiftDemoNavigationController()
-        coordinator = AppCoordinator(navigationController: navController)
+        let navigationController = BVSwiftDemoNavigationController()
+        coordinator = AppCoordinator(navigationController: navigationController)
         coordinator?.start()
 
         // create a basic UIWindow and activate it
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
         return true
     }
 
