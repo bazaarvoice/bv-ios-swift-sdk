@@ -14,7 +14,7 @@ protocol QuestionsViewModelDelegate: class {
 
 class QuestionsViewModel: ViewModelType {
     
-    weak var viewController: QuestionsViewModelDelegate?
+    weak var viewController: QuestionsTableViewControllerDelegate?
     
     weak var coordinator: Coordinator?
 }
