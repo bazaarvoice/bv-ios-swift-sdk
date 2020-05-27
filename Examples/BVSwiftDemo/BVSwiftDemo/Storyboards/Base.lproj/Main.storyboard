@@ -63,6 +63,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="PSd-cP-aig" id="96s-hS-D4F"/>
+                                    <outlet property="delegate" destination="PSd-cP-aig" id="Q67-Bm-iIK"/>
                                 </connections>
                             </tableView>
                         </subviews>
