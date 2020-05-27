@@ -84,6 +84,21 @@
             </objects>
             <point key="canvasLocation" x="1041" y="138"/>
         </scene>
+        <!--Questions Table View Controller-->
+        <scene sceneID="dYO-Hx-9zd">
+            <objects>
+                <viewController id="JAc-LF-JaT" customClass="QuestionsTableViewController" customModule="BVSwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wOV-qA-NJa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="DP1-he-SWq"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zDx-Pf-JEj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1928" y="138"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="h4p-h1-FPa">
             <objects>
