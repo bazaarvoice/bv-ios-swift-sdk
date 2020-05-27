@@ -8,11 +8,15 @@
 
 import Foundation
 
-protocol ViewModelControllerDelegate {
+protocol ViewModelCoodinated {
+    var coordinator: Coordinator? { get set }
+}
+
+protocol ViewModelControllerNotifiable {
     
     associatedtype ViewControllerDelegate
     
     var viewController: ViewControllerDelegate { get set }
 }
 
-typealias BVSwiftViewModelType = ViewModelCoodinated & ViewModelControllerDelegate
+typealias ViewModelType = ViewModelCoodinated & ViewModelControllerNotifiable
