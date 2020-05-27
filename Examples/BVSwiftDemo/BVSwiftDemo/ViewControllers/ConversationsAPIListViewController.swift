@@ -40,8 +40,12 @@ extension ConversationsAPIListViewController: UITableViewDataSource {
         return self.viewModel.numberOfSections
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.titleForHeaderInSection(section)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfRows
+        self.viewModel.numberOfRowsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
