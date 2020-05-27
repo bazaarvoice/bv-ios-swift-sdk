@@ -12,8 +12,11 @@ protocol QuestionsTableViewControllerDelegate: class {
     
 }
 
-class QuestionsTableViewController: UIViewController {
+class QuestionsTableViewController: UIViewController, ViewControllerType {
 
+    // MARK:- Variables
+    var viewModel: QuestionsViewModelDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
