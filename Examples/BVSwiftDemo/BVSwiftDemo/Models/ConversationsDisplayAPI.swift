@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ConversationsDisplayAPIs: Int, CaseIterable, AppNavigator {
+enum ConversationsDisplayAPI: Int, CaseIterable, AppNavigator {
     
     case authorQuery
     
@@ -71,7 +71,7 @@ enum ConversationsDisplayAPIs: Int, CaseIterable, AppNavigator {
     
 }
 
-enum ConversationsSubmissionAPIs: Int, CaseIterable, AppNavigator {
+enum ConversationsSubmissionAPI: Int, CaseIterable, AppNavigator {
     
     case answerSubmission
     
