@@ -17,6 +17,8 @@ protocol ConversationsAPIListViewModelDelegate: class {
     func numberOfRowsInSection(_ section: Int) -> Int
     
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String
+    
+    func didSelectRowAtIndexPath(_ indexPath: IndexPath)
 }
 
 class ConversationsAPIListViewModel: ViewModelType {
@@ -36,6 +38,24 @@ class ConversationsAPIListViewModel: ViewModelType {
     weak var viewController: ConversationsAPIListViewControllerDelegate?
     
     weak var coordinator: Coordinator?
+    
+    private func performDisplayAPINavigationForRow(_ row: Int) {
+        
+        guard let conversationsDisplayRow = ConversationsDisplayAPI(rawValue: row) else {
+            return
+        }
+        
+        self.coordinator?.navigateTo(conversationsDisplayRow)
+    }
+    
+    private func performSubmissionAPINavigationForRow(_ row: Int) {
+        
+        guard let conversationsSubmissionRow = ConversationsSubmissionAPI(rawValue: row) else {
+            return
+        }
+        
+        self.coordinator?.navigateTo(conversationsSubmissionRow)
+    }
 }
 
 // MARK:- ConversationsAPIListViewModelDelegate methods
@@ -60,13 +80,13 @@ extension ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
         }
         
         switch conversationsSection {
-        
+            
         case .display:
-            return ConversationsDisplayAPIs.allCases.count
-        
+            return ConversationsDisplayAPI.allCases.count
+            
         case .submission:
-            return ConversationsSubmissionAPIs.allCases.count
-
+            return ConversationsSubmissionAPI.allCases.count
+            
         }
         
     }
@@ -78,13 +98,30 @@ extension ConversationsAPIListViewModel: ConversationsAPIListViewModelDelegate {
         }
         
         switch conversationsSection {
-        
+            
         case .display:
-            return ConversationsDisplayAPIs.allCases[indexPath.row].titleText
-        
+            return ConversationsDisplayAPI.allCases[indexPath.row].titleText
+            
         case .submission:
-            return ConversationsSubmissionAPIs.allCases[indexPath.row].titleText
-
+            return ConversationsSubmissionAPI.allCases[indexPath.row].titleText
+            
+        }
+    }
+    
+    func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
+        
+        guard let conversationsSection = ConversationsSection(rawValue: indexPath.section) else {
+            return
+        }
+        
+        switch conversationsSection {
+            
+        case .display:
+            self.performDisplayAPINavigationForRow(indexPath.row)
+            
+        case .submission:
+            self.performSubmissionAPINavigationForRow(indexPath.row)
+            
         }
     }
 }
