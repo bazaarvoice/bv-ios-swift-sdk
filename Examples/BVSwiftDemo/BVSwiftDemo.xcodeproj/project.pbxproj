@@ -16,6 +16,7 @@
 		74408BAB723D0BE446FEC273 /* Pods_BVSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A417D650407251B9FF79AE8A /* Pods_BVSwiftDemo.framework */; };
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */; };
+		9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */; };
 		9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */; };
 		9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */; };
 		9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */; };
@@ -42,6 +43,7 @@
 		6C790F49E86194E3D6655CCB /* Pods-BVSwiftDemo.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.staging.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.staging.xcconfig"; sourceTree = "<group>"; };
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsDisplayAPI.swift; sourceTree = "<group>"; };
+		9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsSubmissionAPI.swift; sourceTree = "<group>"; };
 		9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsAPIListViewController.swift; sourceTree = "<group>"; };
 		9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsAPIListViewModel.swift; sourceTree = "<group>"; };
 		9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSwiftDemoNavigationController.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */,
+				9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerType.swift in Sources */,
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
+				9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */,
 				9FA6598E2475278600D9498F /* ConversationsCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
