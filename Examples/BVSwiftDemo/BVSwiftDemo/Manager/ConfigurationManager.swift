@@ -1,8 +1,8 @@
 //
-//  Config.swift
+//  ConfigurationManager.swift
 //  BVSwiftDemo
 //
-//  Created by Abhinav Mandloi on 21/05/2020.
+//  Created by Abhinav Mandloi on 27/05/2020.
 //  Copyright © 2020 Bazaarvoice. All rights reserved.
 //
 
@@ -14,9 +14,9 @@ enum Environment: String {
     case production
 }
 
-class Config: NSObject {
+class ConfigurationManager: NSObject {
     
-    static let sharedInstance = Config()
+    static let sharedInstance = ConfigurationManager()
     private let environment: Environment
     private let clientId: String = "1800petmeds"
     private let conversationsPassKey: String = "1800petmeds"
@@ -53,3 +53,4 @@ class Config: NSObject {
     }
     
 } //end of class
+
