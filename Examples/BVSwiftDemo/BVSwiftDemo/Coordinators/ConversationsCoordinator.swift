@@ -21,7 +21,7 @@ class ConversationsCoordinator: Coordinator {
     
         // 1. Create View Controller
         let conversationsAPIListViewController = ConversationsAPIListViewController.instantiate()
-        
+        conversationsAPIListViewController.navigationItem.title = "Conversations APIs"
         // 2. Create View Model
         let viewModel = ConversationsAPIListViewModel()
         viewModel.viewController = conversationsAPIListViewController
