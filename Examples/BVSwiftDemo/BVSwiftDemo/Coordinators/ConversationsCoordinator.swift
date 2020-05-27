@@ -89,7 +89,7 @@ class ConversationsCoordinator: Coordinator {
         // 2. Create View Model
         let questionsViewModel = QuestionsViewModel()
         questionsViewModel.coordinator = self
-        questionsViewModel.viewController = questionsViewController as? QuestionsViewModelDelegate
+        questionsViewModel.viewController = questionsViewController
         
         // 3. Assign and navigate
         questionsViewController.viewModel = questionsViewModel
