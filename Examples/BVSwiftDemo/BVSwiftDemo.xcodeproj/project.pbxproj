@@ -16,6 +16,7 @@
 		74408BAB723D0BE446FEC273 /* Pods_BVSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A417D650407251B9FF79AE8A /* Pods_BVSwiftDemo.framework */; };
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */; };
+		9F32E671247FA34300CA2633 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E670247FA34300CA2633 /* CardView.swift */; };
 		9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */; };
 		9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */; };
 		9FA622A0247E76CB0036177F /* QuestionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6229F247E76CB0036177F /* QuestionsTableViewController.swift */; };
@@ -46,6 +47,7 @@
 		6C790F49E86194E3D6655CCB /* Pods-BVSwiftDemo.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.staging.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.staging.xcconfig"; sourceTree = "<group>"; };
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerTableViewCell.swift; sourceTree = "<group>"; };
+		9F32E670247FA34300CA2633 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsDisplayAPI.swift; sourceTree = "<group>"; };
 		9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsSubmissionAPI.swift; sourceTree = "<group>"; };
 		9FA6229F247E76CB0036177F /* QuestionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionsTableViewController.swift; path = BVSwiftDemo/ViewControllers/QuestionsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */,
+				9F32E670247FA34300CA2633 /* CardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				9FA6598C247513C900D9498F /* ViewModelType.swift in Sources */,
 				9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */,
 				9FA622A0247E76CB0036177F /* QuestionsTableViewController.swift in Sources */,
+				9F32E671247FA34300CA2633 /* CardView.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerType.swift in Sources */,
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
 				9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */,
