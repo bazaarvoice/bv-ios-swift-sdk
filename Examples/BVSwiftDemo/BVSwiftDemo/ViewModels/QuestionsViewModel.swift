@@ -30,7 +30,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
         let questionQuery = BVQuestionQuery(productId: "test1",
                                             limit: 10,
                                             offset: 0)
-            .configure(Config.sharedInstance.config)
+            .configure(ConfigurationManager.sharedInstance.config)
             .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
                 
                 if case .failure(let error) = response {

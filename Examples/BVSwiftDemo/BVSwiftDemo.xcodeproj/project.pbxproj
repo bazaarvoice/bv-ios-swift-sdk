@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		428E6FA32476C9B200086D1A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428E6FA22476C9B100086D1A /* Config.swift */; };
+		42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42566A4D247E709B008FC057 /* ConfigurationManager.swift */; };
 		42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E22473BB4E00008434 /* AppDelegate.swift */; };
 		42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E62473BB4E00008434 /* HomeViewController.swift */; };
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
 		42BC40EC2473BB5100008434 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40EB2473BB5100008434 /* Assets.xcassets */; };
 		42BC40EF2473BB5100008434 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40ED2473BB5100008434 /* LaunchScreen.storyboard */; };
+		42C587DC247FA6CB00000D85 /* BVModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C587DB247FA6CB00000D85 /* BVModule.swift */; };
 		74408BAB723D0BE446FEC273 /* Pods_BVSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A417D650407251B9FF79AE8A /* Pods_BVSwiftDemo.framework */; };
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */; };
@@ -35,7 +36,7 @@
 
 /* Begin PBXFileReference section */
 		1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
-		428E6FA22476C9B100086D1A /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		42566A4D247E709B008FC057 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		42BC40DF2473BB4E00008434 /* BVSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42BC40E22473BB4E00008434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42BC40E62473BB4E00008434 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +44,7 @@
 		42BC40EB2473BB5100008434 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42BC40EE2473BB5100008434 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42BC40F02473BB5100008434 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42C587DB247FA6CB00000D85 /* BVModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVModule.swift; sourceTree = "<group>"; };
 		699334E2CF660A41F330A31F /* Pods-BVSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.debug.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C790F49E86194E3D6655CCB /* Pods-BVSwiftDemo.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.staging.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.staging.xcconfig"; sourceTree = "<group>"; };
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -87,10 +89,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		42566A4C247E708B008FC057 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				42566A4D247E709B008FC057 /* ConfigurationManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		428E6FA12476C8D100086D1A /* Scheme Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				428E6FA22476C9B100086D1A /* Config.swift */,
 			);
 			path = "Scheme Configuration";
 			sourceTree = "<group>";
@@ -117,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				9F32E66D247F960500CA2633 /* Views */,
+				42566A4C247E708B008FC057 /* Manager */,
 				428E6FA12476C8D100086D1A /* Scheme Configuration */,
 				42BC40F02473BB5100008434 /* Info.plist */,
 				42BC40E22473BB4E00008434 /* AppDelegate.swift */,
@@ -124,7 +134,6 @@
 				9FF7EB8F2473C089007FD337 /* ViewControllers */,
 				9FF7EB932473C129007FD337 /* Models */,
 				9FF7EB912473C0DC007FD337 /* Coordinators */,
-				9FF7EB9A2473D9D4007FD337 /* Managers */,
 				9FF7EB942473C16E007FD337 /* Storyboards */,
 				9FF7EB952473C1AA007FD337 /* Resources */,
 				9FA659842474F48600D9498F /* Utils.swift */,
@@ -193,6 +202,7 @@
 		9FF7EB932473C129007FD337 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				42C587DB247FA6CB00000D85 /* BVModule.swift */,
 				9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */,
 				9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */,
 			);
@@ -214,13 +224,6 @@
 				42BC40EB2473BB5100008434 /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		9FF7EB9A2473D9D4007FD337 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Managers;
 			sourceTree = "<group>";
 		};
 		9FF7EB9B2473D9FF007FD337 /* Protocols */ = {
@@ -349,9 +352,10 @@
 			files = (
 				9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */,
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
-				428E6FA32476C9B200086D1A /* Config.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
+				42C587DC247FA6CB00000D85 /* BVModule.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
+				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
 				9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */,
 				9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */,
 				9FA659852474F48600D9498F /* Utils.swift in Sources */,
