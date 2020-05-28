@@ -19,3 +19,25 @@ extension UIColor {
     
     class var appBackground   : UIColor { return #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) }
 }
+
+extension UILabel {
+  
+  func linkAuthorNameLabel(fullText : String, author : String, target: Any?, selector : Selector?) {
+    
+    let attributedString = NSMutableAttributedString(string: fullText)
+    attributedString.setAttributes([:], range: NSRange(0..<attributedString.length)) // remove all the default attributes
+    
+    let colorFontAttribute = [NSAttributedString.Key.foregroundColor: UIColor.blue]
+    
+    attributedString.addAttributes(colorFontAttribute , range: (fullText as NSString).range(of: author, options: .backwards))
+    
+    self.attributedText = attributedString
+    self.isUserInteractionEnabled = true
+    
+    // Here the full label will be tappable. If you wanted to make just a part of the label
+    // tappable you'd need to check the frame when tapped, or use a different label.
+    let tapLabelGesture = UITapGestureRecognizer(target: target, action: selector)
+    self.addGestureRecognizer(tapLabelGesture)
+    
+  }  
+}
