@@ -28,6 +28,7 @@ class ConversationsAPIListViewController: UIViewController, ViewControllerType {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.conversationsAPIListTableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
 
@@ -40,8 +41,12 @@ extension ConversationsAPIListViewController: UITableViewDataSource {
         return self.viewModel.numberOfSections
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.titleForHeaderInSection(section)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfRows
+        self.viewModel.numberOfRowsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,6 +57,15 @@ extension ConversationsAPIListViewController: UITableViewDataSource {
         
         cell.textLabel?.text = self.viewModel.titleForRowAtIndexPath(indexPath)
         return cell
+    }
+}
+
+// MARK:- UITableViewDelegate methods
+extension ConversationsAPIListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.viewModel.didSelectRowAtIndexPath(indexPath)
     }
 }
 
