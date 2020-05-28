@@ -191,12 +191,14 @@
                                                                 <constraint firstAttribute="height" constant="20" id="R62-zD-A4f"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9sT-1A-9Dt">
-                                                            <rect key="frame" x="356" y="12.5" width="20" height="20"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9sT-1A-9Dt">
+                                                            <rect key="frame" x="356" y="14.5" width="20" height="16.5"/>
+                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="20" id="Ja5-4T-hzl"/>
                                                                 <constraint firstAttribute="height" constant="20" id="gY8-Ax-DD2"/>
                                                             </constraints>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1E-Jg-bzq">
                                                             <rect key="frame" x="0.0" y="0.0" width="0.5" height="48"/>
@@ -264,6 +266,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="callToActionButton" destination="diC-7J-p9X" id="19H-0i-eT7"/>
+                                            <outlet property="callToActionLeftImageView" destination="YWK-si-41m" id="FiW-3R-LcW"/>
                                             <outlet property="questionBody" destination="FeX-Rp-cm5" id="NMy-cx-wR8"/>
                                             <outlet property="questionMetaData" destination="yQv-NT-aAb" id="bd6-Yw-LaS"/>
                                             <outlet property="questionTitle" destination="1cw-4k-brg" id="W0l-SG-0Lh"/>
@@ -309,4 +313,7 @@
             <point key="canvasLocation" x="138" y="844"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="chevron.right" catalog="system" width="48" height="64"/>
+    </resources>
 </document>
