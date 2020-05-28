@@ -17,6 +17,7 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
     // MARK:- Variables
     var viewModel: QuestionsViewModelDelegate!
     
+    @IBOutlet weak var questionsTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
