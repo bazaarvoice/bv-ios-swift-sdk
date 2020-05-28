@@ -18,9 +18,9 @@ class Config: NSObject {
     
     static let sharedInstance = Config()
     private let environment: Environment
-    private let clientId: String = "1800petmeds"
-    private let conversationsPassKey: String = "1800petmeds"
-    var config: BVConversationsConfiguration?
+    private let clientId: String = "apitestcustomer"
+    private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
+    var config: BVConversationsConfiguration!
     
     
     private override init() {
