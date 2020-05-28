@@ -21,6 +21,8 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.viewModel.fetchQuestions()
     }
     
 
