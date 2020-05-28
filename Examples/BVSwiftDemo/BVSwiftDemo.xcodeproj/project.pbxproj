@@ -15,6 +15,7 @@
 		42BC40EF2473BB5100008434 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40ED2473BB5100008434 /* LaunchScreen.storyboard */; };
 		74408BAB723D0BE446FEC273 /* Pods_BVSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A417D650407251B9FF79AE8A /* Pods_BVSwiftDemo.framework */; };
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
+		9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */; };
 		9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */; };
 		9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */; };
 		9FA622A0247E76CB0036177F /* QuestionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6229F247E76CB0036177F /* QuestionsTableViewController.swift */; };
@@ -44,6 +45,7 @@
 		699334E2CF660A41F330A31F /* Pods-BVSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.debug.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C790F49E86194E3D6655CCB /* Pods-BVSwiftDemo.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.staging.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.staging.xcconfig"; sourceTree = "<group>"; };
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsDisplayAPI.swift; sourceTree = "<group>"; };
 		9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsSubmissionAPI.swift; sourceTree = "<group>"; };
 		9FA6229F247E76CB0036177F /* QuestionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionsTableViewController.swift; path = BVSwiftDemo/ViewControllers/QuestionsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -112,6 +114,7 @@
 		42BC40E12473BB4E00008434 /* BVSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
+				9F32E66D247F960500CA2633 /* Views */,
 				428E6FA12476C8D100086D1A /* Scheme Configuration */,
 				42BC40F02473BB5100008434 /* Info.plist */,
 				42BC40E22473BB4E00008434 /* AppDelegate.swift */,
@@ -133,6 +136,14 @@
 				A417D650407251B9FF79AE8A /* Pods_BVSwiftDemo.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F32E66D247F960500CA2633 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9FA659882475139000D9498F /* Protocols */ = {
@@ -351,6 +362,7 @@
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
 				9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */,
 				9FA6598E2475278600D9498F /* ConversationsCoordinator.swift in Sources */,
+				9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
