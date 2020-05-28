@@ -8,12 +8,15 @@
 
 import UIKit
 import BVSwift
+import FontAwesomeKit
 
 class QuestionAnswerTableViewCell: UITableViewCell {
 
     @IBOutlet weak var questionTitle: UILabel!
     @IBOutlet weak var questionMetaData: UILabel!
     @IBOutlet weak var questionBody: UILabel!
+    @IBOutlet weak var callToActionButton: UIButton!
+    @IBOutlet weak var callToActionLeftImageView: UIImageView!
     
     var onAuthorNickNameTapped : ((_ authorId : String) -> Void)? = nil
     var authorId: String?
@@ -42,9 +45,17 @@ class QuestionAnswerTableViewCell: UITableViewCell {
                                                     selector: #selector(QuestionAnswerTableViewCell.tappedAuthor(_:)))
         }
         else {
-          questionMetaData.text = ""
+            self.questionMetaData.text = ""
         }
         
+        if let answers = question.answers, !answers.isEmpty {
+            self.callToActionButton.setTitle("Read \(answers.count) answers", for: .normal)
+            self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.commentsIcon(withSize:))
+        }
+        else {
+            self.callToActionButton.setTitle("Be the first to answer!", for: .normal)
+            self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.plusIcon(withSize:))
+        }
         self.authorId = question.authorId
     }
     
@@ -55,5 +66,19 @@ class QuestionAnswerTableViewCell: UITableViewCell {
         guard let onAuthorNameTapped = self.onAuthorNickNameTapped else { return }
         
         onAuthorNameTapped(authorId)
+    }
+    
+    func getIconImage(_ icon : ((_ size: CGFloat) -> FAKFontAwesome?)) -> UIImage {
+      
+      let size = CGFloat(20)
+      
+      let newIcon = icon(size)
+      newIcon?.addAttribute(
+          NSAttributedString.Key.foregroundColor.rawValue,
+        value: UIColor.lightGray.withAlphaComponent(0.5)
+      )
+      
+      return newIcon!.image(with: CGSize(width: size, height: size))
+      
     }
 }
