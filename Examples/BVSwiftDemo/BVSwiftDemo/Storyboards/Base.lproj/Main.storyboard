@@ -271,6 +271,7 @@
                                             <outlet property="questionBody" destination="FeX-Rp-cm5" id="NMy-cx-wR8"/>
                                             <outlet property="questionMetaData" destination="yQv-NT-aAb" id="bd6-Yw-LaS"/>
                                             <outlet property="questionTitle" destination="1cw-4k-brg" id="W0l-SG-0Lh"/>
+                                            <outlet property="usersFoundHelpfulLabel" destination="NKX-gr-3Vo" id="2KJ-jk-PwZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
