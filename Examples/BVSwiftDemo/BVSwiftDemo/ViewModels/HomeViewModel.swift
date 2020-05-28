@@ -9,7 +9,10 @@
 import Foundation
 
 protocol HomeViewModelDelegate: class {
-    func didTapShowNextButton()
+    var numberOfSections: Int { get }
+    var numberOfRows: Int { get }
+    func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String
+    func didSelectRowAt (indexPath: IndexPath)
 }
 
 class HomeViewModel: ViewModelType {
@@ -20,7 +23,22 @@ class HomeViewModel: ViewModelType {
 }
 
 extension HomeViewModel: HomeViewModelDelegate {
-    func didTapShowNextButton() {
+    
+    var numberOfSections: Int {
+        return 1
+    }
+    
+    var numberOfRows: Int {
+        return BVModuleList.allCases.count
+    }
+    
+    func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
+        return BVModuleList.allCases[indexPath.row].rawValue
+    }
+    
+    func didSelectRowAt(indexPath: IndexPath) {
         coordinator?.navigateTo(AppCoordinator.ModuleNavigation.conversations)
     }
+    
 }
+
