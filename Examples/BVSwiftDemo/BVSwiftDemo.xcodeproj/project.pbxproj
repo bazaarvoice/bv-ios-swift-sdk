@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42566A4D247E709B008FC057 /* ConfigurationManager.swift */; };
+		42566A50247E7C13008FC057 /* ModuleListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42566A4F247E7C13008FC057 /* ModuleListModel.swift */; };
 		42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E22473BB4E00008434 /* AppDelegate.swift */; };
 		42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E62473BB4E00008434 /* HomeViewController.swift */; };
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 		42566A4D247E709B008FC057 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		42566A4F247E7C13008FC057 /* ModuleListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModuleListModel.swift; path = BVSwiftDemo/Manager/ModuleListModel.swift; sourceTree = SOURCE_ROOT; };
 		42BC40DF2473BB4E00008434 /* BVSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42BC40E22473BB4E00008434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42BC40E62473BB4E00008434 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		9FF7EB932473C129007FD337 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				42566A4F247E7C13008FC057 /* ModuleListModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				9FA659852474F48600D9498F /* Utils.swift in Sources */,
 				9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */,
 				42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */,
+				42566A50247E7C13008FC057 /* ModuleListModel.swift in Sources */,
 				9FA6598C247513C900D9498F /* ViewModelType.swift in Sources */,
 				9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerType.swift in Sources */,
