@@ -41,7 +41,7 @@ class AppCoordinator: Coordinator {
     
     override func navigateTo(_ scene: AppNavigator) {
         
-        guard let navigationScene = scene as? ModuleNavigation else { return }
+        guard let navigationScene = scene as? BVModule else { return }
         
         switch navigationScene {
             
