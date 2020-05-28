@@ -29,15 +29,21 @@ extension HomeViewModel: HomeViewModelDelegate {
     }
     
     var numberOfRows: Int {
-        return BVModuleList.allCases.count
+        return BVModule.allCases.count
     }
     
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
-        return BVModuleList.allCases[indexPath.row].rawValue
+        return BVModule.allCases[indexPath.row].titleText
     }
     
     func didSelectRowAt(indexPath: IndexPath) {
-        coordinator?.navigateTo(AppCoordinator.ModuleNavigation.conversations)
+        
+        guard let displayModuleRow = BVModule(rawValue: indexPath.row) else {
+           return
+        }
+        
+        
+        self.coordinator?.navigateTo(displayModuleRow)
     }
     
 }
