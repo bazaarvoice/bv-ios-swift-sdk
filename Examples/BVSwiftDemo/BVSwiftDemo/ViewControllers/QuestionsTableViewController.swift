@@ -68,11 +68,11 @@ extension QuestionsTableViewController: QuestionsTableViewControllerDelegate {
 extension QuestionsTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfSections
+        self.viewModel.numberOfRows
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.viewModel.numberOfRows
+        self.viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

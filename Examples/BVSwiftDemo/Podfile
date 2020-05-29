@@ -12,5 +12,6 @@ target 'BVSwiftDemo' do
   pod 'BVSwift/BVConversations', :path => "../../"
   pod 'BVSwift/BVCurations', :path => "../../"
   pod 'BVSwift/BVRecommendations', :path => "../../"
+  pod 'FontAwesomeKit/FontAwesome'
 
 end
