@@ -10,7 +10,15 @@ import Foundation
 import BVSwift
 
 protocol QuestionsViewModelDelegate: class {
+    
     func fetchQuestions()
+    
+    var numberOfSections: Int { get }
+    
+    var numberOfRows: Int { get }
+    
+    func questionForRowAtIndexPath(_ indexPath: IndexPath) -> BVQuestion?
+    
 }
 
 class QuestionsViewModel: ViewModelType {
@@ -25,7 +33,28 @@ class QuestionsViewModel: ViewModelType {
 // MARK:- QuestionsViewModelDelegate
 extension QuestionsViewModel: QuestionsViewModelDelegate {
     
+    func questionForRowAtIndexPath(_ indexPath: IndexPath) -> BVQuestion? {
+        
+        guard let question = self.questions?[indexPath.row] else {
+            return nil
+        }
+        
+        return question
+    }
+    
+    var numberOfSections: Int {
+        return 1
+    }
+    
+    var numberOfRows: Int {
+        return self.questions?.count ?? 0
+    }
+    
     func fetchQuestions() {
+        
+        guard let delegate = self.viewController else { return }
+        
+        delegate.showLoadingIndicator()
         
         let questionQuery = BVQuestionQuery(productId: "test1",
                                             limit: 10,
@@ -33,18 +62,21 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
             .configure(ConfigurationManager.sharedInstance.config)
             .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
                 
+                delegate.hideLoadingIndicator()
+                
                 if case .failure(let error) = response {
-                  print(error)
+                    print(error)
                     // TODO:- show alert
-                  return
+                    return
                 }
                 
                 guard case let .success(_, questions) = response else {
                     // TODO:- show alert
-                  return
+                    return
                 }
                 
                 self.questions = questions
+                delegate.reloadTableView()
         }
         
         questionQuery.async()
