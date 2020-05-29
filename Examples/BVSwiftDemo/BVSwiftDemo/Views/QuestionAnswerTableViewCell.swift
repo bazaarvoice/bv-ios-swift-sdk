@@ -19,8 +19,14 @@ class QuestionAnswerTableViewCell: UITableViewCell {
     @IBOutlet weak var callToActionLeftImageView: UIImageView!
     @IBOutlet weak var usersFoundHelpfulLabel: UILabel!
     
-    var onAuthorNickNameTapped : ((_ authorId : String) -> Void)? = nil
-    var authorId: String?
+    var onAuthorNickNameTapped : ((_ authorId : String) -> Void)?
+   
+    var onReadAnswersTapped : ((_ question : BVQuestion) -> Void)?
+    
+    var onSubmitAnswersTapped : ((_ question : BVQuestion) -> Void)?
+    
+    var question: BVQuestion?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -85,27 +91,49 @@ class QuestionAnswerTableViewCell: UITableViewCell {
         if let answers = question.answers, !answers.isEmpty {
             let title = "Read \(answers.count) " + ((answers.count == 1) ? "answer" : "answers")
             self.callToActionButton.setTitle(title, for: .normal)
+            self.callToActionButton.addTarget(self, action: #selector(QuestionAnswerTableViewCell.readAnswersTapped(_:)), for: .touchUpInside)
+            
             self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.commentsIcon(withSize:))
         }
         else {
             self.callToActionButton.setTitle("Be the first to answer!", for: .normal)
+            self.callToActionButton.addTarget(self, action: #selector(QuestionAnswerTableViewCell.submitAnswersTapped(_:)), for: .touchUpInside)
             self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.plusIcon(withSize:))
         }
         
-        // store author id
-        self.authorId = question.authorId
+        // store question
+        self.question = question
     }
     
     @objc func tappedAuthor(_ sender:UITapGestureRecognizer){
         
-        guard let authorId = self.authorId else { return }
+        guard let authorId = self.question?.authorId else { return }
         
         guard let onAuthorNameTapped = self.onAuthorNickNameTapped else { return }
         
         onAuthorNameTapped(authorId)
     }
     
-    func getIconImage(_ icon : ((_ size: CGFloat) -> FAKFontAwesome?)) -> UIImage {
+    @objc func readAnswersTapped(_ sender:UITapGestureRecognizer){
+        
+        guard let question = self.question else { return }
+        
+        guard let onReadAnswersTapped = self.onReadAnswersTapped else { return }
+        
+        onReadAnswersTapped(question)
+    }
+    
+    @objc func submitAnswersTapped(_ sender:UITapGestureRecognizer){
+        
+        guard let question = self.question else { return }
+        
+        guard let onSubmitAnswersTapped = self.onSubmitAnswersTapped else { return }
+        
+        onSubmitAnswersTapped(question)
+    }
+    
+    
+    private func getIconImage(_ icon : ((_ size: CGFloat) -> FAKFontAwesome?)) -> UIImage {
         
         let size = CGFloat(20)
         
