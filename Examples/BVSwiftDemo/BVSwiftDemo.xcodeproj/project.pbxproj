@@ -25,7 +25,7 @@
 		9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */; };
 		9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */; };
 		9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */; };
-		9FA659852474F48600D9498F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659842474F48600D9498F /* Utils.swift */; };
+		9FA659852474F48600D9498F /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA659842474F48600D9498F /* UIKit+Extensions.swift */; };
 		9FA6598724750ED800D9498F /* ViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598624750ED800D9498F /* ViewControllerType.swift */; };
 		9FA6598C247513C900D9498F /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598B247513C900D9498F /* ViewModelType.swift */; };
 		9FA6598E2475278600D9498F /* ConversationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6598D2475278600D9498F /* ConversationsCoordinator.swift */; };
@@ -57,7 +57,7 @@
 		9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsAPIListViewController.swift; sourceTree = "<group>"; };
 		9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsAPIListViewModel.swift; sourceTree = "<group>"; };
 		9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSwiftDemoNavigationController.swift; sourceTree = "<group>"; };
-		9FA659842474F48600D9498F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		9FA659842474F48600D9498F /* UIKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		9FA6598624750ED800D9498F /* ViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerType.swift; sourceTree = "<group>"; };
 		9FA6598B247513C900D9498F /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		9FA6598D2475278600D9498F /* ConversationsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsCoordinator.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 				9FF7EB912473C0DC007FD337 /* Coordinators */,
 				9FF7EB942473C16E007FD337 /* Storyboards */,
 				9FF7EB952473C1AA007FD337 /* Resources */,
-				9FA659842474F48600D9498F /* Utils.swift */,
+				9FA659842474F48600D9498F /* UIKit+Extensions.swift */,
 			);
 			path = BVSwiftDemo;
 			sourceTree = "<group>";
@@ -358,7 +358,7 @@
 				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
 				9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */,
 				9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */,
-				9FA659852474F48600D9498F /* Utils.swift in Sources */,
+				9FA659852474F48600D9498F /* UIKit+Extensions.swift in Sources */,
 				9FA622A2247E77170036177F /* QuestionsViewModel.swift in Sources */,
 				9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */,
 				42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */,
