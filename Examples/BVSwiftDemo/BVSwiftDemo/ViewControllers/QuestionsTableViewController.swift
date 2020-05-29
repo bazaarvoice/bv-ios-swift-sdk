@@ -9,7 +9,11 @@
 import UIKit
 
 protocol QuestionsTableViewControllerDelegate: class {
+    func reloadTableView()
     
+    func showLoadingIndicator()
+    
+    func hideLoadingIndicator()
 }
 
 class QuestionsTableViewController: UIViewController, ViewControllerType {
@@ -17,29 +21,69 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
     // MARK:- Variables
     var viewModel: QuestionsViewModelDelegate!
     
+    // MARK:- Constants
+    private static let CELL_IDENTIFIER: String = "QuestionAnswerTableViewCell"
+    
     @IBOutlet weak var questionsTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
+        // Do any additional setup after loading the view.
         self.viewModel.fetchQuestions()
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 // MARK:- ConversationsAPIListViewControllerDelegate methods
 extension QuestionsTableViewController: QuestionsTableViewControllerDelegate {
+    
+    func showLoadingIndicator() {
+        self.showSpinner()
+    }
+    
+    func hideLoadingIndicator() {
+        self.removeSpinner()
+    }
+    
+    func reloadTableView() {
+        DispatchQueue.main.async {
+            self.questionsTableView.reloadData()
+        }
+    }
+}
+
+// MARK:- UITableViewDataSource methods
+extension QuestionsTableViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.viewModel.numberOfSections
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        self.viewModel.numberOfRows
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewController.CELL_IDENTIFIER) as? QuestionAnswerTableViewCell else { return UITableViewCell() }
+        
+        if let question = self.viewModel.questionForRowAtIndexPath(indexPath) {
+            cell.setQuestionDetails(question: question)
+        }
+        
+        return cell
+    }
     
 }
