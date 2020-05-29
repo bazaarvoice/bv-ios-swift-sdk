@@ -55,6 +55,7 @@ extension ConversationsAPIListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        cell.selectionStyle = .none
         cell.textLabel?.text = self.viewModel.titleForRowAtIndexPath(indexPath)
         return cell
     }
