@@ -83,7 +83,8 @@ class QuestionAnswerTableViewCell: UITableViewCell {
         
         // call to action
         if let answers = question.answers, !answers.isEmpty {
-            self.callToActionButton.setTitle("Read \(answers.count) answers", for: .normal)
+            let title = "Read \(answers.count) " + ((answers.count == 1) ? "answer" : "answers")
+            self.callToActionButton.setTitle(title, for: .normal)
             self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.commentsIcon(withSize:))
         }
         else {
