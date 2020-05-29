@@ -30,8 +30,13 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
         let questionQuery = BVQuestionQuery(productId: "test1",
                                             limit: 10,
                                             offset: 0)
+            .include(.answers)
+            .include(.products)
+            .filter(((.hasAnswers(true), .equalTo)))
             .configure(ConfigurationManager.sharedInstance.config)
-            .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
+            .handler { [weak self] (response: BVConversationsQueryResponse<BVQuestion>) in
+                
+                guard let strongSelf = self else { return }
                 
                 if case .failure(let error) = response {
                   print(error)
@@ -44,7 +49,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
                   return
                 }
                 
-                self.questions = questions
+                strongSelf.questions = questions
         }
         
         questionQuery.async()
