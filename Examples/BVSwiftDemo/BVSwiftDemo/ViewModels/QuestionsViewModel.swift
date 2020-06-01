@@ -67,21 +67,28 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
                 
                 guard let strongSelf = self else { return }
                 
-                delegate.hideLoadingIndicator()
-                
-                if case .failure(let error) = response {
-                    print(error)
-                    // TODO:- show alert
-                    return
+                DispatchQueue.main.async {
+                    delegate.hideLoadingIndicator()
+                    
+                    if case .failure(let errors) = response {
+                        let errorMessage = (errors.first as? BVError)?.message ?? "Something went wrong."
+                        strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {
+                            strongSelf.coordinator?.popBack()
+                        })
+                        return
+                    }
+                    
+                    guard case let .success(_, questions) = response else {
+                        strongSelf.coordinator?.showAlert(title: "", message: "Something went wrong.", handler: {
+                            strongSelf.coordinator?.popBack()
+                        })
+                        return
+                    }
+                    
+                    strongSelf.questions = questions
+                    delegate.reloadTableView()
+
                 }
-                
-                guard case let .success(_, questions) = response else {
-                    // TODO:- show alert
-                    return
-                }
-                
-                strongSelf.questions = questions
-                delegate.reloadTableView()
         }
         
         questionQuery.async()
