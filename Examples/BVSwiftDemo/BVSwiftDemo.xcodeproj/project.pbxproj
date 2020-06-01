@@ -97,13 +97,6 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		428E6FA12476C8D100086D1A /* Scheme Configuration */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Scheme Configuration";
-			sourceTree = "<group>";
-		};
 		42BC40D62473BB4E00008434 = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +120,6 @@
 			children = (
 				9F32E66D247F960500CA2633 /* Views */,
 				42566A4C247E708B008FC057 /* Manager */,
-				428E6FA12476C8D100086D1A /* Scheme Configuration */,
 				42BC40F02473BB5100008434 /* Info.plist */,
 				42BC40E22473BB4E00008434 /* AppDelegate.swift */,
 				9FF7EB902473C096007FD337 /* ViewModels */,
