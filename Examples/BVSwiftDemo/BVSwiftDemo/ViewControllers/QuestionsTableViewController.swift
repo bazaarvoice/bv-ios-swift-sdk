@@ -58,9 +58,7 @@ extension QuestionsTableViewController: QuestionsTableViewControllerDelegate {
     }
     
     func reloadTableView() {
-        DispatchQueue.main.async {
-            self.questionsTableView.reloadData()
-        }
+        self.questionsTableView.reloadData()
     }
 }
 
