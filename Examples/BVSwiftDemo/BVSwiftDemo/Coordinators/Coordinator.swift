@@ -32,6 +32,10 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
         
     }
     
+    func popBack() {
+        self.navigationController.popViewController(animated: true)
+    }
+    
     func childDidFinish(_ child: Coordinator?) {
         for (index, coordinator) in self.childCoordinators.enumerated() {
             if coordinator === child {
