@@ -9,6 +9,7 @@
 import UIKit
 import HCSStarRatingView
 import SDWebImage
+import FontAwesomeKit
 
 protocol ProductDisplayPageViewControllerDelegate: class {
     
@@ -63,6 +64,15 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
     func updateProductDetails(name: String,
                               imageURL: URL) {
         self.productNameLabel.text = name
-        self.productImageView.sd_setImage(with: imageURL)
+        self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
+            
+            guard let strongSelf = self else { return }
+            
+            guard let _ = error else { return }
+            
+            strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
+                .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
+                                    height: strongSelf.productImageView.frame.size.height + 20))
+        }
     }
 }
