@@ -8,8 +8,14 @@
 
 import UIKit
 
-class ProductDisplayPageViewController: UIViewController {
+protocol ProductDisplayPageViewControllerDelegate: class {
+    
+}
 
+class ProductDisplayPageViewController: UIViewController , ViewControllerType {
+
+    var viewModel: ProductDisplayPageViewModelDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,4 +33,8 @@ class ProductDisplayPageViewController: UIViewController {
     }
     */
 
+}
+
+extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDelegate{
+    
 }
