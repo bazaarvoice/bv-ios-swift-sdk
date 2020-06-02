@@ -54,9 +54,10 @@ class AppCoordinator: Coordinator {
         
         // 1. Create View Controller
         let productDisplayPageViewController = ProductDisplayPageViewController.instantiate()
+        productDisplayPageViewController.navigationItem.titleView = ProductDisplayPageViewController.createTitleLabel()
         
         // 2. Create View Model
-        let productDisplayPageViewModel = ProductDisplayPageViewModel()
+        let productDisplayPageViewModel = ProductDisplayPageViewModel(productId: productId)
         productDisplayPageViewModel.coordinator = self
         productDisplayPageViewModel.viewController = productDisplayPageViewController
         
