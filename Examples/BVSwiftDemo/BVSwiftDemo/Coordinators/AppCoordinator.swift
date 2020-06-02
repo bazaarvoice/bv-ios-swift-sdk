@@ -11,10 +11,8 @@ import UIKit
 
 class AppCoordinator: Coordinator {
     
-    enum ModuleNavigation: AppNavigator {
-        case conversations
-        case curations
-        case recommendations
+    enum AppNavigation: AppNavigator {
+        case productDisplayPage(productId: String)
     }
     
     // MARK:- Initializers
@@ -41,35 +39,29 @@ class AppCoordinator: Coordinator {
     
     override func navigateTo(_ scene: AppNavigator) {
         
-        guard let navigationScene = scene as? BVModule else { return }
+        guard let navigationScene = scene as? AppNavigation else { return }
         
         switch navigationScene {
             
-        case .conversations:
-            self.showConversationsModule()
-            
-        case .curations:
-            self.showCurationsModule()
-            
-        case .recommendations:
-            self.showRecommendationsModule()
+        case .productDisplayPage(let productId):
+            self.showProductDisplayPage(productId: productId)
+
         }
-        
     }
     
     // MARK:- Private methods
-    private func showConversationsModule() {
-        let child = ConversationsCoordinator(navigationController: self.navigationController)
-        child.parentCoordinator = self
-        self.childCoordinators.append(child)
-        child.start()
-    }
-    
-    private func showCurationsModule() {
+    private func showProductDisplayPage(productId: String) {
         
-    }
-    
-    private func showRecommendationsModule() {
+        // 1. Create View Controller
+        let productDisplayPageViewController = ProductDisplayPageViewController.instantiate()
         
+        // 2. Create View Model
+        let productDisplayPageViewModel = ProductDisplayPageViewModel()
+        productDisplayPageViewModel.coordinator = self
+        productDisplayPageViewModel.viewController = productDisplayPageViewController
+        
+        // 3. Assign View Model and Push View Controller
+        productDisplayPageViewController.viewModel = productDisplayPageViewModel
+        self.navigationController.pushViewController(productDisplayPageViewController, animated: true)
     }
 }

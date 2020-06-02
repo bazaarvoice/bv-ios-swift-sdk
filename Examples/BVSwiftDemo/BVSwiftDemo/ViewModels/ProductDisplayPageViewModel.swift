@@ -8,6 +8,20 @@
 
 import Foundation
 
-class ProductDisplayPageViewModel {
+protocol ProductDisplayPageViewModelDelegate: class {
+    
+    
+}
+
+class ProductDisplayPageViewModel: ViewModelType {
+    
+    weak var viewController: ProductDisplayPageViewControllerDelegate?
+    
+    weak var coordinator: Coordinator?
+}
+
+// MARK:- ProductDisplayPageViewModelDelegate
+extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate{
+    
     
 }
