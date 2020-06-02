@@ -8,8 +8,12 @@
 
 import UIKit
 import HCSStarRatingView
+import SDWebImage
 
 protocol ProductDisplayPageViewControllerDelegate: class {
+    
+    func updateProductDetails(name: String,
+                              imageURL: URL)
     
 }
 
@@ -23,7 +27,7 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     
-    
+    // MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,6 +57,12 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
 
 }
 
-extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDelegate{
+// MARK:- ProductDisplayPageViewControllerDelegate methods
+extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDelegate {
     
+    func updateProductDetails(name: String,
+                              imageURL: URL) {
+        self.productNameLabel.text = name
+        self.productImageView.sd_setImage(with: imageURL)
+    }
 }

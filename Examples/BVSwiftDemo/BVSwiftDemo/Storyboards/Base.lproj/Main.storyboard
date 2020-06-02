@@ -337,8 +337,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CmS-Ei-jMr" userLabel="Product Details View">
                                 <rect key="frame" x="0.0" y="44" width="414" height="144"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bc2-bf-Yng">
-                                        <rect key="frame" x="4" y="4" width="136" height="136"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bc2-bf-Yng">
+                                        <rect key="frame" x="4" y="5" width="136" height="133.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Bc2-bf-Yng" secondAttribute="height" multiplier="1:1" id="CsK-QW-7QB"/>
                                         </constraints>
@@ -442,6 +442,7 @@
     <resources>
         <image name="bazaarvoice_logo" width="474" height="379"/>
         <image name="chevron.right" catalog="system" width="48" height="64"/>
+        <image name="photo" catalog="system" width="64" height="46"/>
         <namedColor name="bazaarvoiceNavy">
             <color red="0.0" green="0.23921568627450981" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
