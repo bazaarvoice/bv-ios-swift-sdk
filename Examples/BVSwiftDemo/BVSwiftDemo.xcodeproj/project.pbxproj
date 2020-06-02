@@ -18,6 +18,8 @@
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */; };
 		9F32E671247FA34300CA2633 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E670247FA34300CA2633 /* CardView.swift */; };
+		9FA2C5262486328A00C0DD6C /* ProductDisplayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */; };
+		9FA2C528248632B300C0DD6C /* ProductDisplayPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA2C527248632B300C0DD6C /* ProductDisplayPageViewModel.swift */; };
 		9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */; };
 		9FA61CBA247E4E710036177F /* ConversationsSubmissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */; };
 		9FA622A0247E76CB0036177F /* QuestionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6229F247E76CB0036177F /* QuestionsTableViewController.swift */; };
@@ -50,6 +52,8 @@
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		9F32E670247FA34300CA2633 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayPageViewController.swift; sourceTree = "<group>"; };
+		9FA2C527248632B300C0DD6C /* ProductDisplayPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayPageViewModel.swift; sourceTree = "<group>"; };
 		9FA61CB7247E34960036177F /* ConversationsDisplayAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsDisplayAPI.swift; sourceTree = "<group>"; };
 		9FA61CB9247E4E710036177F /* ConversationsSubmissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsSubmissionAPI.swift; sourceTree = "<group>"; };
 		9FA6229F247E76CB0036177F /* QuestionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionsTableViewController.swift; path = BVSwiftDemo/ViewControllers/QuestionsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -166,6 +170,7 @@
 				9FA659822474F37D00D9498F /* BVSwiftDemoNavigationController.swift */,
 				9FA6597E2474EDCE00D9498F /* ConversationsAPIListViewController.swift */,
 				42BC40E62473BB4E00008434 /* HomeViewController.swift */,
+				9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 				9F1628852473F54600959C78 /* HomeViewModel.swift */,
 				9FA659802474EDE600D9498F /* ConversationsAPIListViewModel.swift */,
 				9FA622A1247E77170036177F /* QuestionsViewModel.swift */,
+				9FA2C527248632B300C0DD6C /* ProductDisplayPageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -350,11 +356,13 @@
 				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
 				9FA6597F2474EDCE00D9498F /* ConversationsAPIListViewController.swift in Sources */,
 				9FA61CB8247E34960036177F /* ConversationsDisplayAPI.swift in Sources */,
+				9FA2C5262486328A00C0DD6C /* ProductDisplayPageViewController.swift in Sources */,
 				9FA659852474F48600D9498F /* UIKit+Extensions.swift in Sources */,
 				9FA622A2247E77170036177F /* QuestionsViewModel.swift in Sources */,
 				9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */,
 				42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */,
 				9FA6598C247513C900D9498F /* ViewModelType.swift in Sources */,
+				9FA2C528248632B300C0DD6C /* ProductDisplayPageViewModel.swift in Sources */,
 				9FA659812474EDE600D9498F /* ConversationsAPIListViewModel.swift in Sources */,
 				9FA622A0247E76CB0036177F /* QuestionsTableViewController.swift in Sources */,
 				9F32E671247FA34300CA2633 /* CardView.swift in Sources */,
