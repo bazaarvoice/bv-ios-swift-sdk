@@ -18,6 +18,12 @@ class ProductDisplayPageViewModel: ViewModelType {
     weak var viewController: ProductDisplayPageViewControllerDelegate?
     
     weak var coordinator: Coordinator?
+    
+    private let productId: String
+    
+    init(productId: String) {
+        self.productId = productId
+    }
 }
 
 // MARK:- ProductDisplayPageViewModelDelegate
