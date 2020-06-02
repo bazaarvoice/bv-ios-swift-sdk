@@ -326,10 +326,10 @@
             </objects>
             <point key="canvasLocation" x="1928" y="138"/>
         </scene>
-        <!--View Controller-->
+        <!--Product Display Page View Controller-->
         <scene sceneID="h4p-h1-FPa">
             <objects>
-                <viewController id="gni-2w-UDQ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductDisplayPageViewController" id="gni-2w-UDQ" customClass="ProductDisplayPageViewController" customModule="BVSwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ycw-L1-XBZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
