@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HCSStarRatingView
 
 protocol ProductDisplayPageViewControllerDelegate: class {
     
@@ -15,6 +16,13 @@ protocol ProductDisplayPageViewControllerDelegate: class {
 class ProductDisplayPageViewController: UIViewController , ViewControllerType {
 
     var viewModel: ProductDisplayPageViewModelDelegate!
+    
+    // MARK:- IBOutlets
+    @IBOutlet weak var productImageView: UIImageView!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var productPriceLabel: UILabel!
+    @IBOutlet weak var productRatingView: HCSStarRatingView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
