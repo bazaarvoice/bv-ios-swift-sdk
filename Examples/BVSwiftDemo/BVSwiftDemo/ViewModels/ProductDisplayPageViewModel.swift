@@ -47,28 +47,25 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
                 
                 DispatchQueue.main.async {
                     
-                    if case .failure(let errors) = response {
+                    switch response {
+                        
+                    case let .failure(errors):
+                        
                         let errorMessage = (errors.first as? BVError)?.message ?? "Something went wrong."
                         strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {
                             strongSelf.coordinator?.popBack()
                         })
-                        return
-                    }
-                    
-                    guard case let .success(_, products) = response else {
-                        strongSelf.coordinator?.showAlert(title: "", message: "Something went wrong.", handler: {
-                            strongSelf.coordinator?.popBack()
-                        })
-                        return
-                    }
-                    
-                    // save product
-                    strongSelf.product = products.first
-                    
-                    // update UI
-                    if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
-                        strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
                         
+                    case let .success(_, products):
+                        
+                        // save product
+                        strongSelf.product = products.first
+                        
+                        // update UI
+                        if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
+                            strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
+                            
+                        }
                     }
                 }
         }
