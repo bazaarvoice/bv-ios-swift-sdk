@@ -21,16 +21,19 @@ class ProductDisplayPageViewModel: ViewModelType {
     
     weak var coordinator: Coordinator?
     
+    // MARK:- Private properties
     private let productId: String
+    
     private var product: BVProduct?
     
+    // MARK:- Initializers
     init(productId: String) {
         self.productId = productId
     }
 }
 
 // MARK:- ProductDisplayPageViewModelDelegate
-extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate{
+extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     func fetchProductDisplayPageDetails() {
         
@@ -59,7 +62,14 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate{
                         return
                     }
                     
+                    // save product
                     strongSelf.product = products.first
+                    
+                    // update UI
+                    if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
+                        strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
+                        
+                    }
                 }
         }
         
