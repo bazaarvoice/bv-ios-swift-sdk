@@ -13,6 +13,10 @@ protocol ProductDisplayPageViewModelDelegate: class {
     
     func fetchProductDisplayPageDetails()
     
+    var numberOfSections: Int { get }
+    
+    var numberOfRows: Int { get }
+        
 }
 
 class ProductDisplayPageViewModel: ViewModelType {
@@ -25,6 +29,19 @@ class ProductDisplayPageViewModel: ViewModelType {
     private let productId: String
     
     private var product: BVProduct?
+    
+    private enum ProductDisplayPageRow: Int, CaseIterable {
+        
+        case reviews
+        
+        case questions
+        
+        case curations
+        
+        case curationsAddPhoto
+        
+        case curationsPhotoMap
+    }
     
     // MARK:- Initializers
     init(productId: String) {
@@ -73,4 +90,11 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         productQuery.async()
     }
     
+    var numberOfSections: Int {
+        return 1
+    }
+    
+    var numberOfRows: Int {
+        return ProductDisplayPageRow.allCases.count
+    }
 }
