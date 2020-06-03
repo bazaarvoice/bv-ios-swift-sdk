@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class ProductDisplayPageCell: UITableViewCell {
 
@@ -22,6 +23,27 @@ class ProductDisplayPageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setProductDetails(name: String,
+                           icon: ((_ size: CGFloat) -> FAKFontAwesome?)) {
+        
+        self.titleLabel.text = name
+        self.leftIconImageView.image = self.getIconImage(icon)
+    }
+    
+    func getIconImage(_ icon : ((_ size: CGFloat) -> FAKFontAwesome?)) -> UIImage {
+      
+      let size = CGFloat(20)
+      
+      let newIcon = icon(size)
+      newIcon?.addAttribute(
+          NSAttributedString.Key.foregroundColor.rawValue,
+        value: UIColor.lightGray.withAlphaComponent(0.5)
+      )
+      
+      return newIcon!.image(with: CGSize(width: size, height: size))
+      
     }
 
 }
