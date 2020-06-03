@@ -15,6 +15,7 @@ protocol ProductDisplayPageViewControllerDelegate: class {
     
     func updateProductDetails(name: String,
                               imageURL: URL)
+    func reloadData()
     
 }
 
@@ -75,7 +76,10 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.CELL_IDENTIFIER) as? ProductDisplayPageCell else { return UITableViewCell() }
-        cell.titleLabel.text = "Sample"
+        
+        cell.setProductDetails(name: self.viewModel.titleForIndexPath(indexPath),
+                               icon: self.viewModel.iconForIndexPath(indexPath))
+        
         return cell
     }
 }
@@ -96,5 +100,9 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
                 .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
                                     height: strongSelf.productImageView.frame.size.height + 20))
         }
+    }
+    
+    func reloadData() {
+        self.productDetailsTableView.reloadData()
     }
 }
