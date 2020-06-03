@@ -29,7 +29,7 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var productDetailsTableView: UITableView!
     
-    private static let CELL_IDENTIFIER: String = "ProductDisplayPageTableViewCell"
+    private static let CELL_IDENTIFIER: String = "ProductDisplayPageCell"
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
@@ -74,8 +74,8 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.CELL_IDENTIFIER) else { return UITableViewCell() }
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.CELL_IDENTIFIER) as? ProductDisplayPageCell else { return UITableViewCell() }
+        cell.titleLabel.text = "Sample"
         return cell
     }
 }
