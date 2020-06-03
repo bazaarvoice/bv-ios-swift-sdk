@@ -8,6 +8,7 @@
 
 import Foundation
 import BVSwift
+import FontAwesomeKit
 
 protocol ProductDisplayPageViewModelDelegate: class {
     
@@ -16,7 +17,11 @@ protocol ProductDisplayPageViewModelDelegate: class {
     var numberOfSections: Int { get }
     
     var numberOfRows: Int { get }
-        
+    
+    func titleForIndexPath(_ indexPath: IndexPath) -> String
+    
+    func iconForIndexPath(_ indexPath: IndexPath) -> ((_ size: CGFloat) -> FAKFontAwesome?)
+    
 }
 
 class ProductDisplayPageViewModel: ViewModelType {
@@ -54,9 +59,10 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     func fetchProductDisplayPageDetails() {
         
+        // TODO:- Testing Required after Bug fix(Bug in BVSwift SDK - When multiple stats are added they are passed as separate query params. So only first stat added will be returned).
         let productQuery = BVProductQuery(productId: self.productId)
-            .include(.questions)
-            .include(.reviews)
+            .stats(.questions)
+            .stats(.reviews)
             .configure(ConfigurationManager.sharedInstance.config)
             .handler { [weak self] (response: BVConversationsQueryResponse<BVProduct>) in
                 
@@ -81,8 +87,9 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
                         // update UI
                         if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
                             strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
-                            
                         }
+                        strongSelf.viewController?.reloadData()
+                        
                     }
                 }
         }
@@ -96,5 +103,30 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     var numberOfRows: Int {
         return ProductDisplayPageRow.allCases.count
+    }
+    
+    func titleForIndexPath(_ indexPath: IndexPath) -> String {
+        
+        guard let productDisplayPageRow = ProductDisplayPageRow(rawValue: indexPath.row) else {
+            return ""
+        }
+        
+        switch productDisplayPageRow {
+            
+        case .reviews: return "\(self.product?.reviewStatistics?.totalReviewCount ?? 0) Reviews"
+            
+        case .questions: return "\(self.product?.qaStatistics?.totalQuestionCount ?? 0) Questions, \(self.product?.qaStatistics?.totalAnswerCount ?? 0) Answers"
+            
+        case .curations: return "Curations"
+            
+        case .curationsAddPhoto: return "Add your photo!"
+            
+        case .curationsPhotoMap: return "Photos by Location"
+            
+        }
+    }
+    
+    func iconForIndexPath(_ indexPath: IndexPath) -> ((CGFloat) -> FAKFontAwesome?) {
+        return FAKFontAwesome.plugIcon(withSize:)
     }
 }
