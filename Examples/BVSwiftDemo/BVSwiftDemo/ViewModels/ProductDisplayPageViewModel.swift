@@ -127,6 +127,23 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     }
     
     func iconForIndexPath(_ indexPath: IndexPath) -> ((CGFloat) -> FAKFontAwesome?) {
-        return FAKFontAwesome.plugIcon(withSize:)
+        
+        guard let productDisplayPageRow = ProductDisplayPageRow(rawValue: indexPath.row) else {
+            return FAKFontAwesome.plugIcon(withSize:)
+        }
+        
+        switch productDisplayPageRow {
+            
+        case .reviews: return FAKFontAwesome.commentsIcon(withSize:)
+            
+        case .questions: return FAKFontAwesome.questionCircleIcon(withSize:)
+            
+        case .curations: return FAKFontAwesome.plugIcon(withSize:)
+            
+        case .curationsAddPhoto: return FAKFontAwesome.cameraRetroIcon(withSize:)
+            
+        case .curationsPhotoMap: return FAKFontAwesome.locationArrowIcon(withSize:)
+            
+        }        
     }
 }
