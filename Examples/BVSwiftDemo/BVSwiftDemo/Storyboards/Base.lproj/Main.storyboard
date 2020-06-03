@@ -425,13 +425,65 @@
                                 <rect key="frame" x="0.0" y="188" width="414" height="674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="x6u-aY-FoT">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="x6u-aY-FoT" id="uF5-0T-ER2">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDisplayPageCell" rowHeight="56" id="8oo-et-7gQ" customClass="ProductDisplayPageCell" customModule="BVSwiftDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8oo-et-7gQ" id="g9c-WT-yyR">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7ON-Rm-6oJ">
+                                                    <rect key="frame" x="10" y="18" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="ILg-SJ-eXP"/>
+                                                        <constraint firstAttribute="width" constant="20" id="m7f-ad-jmn"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVo-BZ-JUg">
+                                                    <rect key="frame" x="40" y="19.5" width="324" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fsS-8g-gXH">
+                                                    <rect key="frame" x="374" y="17.5" width="20" height="21.5"/>
+                                                    <color key="tintColor" white="0.67000000000000004" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="Mwy-km-EU1"/>
+                                                        <constraint firstAttribute="width" constant="20" id="cDo-d2-mYJ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bGI-6G-EAO">
+                                                    <rect key="frame" x="0.0" y="55.5" width="414" height="0.5"/>
+                                                    <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="93E-4f-whK"/>
+                                                        <constraint firstAttribute="height" constant="0.5" id="SNg-wW-vYm"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="93E-4f-whK"/>
+                                                        </mask>
+                                                    </variation>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7ON-Rm-6oJ" firstAttribute="centerY" secondItem="g9c-WT-yyR" secondAttribute="centerY" id="4Md-ou-aSf"/>
+                                                <constraint firstAttribute="trailing" secondItem="bGI-6G-EAO" secondAttribute="trailing" id="9em-Li-uKA"/>
+                                                <constraint firstItem="bGI-6G-EAO" firstAttribute="leading" secondItem="g9c-WT-yyR" secondAttribute="leading" id="E4K-c1-v4Z"/>
+                                                <constraint firstItem="WVo-BZ-JUg" firstAttribute="leading" secondItem="7ON-Rm-6oJ" secondAttribute="trailing" constant="10" id="Jut-8o-Iz7"/>
+                                                <constraint firstItem="WVo-BZ-JUg" firstAttribute="centerY" secondItem="g9c-WT-yyR" secondAttribute="centerY" id="SMw-Wc-4LJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="bGI-6G-EAO" secondAttribute="bottom" id="eFn-sY-aTC"/>
+                                                <constraint firstItem="fsS-8g-gXH" firstAttribute="centerY" secondItem="g9c-WT-yyR" secondAttribute="centerY" id="kIc-gU-4qS"/>
+                                                <constraint firstItem="fsS-8g-gXH" firstAttribute="trailing" secondItem="g9c-WT-yyR" secondAttribute="trailingMargin" id="rcx-Qd-kux"/>
+                                                <constraint firstItem="7ON-Rm-6oJ" firstAttribute="leading" secondItem="g9c-WT-yyR" secondAttribute="leading" constant="10" id="sbz-T1-g5g"/>
+                                                <constraint firstItem="fsS-8g-gXH" firstAttribute="leading" secondItem="WVo-BZ-JUg" secondAttribute="trailing" constant="10" id="wG3-wm-LVU"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="leftIconImageView" destination="7ON-Rm-6oJ" id="XiC-Yf-qNi"/>
+                                            <outlet property="titleLabel" destination="WVo-BZ-JUg" id="ctt-XU-RgW"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
