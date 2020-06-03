@@ -424,6 +424,20 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-FI-ang">
                                 <rect key="frame" x="0.0" y="188" width="414" height="674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="x6u-aY-FoT">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="x6u-aY-FoT" id="uF5-0T-ER2">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="gni-2w-UDQ" id="VyR-fQ-U5D"/>
+                                    <outlet property="delegate" destination="gni-2w-UDQ" id="SiL-k2-RIY"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -440,6 +454,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Fke-78-HWl"/>
                     <connections>
+                        <outlet property="productDetailsTableView" destination="g2G-FI-ang" id="b7M-Vk-9JZ"/>
                         <outlet property="productImageView" destination="Bc2-bf-Yng" id="PXT-cu-bF7"/>
                         <outlet property="productNameLabel" destination="9S1-5p-eje" id="RHL-er-0er"/>
                         <outlet property="productPriceLabel" destination="N27-VZ-MqW" id="yDn-W1-UN8"/>

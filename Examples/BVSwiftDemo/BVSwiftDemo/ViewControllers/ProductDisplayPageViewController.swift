@@ -19,7 +19,7 @@ protocol ProductDisplayPageViewControllerDelegate: class {
 }
 
 class ProductDisplayPageViewController: UIViewController , ViewControllerType {
-
+    
     var viewModel: ProductDisplayPageViewModelDelegate!
     
     // MARK:- IBOutlets
@@ -27,11 +27,14 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productRatingView: HCSStarRatingView!
+    @IBOutlet weak var productDetailsTableView: UITableView!
+    
+    private static let CELL_IDENTIFIER: String = "ProductDisplayPageTableViewCell"
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.viewModel.fetchProductDisplayPageDetails()
     }
@@ -45,17 +48,36 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
         titleLabel.font = UIFont.systemFont(ofSize: 34)
         return titleLabel
     }
-
+    
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+// MARK:- UITableViewDataSource methods
+extension ProductDisplayPageViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        self.viewModel.numberOfSections
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.viewModel.numberOfRows
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.CELL_IDENTIFIER) else { return UITableViewCell() }
+        
+        return cell
+    }
 }
 
 // MARK:- ProductDisplayPageViewControllerDelegate methods
