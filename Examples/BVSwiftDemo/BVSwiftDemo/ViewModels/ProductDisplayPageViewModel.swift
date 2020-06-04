@@ -97,6 +97,50 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         productQuery.async()
     }
     
+    func fetchCurations() {
+        let feedItemQuery = BVCurationsFeedItemQuery()
+        
+        feedItemQuery
+            .configure(ConfigurationManager.sharedInstance.curationsConfig)
+            .field(.before(Date()))
+            .handler { response in
+                
+                if case let .failure(errors) = response {
+                    print(errors)
+                    return
+                }
+                
+                guard case let .success(meta, results) = response else {
+                    return
+                }
+                
+                print(meta)
+                
+                if let firstResult = results.first,
+                    let contentId = firstResult.contentId {
+                    print(contentId)
+                    
+                    if let referencedProducts = firstResult.referencedProducts {
+                        print(referencedProducts)
+                    }
+                }
+                
+        }
+        
+        guard let request = feedItemQuery.request else {
+            return
+        }
+        
+        print(request)
+        
+        feedItemQuery.async()
+        
+    }
+    
+    func fetchRecommendations() {
+        //let rec = BVRecommendationsProfileQuery()
+    }
+    
     var numberOfSections: Int {
         return 1
     }
