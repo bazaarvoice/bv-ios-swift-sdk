@@ -21,6 +21,18 @@ class ConfigurationManager: NSObject {
     private let clientId: String = "apitestcustomer"
     private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
     var config: BVConversationsConfiguration!
+    var curationsConfig: BVCurationsConfiguration =
+    { () -> BVCurationsConfiguration in
+      
+      let analyticsConfig: BVAnalyticsConfiguration =
+        .dryRun(
+          configType: .staging(clientId: "branddemo"))
+      
+      return BVCurationsConfiguration.display(
+        clientKey: "r538c65d7d3rsx2265tvzfje",
+        configType: .production(clientId: "branddemo"),
+        analyticsConfig: analyticsConfig)
+    }()
     
     
     private override init() {
