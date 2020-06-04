@@ -35,7 +35,7 @@ BVRecommendationsQuery<BVRecommendationsProfile> {
     return nil
   }
   
-  init(_ limit: UInt16 = 20) {
+  public init(_ limit: UInt16 = 20) {
     super.init(BVRecommendationsProfile.self)
   }
   
