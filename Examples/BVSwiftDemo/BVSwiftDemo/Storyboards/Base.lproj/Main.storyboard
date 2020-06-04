@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,7 +32,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bazaarvoice_logo" translatesAutoresizingMaskIntoConstraints="NO" id="8sd-Kv-xew">
-                                            <rect key="frame" x="132" y="140" width="150" height="125"/>
+                                            <rect key="frame" x="132" y="140" width="150.00000000000011" height="125"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="125" id="cCt-OR-GvA"/>
                                                 <constraint firstAttribute="width" constant="150" id="dNC-2P-tOz"/>
@@ -486,7 +487,7 @@
                                             <outlet property="titleLabel" destination="WVo-BZ-JUg" id="ctt-XU-RgW"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewProductCurationsTableViewCell" rowHeight="250" id="zS5-zn-cDI" userLabel="ProductDisplayPageCurationsCell" customClass="ProductDisplayPageCurationsCell" customModule="BVSwiftDemo">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDisplayPageCurationsCell" rowHeight="250" id="zS5-zn-cDI" userLabel="ProductDisplayPageCurationsCell" customClass="ProductDisplayPageCurationsCell" customModule="BVSwiftDemo">
                                         <rect key="frame" x="0.0" y="84" width="414" height="250"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zS5-zn-cDI" id="IMs-zA-p6G">
@@ -507,23 +508,49 @@
                                                         <constraint firstAttribute="height" constant="184" id="qTJ-FJ-XU3"/>
                                                     </constraints>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5s8-mg-gS6">
-                                                        <size key="itemSize" width="50" height="50"/>
+                                                        <size key="itemSize" width="182" height="182"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
+                                                    <cells>
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CurationsCollectionViewCell" id="LE9-wH-txY" customClass="CurationsCollectionViewCell" customModule="BVSwiftDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Bvg-WA-0Fz">
+                                                                <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="CfW-F3-t7R">
+                                                                        <rect key="frame" x="0.0" y="1" width="182" height="179.5"/>
+                                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </imageView>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="florinsign.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6K8-sz-e5B">
+                                                                        <rect key="frame" x="131" y="131.5" width="45" height="44"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="45" id="10q-gX-D3O"/>
+                                                                            <constraint firstAttribute="height" constant="45" id="biY-6e-XE4"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="CfW-F3-t7R" secondAttribute="bottom" id="2bP-WS-1yd"/>
+                                                                    <constraint firstItem="CfW-F3-t7R" firstAttribute="leading" secondItem="Bvg-WA-0Fz" secondAttribute="leading" id="54Y-ya-H4W"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="6K8-sz-e5B" secondAttribute="bottom" constant="6" id="Rmp-Cz-ELz"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="6K8-sz-e5B" secondAttribute="trailing" constant="6" id="YJc-2n-ZZd"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="CfW-F3-t7R" secondAttribute="trailing" id="bQN-1x-eb2"/>
+                                                                    <constraint firstItem="CfW-F3-t7R" firstAttribute="top" secondItem="Bvg-WA-0Fz" secondAttribute="top" id="nJI-mP-b4g"/>
+                                                                </constraints>
+                                                            </collectionViewCellContentView>
+                                                            <size key="customSize" width="182" height="182"/>
+                                                        </collectionViewCell>
+                                                    </cells>
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="qTJ-FJ-XU3"/>
                                                         </mask>
                                                     </variation>
                                                 </collectionView>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No social content to show - upload your own!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxl-hV-iNP">
-                                                    <rect key="frame" x="20" y="57" width="374" height="182"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sb-bn-NBF">
                                                     <rect key="frame" x="0.0" y="249.5" width="414" height="0.5"/>
                                                     <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -544,27 +571,19 @@
                                                 <constraint firstItem="ZNp-RA-hnr" firstAttribute="top" secondItem="obT-f7-8J9" secondAttribute="bottom" constant="8" id="79c-HP-evT"/>
                                                 <constraint firstAttribute="bottom" secondItem="0sb-bn-NBF" secondAttribute="bottom" id="9uv-em-8SV"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ZNp-RA-hnr" secondAttribute="bottom" id="E2l-We-CaQ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="cxl-hV-iNP" secondAttribute="trailing" id="FMc-5c-Wun"/>
                                                 <constraint firstItem="obT-f7-8J9" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leadingMargin" id="Khd-zg-cSV"/>
-                                                <constraint firstItem="cxl-hV-iNP" firstAttribute="leading" secondItem="ZNp-RA-hnr" secondAttribute="leading" id="PKq-YU-Fgy"/>
                                                 <constraint firstItem="ZNp-RA-hnr" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leadingMargin" id="TUv-LH-mun"/>
-                                                <constraint firstItem="cxl-hV-iNP" firstAttribute="bottom" secondItem="ZNp-RA-hnr" secondAttribute="bottom" id="YsC-qx-Gyg"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ZNp-RA-hnr" secondAttribute="trailing" id="ZpL-4y-BZi"/>
-                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="cxl-hV-iNP" secondAttribute="bottom" id="cVQ-yt-hbV"/>
                                                 <constraint firstAttribute="trailing" secondItem="T7o-PD-xLe" secondAttribute="trailing" id="epc-et-uWu"/>
-                                                <constraint firstItem="cxl-hV-iNP" firstAttribute="top" secondItem="ZNp-RA-hnr" secondAttribute="top" id="h6f-bc-HrK"/>
                                                 <constraint firstItem="T7o-PD-xLe" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leading" id="lqD-9z-Ao8"/>
                                                 <constraint firstItem="obT-f7-8J9" firstAttribute="top" secondItem="IMs-zA-p6G" secondAttribute="topMargin" id="lry-OG-l5v"/>
-                                                <constraint firstItem="cxl-hV-iNP" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leadingMargin" id="mIK-lu-rtT"/>
                                                 <constraint firstItem="0sb-bn-NBF" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leading" id="n8x-IX-ruy"/>
                                                 <constraint firstAttribute="trailing" secondItem="0sb-bn-NBF" secondAttribute="trailing" id="nCI-dN-LtY"/>
-                                                <constraint firstItem="cxl-hV-iNP" firstAttribute="trailing" secondItem="ZNp-RA-hnr" secondAttribute="trailing" id="p98-ZK-c7y"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="obT-f7-8J9" secondAttribute="trailing" id="xcn-Om-beH"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="curationsCarousel" destination="ZNp-RA-hnr" id="yBG-Zt-tpA"/>
-                                            <outlet property="errorLabel" destination="cxl-hV-iNP" id="PvS-hv-9Uk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -597,13 +616,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3DR-sA-mKh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="844"/>
+            <point key="canvasLocation" x="137.68115942028987" y="843.75"/>
         </scene>
     </scenes>
     <resources>
         <image name="bazaarvoice_logo" width="474" height="379"/>
         <image name="chevron.right" catalog="system" width="48" height="64"/>
+        <image name="florinsign.circle.fill" catalog="system" width="64" height="60"/>
         <image name="photo" catalog="system" width="64" height="46"/>
+        <image name="photo.fill" catalog="system" width="64" height="46"/>
         <namedColor name="bazaarvoiceNavy">
             <color red="0.0" green="0.23921568627450981" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
