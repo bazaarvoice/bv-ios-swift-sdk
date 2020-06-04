@@ -75,6 +75,11 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProductDisplayPageCurationsCell") as! ProductDisplayPageCurationsCell
+            return cell
+        }
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.CELL_IDENTIFIER) as? ProductDisplayPageCell else { return UITableViewCell() }
         
         cell.setProductDetails(name: self.viewModel.titleForIndexPath(indexPath),
