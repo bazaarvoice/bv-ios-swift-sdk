@@ -16,7 +16,7 @@ import Foundation
 public class BVCurationsFeedItemQuery: BVCurationsQuery<BVCurationsFeedItem> {
   private let limit: UInt16?
   
-  init(_ limit: UInt16 = 10) {
+  public init(_ limit: UInt16 = 10) {
     self.limit = limit
     super.init(BVCurationsFeedItem.self)
     add(
