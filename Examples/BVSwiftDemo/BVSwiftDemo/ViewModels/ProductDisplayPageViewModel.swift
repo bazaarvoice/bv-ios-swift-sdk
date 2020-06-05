@@ -12,7 +12,7 @@ import FontAwesomeKit
 
 protocol ProductDisplayPageViewModelDelegate: class {
     
-    func fetchProductDisplayPageDetails()
+    func fetchProductDisplayPageData()
     
     var numberOfSections: Int { get }
     
@@ -31,6 +31,7 @@ class ProductDisplayPageViewModel: ViewModelType {
     weak var coordinator: Coordinator?
     
     // MARK:- Private properties
+    
     private let productId: String
     
     private var product: BVProduct?
@@ -39,7 +40,9 @@ class ProductDisplayPageViewModel: ViewModelType {
     
     private var recommendations: [BVRecommendationsProduct]?
     
-    private enum ProductDisplayPageRow: Int, CaseIterable {
+    private let dispatchGroup = DispatchGroup()
+    
+    enum ProductDisplayPageRow: Int, CaseIterable {
         
         case reviews
         
@@ -50,20 +53,20 @@ class ProductDisplayPageViewModel: ViewModelType {
         case curationsAddPhoto
         
         case curationsPhotoMap
+        
+        case recommendations
     }
     
     // MARK:- Initializers
     init(productId: String) {
         self.productId = productId
     }
-}
-
-// MARK:- ProductDisplayPageViewModelDelegate
-extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
-    func fetchProductDisplayPageDetails() {
+    private func fetchProductDisplayPageDetails() {
         
         // TODO:- Testing Required after Bug fix(Bug in BVSwift SDK - When multiple stats are added they are passed as separate query params. So only first stat added will be returned).
+        self.dispatchGroup.enter()
+        
         let productQuery = BVProductQuery(productId: self.productId)
             .stats(.questions)
             .stats(.reviews)
@@ -72,36 +75,25 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
                 
                 guard let strongSelf = self else { return }
                 
-                DispatchQueue.main.async {
                     
                     switch response {
                         
                     case let .failure(errors):
-                        
-                        let errorMessage = (errors.first as? BVError)?.message ?? "Something went wrong."
-                        strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {
-                            strongSelf.coordinator?.popBack()
-                        })
+                       print(errors)
                         
                     case let .success(_, products):
-                        
-                        // save product
                         strongSelf.product = products.first
-                        
-                        // update UI
-                        if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
-                            strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
-                        }
-                        strongSelf.viewController?.reloadData()
-                        
-                    }
+
+                    strongSelf.dispatchGroup.leave()
                 }
         }
         
         productQuery.async()
     }
     
-    func fetchCurations() {
+    private func fetchCurations() {
+        
+        self.dispatchGroup.enter()
         
         let feedItemQuery = BVCurationsFeedItemQuery()
             .configure(ConfigurationManager.sharedInstance.curationsConfig)
@@ -111,24 +103,25 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
                 
                 guard let strongSelf = self else { return }
                 
-                if case let .failure(errors) = response {
+                switch response {
+                    
+                case let .failure(errors):
                     print(errors)
-                    return
+                    
+                case let .success(_, results):
+                    strongSelf.curationsFeedItems = results
                 }
                 
-                guard case let .success(_, results) = response else {
-                    return
-                }
-                
-                // save curations feed item
-                strongSelf.curationsFeedItems = results
+                strongSelf.dispatchGroup.leave()
         }
         
         feedItemQuery.async()
         
     }
     
-    func fetchRecommendations() {
+    private func fetchRecommendations() {
+        
+        self.dispatchGroup.enter()
         
         let recommendationsQuery = BVRecommendationsProfileQuery()
             .field(.product(self.productId))
@@ -137,20 +130,46 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
                 
                 guard let strongSelf = self else { return }
                 
-                if case let .failure(errors) = response {
-                  print(errors)
-                  return
+                switch response {
+                    
+                case let .failure(errors):
+                    print(errors)
+                    
+                case let .success(_, results):
+                    strongSelf.recommendations = results.first?.products
                 }
                 
-                guard case let .success(_, result) = response else {
-                  return
-                }
-                
-                // save recommendations
-                strongSelf.recommendations = result.first?.products
+                strongSelf.dispatchGroup.leave()
         }
         
         recommendationsQuery.async()
+    }
+}
+
+// MARK:- ProductDisplayPageViewModelDelegate
+extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
+    
+    func fetchProductDisplayPageData() {
+        
+        self.viewController?.showLoadingIndicator()
+        
+        self.fetchProductDisplayPageDetails()
+        
+        self.fetchCurations()
+        
+        self.fetchRecommendations()
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            
+            self?.viewController?.hideLoadingIndicator()
+            
+            // update UI
+            if let name = self?.product?.name, let imageURL = self?.product?.imageUrl?.value {
+                self?.viewController?.updateProductDetails(name: name, imageURL: imageURL)
+            }
+            
+            self?.viewController?.reloadData()
+        }
     }
     
     var numberOfSections: Int {
@@ -179,6 +198,8 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
             
         case .curationsPhotoMap: return "Photos by Location"
             
+        case .recommendations: return ""
+            
         }
     }
     
@@ -199,6 +220,8 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         case .curationsAddPhoto: return FAKFontAwesome.cameraRetroIcon(withSize:)
             
         case .curationsPhotoMap: return FAKFontAwesome.locationArrowIcon(withSize:)
+            
+        case .recommendations: return FAKFontAwesome.plugIcon(withSize:)
             
         }        
     }
