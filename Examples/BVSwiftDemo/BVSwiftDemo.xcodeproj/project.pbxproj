@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42566A4D247E709B008FC057 /* ConfigurationManager.swift */; };
+		42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */; };
 		42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E22473BB4E00008434 /* AppDelegate.swift */; };
 		42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E62473BB4E00008434 /* HomeViewController.swift */; };
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 		42566A4D247E709B008FC057 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewCell.swift; sourceTree = "<group>"; };
 		42BC40DF2473BB4E00008434 /* BVSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42BC40E22473BB4E00008434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42BC40E62473BB4E00008434 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */,
 				9F32E670247FA34300CA2633 /* CardView.swift */,
+				42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			files = (
 				9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */,
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
+				42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
 				42C587DC247FA6CB00000D85 /* BVModule.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,

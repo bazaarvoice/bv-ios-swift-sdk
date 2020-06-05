@@ -13,5 +13,7 @@ target 'BVSwiftDemo' do
   pod 'BVSwift/BVCurations', :path => "../../"
   pod 'BVSwift/BVRecommendations', :path => "../../"
   pod 'FontAwesomeKit/FontAwesome'
+  pod 'SDWebImage'
+  pod 'HCSStarRatingView'
 
 end
