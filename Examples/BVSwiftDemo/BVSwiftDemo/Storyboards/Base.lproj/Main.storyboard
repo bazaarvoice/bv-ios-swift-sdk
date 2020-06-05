@@ -682,6 +682,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Fke-78-HWl"/>
                     <connections>
+                        <outlet property="productDetailsHeaderView" destination="CmS-Ei-jMr" id="fbh-cS-EZ0"/>
                         <outlet property="productDetailsTableView" destination="g2G-FI-ang" id="b7M-Vk-9JZ"/>
                         <outlet property="productImageView" destination="Bc2-bf-Yng" id="PXT-cu-bF7"/>
                         <outlet property="productNameLabel" destination="9S1-5p-eje" id="RHL-er-0er"/>

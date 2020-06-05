@@ -17,6 +17,9 @@ protocol ProductDisplayPageViewControllerDelegate: class {
                               imageURL: URL)
     func reloadData()
     
+    func showLoadingIndicator()
+    
+    func hideLoadingIndicator()
 }
 
 class ProductDisplayPageViewController: UIViewController , ViewControllerType {
@@ -24,6 +27,7 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     var viewModel: ProductDisplayPageViewModelDelegate!
     
     // MARK:- IBOutlets
+    @IBOutlet weak var productDetailsHeaderView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
@@ -37,7 +41,11 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.viewModel.fetchProductDisplayPageDetails()
+        
+        self.productDetailsHeaderView.isHidden = true
+        self.productDetailsTableView.isHidden = true
+        
+        self.viewModel.fetchProductDisplayPageData()
     }
     
     class func createTitleLabel() -> UILabel {
@@ -94,6 +102,9 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
     
     func updateProductDetails(name: String,
                               imageURL: URL) {
+        
+        self.productDetailsHeaderView.isHidden = false
+        
         self.productNameLabel.text = name
         self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
             
@@ -108,6 +119,16 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
     }
     
     func reloadData() {
+        self.productDetailsTableView.isHidden = true
         self.productDetailsTableView.reloadData()
     }
+    
+    func showLoadingIndicator() {
+        self.showSpinner()
+    }
+    
+    func hideLoadingIndicator() {
+        self.removeSpinner()
+    }
+    
 }
