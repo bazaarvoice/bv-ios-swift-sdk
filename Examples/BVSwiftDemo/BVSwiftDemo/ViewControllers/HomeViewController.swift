@@ -64,6 +64,7 @@ extension HomeViewController: UICollectionViewDataSource {
     
 }
 
+// MARK:- HomeViewControllerDelegateFlowLayout methods
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -72,10 +73,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK:- HomeViewControllerDelegate methods
-extension HomeViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel.didSelectRowAt(indexPath: indexPath)
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }
 
