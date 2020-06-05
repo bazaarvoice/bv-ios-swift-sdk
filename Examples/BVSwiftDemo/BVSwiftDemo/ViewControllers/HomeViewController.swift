@@ -14,7 +14,7 @@ class HomeViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var bvModulesTableView: UITableView!
     
     // MARK:- Constants
-    private static let CELL_IDENTIFIER = "BVModuleListCell"
+    private static let CELL_IDENTIFIER = "ProductCollectionViewCell"
     
     // MARK:- Variables
     var viewModel: HomeViewModelDelegate!
@@ -23,8 +23,6 @@ class HomeViewController: UIViewController, ViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        self.bvModulesTableView.tableFooterView = UIView()
     }
     
     class func createTitleLabel() -> UILabel {
@@ -38,41 +36,46 @@ class HomeViewController: UIViewController, ViewControllerType {
     }
     
     @IBAction func showNextTapped(_ sender: Any) {
-       // self.viewModel.didTapShowNextButton()
+        // self.viewModel.didTapShowNextButton()
     }
     
     
 }
 
 // Mark:- HomeViewControllerDatasource methods
-extension HomeViewController: UITableViewDataSource {
+extension HomeViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return self.viewModel.numberOfSections
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        self.viewModel.numberOfSections
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.viewModel.numberOfRows
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeViewController.CELL_IDENTIFIER) else {
-            return UITableViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.CELL_IDENTIFIER, for: indexPath) as? ProductCollectionViewCell else {
+            return UICollectionViewCell()
         }
         
-        cell.selectionStyle = .none
-        cell.textLabel?.text = self.viewModel.titleForRowAtIndexPath(indexPath)
-
         return cell
     }
+    
+}
+
+// MARK:- HomeViewControllerDelegateFlowLayout methods
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: ((UIScreen.main.bounds.width/2) - 15), height: 200)
+     }
 }
 
 // MARK:- HomeViewControllerDelegate methods
-extension HomeViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       self.viewModel.didSelectRowAt(indexPath: indexPath)
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }
 
