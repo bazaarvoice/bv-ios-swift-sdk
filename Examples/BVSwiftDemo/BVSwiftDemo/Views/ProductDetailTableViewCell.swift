@@ -9,7 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class ProductDisplayPageCell: UITableViewCell {
+class ProductDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var leftIconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

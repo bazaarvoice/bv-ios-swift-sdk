@@ -34,7 +34,9 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var productDetailsTableView: UITableView!
     
-    private static let CELL_IDENTIFIER: String = "ProductDisplayPageCell"
+    private static let PRODUCT_DETAIL_CELL_IDENTIFIER: String = "ProductDetailTableViewCell"
+    private static let PRODUCT_DETAIL_CURATIONS_CELL_IDENTIFIER: String = "ProductDetailCurationsTableViewCell"
+     private static let PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER: String = "ProductDetailRecommendationsTableViewCell"
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
@@ -83,17 +85,26 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProductDisplayPageCurationsCell") as! ProductDisplayPageCurationsCell
-            return cell
+        guard let rowType = self.viewModel.rowTypeAtIndexPath(indexPath) else {
+            return UITableViewCell()
         }
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.CELL_IDENTIFIER) as? ProductDisplayPageCell else { return UITableViewCell() }
-        
-        cell.setProductDetails(name: self.viewModel.titleForIndexPath(indexPath),
-                               icon: self.viewModel.iconForIndexPath(indexPath))
-        
-        return cell
+        switch rowType {
+            
+        case .reviews, .questions, .curationsAddPhoto, .curationsPhotoMap:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CELL_IDENTIFIER) as! ProductDetailTableViewCell
+            cell.setProductDetails(name: self.viewModel.titleForIndexPath(indexPath),
+                                          icon: self.viewModel.iconForIndexPath(indexPath))
+            return cell
+            
+        case .curations:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CURATIONS_CELL_IDENTIFIER) as! ProductDisplayPageCurationsTableViewCell
+            return cell
+            
+        case .recommendations:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER)!
+            return cell
+        }
     }
 }
 
@@ -119,7 +130,7 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
     }
     
     func reloadData() {
-        self.productDetailsTableView.isHidden = true
+        self.productDetailsTableView.isHidden = false
         self.productDetailsTableView.reloadData()
     }
     
