@@ -184,11 +184,7 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     func rowTypeAtIndexPath(_ indexPath: IndexPath) -> ProductDisplayPageViewModel.ProductDisplayPageRow? {
         
-        guard let rowType = ProductDisplayPageRow(rawValue: indexPath.row) else {
-            return nil
-        }
-        
-        return rowType
+        return ProductDisplayPageRow(rawValue: indexPath.row)
     }
     
     func titleForIndexPath(_ indexPath: IndexPath) -> String {
