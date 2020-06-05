@@ -34,6 +34,19 @@ class ConfigurationManager: NSObject {
         analyticsConfig: analyticsConfig)
     }()
     
+    var recommendationsConfig: BVRecommendationsConfiguration =
+    { () -> BVRecommendationsConfiguration in
+      
+      let analyticsConfig: BVAnalyticsConfiguration =
+        .dryRun(
+          configType: .staging(clientId: "apitestcustomer"))
+      
+      return BVRecommendationsConfiguration.display(
+        clientKey: "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo",
+        configType: .production(clientId: "apitestcustomer"),
+        analyticsConfig: analyticsConfig)
+    }()
+    
     
     private override init() {
         
