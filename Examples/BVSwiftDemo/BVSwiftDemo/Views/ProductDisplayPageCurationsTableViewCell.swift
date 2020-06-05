@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductDisplayPageCurationsCell: UITableViewCell {
+class ProductDisplayPageCurationsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var curationsCarousel: UICollectionView!
     @IBOutlet weak var errorLabel: UILabel!
@@ -27,7 +27,7 @@ class ProductDisplayPageCurationsCell: UITableViewCell {
     }
 }
 
-extension ProductDisplayPageCurationsCell: UICollectionViewDataSource {
+extension ProductDisplayPageCurationsTableViewCell: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

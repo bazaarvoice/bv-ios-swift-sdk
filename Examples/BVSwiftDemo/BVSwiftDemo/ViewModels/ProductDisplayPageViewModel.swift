@@ -18,6 +18,8 @@ protocol ProductDisplayPageViewModelDelegate: class {
     
     var numberOfRows: Int { get }
     
+    func rowTypeAtIndexPath(_ indexPath: IndexPath) -> ProductDisplayPageViewModel.ProductDisplayPageRow?
+    
     func titleForIndexPath(_ indexPath: IndexPath) -> String
     
     func iconForIndexPath(_ indexPath: IndexPath) -> ((_ size: CGFloat) -> FAKFontAwesome?)
@@ -178,6 +180,15 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     var numberOfRows: Int {
         return ProductDisplayPageRow.allCases.count
+    }
+    
+    func rowTypeAtIndexPath(_ indexPath: IndexPath) -> ProductDisplayPageViewModel.ProductDisplayPageRow? {
+        
+        guard let rowType = ProductDisplayPageRow(rawValue: indexPath.row) else {
+            return nil
+        }
+        
+        return rowType
     }
     
     func titleForIndexPath(_ indexPath: IndexPath) -> String {
