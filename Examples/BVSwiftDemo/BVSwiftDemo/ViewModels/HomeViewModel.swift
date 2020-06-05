@@ -29,7 +29,7 @@ extension HomeViewModel: HomeViewModelDelegate {
     }
     
     var numberOfRows: Int {
-        return BVModule.allCases.count
+        return 10
     }
     
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
