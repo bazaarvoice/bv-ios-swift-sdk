@@ -35,6 +35,10 @@ class ProductDisplayPageViewModel: ViewModelType {
     
     private var product: BVProduct?
     
+    private var curationsFeedItems: [BVCurationsFeedItem]?
+    
+    private var recommendations: [BVRecommendationsProduct]?
+    
     private enum ProductDisplayPageRow: Int, CaseIterable {
         
         case reviews
@@ -98,47 +102,55 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     }
     
     func fetchCurations() {
-        let feedItemQuery = BVCurationsFeedItemQuery()
         
-        feedItemQuery
+        let feedItemQuery = BVCurationsFeedItemQuery()
             .configure(ConfigurationManager.sharedInstance.curationsConfig)
-            .field(.before(Date()))
-            .handler { response in
+            .field(.groups(["__all__"]))
+            .field(.productId(BVIdentifier.string(self.productId)))
+            .handler { [weak self] response in
+                
+                guard let strongSelf = self else { return }
                 
                 if case let .failure(errors) = response {
                     print(errors)
                     return
                 }
                 
-                guard case let .success(meta, results) = response else {
+                guard case let .success(_, results) = response else {
                     return
                 }
                 
-                print(meta)
-                
-                if let firstResult = results.first,
-                    let contentId = firstResult.contentId {
-                    print(contentId)
-                    
-                    if let referencedProducts = firstResult.referencedProducts {
-                        print(referencedProducts)
-                    }
-                }
-                
+                // save curations feed item
+                strongSelf.curationsFeedItems = results
         }
-        
-        guard let request = feedItemQuery.request else {
-            return
-        }
-        
-        print(request)
         
         feedItemQuery.async()
         
     }
     
     func fetchRecommendations() {
-        //let rec = BVRecommendationsProfileQuery()
+        
+        let recommendationsQuery = BVRecommendationsProfileQuery()
+            .field(.product(self.productId))
+            .configure(ConfigurationManager.sharedInstance.recommendationsConfig)
+            .handler { [weak self] (response) in
+                
+                guard let strongSelf = self else { return }
+                
+                if case let .failure(errors) = response {
+                  print(errors)
+                  return
+                }
+                
+                guard case let .success(_, result) = response else {
+                  return
+                }
+                
+                // save recommendations
+                strongSelf.recommendations = result.first?.products
+        }
+        
+        recommendationsQuery.async()
     }
     
     var numberOfSections: Int {
