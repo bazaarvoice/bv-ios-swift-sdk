@@ -98,11 +98,11 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
             return cell
             
         case .curations:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CURATIONS_CELL_IDENTIFIER) as! ProductDisplayPageCurationsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CURATIONS_CELL_IDENTIFIER) as! ProductDetailCurationsTableViewCell
             return cell
             
         case .recommendations:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER)!
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER) as! ProductDetailRecommendationsTableViewCell
             return cell
         }
     }
