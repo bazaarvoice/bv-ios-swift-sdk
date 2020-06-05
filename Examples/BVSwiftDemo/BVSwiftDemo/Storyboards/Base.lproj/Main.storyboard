@@ -427,7 +427,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="sectionIndexBackgroundColor" name="bazaarvoiceScreenBackground"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductDisplayPageCell" rowHeight="56" id="8oo-et-7gQ" customClass="ProductDisplayPageCell" customModule="BVSwiftDemo" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductDetailTableViewCell" rowHeight="56" id="8oo-et-7gQ" customClass="ProductDetailTableViewCell" customModule="BVSwiftDemo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8oo-et-7gQ" id="g9c-WT-yyR">
@@ -487,7 +487,7 @@
                                             <outlet property="titleLabel" destination="WVo-BZ-JUg" id="ctt-XU-RgW"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDisplayPageCurationsCell" rowHeight="250" id="zS5-zn-cDI" userLabel="ProductDisplayPageCurationsCell" customClass="ProductDisplayPageCurationsCell" customModule="BVSwiftDemo">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDetailCurationsTableViewCell" rowHeight="250" id="zS5-zn-cDI" userLabel="ProductDisplayPageCurationsCell" customClass="ProductDisplayPageCurationsTableViewCell" customModule="BVSwiftDemo">
                                         <rect key="frame" x="0.0" y="84" width="414" height="250"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zS5-zn-cDI" id="IMs-zA-p6G">
@@ -586,7 +586,7 @@
                                             <outlet property="curationsCarousel" destination="ZNp-RA-hnr" id="yBG-Zt-tpA"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewProductRecsTableViewCell" rowHeight="304" id="KuE-uI-kWM">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDetailRecommendationsTableViewCell" rowHeight="304" id="KuE-uI-kWM">
                                         <rect key="frame" x="0.0" y="334" width="414" height="304"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KuE-uI-kWM" id="n6s-g7-2ho">
@@ -657,9 +657,6 @@
                                                 <constraint firstItem="YMW-jI-omU" firstAttribute="leading" secondItem="n6s-g7-2ho" secondAttribute="leading" id="zxT-Jz-6kl"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="recommendationsCarousel" destination="cH3-9H-ntr" id="F1Y-qb-T86"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
