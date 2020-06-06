@@ -739,14 +739,13 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="192" height="192"/>
                                                                                 <subviews>
                                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="nm2-zf-pcG">
-                                                                                        <rect key="frame" x="5" y="5" width="182" height="101"/>
-                                                                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <rect key="frame" x="5" y="5" width="182" height="99"/>
                                                                                         <userDefinedRuntimeAttributes>
                                                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="userInteractionEnabled" value="NO"/>
                                                                                         </userDefinedRuntimeAttributes>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="1000" text="LG 55&quot; HDTV Curved - 4K Resolution" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yua-h9-FGQ">
-                                                                                        <rect key="frame" x="8" y="116" width="176" height="25"/>
+                                                                                        <rect key="frame" x="8" y="114" width="176" height="25"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="25" id="29j-FM-24C"/>
                                                                                         </constraints>
@@ -755,10 +754,7 @@
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="$12.95" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRd-gG-GSR">
-                                                                                        <rect key="frame" x="8" y="151" width="176" height="15"/>
-                                                                                        <constraints>
-                                                                                            <constraint firstAttribute="height" constant="15" id="gCn-yY-NTc"/>
-                                                                                        </constraints>
+                                                                                        <rect key="frame" x="8" y="149" width="176" height="17"/>
                                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                         <nil key="highlightedColor"/>
