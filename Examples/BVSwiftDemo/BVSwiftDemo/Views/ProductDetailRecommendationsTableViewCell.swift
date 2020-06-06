@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import BVSwift
 
 class ProductDetailRecommendationsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
+    var numberOfRecommendations: (() -> (Int))?
+    var recommendationAtIndexPath: ((IndexPath) -> (BVRecommendationsProduct?))?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,10 +32,15 @@ class ProductDetailRecommendationsTableViewCell: UITableViewCell {
 
 extension ProductDetailRecommendationsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+                
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
         
+        guard let recommendation = self.recommendationAtIndexPath?(indexPath) else { return UICollectionViewCell() }
+
+        cell.label_ProductName.text = recommendation.productId
+        cell.label_ProductPrice.text = ""
+        cell.imageView_Product.sd_setImage(with: recommendation.imageURL)
+        cell.view_StarRating.value = CGFloat(recommendation.averageRating ?? 0.0)
         return cell
     }
     
@@ -42,9 +50,6 @@ extension ProductDetailRecommendationsTableViewCell: UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.numberOfRecommendations?() ?? 0
     }
-    
-    
-    
 }
