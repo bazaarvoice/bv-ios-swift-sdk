@@ -103,6 +103,17 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
             
         case .recommendations:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER) as! ProductDetailRecommendationsTableViewCell
+            
+            cell.numberOfRecommendations = {
+                return self.viewModel.numberOfRecommendations
+            }
+            
+            cell.recommendationAtIndexPath = { indexPath in
+                return self.viewModel.recommendationAtIndexPath(indexPath)
+            }
+            
+            cell.recommendationsCollectionView.reloadData()
+            
             return cell
         }
     }
