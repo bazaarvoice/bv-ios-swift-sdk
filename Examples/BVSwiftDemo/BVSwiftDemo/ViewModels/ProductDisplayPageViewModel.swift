@@ -24,6 +24,10 @@ protocol ProductDisplayPageViewModelDelegate: class {
     
     func iconForIndexPath(_ indexPath: IndexPath) -> ((_ size: CGFloat) -> FAKFontAwesome?)
     
+    var numberOfRecommendations: Int { get }
+    
+    func recommendationAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct?
+    
 }
 
 class ProductDisplayPageViewModel: ViewModelType {
@@ -231,5 +235,13 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         case .recommendations: return FAKFontAwesome.plugIcon(withSize:)
             
         }        
+    }
+    
+    var numberOfRecommendations: Int {
+        return self.recommendations?.count ?? 0
+    }
+    
+    func recommendationAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct? {
+        return self.recommendations?[indexPath.row]
     }
 }
