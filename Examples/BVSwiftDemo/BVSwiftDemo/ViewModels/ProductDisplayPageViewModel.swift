@@ -139,7 +139,7 @@ class ProductDisplayPageViewModel: ViewModelType {
         
         let recommendationsQuery = BVRecommendationsProfileQuery()
             .field(.product(self.productId))
-            .configure(ConfigurationManager.sharedInstance.recommendationsConfig)
+            .configure(ConfigurationManager.sharedInstance.recommendationConfig)
             .handler { [weak self] (response) in
                 
                 guard let strongSelf = self else { return }
