@@ -198,8 +198,8 @@ class BVRecommendationsQueryTest: XCTestCase {
           return
         }
         
-        print(meta)
         print(result)
+        print(result.first?.products?.first?.productId)
         
         expectation.fulfill()
     }
