@@ -234,8 +234,68 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NqU-fd-ymY" customClass="ProductDetailHeaderView" customModule="BVSwiftDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="80"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Y9-DK-bDg">
+                                        <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="122" id="qJb-4R-szE"/>
+                                            <constraint firstAttribute="width" secondItem="5Y9-DK-bDg" secondAttribute="height" multiplier="1:1" id="yc9-ol-3Nj"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="yc9-ol-3Nj"/>
+                                                <exclude reference="qJb-4R-szE"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="40v-Rm-evK">
+                                        <rect key="frame" x="80" y="16" width="326" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                                        <color key="textColor" red="0.0" green="0.2392156869" blue="0.29803922770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tSD-ii-1fS" customClass="HCSStarRatingView">
+                                        <rect key="frame" x="80" y="41" width="100" height="20"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.99715530870000002" green="0.85457783939999998" blue="0.063469812269999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="h8a-od-1Yj"/>
+                                            <constraint firstAttribute="height" constant="20" id="mQL-xd-dfB"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsHalfStars" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="accurateHalfStars" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="continuous" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="tSD-ii-1fS" firstAttribute="leading" secondItem="40v-Rm-evK" secondAttribute="leading" id="AYI-UZ-p2Y"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="5Y9-DK-bDg" secondAttribute="bottom" id="G7z-fZ-asg"/>
+                                    <constraint firstAttribute="trailing" secondItem="40v-Rm-evK" secondAttribute="trailing" constant="8" id="H1P-yC-C2Z"/>
+                                    <constraint firstAttribute="height" constant="80" id="MNk-VM-8za"/>
+                                    <constraint firstItem="40v-Rm-evK" firstAttribute="top" secondItem="5Y9-DK-bDg" secondAttribute="top" id="RoV-0B-Dv5"/>
+                                    <constraint firstItem="5Y9-DK-bDg" firstAttribute="leading" secondItem="NqU-fd-ymY" secondAttribute="leadingMargin" id="Zk7-Jh-E54"/>
+                                    <constraint firstItem="5Y9-DK-bDg" firstAttribute="width" secondItem="5Y9-DK-bDg" secondAttribute="height" multiplier="1:1" id="jpy-Rg-cbq"/>
+                                    <constraint firstItem="5Y9-DK-bDg" firstAttribute="top" secondItem="NqU-fd-ymY" secondAttribute="topMargin" id="nc7-0I-XUE"/>
+                                    <constraint firstItem="40v-Rm-evK" firstAttribute="leading" secondItem="5Y9-DK-bDg" secondAttribute="trailing" constant="8" id="puh-S5-QNE"/>
+                                    <constraint firstItem="40v-Rm-evK" firstAttribute="bottom" secondItem="NqU-fd-ymY" secondAttribute="centerY" constant="-2" id="qGK-Sf-2iH"/>
+                                    <constraint firstItem="tSD-ii-1fS" firstAttribute="top" secondItem="40v-Rm-evK" secondAttribute="bottom" constant="3" id="tMT-65-85b"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="RoV-0B-Dv5"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MLT-w7-hRl">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -414,14 +474,21 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="MLT-w7-hRl" firstAttribute="top" secondItem="DP1-he-SWq" secondAttribute="top" id="0Vb-k4-RXs"/>
+                            <constraint firstItem="MLT-w7-hRl" firstAttribute="top" secondItem="DP1-he-SWq" secondAttribute="top" constant="80" id="0Vb-k4-RXs"/>
+                            <constraint firstItem="DP1-he-SWq" firstAttribute="trailing" secondItem="NqU-fd-ymY" secondAttribute="trailing" id="2wi-T1-Cqs"/>
                             <constraint firstItem="DP1-he-SWq" firstAttribute="bottom" secondItem="MLT-w7-hRl" secondAttribute="bottom" id="7ge-Ia-qvb"/>
                             <constraint firstItem="MLT-w7-hRl" firstAttribute="leading" secondItem="DP1-he-SWq" secondAttribute="leading" id="8gg-Mc-Vor"/>
+                            <constraint firstItem="NqU-fd-ymY" firstAttribute="top" secondItem="DP1-he-SWq" secondAttribute="top" id="GGL-nz-lhw"/>
                             <constraint firstItem="DP1-he-SWq" firstAttribute="trailing" secondItem="MLT-w7-hRl" secondAttribute="trailing" id="L1n-hY-giF"/>
+                            <constraint firstItem="MLT-w7-hRl" firstAttribute="top" secondItem="NqU-fd-ymY" secondAttribute="bottom" id="TQ4-ZC-UUQ"/>
+                            <constraint firstItem="NqU-fd-ymY" firstAttribute="leading" secondItem="DP1-he-SWq" secondAttribute="leading" id="ZGf-KL-vPh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DP1-he-SWq"/>
                     </view>
                     <connections>
+                        <outlet property="productImageView" destination="5Y9-DK-bDg" id="Eiz-Ju-o0t"/>
+                        <outlet property="productNameLabel" destination="40v-Rm-evK" id="Pf4-Tq-jzh"/>
+                        <outlet property="productStarRatingView" destination="tSD-ii-1fS" id="Vnt-nu-VK1"/>
                         <outlet property="questionsTableView" destination="MLT-w7-hRl" id="RMp-uQ-AEW"/>
                     </connections>
                 </viewController>

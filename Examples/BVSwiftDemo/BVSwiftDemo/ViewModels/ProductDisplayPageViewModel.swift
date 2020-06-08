@@ -282,7 +282,7 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
             
         case .reviews: break
             
-        case .questions: self.coordinator?.navigateTo(AppCoordinator.AppNavigation.questions(productId: self.productId))
+        case .questions: self.coordinator?.navigateTo(AppCoordinator.AppNavigation.questions(productId: self.productId, product: self.product!))
             
         case .curations: break
             
