@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import BVSwift
 
 class AppCoordinator: Coordinator {
     
@@ -15,7 +16,7 @@ class AppCoordinator: Coordinator {
         
         case productDisplayPage(productId: String)
         
-        case questions(productId: String)
+        case questions(productId: String, product: BVProduct)
     }
     
     // MARK:- Initializers
@@ -49,8 +50,8 @@ class AppCoordinator: Coordinator {
         case .productDisplayPage(let productId):
             self.showProductDisplayPage(productId: productId)
             
-        case .questions(let productId):
-            self.showQuestionsScreen(productId: productId)
+        case .questions(let productId, let product):
+            self.showQuestionsScreen(productId: productId, product: product)
 
         }
     }
@@ -72,14 +73,15 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(productDisplayPageViewController, animated: true)
     }
     
-    private func showQuestionsScreen(productId: String) {
+    private func showQuestionsScreen(productId: String, product: BVProduct) {
         
         // 1. Create View Controller
         let questionsViewController = QuestionsTableViewController.instantiate()
         questionsViewController.navigationItem.title = "Questions"
         
         // 2. Create View Model
-        let questionsViewModel = QuestionsViewModel(productId: productId)
+        let questionsViewModel = QuestionsViewModel(productId: productId,
+                                                    product: product)
         questionsViewModel.coordinator = self
         questionsViewModel.viewController = questionsViewController
         

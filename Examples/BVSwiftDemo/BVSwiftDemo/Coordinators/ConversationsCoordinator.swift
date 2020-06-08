@@ -81,19 +81,6 @@ class ConversationsCoordinator: Coordinator {
     }
     
     private func showQuestionsScreen() {
-
-        // 1. Create View Controller
-        let questionsViewController = QuestionsTableViewController.instantiate()
-        questionsViewController.navigationItem.title = "Product Questions"
-        
-        // 2. Create View Model
-        let questionsViewModel = QuestionsViewModel(productId: "test1")
-        questionsViewModel.coordinator = self
-        questionsViewModel.viewController = questionsViewController
-        
-        // 3. Assign and navigate
-        questionsViewController.viewModel = questionsViewModel
-        self.navigationController.pushViewController(questionsViewController, animated: true)
     }
     
     private func performConversationsSubmissionNavigationForScene(_ scene: ConversationsSubmissionAPI) {
