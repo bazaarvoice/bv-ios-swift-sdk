@@ -32,6 +32,8 @@ protocol ProductDisplayPageViewModelDelegate: class {
     
     func recommendationAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct?
     
+    func didSelectRowAtIndexPath(_ indexPath: IndexPath)
+    
 }
 
 class ProductDisplayPageViewModel: ViewModelType {
@@ -87,15 +89,15 @@ class ProductDisplayPageViewModel: ViewModelType {
                 
                 guard let strongSelf = self else { return }
                 
+                
+                switch response {
                     
-                    switch response {
-                        
-                    case let .failure(errors):
-                        strongSelf.error = errors.first
-                        
-                    case let .success(_, products):
-                        strongSelf.product = products.first
-
+                case let .failure(errors):
+                    strongSelf.error = errors.first
+                    
+                case let .success(_, products):
+                    strongSelf.product = products.first
+                    
                     strongSelf.dispatchGroup.leave()
                 }
         }
@@ -268,5 +270,29 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     func recommendationAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct? {
         return self.recommendations?[indexPath.row]
+    }
+    
+    func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
+        
+        guard let productDisplayPageRow = ProductDisplayPageRow(rawValue: indexPath.row) else {
+            return
+        }
+        
+        switch productDisplayPageRow {
+            
+        case .reviews: break
+            
+        case .questions: self.coordinator?.navigateTo(AppCoordinator.AppNavigation.questions(productId: self.productId))
+            
+        case .curations: break
+            
+        case .curationsAddPhoto: break
+            
+        case .curationsPhotoMap: break
+            
+        case .recommendations: break
+            
+        }
+        
     }
 }
