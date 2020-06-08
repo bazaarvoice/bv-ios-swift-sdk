@@ -26,6 +26,8 @@ protocol ProductDisplayPageViewModelDelegate: class {
     
     var numberOfCurations: Int { get }
     
+    func curationsFeedItemAtIndexPath(_ indexPath: IndexPath) -> BVCurationsFeedItem?
+    
     var numberOfRecommendations: Int { get }
     
     func recommendationAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct?
@@ -241,6 +243,10 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
     
     var numberOfCurations: Int {
         return self.curationsFeedItems?.count ?? 0
+    }
+    
+    func curationsFeedItemAtIndexPath(_ indexPath: IndexPath) -> BVCurationsFeedItem? {
+        return self.curationsFeedItems?[indexPath.row]
     }
     
     var numberOfRecommendations: Int {
