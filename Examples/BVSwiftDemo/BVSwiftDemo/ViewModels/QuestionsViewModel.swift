@@ -11,6 +11,10 @@ import BVSwift
 
 protocol QuestionsViewModelDelegate: class {
     
+    var productName: String? { get }
+    
+    var productImageURL: URL? { get }
+        
     func fetchQuestions()
     
     var numberOfSections: Int { get }
@@ -20,7 +24,6 @@ protocol QuestionsViewModelDelegate: class {
     func questionForRowAtIndexPath(_ indexPath: IndexPath) -> BVQuestion?
     
     func askQuestionTapped()
-    
 }
 
 class QuestionsViewModel: ViewModelType {
@@ -33,13 +36,24 @@ class QuestionsViewModel: ViewModelType {
     
     private let productId: String
     
-    init(productId: String) {
+    private let product: BVProduct
+    
+    init(productId: String, product: BVProduct) {
         self.productId = productId
+        self.product = product
     }
 }
 
 // MARK:- QuestionsViewModelDelegate
 extension QuestionsViewModel: QuestionsViewModelDelegate {
+    
+    var productName: String? {
+        return self.product.productId
+    }
+    
+    var productImageURL: URL? {
+        return self.product.imageUrl?.value
+    }
     
     func questionForRowAtIndexPath(_ indexPath: IndexPath) -> BVQuestion? {
         

@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import HCSStarRatingView
+import FontAwesomeKit
 
 protocol QuestionsTableViewControllerDelegate: class {
+    
     func reloadTableView()
     
     func showLoadingIndicator()
@@ -24,7 +27,11 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
     // MARK:- Constants
     private static let CELL_IDENTIFIER: String = "QuestionAnswerTableViewCell"
     
+    // MARK:- IBOutlets
     @IBOutlet weak var questionsTableView: UITableView!
+    @IBOutlet weak var productImageView: UIImageView!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var productStarRatingView: HCSStarRatingView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +42,7 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
                                                                  target: self,
                                                                  action: #selector(QuestionsTableViewController.askQuestionTapped))
         
+        self.updateProductDetails()
         self.viewModel.fetchQuestions()
     }
     
@@ -52,6 +60,27 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
      // Pass the selected object to the new view controller.
      }
      */
+    
+    func updateProductDetails() {
+        self.productNameLabel.text = self.viewModel.productName
+        
+        if let imageURL = self.viewModel.productImageURL {
+            
+            self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                
+                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 70.0)?
+                    .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
+                                        height: strongSelf.productImageView.frame.size.height + 20))
+            }
+        }
+        else {
+            self.productImageView.image = #imageLiteral(resourceName: "placeholder")
+        }
+    }
     
 }
 
