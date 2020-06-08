@@ -21,6 +21,8 @@ class ConfigurationManager: NSObject {
     private let clientId: String = "apitestcustomer"
     private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
     var config: BVConversationsConfiguration!
+    
+    // TODO:- curationsConfig & recommendationsConfig needs to be refactored after code merge
     var curationsConfig: BVCurationsConfiguration =
     { () -> BVCurationsConfiguration in
       
