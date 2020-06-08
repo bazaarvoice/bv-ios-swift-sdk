@@ -99,6 +99,10 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
             
         case .curations:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CURATIONS_CELL_IDENTIFIER) as! ProductDetailCurationsTableViewCell
+            cell.numberOfCurations = {
+                return self.viewModel.numberOfCurations
+            }
+            cell.curationsCarousel.reloadData()
             return cell
             
         case .recommendations:

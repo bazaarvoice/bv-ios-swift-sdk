@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import BVSwift
 
 class ProductDetailCurationsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var curationsCarousel: UICollectionView!
     @IBOutlet weak var errorLabel: UILabel!
+    
+    var numberOfCurations: (() -> (Int))?
+    var curationAtIndexPath: ((IndexPath) -> (BVCurationsFeedItem?))?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,7 +38,14 @@ extension ProductDetailCurationsTableViewCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if let numberOfItems = self.numberOfCurations?(), numberOfItems != 0 {
+            self.errorLabel.isHidden = true
+            return numberOfItems
+        }
+        else {
+            self.errorLabel.isHidden = false
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
