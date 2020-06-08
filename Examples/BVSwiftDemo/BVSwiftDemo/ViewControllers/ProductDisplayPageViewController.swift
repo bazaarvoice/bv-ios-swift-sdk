@@ -24,6 +24,7 @@ protocol ProductDisplayPageViewControllerDelegate: class {
 
 class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     
+    // MARK:- Variables
     var viewModel: ProductDisplayPageViewModelDelegate!
     
     // MARK:- IBOutlets
@@ -34,9 +35,10 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var productDetailsTableView: UITableView!
     
+    // MARK:- Constants
     private static let PRODUCT_DETAIL_CELL_IDENTIFIER: String = "ProductDetailTableViewCell"
     private static let PRODUCT_DETAIL_CURATIONS_CELL_IDENTIFIER: String = "ProductDetailCurationsTableViewCell"
-     private static let PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER: String = "ProductDetailRecommendationsTableViewCell"
+    private static let PRODUCT_DETAIL_RECOMMENDATIONS_CELL_IDENTIFIER: String = "ProductDetailRecommendationsTableViewCell"
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
@@ -123,9 +125,16 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
             }
             
             cell.recommendationsCollectionView.reloadData()
-            
             return cell
         }
+    }
+}
+
+// MARK:- UITableViewDelegate methods
+extension ProductDisplayPageViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -136,8 +145,8 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
                               imageURL: URL) {
         
         self.productDetailsHeaderView.isHidden = false
-        
         self.productNameLabel.text = name
+        
         self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
             
             guard let strongSelf = self else { return }
@@ -162,5 +171,4 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
     func hideLoadingIndicator() {
         self.removeSpinner()
     }
-    
 }
