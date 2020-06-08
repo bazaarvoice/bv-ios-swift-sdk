@@ -29,10 +29,11 @@ class AppCoordinator: Coordinator {
         // 1. Create View Controller
         let homeViewController = HomeViewController.instantiate()
         homeViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
-        
+
         // 2. Create View Model
         let viewModel = HomeViewModel()
         viewModel.coordinator = self
+        viewModel.viewController = homeViewController
         
         // 3. Assign View Model and Push View Controller
         homeViewController.viewModel = viewModel
