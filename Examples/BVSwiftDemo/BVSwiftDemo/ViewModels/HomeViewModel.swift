@@ -64,11 +64,6 @@ extension HomeViewModel: HomeViewModelDelegate {
         
         recommendationQuery
             .configure(ConfigurationManager.sharedInstance.recommendationConfig)
-            .field(.brandId("610ce8a1-644f-4f02-8b6e-8b198376aa9d"))
-            .field(.include(.interests))
-            .field(.include(.categories))
-            .field(.include(.brands))
-            .field(.include(.recommendations))
             .handler { [weak self] response in
                 
                 guard let strongSelf = self else { return }
@@ -78,16 +73,12 @@ extension HomeViewModel: HomeViewModelDelegate {
                     
                     if case let .failure(error) = response {
                         let errorMessage = (error.first as? BVError)?.message ?? "Something went wrong."
-                        strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {
-                            strongSelf.coordinator?.popBack()
-                        })
+                        strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: nil)
                         return
                     }
                     
                     guard case let .success(_, result) = response else {
-                        strongSelf.coordinator?.showAlert(title: "", message: "Something went wrong.", handler: {
-                            strongSelf.coordinator?.popBack()
-                        })
+                        strongSelf.coordinator?.showAlert(title: "", message: "Something went wrong.", handler: nil)
                         return
                     }
                     
