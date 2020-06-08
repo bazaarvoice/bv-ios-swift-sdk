@@ -12,7 +12,10 @@ import UIKit
 class AppCoordinator: Coordinator {
     
     enum AppNavigation: AppNavigator {
+        
         case productDisplayPage(productId: String)
+        
+        case questions(productId: String)
     }
     
     // MARK:- Initializers
@@ -45,6 +48,9 @@ class AppCoordinator: Coordinator {
             
         case .productDisplayPage(let productId):
             self.showProductDisplayPage(productId: productId)
+            
+        case .questions(let productId):
+            self.showQuestionsScreen(productId: productId)
 
         }
     }
@@ -64,5 +70,21 @@ class AppCoordinator: Coordinator {
         // 3. Assign View Model and Push View Controller
         productDisplayPageViewController.viewModel = productDisplayPageViewModel
         self.navigationController.pushViewController(productDisplayPageViewController, animated: true)
+    }
+    
+    private func showQuestionsScreen(productId: String) {
+        
+        // 1. Create View Controller
+        let questionsViewController = QuestionsTableViewController.instantiate()
+        questionsViewController.navigationItem.title = "Questions"
+        
+        // 2. Create View Model
+        let questionsViewModel = QuestionsViewModel(productId: productId)
+        questionsViewModel.coordinator = self
+        questionsViewModel.viewController = questionsViewController
+        
+        // 3. Assign and navigate
+        questionsViewController.viewModel = questionsViewModel
+        self.navigationController.pushViewController(questionsViewController, animated: true)
     }
 }

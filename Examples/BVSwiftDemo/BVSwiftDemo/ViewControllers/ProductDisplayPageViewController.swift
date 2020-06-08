@@ -135,6 +135,8 @@ extension ProductDisplayPageViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        self.viewModel.didSelectRowAtIndexPath(indexPath)
     }
 }
 
