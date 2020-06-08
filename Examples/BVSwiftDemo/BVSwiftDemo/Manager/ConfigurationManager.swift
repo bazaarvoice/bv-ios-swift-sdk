@@ -20,37 +20,11 @@ class ConfigurationManager: NSObject {
     private let environment: Environment
     private let clientId: String = "apitestcustomer"
     private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
+    private let curationsPassKey: String = ""
     private let recommendationPassKey: String = "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo"
     var config: BVConversationsConfiguration!
+    var curationsConfig: BVCurationsConfiguration!
     var recommendationConfig: BVRecommendationsConfiguration!
-    
-    // TODO:- curationsConfig & recommendationsConfig needs to be refactored after code merge
-    var curationsConfig: BVCurationsConfiguration =
-    { () -> BVCurationsConfiguration in
-      
-      let analyticsConfig: BVAnalyticsConfiguration =
-        .dryRun(
-          configType: .staging(clientId: "branddemo"))
-      
-      return BVCurationsConfiguration.display(
-        clientKey: "r538c65d7d3rsx2265tvzfje",
-        configType: .production(clientId: "branddemo"),
-        analyticsConfig: analyticsConfig)
-    }()
-    
-    var recommendationsConfig: BVRecommendationsConfiguration =
-    { () -> BVRecommendationsConfiguration in
-      
-      let analyticsConfig: BVAnalyticsConfiguration =
-        .dryRun(
-          configType: .staging(clientId: "apitestcustomer"))
-      
-      return BVRecommendationsConfiguration.display(
-        clientKey: "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo",
-        configType: .production(clientId: "apitestcustomer"),
-        analyticsConfig: analyticsConfig)
-    }()
-    
     
     private override init() {
         
@@ -76,6 +50,12 @@ class ConfigurationManager: NSObject {
             let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .staging(clientId: self.clientId))
             self.config = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .staging(clientId: self.clientId), analyticsConfig: analyticsConfig)
             
+            // Curations Configuration
+            self.curationsConfig = BVCurationsConfiguration.display(
+                clientKey: self.curationsPassKey,
+                configType: .production(clientId: self.clientId),
+            analyticsConfig: analyticsConfig)
+            
             //Recommendation Configuration
             self.recommendationConfig = BVRecommendationsConfiguration.display(
                 clientKey: self.recommendationPassKey,
@@ -87,6 +67,12 @@ class ConfigurationManager: NSObject {
             //Conversation Configuration
             let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .production(clientId: self.clientId))
             self.config = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .production(clientId: self.clientId), analyticsConfig: analyticsConfig)
+            
+            // Curations Configuration
+            self.curationsConfig = BVCurationsConfiguration.display(
+            clientKey: self.curationsPassKey,
+            configType: .production(clientId: self.clientId),
+            analyticsConfig: analyticsConfig)
             
             //Recommendation Configuration
             self.recommendationConfig = BVRecommendationsConfiguration.display(
