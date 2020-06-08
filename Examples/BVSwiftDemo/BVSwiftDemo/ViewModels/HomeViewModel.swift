@@ -47,12 +47,11 @@ extension HomeViewModel: HomeViewModelDelegate {
     
     func didSelectItemAt(indexPath: IndexPath) {
         
-        guard let displayModuleRow = BVModule(rawValue: indexPath.row) else {
+        guard let productId = self.bVRecommendationsProduct?[indexPath.item].productId else {
             return
         }
         
-        
-        self.coordinator?.navigateTo(displayModuleRow)
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.productDisplayPage(productId: productId))
     }
     
     func loadProductRecommendations() {

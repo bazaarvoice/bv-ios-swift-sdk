@@ -100,7 +100,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 // MARK:- HomeViewControllerDelegate methods
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        self.viewModel.didSelectItemAt(indexPath: indexPath)
     }
 }
 
