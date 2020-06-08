@@ -17,7 +17,7 @@ protocol QuestionsTableViewControllerDelegate: class {
 }
 
 class QuestionsTableViewController: UIViewController, ViewControllerType {
-
+    
     // MARK:- Variables
     var viewModel: QuestionsViewModelDelegate!
     
@@ -30,7 +30,16 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask a question",
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(QuestionsTableViewController.askQuestionTapped))
+        
         self.viewModel.fetchQuestions()
+    }
+    
+    @objc func askQuestionTapped() {
+        self.viewModel.askQuestionTapped()
     }
     
     

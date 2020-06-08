@@ -19,6 +19,8 @@ protocol QuestionsViewModelDelegate: class {
     
     func questionForRowAtIndexPath(_ indexPath: IndexPath) -> BVQuestion?
     
+    func askQuestionTapped()
+    
 }
 
 class QuestionsViewModel: ViewModelType {
@@ -98,5 +100,9 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
         }
         
         questionQuery.async()
+    }
+    
+    func askQuestionTapped() {
+        // TODO:- Navigate to Submit a Question screen
     }
 }
