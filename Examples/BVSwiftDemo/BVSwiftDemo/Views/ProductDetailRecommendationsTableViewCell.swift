@@ -11,8 +11,10 @@ import BVSwift
 
 class ProductDetailRecommendationsTableViewCell: UITableViewCell {
 
+    // MARK:- IBOutlets
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
+    // MARK:- Variables
     var numberOfRecommendations: (() -> (Int))?
     var recommendationAtIndexPath: ((IndexPath) -> (BVRecommendationsProduct?))?
     
@@ -30,6 +32,7 @@ class ProductDetailRecommendationsTableViewCell: UITableViewCell {
 
 }
 
+// MARK:- UICollectionViewDataSource methods
 extension ProductDetailRecommendationsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
                 
@@ -37,10 +40,12 @@ extension ProductDetailRecommendationsTableViewCell: UICollectionViewDataSource 
         
         guard let recommendation = self.recommendationAtIndexPath?(indexPath) else { return UICollectionViewCell() }
 
+        // TODO:- Replace this with the method to set properties that will be added to the ProductCollectionViewCell class
         cell.label_ProductName.text = recommendation.productId
         cell.label_ProductPrice.text = ""
         cell.imageView_Product.sd_setImage(with: recommendation.imageURL)
         cell.view_StarRating.value = CGFloat(recommendation.averageRating ?? 0.0)
+        
         return cell
     }
     

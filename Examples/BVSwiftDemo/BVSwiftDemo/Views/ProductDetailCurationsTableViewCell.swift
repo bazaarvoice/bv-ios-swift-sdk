@@ -11,9 +11,11 @@ import BVSwift
 
 class ProductDetailCurationsTableViewCell: UITableViewCell {
 
+    // MARK:- IBOutlets
     @IBOutlet weak var curationsCarousel: UICollectionView!
     @IBOutlet weak var errorLabel: UILabel!
     
+    // MARK:- Variables
     var numberOfCurations: (() -> (Int))?
     var curationAtIndexPath: ((IndexPath) -> (BVCurationsFeedItem?))?
     
@@ -31,6 +33,7 @@ class ProductDetailCurationsTableViewCell: UITableViewCell {
     }
 }
 
+// MARK:- UICollectionViewDataSource methods
 extension ProductDetailCurationsTableViewCell: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -57,17 +60,8 @@ extension ProductDetailCurationsTableViewCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        
-        if let imageURL = self.curationAtIndexPath?(indexPath)?.photos?.first?.imageServiceURL?.value {
-            cell.socialImageView.sd_setImage(with: imageURL)
-        }
-        else {
-            cell.socialImageView.image = #imageLiteral(resourceName: "placeholder")
-        }
-       
-        if let channel = curationFeedItem.channel {
-            cell.sourceIconImageView.image = UIImage(named: channel)
-        }
+        cell.setDetails(socialImageURL: curationFeedItem.photos?.first?.imageServiceURL?.value,
+                        sourceImage: curationFeedItem.channel)
         
         return cell
     }

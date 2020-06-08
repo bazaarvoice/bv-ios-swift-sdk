@@ -52,6 +52,8 @@ class ProductDisplayPageViewModel: ViewModelType {
     
     private let dispatchGroup = DispatchGroup()
     
+    private var error: Error?
+    
     enum ProductDisplayPageRow: Int, CaseIterable {
         
         case reviews
@@ -89,7 +91,7 @@ class ProductDisplayPageViewModel: ViewModelType {
                     switch response {
                         
                     case let .failure(errors):
-                       print(errors)
+                        strongSelf.error = errors.first
                         
                     case let .success(_, products):
                         strongSelf.product = products.first
@@ -171,14 +173,25 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         
         dispatchGroup.notify(queue: .main) { [weak self] in
             
-            self?.viewController?.hideLoadingIndicator()
+            guard let strongSelf = self else { return }
             
-            // update UI
-            if let name = self?.product?.name, let imageURL = self?.product?.imageUrl?.value {
-                self?.viewController?.updateProductDetails(name: name, imageURL: imageURL)
+            strongSelf.viewController?.hideLoadingIndicator()
+            
+            // check for PDP API error
+            if let error = strongSelf.error {
+                let errorMessage = (error as? BVError)?.message ?? "Something went wrong."
+                strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {
+                    strongSelf.coordinator?.popBack()
+                })
+                return
             }
             
-            self?.viewController?.reloadData()
+            // update UI
+            if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
+                strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
+            }
+            
+            strongSelf.viewController?.reloadData()
         }
     }
     
@@ -207,7 +220,7 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
             
         case .questions: return "\(self.product?.qaStatistics?.totalQuestionCount ?? 0) Questions, \(self.product?.qaStatistics?.totalAnswerCount ?? 0) Answers"
             
-        case .curations: return "Curations"
+        case .curations: return ""
             
         case .curationsAddPhoto: return "Add your photo!"
             
@@ -230,13 +243,13 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
             
         case .questions: return FAKFontAwesome.questionCircleIcon(withSize:)
             
-        case .curations: return FAKFontAwesome.plugIcon(withSize:)
+        case .curations: return FAKFontAwesome.plugIcon(withSize:)  // default Icon
             
         case .curationsAddPhoto: return FAKFontAwesome.cameraRetroIcon(withSize:)
             
         case .curationsPhotoMap: return FAKFontAwesome.locationArrowIcon(withSize:)
             
-        case .recommendations: return FAKFontAwesome.plugIcon(withSize:)
+        case .recommendations: return FAKFontAwesome.plugIcon(withSize:) // default Icon
             
         }        
     }
