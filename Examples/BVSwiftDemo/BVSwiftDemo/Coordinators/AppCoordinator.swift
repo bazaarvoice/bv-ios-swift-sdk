@@ -65,7 +65,8 @@ class AppCoordinator: Coordinator {
         productDisplayPageViewController.navigationItem.titleView = ProductDisplayPageViewController.createTitleLabel()
         
         // 2. Create View Model
-        let productDisplayPageViewModel = ProductDisplayPageViewModel(productId: productId)
+        // TODO:- Hard coded to "test1" as the product ids returned by recommendations API are not having data in BVProductQuery.
+        let productDisplayPageViewModel = ProductDisplayPageViewModel(productId: "test1")
         productDisplayPageViewModel.coordinator = self
         productDisplayPageViewModel.viewController = productDisplayPageViewController
         
