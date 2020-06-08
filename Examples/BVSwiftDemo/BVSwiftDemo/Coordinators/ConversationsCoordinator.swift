@@ -87,7 +87,7 @@ class ConversationsCoordinator: Coordinator {
         questionsViewController.navigationItem.title = "Product Questions"
         
         // 2. Create View Model
-        let questionsViewModel = QuestionsViewModel()
+        let questionsViewModel = QuestionsViewModel(productId: "test1")
         questionsViewModel.coordinator = self
         questionsViewModel.viewController = questionsViewController
         
