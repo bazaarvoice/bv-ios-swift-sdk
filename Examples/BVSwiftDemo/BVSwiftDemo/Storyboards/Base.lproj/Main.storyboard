@@ -596,6 +596,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7o-PD-xLe" userLabel="Top View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
+                                                    <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="wI2-wJ-M4D"/>
+                                                    </constraints>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CURATIONS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obT-f7-8J9">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
@@ -653,29 +660,32 @@
                                                         </mask>
                                                     </variation>
                                                 </collectionView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sb-bn-NBF">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No social content to show - upload your own!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dla-h0-8EM">
+                                                    <rect key="frame" x="20" y="57" width="374" height="182"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sb-bn-NBF" userLabel="Bottom View">
                                                     <rect key="frame" x="0.0" y="249.5" width="414" height="0.5"/>
                                                     <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="9qe-e2-mV5"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7o-PD-xLe">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
-                                                    <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="wI2-wJ-M4D"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="dla-h0-8EM" firstAttribute="top" secondItem="ZNp-RA-hnr" secondAttribute="top" id="0Mq-9h-h5A"/>
                                                 <constraint firstItem="T7o-PD-xLe" firstAttribute="top" secondItem="IMs-zA-p6G" secondAttribute="top" id="2fS-qb-ZYR"/>
+                                                <constraint firstItem="dla-h0-8EM" firstAttribute="bottom" secondItem="ZNp-RA-hnr" secondAttribute="bottom" id="5Gr-ck-pfU"/>
                                                 <constraint firstItem="ZNp-RA-hnr" firstAttribute="top" secondItem="obT-f7-8J9" secondAttribute="bottom" constant="8" id="79c-HP-evT"/>
                                                 <constraint firstAttribute="bottom" secondItem="0sb-bn-NBF" secondAttribute="bottom" id="9uv-em-8SV"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ZNp-RA-hnr" secondAttribute="bottom" id="E2l-We-CaQ"/>
                                                 <constraint firstItem="obT-f7-8J9" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leadingMargin" id="Khd-zg-cSV"/>
                                                 <constraint firstItem="ZNp-RA-hnr" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leadingMargin" id="TUv-LH-mun"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ZNp-RA-hnr" secondAttribute="trailing" id="ZpL-4y-BZi"/>
+                                                <constraint firstItem="dla-h0-8EM" firstAttribute="leading" secondItem="ZNp-RA-hnr" secondAttribute="leading" id="beU-dG-Wg0"/>
+                                                <constraint firstItem="dla-h0-8EM" firstAttribute="trailing" secondItem="ZNp-RA-hnr" secondAttribute="trailing" id="dfy-5s-IFb"/>
                                                 <constraint firstAttribute="trailing" secondItem="T7o-PD-xLe" secondAttribute="trailing" id="epc-et-uWu"/>
                                                 <constraint firstItem="T7o-PD-xLe" firstAttribute="leading" secondItem="IMs-zA-p6G" secondAttribute="leading" id="lqD-9z-Ao8"/>
                                                 <constraint firstItem="obT-f7-8J9" firstAttribute="top" secondItem="IMs-zA-p6G" secondAttribute="topMargin" id="lry-OG-l5v"/>
@@ -686,6 +696,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="curationsCarousel" destination="ZNp-RA-hnr" id="yBG-Zt-tpA"/>
+                                            <outlet property="errorLabel" destination="dla-h0-8EM" id="4yV-UH-uiX"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDetailRecommendationsTableViewCell" rowHeight="304" id="KuE-uI-kWM" customClass="ProductDetailRecommendationsTableViewCell" customModule="BVSwiftDemo">
