@@ -7,15 +7,31 @@
 //
 
 import UIKit
+import BVSwift
 import HCSStarRatingView
+import SDWebImage
 
 class ProductCollectionViewCell: UICollectionViewCell {
-    
     
     @IBOutlet weak var view_Background: UIView!
     @IBOutlet weak var view_StarRating: HCSStarRatingView!
     @IBOutlet weak var imageView_Product: UIImageView!
     @IBOutlet weak var label_ProductName: UILabel!
     @IBOutlet weak var label_ProductPrice: UILabel!
+    
+    func setRecommendationProductDetails(recommendationProduct: BVRecommendationsProduct) {
+        self.label_ProductName.text = recommendationProduct.productId?.capitalized
+        self.view_StarRating.value = CGFloat(recommendationProduct.averageRating ?? 0)
+        self.label_ProductPrice.text = ""
+        self.imageView_Product.image = nil
+        
+        if let imageUrl = recommendationProduct.imageURL {
+            
+            self.imageView_Product.sd_setImage(with: imageUrl)
+        }
+        else {
+            self.imageView_Product.image = nil
+        }
+    }
     
 }
