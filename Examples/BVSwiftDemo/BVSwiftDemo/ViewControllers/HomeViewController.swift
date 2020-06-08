@@ -8,13 +8,19 @@
 
 import UIKit
 
+protocol HomeCollectionViewControllerDelegate: class {
+    func reloadCollectionView()
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
+}
+
 class HomeViewController: UIViewController, ViewControllerType {
     
     // MARK:- IBOutlets
-    @IBOutlet weak var bvModulesTableView: UITableView!
+    @IBOutlet weak var bvRecommendationProductCollectionView: UICollectionView!
     
     // MARK:- Constants
-    private static let CELL_IDENTIFIER = "ProductCollectionViewCell"
+    private static let CELL_IDENTIFIER = "ProductCollectionViewCellIdentifier"
     
     // MARK:- Variables
     var viewModel: HomeViewModelDelegate!
@@ -23,6 +29,8 @@ class HomeViewController: UIViewController, ViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.viewModel.loadProductRecommendations()
     }
     
     class func createTitleLabel() -> UILabel {
@@ -38,7 +46,21 @@ class HomeViewController: UIViewController, ViewControllerType {
     @IBAction func showNextTapped(_ sender: Any) {
         // self.viewModel.didTapShowNextButton()
     }
+}
+
+extension HomeViewController: HomeCollectionViewControllerDelegate {
     
+    func reloadCollectionView() {
+        self.bvRecommendationProductCollectionView.reloadData()
+    }
+    
+    func showLoadingIndicator() {
+        self.showSpinner()
+    }
+    
+    func hideLoadingIndicator() {
+        self.removeSpinner()
+    }
     
 }
 
@@ -50,13 +72,16 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.viewModel.numberOfRows
+        self.viewModel.numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.CELL_IDENTIFIER, for: indexPath) as? ProductCollectionViewCell else {
-            return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.CELL_IDENTIFIER, for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
+        
+        
+        if let product = self.viewModel.productForItemAtIndexPath(indexPath) {
+            cell.setRecommendationProductDetails(recommendationProduct: product)
         }
         
         return cell
@@ -68,8 +93,8 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((UIScreen.main.bounds.width/2) - 15), height: 200)
-     }
+        return CGSize(width: ((UIScreen.main.bounds.width/2) - 10), height: 200)
+    }
 }
 
 // MARK:- HomeViewControllerDelegate methods

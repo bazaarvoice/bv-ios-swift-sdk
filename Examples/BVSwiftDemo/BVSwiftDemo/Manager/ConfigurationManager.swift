@@ -20,7 +20,9 @@ class ConfigurationManager: NSObject {
     private let environment: Environment
     private let clientId: String = "apitestcustomer"
     private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
+    private let recommendationPassKey: String = "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo"
     var config: BVConversationsConfiguration!
+    var recommendationConfig: BVRecommendationsConfiguration!
     
     // TODO:- curationsConfig & recommendationsConfig needs to be refactored after code merge
     var curationsConfig: BVCurationsConfiguration =
@@ -69,12 +71,28 @@ class ConfigurationManager: NSObject {
         switch self.environment {
             
         case .staging :
+            
+            //Conversation Configuration
             let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .staging(clientId: self.clientId))
             self.config = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .staging(clientId: self.clientId), analyticsConfig: analyticsConfig)
             
+            //Recommendation Configuration
+            self.recommendationConfig = BVRecommendationsConfiguration.display(
+                clientKey: self.recommendationPassKey,
+                configType: .production(clientId: self.clientId),
+                analyticsConfig: analyticsConfig)
+            
         case .production :
+            
+            //Conversation Configuration
             let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .production(clientId: self.clientId))
             self.config = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .production(clientId: self.clientId), analyticsConfig: analyticsConfig)
+            
+            //Recommendation Configuration
+            self.recommendationConfig = BVRecommendationsConfiguration.display(
+                clientKey: self.recommendationPassKey,
+                configType: .production(clientId: self.clientId),
+                analyticsConfig: analyticsConfig)
             
         } //end of case
     }
