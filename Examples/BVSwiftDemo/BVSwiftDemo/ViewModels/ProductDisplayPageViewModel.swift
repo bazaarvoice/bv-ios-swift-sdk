@@ -24,6 +24,8 @@ protocol ProductDisplayPageViewModelDelegate: class {
     
     func iconForIndexPath(_ indexPath: IndexPath) -> ((_ size: CGFloat) -> FAKFontAwesome?)
     
+    var numberOfCurations: Int { get }
+    
     var numberOfRecommendations: Int { get }
     
     func recommendationAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct?
@@ -235,6 +237,10 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         case .recommendations: return FAKFontAwesome.plugIcon(withSize:)
             
         }        
+    }
+    
+    var numberOfCurations: Int {
+        return self.curationsFeedItems?.count ?? 0
     }
     
     var numberOfRecommendations: Int {
