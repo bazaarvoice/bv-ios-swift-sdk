@@ -28,6 +28,12 @@ class QuestionsViewModel: ViewModelType {
     weak var coordinator: Coordinator?
     
     private var questions: [BVQuestion]?
+    
+    private let productId: String
+    
+    init(productId: String) {
+        self.productId = productId
+    }
 }
 
 // MARK:- QuestionsViewModelDelegate
@@ -56,7 +62,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
         
         delegate.showLoadingIndicator()
         
-        let questionQuery = BVQuestionQuery(productId: "test1",
+        let questionQuery = BVQuestionQuery(productId: self.productId,
                                             limit: 10,
                                             offset: 0)
             .include(.answers)
