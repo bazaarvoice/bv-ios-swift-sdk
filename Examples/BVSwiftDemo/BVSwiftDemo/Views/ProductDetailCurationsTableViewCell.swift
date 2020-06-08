@@ -53,6 +53,22 @@ extension ProductDetailCurationsTableViewCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
+        guard let curationFeedItem = self.curationAtIndexPath?(indexPath) else {
+            return UICollectionViewCell()
+        }
+        
+        
+        if let imageURL = self.curationAtIndexPath?(indexPath)?.photos?.first?.imageServiceURL?.value {
+            cell.socialImageView.sd_setImage(with: imageURL)
+        }
+        else {
+            cell.socialImageView.image = #imageLiteral(resourceName: "placeholder")
+        }
+       
+        if let channel = curationFeedItem.channel {
+            cell.sourceIconImageView.image = UIImage(named: channel)
+        }
+        
         return cell
     }
 }

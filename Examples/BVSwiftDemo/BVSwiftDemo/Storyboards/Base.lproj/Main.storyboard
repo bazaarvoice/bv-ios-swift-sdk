@@ -652,6 +652,10 @@
                                                                 </constraints>
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="179" height="179"/>
+                                                            <connections>
+                                                                <outlet property="socialImageView" destination="CfW-F3-t7R" id="7Xz-x9-jU1"/>
+                                                                <outlet property="sourceIconImageView" destination="6K8-sz-e5B" id="gbl-jF-Db1"/>
+                                                            </connections>
                                                         </collectionViewCell>
                                                     </cells>
                                                     <variation key="default">

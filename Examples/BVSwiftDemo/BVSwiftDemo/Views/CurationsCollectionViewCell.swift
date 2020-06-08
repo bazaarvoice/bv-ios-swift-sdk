@@ -10,4 +10,6 @@ import UIKit
 
 class CurationsCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var socialImageView: UIImageView!
+    @IBOutlet weak var sourceIconImageView: UIImageView!
 }
