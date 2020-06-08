@@ -74,16 +74,12 @@ extension HomeViewModel: HomeViewModelDelegate {
                     
                     if case let .failure(error) = response {
                         let errorMessage = (error.first as? BVError)?.message ?? "Something went wrong."
-                        strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {
-                            strongSelf.coordinator?.popBack()
-                        })
+                        strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: nil)
                         return
                     }
                     
                     guard case let .success(_, result) = response else {
-                        strongSelf.coordinator?.showAlert(title: "", message: "Something went wrong.", handler: {
-                            strongSelf.coordinator?.popBack()
-                        })
+                        strongSelf.coordinator?.showAlert(title: "", message: "Something went wrong.", handler: nil)
                         return
                     }
                     
