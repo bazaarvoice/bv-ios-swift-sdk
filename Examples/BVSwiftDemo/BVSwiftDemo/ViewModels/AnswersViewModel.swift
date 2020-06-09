@@ -24,6 +24,9 @@ protocol AnswersViewModelDelegate: class {
     var numberOfSections: Int { get }
     
     var numberOfRows: Int { get }
+    
+    func answerForRowAtIndexPath(_ indexPath: IndexPath) -> BVAnswer?
+
 }
 
 class AnswersViewModel: ViewModelType {
@@ -80,5 +83,9 @@ extension  AnswersViewModel: AnswersViewModelDelegate {
     
     var numberOfRows: Int {
         return self.question.answers?.count ?? 0
+    }
+    
+    func answerForRowAtIndexPath(_ indexPath: IndexPath) -> BVAnswer? {
+        return self.question.answers?[indexPath.row]
     }
 }

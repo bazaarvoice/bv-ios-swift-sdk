@@ -84,6 +84,10 @@ extension AnswersTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswersTableViewController.CELL_IDENTIFIER) as? AnswerTableViewCell else { return UITableViewCell() }
         
+        if let answer = self.viewModel.answerForRowAtIndexPath(indexPath) {
+            cell.setAnswerDetails(answer: answer)
+        }
+        
         return cell
     }
 }
