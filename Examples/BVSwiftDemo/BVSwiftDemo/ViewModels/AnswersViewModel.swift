@@ -20,6 +20,10 @@ protocol AnswersViewModelDelegate: class {
     var questionDetails: String? { get }
     
     var questionMetaData: String? { get }
+    
+    var numberOfSections: Int { get }
+    
+    var numberOfRows: Int { get }
 }
 
 class AnswersViewModel: ViewModelType {
@@ -68,5 +72,13 @@ extension  AnswersViewModel: AnswersViewModelDelegate {
         else {
             return "Anonymous"
         }
+    }
+    
+    var numberOfSections: Int {
+        return 1
+    }
+    
+    var numberOfRows: Int {
+        return self.question.answers?.count ?? 0
     }
 }
