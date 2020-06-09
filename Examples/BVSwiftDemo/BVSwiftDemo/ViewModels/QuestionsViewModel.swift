@@ -24,6 +24,8 @@ protocol QuestionsViewModelDelegate: class {
     func questionForRowAtIndexPath(_ indexPath: IndexPath) -> BVQuestion?
     
     func askQuestionTapped()
+    
+    func readAnswersTapped(question: BVQuestion)
 }
 
 class QuestionsViewModel: ViewModelType {
@@ -118,5 +120,12 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
     
     func askQuestionTapped() {
         // TODO:- Navigate to Submit a Question screen
+    }
+    
+    func readAnswersTapped(question: BVQuestion) {
+        
+        guard let answers = question.answers else { return }
+        
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(answers: answers, product: self.product))
     }
 }
