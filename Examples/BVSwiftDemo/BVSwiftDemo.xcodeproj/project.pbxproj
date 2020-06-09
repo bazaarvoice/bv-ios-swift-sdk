@@ -130,7 +130,6 @@
 				42BC40E22473BB4E00008434 /* AppDelegate.swift */,
 				9FF7EB902473C096007FD337 /* ViewModels */,
 				9FF7EB8F2473C089007FD337 /* ViewControllers */,
-				9FF7EB932473C129007FD337 /* Models */,
 				9FF7EB912473C0DC007FD337 /* Coordinators */,
 				9FF7EB942473C16E007FD337 /* Storyboards */,
 				9FF7EB952473C1AA007FD337 /* Resources */,
@@ -217,13 +216,6 @@
 				9FF7EB982473C346007FD337 /* AppCoordinator.swift */,
 			);
 			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		9FF7EB932473C129007FD337 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		9FF7EB942473C16E007FD337 /* Storyboards */ = {
