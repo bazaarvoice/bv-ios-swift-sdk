@@ -10,6 +10,7 @@ import UIKit
 import BVSwift
 import HCSStarRatingView
 import SDWebImage
+import FontAwesomeKit
 
 class ProductCollectionViewCell: UICollectionViewCell {
     
@@ -27,11 +28,18 @@ class ProductCollectionViewCell: UICollectionViewCell {
         
         if let imageUrl = recommendationProduct.imageURL {
             
-            self.imageView_Product.sd_setImage(with: imageUrl)
+            self.imageView_Product.sd_setImage(with: imageUrl) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                
+                strongSelf.imageView_Product.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
+                    .image(with: CGSize(width: strongSelf.imageView_Product.frame.size.width,
+                                        height: strongSelf.imageView_Product.frame.size.height))
+            }
         }
-        else {
-            self.imageView_Product.image = nil
-        }
+        
     }
     
 }
