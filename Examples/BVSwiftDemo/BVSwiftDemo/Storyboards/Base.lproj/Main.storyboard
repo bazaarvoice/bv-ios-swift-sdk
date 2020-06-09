@@ -531,6 +531,55 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BpM-jR-HUp">
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="Y40-CK-Tb4" userLabel="Question Header View">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="267"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pi9-0u-U4K">
+                                            <rect key="frame" x="16" y="16" width="382" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.2392156869" blue="0.29803922770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago from Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TU2-ko-dZP">
+                                            <rect key="frame" x="16" y="43.5" width="398" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.2392156869" blue="0.29803922770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lei-dA-mWL">
+                                            <rect key="frame" x="16" y="76.5" width="382" height="86"/>
+                                            <string key="text">Question detail text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdW-RC-6Zt">
+                                            <rect key="frame" x="8" y="258.5" width="398" height="0.5"/>
+                                            <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.5" id="xpq-YN-Kiy"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstItem="Lei-dA-mWL" firstAttribute="top" secondItem="TU2-ko-dZP" secondAttribute="bottom" constant="16" id="0kO-mR-Zwj"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Pi9-0u-U4K" secondAttribute="trailing" constant="8" id="7A4-QY-Wuq"/>
+                                        <constraint firstItem="Pi9-0u-U4K" firstAttribute="top" secondItem="Y40-CK-Tb4" secondAttribute="topMargin" constant="8" id="BpK-lZ-XT2"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Lei-dA-mWL" secondAttribute="bottom" id="ClF-hj-j4Y"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="hdW-RC-6Zt" secondAttribute="trailing" id="DPz-Dp-fix"/>
+                                        <constraint firstItem="TU2-ko-dZP" firstAttribute="top" secondItem="Pi9-0u-U4K" secondAttribute="bottom" constant="6" id="LOE-4w-bGd"/>
+                                        <constraint firstItem="TU2-ko-dZP" firstAttribute="leading" secondItem="Y40-CK-Tb4" secondAttribute="leadingMargin" constant="8" id="OM1-oA-9CF"/>
+                                        <constraint firstItem="hdW-RC-6Zt" firstAttribute="leading" secondItem="Y40-CK-Tb4" secondAttribute="leadingMargin" id="Szi-CX-rkb"/>
+                                        <constraint firstItem="Lei-dA-mWL" firstAttribute="top" secondItem="TU2-ko-dZP" secondAttribute="bottom" constant="16" id="VDQ-kW-Dsu"/>
+                                        <constraint firstItem="Pi9-0u-U4K" firstAttribute="leading" secondItem="Y40-CK-Tb4" secondAttribute="leadingMargin" constant="8" id="fd3-J3-Uv2"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hdW-RC-6Zt" secondAttribute="bottom" id="oCw-ck-37f"/>
+                                        <constraint firstItem="Lei-dA-mWL" firstAttribute="leading" secondItem="Y40-CK-Tb4" secondAttribute="leadingMargin" constant="8" id="sUw-XJ-UiV"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Lei-dA-mWL" secondAttribute="trailing" constant="8" id="vzU-K3-8HK"/>
+                                        <constraint firstItem="TU2-ko-dZP" firstAttribute="trailing" secondItem="Y40-CK-Tb4" secondAttribute="trailingMargin" constant="8" id="wS5-aV-EUs"/>
+                                    </constraints>
+                                </view>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
