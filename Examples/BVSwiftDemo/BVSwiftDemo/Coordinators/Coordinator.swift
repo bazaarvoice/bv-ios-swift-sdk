@@ -67,9 +67,9 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
         }
 
         // Its a pop. Check if it is the coordinator's first view controller and call parent coordinators childDidFinish() method.
-        if fromViewController is ConversationsAPIListViewController {
-            self.parentCoordinator?.childDidFinish(self)
-        }
+//        if fromViewController is ConversationsAPIListViewController {
+//            self.parentCoordinator?.childDidFinish(self)
+//        }
 
     }
 }
