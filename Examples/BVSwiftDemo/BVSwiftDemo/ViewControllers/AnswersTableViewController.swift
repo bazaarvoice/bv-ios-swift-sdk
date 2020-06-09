@@ -27,6 +27,9 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var questionMetaDataLabel: UILabel!
     @IBOutlet weak var questionTextLabel: UILabel!
     
+    // MARK:- Constants
+    private static let CELL_IDENTIFIER = "AnswerTableViewCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +68,24 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
         questionMetaDataLabel.text = self.viewModel.questionMetaData
     }
     
+}
+
+// MARK:- UITableViewDataSource methods
+extension AnswersTableViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        self.viewModel.numberOfSections
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.viewModel.numberOfRows
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswersTableViewController.CELL_IDENTIFIER) as? AnswerTableViewCell else { return UITableViewCell() }
+        
+        return cell
+    }
 }
 
 // MARK:- AnswersViewControllerDelegate methods
