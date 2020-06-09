@@ -532,7 +532,7 @@
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="Y40-CK-Tb4" userLabel="Question Header View">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="267"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="188"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pi9-0u-U4K">
@@ -555,7 +555,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdW-RC-6Zt">
-                                            <rect key="frame" x="8" y="258.5" width="398" height="0.5"/>
+                                            <rect key="frame" x="8" y="179.5" width="398" height="0.5"/>
                                             <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="0.5" id="xpq-YN-Kiy"/>
@@ -598,6 +598,9 @@
                         <outlet property="productImageView" destination="ED3-fk-9nw" id="OYP-zf-rCo"/>
                         <outlet property="productNameLabel" destination="Hpa-N2-LXb" id="hcp-Zz-n0J"/>
                         <outlet property="productRatingView" destination="yud-o9-5v7" id="Gen-EO-5RC"/>
+                        <outlet property="questionMetaDataLabel" destination="TU2-ko-dZP" id="9PP-dR-vlv"/>
+                        <outlet property="questionTextLabel" destination="Lei-dA-mWL" id="0Wk-CP-t9E"/>
+                        <outlet property="questionTtileLabel" destination="Pi9-0u-U4K" id="qLS-WL-qhC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUb-5e-Gpr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -23,6 +23,9 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productRatingView: HCSStarRatingView!
+    @IBOutlet weak var questionTtileLabel: UILabel!
+    @IBOutlet weak var questionMetaDataLabel: UILabel!
+    @IBOutlet weak var questionTextLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,7 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
         // Do any additional setup after loading the view.
         
         self.updateProductDetails()
+        self.updateQuestionDetails()
     }
     
     
@@ -50,6 +54,15 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
                                         height: strongSelf.productImageView.frame.size.height + 20))
             }
         }
+    }
+    
+    private func updateQuestionDetails() {
+        
+        questionTtileLabel.text = self.viewModel.questionSummary
+        
+        questionTextLabel.text = self.viewModel.questionDetails
+        
+        questionMetaDataLabel.text = self.viewModel.questionMetaData
     }
     
 }

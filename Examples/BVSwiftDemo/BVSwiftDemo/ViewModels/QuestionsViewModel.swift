@@ -123,9 +123,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
     }
     
     func readAnswersTapped(question: BVQuestion) {
-        
-        guard let answers = question.answers else { return }
-        
-        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(answers: answers, product: self.product))
+                
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(question: question, product: self.product))
     }
 }
