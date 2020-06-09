@@ -14,6 +14,12 @@ protocol AnswersViewModelDelegate: class {
     var productName: String? { get }
     
     var imageURL: URL? { get }
+    
+    var questionSummary: String? { get }
+    
+    var questionDetails: String? { get }
+    
+    var questionMetaData: String? { get }
 }
 
 class AnswersViewModel: ViewModelType {
@@ -22,12 +28,12 @@ class AnswersViewModel: ViewModelType {
     
     weak var coordinator: Coordinator?
     
-    private let answers: [BVAnswer]
+    private let question: BVQuestion
     
     private let product: BVProduct
     
-    init(answers: [BVAnswer], product: BVProduct) {
-        self.answers = answers
+    init(question: BVQuestion, product: BVProduct) {
+        self.question = question
         self.product = product
     }
 }
@@ -39,5 +45,28 @@ extension  AnswersViewModel: AnswersViewModelDelegate {
     
     var imageURL: URL? {
         return self.product.imageUrl?.value
+    }
+    
+    var questionSummary: String? {
+        return question.questionSummary
+    }
+    
+    var questionDetails: String? {
+        return question.questionDetails
+    }
+    
+    var questionMetaData: String? {
+        if let submissionTime = question.submissionTime, let nickname = question.userNickname {
+            return dateTimeAgo(submissionTime) + " by " + nickname
+        }
+        else if let nickname = question.userNickname {
+            return nickname
+        }
+        else if let submissionTime = question.submissionTime {
+            return dateTimeAgo(submissionTime) + " by Anonymous"
+        }
+        else {
+            return "Anonymous"
+        }
     }
 }
