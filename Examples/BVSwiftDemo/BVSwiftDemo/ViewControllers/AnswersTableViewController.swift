@@ -8,13 +8,14 @@
 
 import UIKit
 import HCSStarRatingView
+import FontAwesomeKit
 
 protocol AnswersViewControllerDelegate: class {
-
+    
 }
 
 class AnswersTableViewController: UIViewController, ViewControllerType {
-
+    
     // MARK:- Variables
     var viewModel: AnswersViewModelDelegate!
     
@@ -25,24 +26,33 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    private func updateProductDetails() {
+        
+        self.productNameLabel.text = self.viewModel.productName
+        
+        if let imageURL = self.viewModel.imageURL {
+            
+            self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                
+                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
+                    .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
+                                        height: strongSelf.productImageView.frame.size.height + 20))
+            }
+        }
     }
-    */
-
+    
 }
 
 // MARK:- AnswersViewControllerDelegate methods
 extension AnswersTableViewController: AnswersViewControllerDelegate {
-
+    
 }
