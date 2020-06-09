@@ -454,12 +454,12 @@
         <!--Answers Table View Controller-->
         <scene sceneID="gEh-3X-Sy9">
             <objects>
-                <viewController id="Lfo-xm-8IH" customClass="AnswersTableViewController" customModule="BVSwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AnswersTableViewController" id="Lfo-xm-8IH" customClass="AnswersTableViewController" customModule="BVSwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jnl-gi-gIU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYy-LR-KyI" customClass="ProductDetailHeaderView" customModule="BVSDKDemo" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYy-LR-KyI" customClass="ProductDetailHeaderView" customModule="BVSwiftDemo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="80"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ED3-fk-9nw">
@@ -527,11 +527,6 @@
                                         <exclude reference="OKm-Ul-qc0"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <outlet property="productImage" destination="ED3-fk-9nw" id="J9m-wJ-1eb"/>
-                                    <outlet property="productName" destination="Hpa-N2-LXb" id="CPS-bh-4rQ"/>
-                                    <outlet property="productStars" destination="yud-o9-5v7" id="AF2-h5-sjP"/>
-                                </connections>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BpM-jR-HUp">
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>

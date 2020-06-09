@@ -17,6 +17,8 @@ class AppCoordinator: Coordinator {
         case productDisplayPage(productId: String)
         
         case questions(productId: String, product: BVProduct)
+        
+        case answers(answers: [BVAnswer], product: BVProduct)
     }
     
     // MARK:- Initializers
@@ -53,6 +55,9 @@ class AppCoordinator: Coordinator {
             
         case .questions(let productId, let product):
             self.showQuestionsScreen(productId: productId, product: product)
+            
+        case .answers(let answers, let product):
+            self.showAnswersScreen(answers: answers, product: product)
 
         }
     }
@@ -90,5 +95,22 @@ class AppCoordinator: Coordinator {
         // 3. Assign and navigate
         questionsViewController.viewModel = questionsViewModel
         self.navigationController.pushViewController(questionsViewController, animated: true)
+    }
+    
+    private func showAnswersScreen(answers: [BVAnswer], product: BVProduct) {
+        
+        // 1. Create View Controller
+        let answersViewController = AnswersTableViewController.instantiate()
+        answersViewController.navigationItem.title = "Answers"
+        
+        // 2. Create View Model
+        let answersViewModel = AnswersViewModel(answers: answers,
+                                                product: product)
+        answersViewModel.coordinator = self
+        answersViewModel.viewController = answersViewController
+        
+        // 3. Assign and navigate
+        answersViewController.viewModel = answersViewModel
+        self.navigationController.pushViewController(answersViewController, animated: true)
     }
 }
