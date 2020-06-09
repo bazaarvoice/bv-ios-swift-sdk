@@ -585,7 +585,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-QX-7a1">
-                                        <rect key="frame" x="0.0" y="143.5" width="359" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="143.5" width="414" height="0.5"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="FHZ-QF-r13"/>
@@ -615,7 +615,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="DAB-17-qG5">
-                                        <rect key="frame" x="330" y="67" width="76" height="50"/>
+                                        <rect key="frame" x="303" y="67" width="76" height="50"/>
                                         <color key="backgroundColor" name="bazaarvoiceNavy"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="76" id="QRb-7p-XZ9"/>
@@ -638,7 +638,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="Fsn-WW-byO" firstAttribute="leading" secondItem="9S1-5p-eje" secondAttribute="leading" id="2wO-Q7-6f9"/>
-                                    <constraint firstAttribute="trailing" secondItem="DAB-17-qG5" secondAttribute="trailing" constant="8" id="6KJ-Wc-hMH"/>
+                                    <constraint firstAttribute="trailing" secondItem="DAB-17-qG5" secondAttribute="trailing" constant="35" id="6KJ-Wc-hMH"/>
                                     <constraint firstAttribute="bottom" secondItem="DAB-17-qG5" secondAttribute="bottom" constant="27" id="6SE-5X-clV"/>
                                     <constraint firstItem="Fsn-WW-byO" firstAttribute="top" secondItem="N27-VZ-MqW" secondAttribute="bottom" constant="2" id="AQS-xV-ZjZ"/>
                                     <constraint firstItem="N27-VZ-MqW" firstAttribute="leading" secondItem="9S1-5p-eje" secondAttribute="leading" id="DF7-gg-9VW"/>
@@ -652,7 +652,7 @@
                                     <constraint firstItem="Bc2-bf-Yng" firstAttribute="top" secondItem="CmS-Ei-jMr" secondAttribute="top" constant="4" id="p88-EI-cch"/>
                                     <constraint firstItem="N27-VZ-MqW" firstAttribute="centerY" secondItem="CmS-Ei-jMr" secondAttribute="centerY" id="pI2-W6-reo"/>
                                     <constraint firstItem="N27-VZ-MqW" firstAttribute="top" secondItem="9S1-5p-eje" secondAttribute="bottom" constant="4" id="pyF-A7-40b"/>
-                                    <constraint firstAttribute="trailing" secondItem="Cxa-QX-7a1" secondAttribute="trailing" constant="55" id="qaM-A4-Ksy"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cxa-QX-7a1" secondAttribute="trailing" id="qaM-A4-Ksy"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-FI-ang">
