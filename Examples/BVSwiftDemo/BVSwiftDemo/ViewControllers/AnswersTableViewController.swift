@@ -63,7 +63,7 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
         
         questionTtileLabel.text = self.viewModel.questionSummary
         
-        questionTextLabel.text = self.viewModel.questionDetails
+       // questionTextLabel.text = self.viewModel.questionDetails
         
         questionMetaDataLabel.text = self.viewModel.questionMetaData
     }
