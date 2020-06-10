@@ -811,7 +811,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="DAB-17-qG5">
-                                        <rect key="frame" x="303" y="67" width="76" height="50"/>
+                                        <rect key="frame" x="313" y="67" width="76" height="50"/>
                                         <color key="backgroundColor" name="bazaarvoiceNavy"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="76" id="QRb-7p-XZ9"/>
@@ -834,7 +834,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="Fsn-WW-byO" firstAttribute="leading" secondItem="9S1-5p-eje" secondAttribute="leading" id="2wO-Q7-6f9"/>
-                                    <constraint firstAttribute="trailing" secondItem="DAB-17-qG5" secondAttribute="trailing" constant="35" id="6KJ-Wc-hMH"/>
+                                    <constraint firstAttribute="trailing" secondItem="DAB-17-qG5" secondAttribute="trailing" constant="25" id="6KJ-Wc-hMH"/>
                                     <constraint firstAttribute="bottom" secondItem="DAB-17-qG5" secondAttribute="bottom" constant="27" id="6SE-5X-clV"/>
                                     <constraint firstItem="Fsn-WW-byO" firstAttribute="top" secondItem="N27-VZ-MqW" secondAttribute="bottom" constant="2" id="AQS-xV-ZjZ"/>
                                     <constraint firstItem="N27-VZ-MqW" firstAttribute="leading" secondItem="9S1-5p-eje" secondAttribute="leading" id="DF7-gg-9VW"/>
@@ -916,7 +916,7 @@
                                             <outlet property="titleLabel" destination="WVo-BZ-JUg" id="ctt-XU-RgW"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDetailCurationsTableViewCell" rowHeight="250" id="zS5-zn-cDI" userLabel="ProductDisplayPageCurationsCell" customClass="ProductDetailCurationsTableViewCell" customModule="BVSwiftDemo">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductDetailCurationsTableViewCell" rowHeight="250" id="zS5-zn-cDI" userLabel="ProductDisplayPageCurationsCell" customClass="ProductDetailCurationsTableViewCell" customModule="BVSwiftDemo">
                                         <rect key="frame" x="0.0" y="84" width="414" height="250"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zS5-zn-cDI" id="IMs-zA-p6G">
@@ -1030,7 +1030,7 @@
                                             <outlet property="errorLabel" destination="dla-h0-8EM" id="4yV-UH-uiX"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductDetailRecommendationsTableViewCell" rowHeight="304" id="KuE-uI-kWM" customClass="ProductDetailRecommendationsTableViewCell" customModule="BVSwiftDemo">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductDetailRecommendationsTableViewCell" rowHeight="304" id="KuE-uI-kWM" customClass="ProductDetailRecommendationsTableViewCell" customModule="BVSwiftDemo">
                                         <rect key="frame" x="0.0" y="334" width="414" height="304"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KuE-uI-kWM" id="n6s-g7-2ho">
