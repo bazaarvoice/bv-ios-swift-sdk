@@ -52,7 +52,7 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
                 
                 guard let _ = error else { return }
                 
-                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
+                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 70.0)?
                     .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
                                         height: strongSelf.productImageView.frame.size.height + 20))
             }
@@ -62,9 +62,7 @@ class AnswersTableViewController: UIViewController, ViewControllerType {
     private func updateQuestionDetails() {
         
         questionTtileLabel.text = self.viewModel.questionSummary
-        
-       // questionTextLabel.text = self.viewModel.questionDetails
-        
+                
         questionMetaDataLabel.text = self.viewModel.questionMetaData
     }
     
