@@ -84,7 +84,7 @@ class ProductDisplayPageViewModel: ViewModelType {
         let productQuery = BVProductQuery(productId: self.productId)
             .stats(.questions)
             .stats(.reviews)
-            .configure(ConfigurationManager.sharedInstance.config)
+            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
             .handler { [weak self] (response: BVConversationsQueryResponse<BVProduct>) in
                 
                 guard let strongSelf = self else { return }

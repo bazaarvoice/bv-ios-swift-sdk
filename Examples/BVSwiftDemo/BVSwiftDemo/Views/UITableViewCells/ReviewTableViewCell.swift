@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BVSwift
 import HCSStarRatingView
 import FontAwesomeKit
 
@@ -14,7 +15,7 @@ class ReviewTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reviewText : UILabel!
     @IBOutlet weak var reviewTitle : UILabel!
-    @IBOutlet weak var reviewAuthor : UILabel!
+    @IBOutlet weak var lastModificationTimeLabel : UILabel!
     @IBOutlet weak var reviewAuthorLocation : UILabel!
     @IBOutlet weak var reviewStars : HCSStarRatingView!
     @IBOutlet weak var reviewPhoto : UIImageView!
@@ -67,4 +68,41 @@ class ReviewTableViewCell: UITableViewCell {
         
     }
     
+    func setReview(review: BVReview) {
+        
+        if let imageUrl = review.photos?.first?.photoSizes?.first?.url?.value {
+            
+            
+            self.reviewPhoto.sd_setImage(with: imageUrl) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                strongSelf.reviewPhoto.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
+                    .image(with: CGSize(width: strongSelf.reviewPhoto.frame.size.width,
+                                        height: strongSelf.reviewPhoto.frame.size.height))
+                strongSelf.reviewPhoto.image?.withTintColor(UIColor.bazaarvoiceNavy)
+            }
+        }
+        
+        self.reviewText.text = review.reviewText
+        self.reviewTitle.text = review.title
+        self.reviewAuthorLocation.text = review.userLocation
+        self.reviewAuthorLocation.text = review.userNickname
+        self.totalCommentsLabel.text = "\(review.comments?.count ?? 0)"
+        self.reviewStars.value = CGFloat(review.rating ?? 0)
+        self.totalCommentsLabel.text = "\(review.totalCommentCount ?? 0)"
+        self.upVoteCountLabel.text = "\(review.totalPositiveFeedbackCount ?? 0)"
+        self.downVoteCountLabel.text = "\(review.totalNegativeFeedbackCount ?? 0)"
+        
+        if let submissionTime = review.submissionTime, let nickname = review.userNickname {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            let myString = formatter.string(from: submissionTime)
+            
+            formatter.dateFormat = "dd-MMM-yyyy"
+            self.lastModificationTimeLabel.text = "\(myString) by " + nickname
+        }
+    }
 }

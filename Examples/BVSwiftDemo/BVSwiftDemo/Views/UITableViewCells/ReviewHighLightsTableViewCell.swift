@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BVSwift
 
 class ReviewHighLightsTableViewCell: UITableViewCell {
     
@@ -22,6 +23,10 @@ class ReviewHighLightsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setReviewHighlightsData(bvReviewHight: BVReviewHighlight) {
+        self.lbl_Title.text = bvReviewHight.title?.capitalized
     }
 
 }

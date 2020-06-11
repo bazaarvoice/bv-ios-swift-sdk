@@ -84,7 +84,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
             .include(.answers)
             .include(.products)
             .filter(((.hasAnswers(true), .equalTo)))
-            .configure(ConfigurationManager.sharedInstance.config)
+            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
             .handler { [weak self] (response: BVConversationsQueryResponse<BVQuestion>) in
                 
                 guard let strongSelf = self else { return }
