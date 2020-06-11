@@ -22,9 +22,10 @@ class ConfigurationManager: NSObject {
     private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
     private let curationsPassKey: String = ""
     private let recommendationPassKey: String = "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo"
-    var config: BVConversationsConfiguration!
+    var conversationsConfig: BVConversationsConfiguration!
     var curationsConfig: BVCurationsConfiguration!
     var recommendationConfig: BVRecommendationsConfiguration!
+    var reviewHighlightsConfig: BVReviewHighlightsConfiguration!
     
     private override init() {
         
@@ -48,13 +49,13 @@ class ConfigurationManager: NSObject {
             
             //Conversation Configuration
             let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .staging(clientId: self.clientId))
-            self.config = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .staging(clientId: self.clientId), analyticsConfig: analyticsConfig)
+            self.conversationsConfig = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .staging(clientId: self.clientId), analyticsConfig: analyticsConfig)
             
             // Curations Configuration
             self.curationsConfig = BVCurationsConfiguration.display(
                 clientKey: self.curationsPassKey,
                 configType: .production(clientId: self.clientId),
-            analyticsConfig: analyticsConfig)
+                analyticsConfig: analyticsConfig)
             
             //Recommendation Configuration
             self.recommendationConfig = BVRecommendationsConfiguration.display(
@@ -62,22 +63,32 @@ class ConfigurationManager: NSObject {
                 configType: .production(clientId: self.clientId),
                 analyticsConfig: analyticsConfig)
             
+            //ReviewHighlights Configuration
+            self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
+                configType: .staging(clientId: "1800petmeds"),
+                analyticsConfig: analyticsConfig)
+            
         case .production :
             
             //Conversation Configuration
             let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .production(clientId: self.clientId))
-            self.config = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .production(clientId: self.clientId), analyticsConfig: analyticsConfig)
+            self.conversationsConfig = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .production(clientId: self.clientId), analyticsConfig: analyticsConfig)
             
             // Curations Configuration
             self.curationsConfig = BVCurationsConfiguration.display(
-            clientKey: self.curationsPassKey,
-            configType: .production(clientId: self.clientId),
-            analyticsConfig: analyticsConfig)
+                clientKey: self.curationsPassKey,
+                configType: .production(clientId: self.clientId),
+                analyticsConfig: analyticsConfig)
             
             //Recommendation Configuration
             self.recommendationConfig = BVRecommendationsConfiguration.display(
                 clientKey: self.recommendationPassKey,
                 configType: .production(clientId: self.clientId),
+                analyticsConfig: analyticsConfig)
+            
+            //ReviewHighlights Configuration
+            self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
+                configType: .production(clientId: "1800petmeds"),
                 analyticsConfig: analyticsConfig)
             
         } //end of case

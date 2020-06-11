@@ -8,8 +8,12 @@
 
 import UIKit
 import HCSStarRatingView
+import FontAwesomeKit
 
 protocol ReviewsViewControllerDelegate: class {
+    
+    func updateProductDetails(name: String,
+                              imageURL: URL)
     
     func reloadData()
     
@@ -31,17 +35,64 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var reviewTableView: UITableView!
     @IBOutlet weak var reviewHighlightsTableView: UITableView!
+    @IBOutlet weak var reviewHighlightsTableHeightConstraints: NSLayoutConstraint!
     
     // MARK:- Constants
     private static let REVIEW_CELL_IDENTIFIER: String = "ReviewTableViewCell"
     private static let REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER: String = "ReviewHighlightsHeaderTableViewCell"
     private static let REVIEW_HIGHLIGHTS_CELL_IDENTIFIER: String = "ReviewHighLightsTableViewCell"
-    private var reviewHighlightsHeaderModelArray: [ReviewHighlightsHeaderModel] = []
+    // private var reviewHighlightsHeaderModelArray: [ReviewHighlightsHeaderModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        self.viewModel.fetchReviews()
+        
+        //  self.updateProductDetails()
+    }
+    
+    func updateProductDetails() {
+        self.productNameLabel.text = self.viewModel.productName
+        
+        if let imageURL = self.viewModel.productImageURL {
+            
+            self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                
+                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 70.0)?
+                    .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
+                                        height: strongSelf.productImageView.frame.size.height + 20))
+            }
+        }
+        else {
+            self.productImageView.image = #imageLiteral(resourceName: "placeholder")
+        }
+    }
+    
+    private func updateReviewHightlightsTableViewHeightConstraints() {
+        
+        if self.viewModel.reviewHighlightsHeaderType[0].isExpand {
+            
+            if let positive = self.viewModel.getBvReviewHighlightsData()?.positives {
+                self.reviewHighlightsTableHeightConstraints.constant = CGFloat((100 + (positive.count * 40)))
+            }
+            
+        }
+            
+        else if self.viewModel.reviewHighlightsHeaderType[1].isExpand {
+            if let negative = self.viewModel.getBvReviewHighlightsData()?.negatives {
+                self.reviewHighlightsTableHeightConstraints.constant = CGFloat((100 + (negative.count * 40)))
+            }
+        }
+        else {
+            self.reviewHighlightsTableHeightConstraints.constant = 100
+        }
+        
     }
     
 }
@@ -50,21 +101,54 @@ class ReviewsViewController: UIViewController, ViewControllerType {
 extension ReviewsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        1//return self.viewModel.numberOfSections
+        
+        if tableView == self.reviewTableView {
+            return self.viewModel.numberOfSectionsForReviews
+        }
+        else {
+            return self.viewModel.numberOfSectionsForReviewHighlights
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2//return self.viewModel.numberOfRows
+        
+        if tableView == self.reviewTableView {
+            return self.viewModel.numberOfRowsForReview
+        }
+        else {
+            return self.viewModel.numberOfRowsForReviewHighlights(section)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if tableView == self.reviewHighlightsTableView {
+            
+            return self.viewModel?.heightForRow(indexPath) ?? UITableView.automaticDimension
+        }
+        else {
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView == self.reviewHighlightsTableView {
             
-            if indexPath.section == 0 {
+            if indexPath.row == 0 {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER) as! ReviewHighlightsHeaderTableViewCell
-                cell.lbl_Title.text = "HeaderTableViewCell"
+                
+                cell.selectionStyle = .none
+                
+                if let title = self.viewModel.reviewHighlightsTitleForIndexPath(indexPath) {
+                    cell.lbl_Title.text = title
+                }
+                
+                if let bvReviewHighlight = self.viewModel.getBvReviewHighlightsData() {
+                    cell.setReviewHighlightsData(bvReviewHights: bvReviewHighlight, section: indexPath.section, title: self.viewModel.reviewHighlightsTitleForIndexPath(indexPath))
+                }
+                
                 return cell
                 
             }
@@ -72,7 +156,12 @@ extension ReviewsViewController: UITableViewDataSource {
             else {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_CELL_IDENTIFIER) as! ReviewHighLightsTableViewCell
-                cell.lbl_Title.text = "TableViewCell"
+                
+                cell.selectionStyle = .none
+                
+                if let bvReviewHighlight = self.viewModel.initReviewHighlightsDataForIndexPath(indexPath) {
+                    cell.setReviewHighlightsData(bvReviewHight: bvReviewHighlight)
+                }
                 return cell
                 
             }
@@ -80,6 +169,13 @@ extension ReviewsViewController: UITableViewDataSource {
         else {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_CELL_IDENTIFIER) as! ReviewTableViewCell
+            
+            cell.selectionStyle = .none
+            
+            if let review = self.viewModel.initReviewDataForIndexPath(indexPath) {
+                
+                cell.setReview(review: review)
+            }
             
             return cell
         }
@@ -91,10 +187,21 @@ extension ReviewsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if tableView == self.reviewHighlightsTableView && indexPath.row == 0 {
+            
+            self.viewModel.didSelectRowAt(indexPath)
+            
+            self.updateReviewHightlightsTableViewHeightConstraints()
+            self.reviewHighlightsTableView.reloadData()
+        }
     }
 }
 
 extension ReviewsViewController: ReviewsViewControllerDelegate {
+    
+    func updateProductDetails(name: String, imageURL: URL) {
+        
+    }
     
     func reloadData() {
         self.reviewTableView.reloadData()
