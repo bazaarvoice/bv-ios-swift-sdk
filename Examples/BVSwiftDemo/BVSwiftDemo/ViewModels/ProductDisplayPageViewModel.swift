@@ -280,7 +280,7 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         
         switch productDisplayPageRow {
             
-        case .reviews: break
+        case .reviews: self.coordinator?.navigateTo(AppCoordinator.AppNavigation.review(productId: self.productId, product: self.product!))
             
         case .questions: self.coordinator?.navigateTo(AppCoordinator.AppNavigation.questions(productId: self.productId, product: self.product!))
             

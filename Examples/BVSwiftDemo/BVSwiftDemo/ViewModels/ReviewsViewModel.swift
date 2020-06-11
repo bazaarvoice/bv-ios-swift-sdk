@@ -7,24 +7,49 @@
 //
 
 import UIKit
+import BVSwift
 
-class ReviewsViewModel: UIViewController {
+struct ReviewHighlightsHeaderModel {
+    var title: String = ""
+    var isExpand: Bool = false
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+protocol ReviewsViewModelDelegate: class {
+    
+    var numberOfSections: Int { get }
+    
+    var numberOfRows: Int { get }
+    
+    func titleForIndexPath(_ indexPath: IndexPath) -> BVReview?
+    
+    func initReviewHighlightsHeaderArray() -> [ReviewHighlightsHeaderModel]
+}
 
-        // Do any additional setup after loading the view.
+class ReviewsViewModel: ViewModelType {
+    
+    weak var viewController: ReviewsViewControllerDelegate?
+    
+    weak var coordinator: Coordinator?
+}
+
+extension ReviewsViewModel: ReviewsViewModelDelegate {
+    
+    var numberOfSections: Int {
+        return 1
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    var numberOfRows: Int {
+        return 22
     }
-    */
-
+    
+    func titleForIndexPath(_ indexPath: IndexPath) -> BVReview? {
+        return nil
+    }
+    
+    func initReviewHighlightsHeaderArray() -> [ReviewHighlightsHeaderModel] {
+        
+        return [ReviewHighlightsHeaderModel(title: "Pros Mentioned", isExpand: false), ReviewHighlightsHeaderModel(title: "Cons mentioned", isExpand: false)]
+    }
+    
+    
 }
