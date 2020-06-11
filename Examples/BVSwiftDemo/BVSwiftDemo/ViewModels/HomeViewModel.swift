@@ -82,7 +82,7 @@ extension HomeViewModel: HomeViewModelDelegate {
                         return
                     }
                     
-                    self?.bVRecommendationsProduct = result.first?.products
+                    strongSelf.bVRecommendationsProduct = result.first?.products
                     
                     delegate.reloadCollectionView()
                 }

@@ -99,9 +99,18 @@ class AppCoordinator: Coordinator {
     private func showReviewScreen(productId: String, product: BVProduct) {
         
         //1. Create View Controller
-        let reviewViewController = ReviewsViewController.instantiate()
+        let reviewsViewController = ReviewsViewController.instantiate()
+        reviewsViewController.navigationItem.title = "Reviews"
+        
+        //2. Create View Model
+        let reviewsViewModel = ReviewsViewModel(productId: productId, product: product)
+        reviewsViewModel.coordinator = self
         
         
-        self.navigationController.pushViewController(reviewViewController, animated: true)
+        //3 Assign and Navigate
+        reviewsViewModel.viewController = reviewsViewController
+        
+        reviewsViewController.viewModel = reviewsViewModel
+        self.navigationController.pushViewController(reviewsViewController, animated: true)
     }
 }

@@ -33,10 +33,10 @@ class ProductCollectionViewCell: UICollectionViewCell {
                 guard let strongSelf = self else { return }
                 
                 guard let _ = error else { return }
-                
                 strongSelf.imageView_Product.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
                     .image(with: CGSize(width: strongSelf.imageView_Product.frame.size.width,
                                         height: strongSelf.imageView_Product.frame.size.height))
+                strongSelf.imageView_Product.image?.withTintColor(UIColor.bazaarvoiceNavy)
             }
         }
         
