@@ -1064,18 +1064,18 @@
                                                     <outlet property="view_Separator" destination="vsD-V3-Z7A" id="Hod-8e-f7L"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReviewHighLightsTableViewCell" rowHeight="30" id="slZ-R9-GDM" customClass="ReviewHighLightsTableViewCell" customModule="BVSwiftDemo" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="78" width="414" height="30"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReviewHighLightsTableViewCell" rowHeight="40" id="slZ-R9-GDM" customClass="ReviewHighLightsTableViewCell" customModule="BVSwiftDemo" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="78" width="414" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="slZ-R9-GDM" id="3vm-Bo-LtD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-03-WuY">
-                                                            <rect key="frame" x="20" y="11" width="374" height="8"/>
+                                                            <rect key="frame" x="20" y="11" width="374" height="18"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDn-Xb-D5n">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="8"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1085,7 +1085,6 @@
                                                             <constraints>
                                                                 <constraint firstItem="jDn-Xb-D5n" firstAttribute="top" secondItem="KDW-03-WuY" secondAttribute="top" id="4aj-Uu-21E"/>
                                                                 <constraint firstItem="jDn-Xb-D5n" firstAttribute="leading" secondItem="KDW-03-WuY" secondAttribute="leading" id="HHk-wK-BZX"/>
-                                                                <constraint firstAttribute="height" constant="30" id="bL9-CX-amk"/>
                                                                 <constraint firstAttribute="bottom" secondItem="jDn-Xb-D5n" secondAttribute="bottom" id="fnR-s2-yzz"/>
                                                                 <constraint firstAttribute="trailing" secondItem="jDn-Xb-D5n" secondAttribute="trailing" constant="10" id="gH6-xq-4Wg"/>
                                                             </constraints>

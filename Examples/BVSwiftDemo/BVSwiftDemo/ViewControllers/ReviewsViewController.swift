@@ -12,9 +12,6 @@ import FontAwesomeKit
 
 protocol ReviewsViewControllerDelegate: class {
     
-    func updateProductDetails(name: String,
-                              imageURL: URL)
-    
     func reloadData()
     
     func showLoadingIndicator()
@@ -31,7 +28,6 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var productDetailsHeaderView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var reviewTableView: UITableView!
     @IBOutlet weak var reviewHighlightsTableView: UITableView!
@@ -41,7 +37,6 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     private static let REVIEW_CELL_IDENTIFIER: String = "ReviewTableViewCell"
     private static let REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER: String = "ReviewHighlightsHeaderTableViewCell"
     private static let REVIEW_HIGHLIGHTS_CELL_IDENTIFIER: String = "ReviewHighLightsTableViewCell"
-    // private var reviewHighlightsHeaderModelArray: [ReviewHighlightsHeaderModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +45,7 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         
         self.viewModel.fetchReviews()
         
-        //  self.updateProductDetails()
+        self.updateProductDetails()
     }
     
     func updateProductDetails() {
@@ -74,6 +69,7 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         }
     }
     
+    //Need to
     private func updateReviewHightlightsTableViewHeightConstraints() {
         
         if self.viewModel.reviewHighlightsHeaderType[0].isExpand {
@@ -120,10 +116,11 @@ extension ReviewsViewController: UITableViewDataSource {
         }
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         if tableView == self.reviewHighlightsTableView {
-            
+
             return self.viewModel?.heightForRow(indexPath) ?? UITableView.automaticDimension
         }
         else {
@@ -198,11 +195,7 @@ extension ReviewsViewController: UITableViewDelegate {
 }
 
 extension ReviewsViewController: ReviewsViewControllerDelegate {
-    
-    func updateProductDetails(name: String, imageURL: URL) {
-        
-    }
-    
+
     func reloadData() {
         self.reviewTableView.reloadData()
         self.reviewHighlightsTableView.reloadData()

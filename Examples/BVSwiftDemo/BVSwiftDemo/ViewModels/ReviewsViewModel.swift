@@ -127,7 +127,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     var productImageURL: URL? {
-        return self.productImageURL
+        return self.product?.imageUrl?.value
     }
     
     func initReviewHighlightsDataForIndexPath(_ indexPath: IndexPath) -> BVReviewHighlight? {
@@ -219,19 +219,13 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
                 return
             }
             
-            //            // update UI
-            if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
-                delegate.updateProductDetails(name: name, imageURL: imageURL)
-            }
-            
             strongSelf.viewController?.reloadData()
-            
             
         }
         
     }
     
-    
+    //Need to
     func didSelectRowAt(_ indexPath: IndexPath) {
         
         for i in 0..<self.headerType.count {
