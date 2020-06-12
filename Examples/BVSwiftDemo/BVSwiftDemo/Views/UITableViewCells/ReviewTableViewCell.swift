@@ -94,15 +94,8 @@ class ReviewTableViewCell: UITableViewCell {
         self.upVoteCountLabel.text = "\(review.totalPositiveFeedbackCount ?? 0)"
         self.downVoteCountLabel.text = "\(review.totalNegativeFeedbackCount ?? 0)"
         
-        //Need to
         if let submissionTime = review.submissionTime, let nickname = review.userNickname {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            
-            let myString = formatter.string(from: submissionTime)
-            
-            formatter.dateFormat = "dd-MMM-yyyy"
-            self.lastModificationTimeLabel.text = "\(myString) by " + nickname
+            self.lastModificationTimeLabel.text = "\(dateTimeAgo(submissionTime)) by " + nickname
         }
     }
 }
