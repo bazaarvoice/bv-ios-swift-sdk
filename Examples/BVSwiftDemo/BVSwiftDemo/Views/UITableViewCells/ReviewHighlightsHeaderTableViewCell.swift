@@ -29,17 +29,9 @@ class ReviewHighlightsHeaderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setReviewHighlightsData(bvReviewHights: BVReviewHighlights, section: Int, title: String?) {
-        
-        self.lbl_Count.text = title
-        
-        if section == 0 {
-            self.lbl_Count.text = "\(bvReviewHights.positives?.count ?? 0)"
-        }
-        else {
-            self.lbl_Count.text = "\(bvReviewHights.negatives?.count ?? 0)"
-        }
-        
+    func setReviewHighlightsData(title: String, count: Int) {
+        self.lbl_Title.text = title
+        self.lbl_Count.text = "\(count)"
     }
 
 }
