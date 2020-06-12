@@ -88,13 +88,13 @@ class ReviewTableViewCell: UITableViewCell {
         self.reviewText.text = review.reviewText
         self.reviewTitle.text = review.title
         self.reviewAuthorLocation.text = review.userLocation
-        self.reviewAuthorLocation.text = review.userNickname
         self.totalCommentsLabel.text = "\(review.comments?.count ?? 0)"
         self.reviewStars.value = CGFloat(review.rating ?? 0)
         self.totalCommentsLabel.text = "\(review.totalCommentCount ?? 0)"
         self.upVoteCountLabel.text = "\(review.totalPositiveFeedbackCount ?? 0)"
         self.downVoteCountLabel.text = "\(review.totalNegativeFeedbackCount ?? 0)"
         
+        //Need to
         if let submissionTime = review.submissionTime, let nickname = review.userNickname {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
