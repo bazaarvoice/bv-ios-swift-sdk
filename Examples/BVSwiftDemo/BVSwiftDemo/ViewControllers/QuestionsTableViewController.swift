@@ -119,6 +119,10 @@ extension QuestionsTableViewController: UITableViewDataSource {
             cell.setQuestionDetails(question: question)
         }
         
+        cell.onReadAnswersTapped = { question in
+            self.viewModel.readAnswersTapped(question: question)
+        }
+        
         return cell
     }
     
