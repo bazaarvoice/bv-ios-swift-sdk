@@ -69,28 +69,15 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         }
     }
     
-    //Need to
-    private func updateReviewHightlightsTableViewHeightConstraints() {
+    private func updateReviewHightlightsTableViewHeightConstraints(indexPath: IndexPath) {
         
-        if self.viewModel.reviewHighlightsHeaderType[0].isExpand {
-            
-            if let positive = self.viewModel.getBvReviewHighlightsData()?.positives {
-                self.reviewHighlightsTableHeightConstraints.constant = CGFloat((100 + (positive.count * 40)))
-            }
-            
-        }
-            
-        else if self.viewModel.reviewHighlightsHeaderType[1].isExpand {
-            if let negative = self.viewModel.getBvReviewHighlightsData()?.negatives {
-                self.reviewHighlightsTableHeightConstraints.constant = CGFloat((100 + (negative.count * 40)))
-            }
+        if self.viewModel.isReviewHighlightsExpanded {
+            self.reviewHighlightsTableHeightConstraints.constant = CGFloat((100 + (self.viewModel.reviewHighlightsCountForIndexPath(indexPath) * 40)))
         }
         else {
             self.reviewHighlightsTableHeightConstraints.constant = 100
         }
-        
     }
-    
 }
 
 // MARK:- UITableViewDataSource methods
@@ -116,18 +103,6 @@ extension ReviewsViewController: UITableViewDataSource {
         }
     }
     
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        if tableView == self.reviewHighlightsTableView {
-
-            return self.viewModel?.heightForRow(indexPath) ?? UITableView.automaticDimension
-        }
-        else {
-            return UITableView.automaticDimension
-        }
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView == self.reviewHighlightsTableView {
@@ -137,28 +112,18 @@ extension ReviewsViewController: UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER) as! ReviewHighlightsHeaderTableViewCell
                 
                 cell.selectionStyle = .none
-                
-                if let title = self.viewModel.reviewHighlightsTitleForIndexPath(indexPath) {
-                    cell.lbl_Title.text = title
-                }
-                
-                if let bvReviewHighlight = self.viewModel.getBvReviewHighlightsData() {
-                    cell.setReviewHighlightsData(bvReviewHights: bvReviewHighlight, section: indexPath.section, title: self.viewModel.reviewHighlightsTitleForIndexPath(indexPath))
-                }
+                cell.setReviewHighlightsData(title: self.viewModel.reviewHighlightsHeaderTitleForIndexPath(indexPath),
+                                             count: self.viewModel.reviewHighlightsCountForIndexPath(indexPath))
                 
                 return cell
                 
             }
-                
             else {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_CELL_IDENTIFIER) as! ReviewHighLightsTableViewCell
                 
                 cell.selectionStyle = .none
-                
-                if let bvReviewHighlight = self.viewModel.initReviewHighlightsDataForIndexPath(indexPath) {
-                    cell.setReviewHighlightsData(bvReviewHight: bvReviewHighlight)
-                }
+                cell.setReviewHighlightsTitle(title: self.viewModel.reviewHighlightsTitleForIndexPath(indexPath))
                 return cell
                 
             }
@@ -169,7 +134,7 @@ extension ReviewsViewController: UITableViewDataSource {
             
             cell.selectionStyle = .none
             
-            if let review = self.viewModel.initReviewDataForIndexPath(indexPath) {
+            if let review = self.viewModel.reviewForIndexPath(indexPath) {
                 
                 cell.setReview(review: review)
             }
@@ -188,7 +153,7 @@ extension ReviewsViewController: UITableViewDelegate {
             
             self.viewModel.didSelectRowAt(indexPath)
             
-            self.updateReviewHightlightsTableViewHeightConstraints()
+            self.updateReviewHightlightsTableViewHeightConstraints(indexPath: indexPath)
             self.reviewHighlightsTableView.reloadData()
         }
     }

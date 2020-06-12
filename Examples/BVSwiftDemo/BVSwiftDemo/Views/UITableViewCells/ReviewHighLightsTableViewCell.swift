@@ -25,8 +25,8 @@ class ReviewHighLightsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setReviewHighlightsData(bvReviewHight: BVReviewHighlight) {
-        self.lbl_Title.text = bvReviewHight.title?.capitalized
+    func setReviewHighlightsTitle(title: String) {
+        self.lbl_Title.text = title.capitalized
     }
 
 }
