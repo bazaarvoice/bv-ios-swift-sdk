@@ -9,15 +9,15 @@
 import UIKit
 import BVSwift
 
-struct ReviewHighlightsHeaderModel {
-    var title: String = ""
+private struct ReviewHighlightsSection {
+    let type: ReviewHighlightsType
     var isExpand: Bool = false
 }
 
-enum ReviewHighlightsType {
+private enum ReviewHighlightsType: Int, CaseIterable {
     
-    case pros(isExpand: Bool = false)
-    case cons(isExpand: Bool = false)
+    case pros
+    case cons
     
     var title: String {
         switch self {
@@ -27,46 +27,30 @@ enum ReviewHighlightsType {
             return "Cons mentioned"
         }
     }
-    
-    func typeForIntValue(_ value: Int) -> ReviewHighlightsType? {
-        
-        if value == 0 {
-            return .pros(isExpand: false)
-        }
-            
-        else if value == 1 {
-            return .cons(isExpand: false)
-        }
-        else {
-            return nil
-        }
-    }
 }
 
 protocol ReviewsViewModelDelegate: class {
     
     func fetchReviews()
-    
-    var reviewHighlightsHeaderType: [ReviewHighlightsHeaderModel] {get}
-    
+        
+    var isReviewHighlightsExpanded: Bool { get }
+        
     var numberOfSectionsForReviews: Int { get }
     
     var numberOfRowsForReview: Int { get }
-    
-    func heightForRow(_ indexPath: IndexPath) -> CGFloat
-    
+        
     func numberOfRowsForReviewHighlights(_ section: Int) -> Int
     
     var numberOfSectionsForReviewHighlights: Int { get }
     
-    func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String? //ReviewHighlightsType?
+    func reviewHighlightsHeaderTitleForIndexPath(_ indexPath: IndexPath) -> String
     
-    func initReviewHighlightsHeaderArray() -> [ReviewHighlightsHeaderModel]
+    func reviewHighlightsCountForIndexPath(_ indexPath: IndexPath) -> Int
     
-    func initReviewDataForIndexPath(_ indexPath: IndexPath) -> BVReview?
-    
-    func initReviewHighlightsDataForIndexPath(_ indexPath: IndexPath) -> BVReviewHighlight?
-    
+    func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String
+        
+    func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview?
+        
     func didSelectRowAt(_ indexPath: IndexPath)
     
     func getBvReviewHighlightsData() -> BVReviewHighlights?
@@ -80,8 +64,6 @@ protocol ReviewsViewModelDelegate: class {
 class ReviewsViewModel: ViewModelType {
     
     weak var viewController: ReviewsViewControllerDelegate?
-    
-    private var headerType: [ReviewHighlightsHeaderModel] = [ReviewHighlightsHeaderModel(title: "Pros Mentioned", isExpand: false), ReviewHighlightsHeaderModel(title: "Cons mentioned", isExpand: false)]
     
     weak var coordinator: Coordinator?
     
@@ -97,6 +79,9 @@ class ReviewsViewModel: ViewModelType {
     
     private var error: Error?
     
+    private var reviewHighlightsSections: [ReviewHighlightsSection] = [ReviewHighlightsSection(type: .pros),
+                                                                      ReviewHighlightsSection(type: .cons)]
+    
     init(productId: String, product: BVProduct) {
         self.productId = productId
         self.product = product
@@ -104,19 +89,6 @@ class ReviewsViewModel: ViewModelType {
 }
 
 extension ReviewsViewModel: ReviewsViewModelDelegate {
-    
-    var reviewHighlightsHeaderType: [ReviewHighlightsHeaderModel] {
-        return self.headerType
-    }
-    
-    func heightForRow(_ indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 50
-        }
-        else {
-            return 40
-        }
-    }
     
     func getBvReviewHighlightsData() -> BVReviewHighlights? {
         return self.bvReviewHighlights
@@ -128,15 +100,6 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     
     var productImageURL: URL? {
         return self.product?.imageUrl?.value
-    }
-    
-    func initReviewHighlightsDataForIndexPath(_ indexPath: IndexPath) -> BVReviewHighlight? {
-        if indexPath.section == 0 {
-            return self.bvReviewHighlights?.positives?[indexPath.row - 1]
-        }
-        
-        return self.bvReviewHighlights?.negatives?[indexPath.row - 1]
-        
     }
     
     func fectchReviewData() {
@@ -225,25 +188,22 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
     }
     
-    //Need to
     func didSelectRowAt(_ indexPath: IndexPath) {
         
-        for i in 0..<self.headerType.count {
+        for (index, _) in self.reviewHighlightsSections.enumerated() {
             
-            if i == indexPath.section {
-                self.headerType[indexPath.section].isExpand = !self.headerType[indexPath.section].isExpand
+            if index == indexPath.section {
+                self.reviewHighlightsSections[index].isExpand = !self.reviewHighlightsSections[index].isExpand
             }
             else {
-                self.headerType[i].isExpand = false
+                self.reviewHighlightsSections[index].isExpand = false
             }
         }
-        
     }
     
     
-    func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String? {//ReviewHighlightsType? {
-        
-        return self.headerType[indexPath.section].title
+    func reviewHighlightsHeaderTitleForIndexPath(_ indexPath: IndexPath) -> String {
+        return self.reviewHighlightsSections[indexPath.section].type.title
     }
     
     
@@ -256,32 +216,61 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     var numberOfSectionsForReviewHighlights: Int {
-        return 2
+        return self.reviewHighlightsSections.count
     }
     
     func numberOfRowsForReviewHighlights(_ section: Int) -> Int {
         
-        if let reviewHightData = self.bvReviewHighlights {
-            if section == 0 {
-                return self.headerType[section].isExpand ? (reviewHightData.positives?.count ?? 0) + 1 : 1
-                
-            }
-            else {
-                return self.headerType[section].isExpand ? (reviewHightData.negatives?.count ?? 0) + 1 : 1
-            }
-        }
+        let reviewHighlightSection = self.reviewHighlightsSections[section]
         
-        return 0
+        switch reviewHighlightSection.type {
+            
+        case .pros:
+            return reviewHighlightSection.isExpand ? (self.bvReviewHighlights?.positives?.count ?? 0) + 1 : 1
+            
+        case .cons:
+             return reviewHighlightSection.isExpand ? (self.bvReviewHighlights?.negatives?.count ?? 0) + 1 : 1
+            
+        }
     }
     
-    func initReviewDataForIndexPath(_ indexPath: IndexPath) -> BVReview? {
+    func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview? {
         return self.bvReviews?[indexPath.row]
     }
     
-    func initReviewHighlightsHeaderArray() -> [ReviewHighlightsHeaderModel] {
-        
-        return [ReviewHighlightsHeaderModel(title: "Pros Mentioned", isExpand: false), ReviewHighlightsHeaderModel(title: "Cons mentioned", isExpand: false)]
+    var isReviewHighlightsExpanded: Bool {
+        return (self.reviewHighlightsSections.first(where: { $0.type == .pros })?.isExpand ?? false ||
+                self.reviewHighlightsSections.first(where: { $0.type == .cons })?.isExpand ?? false)
+            
     }
     
+    func reviewHighlightsCountForIndexPath(_ indexPath: IndexPath) -> Int {
+        
+        let reviewHighlightSection = self.reviewHighlightsSections[indexPath.section]
+        
+        switch reviewHighlightSection.type {
+            
+        case .pros:
+            return self.bvReviewHighlights?.positives?.count ?? 0
+            
+        case .cons:
+             return self.bvReviewHighlights?.negatives?.count ?? 0
+            
+        }
+    }
     
+    func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String {
+        
+        let reviewHighlightSection = self.reviewHighlightsSections[indexPath.section]
+        
+        switch reviewHighlightSection.type {
+            
+        case .pros:
+            return self.bvReviewHighlights?.positives?[indexPath.row - 1].title ?? ""
+            
+        case .cons:
+             return self.bvReviewHighlights?.negatives?[indexPath.row - 1].title ?? ""
+            
+        }
+    }
 }

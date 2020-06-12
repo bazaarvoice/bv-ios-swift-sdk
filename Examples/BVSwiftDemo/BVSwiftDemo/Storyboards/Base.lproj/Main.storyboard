@@ -1387,29 +1387,29 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-03-WuY">
-                                                            <rect key="frame" x="20" y="11" width="374" height="18"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDn-Xb-D5n">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="18"/>
+                                                                    <rect key="frame" x="15" y="0.0" width="384" height="40"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
-                                                                <constraint firstItem="jDn-Xb-D5n" firstAttribute="top" secondItem="KDW-03-WuY" secondAttribute="top" id="4aj-Uu-21E"/>
-                                                                <constraint firstItem="jDn-Xb-D5n" firstAttribute="leading" secondItem="KDW-03-WuY" secondAttribute="leading" id="HHk-wK-BZX"/>
-                                                                <constraint firstAttribute="bottom" secondItem="jDn-Xb-D5n" secondAttribute="bottom" id="fnR-s2-yzz"/>
-                                                                <constraint firstAttribute="trailing" secondItem="jDn-Xb-D5n" secondAttribute="trailing" constant="10" id="gH6-xq-4Wg"/>
+                                                                <constraint firstItem="jDn-Xb-D5n" firstAttribute="top" secondItem="KDW-03-WuY" secondAttribute="top" id="Icr-hr-a2d"/>
+                                                                <constraint firstAttribute="trailing" secondItem="jDn-Xb-D5n" secondAttribute="trailing" constant="15" id="Neu-RV-4Mp"/>
+                                                                <constraint firstAttribute="height" constant="40" id="iOY-mU-P6S"/>
+                                                                <constraint firstAttribute="bottom" secondItem="jDn-Xb-D5n" secondAttribute="bottom" id="l7p-UI-209"/>
+                                                                <constraint firstItem="jDn-Xb-D5n" firstAttribute="leading" secondItem="KDW-03-WuY" secondAttribute="leading" constant="15" id="mCv-Br-xZo"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="KDW-03-WuY" firstAttribute="leading" secondItem="3vm-Bo-LtD" secondAttribute="leadingMargin" id="06W-7u-rrc"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="KDW-03-WuY" secondAttribute="trailing" id="18k-iI-nG2"/>
-                                                        <constraint firstItem="KDW-03-WuY" firstAttribute="top" secondItem="3vm-Bo-LtD" secondAttribute="topMargin" id="LPD-Tt-8v1"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="KDW-03-WuY" secondAttribute="bottom" id="PvA-vo-1yI"/>
+                                                        <constraint firstItem="KDW-03-WuY" firstAttribute="leading" secondItem="3vm-Bo-LtD" secondAttribute="leading" id="Phv-Fm-GKr"/>
+                                                        <constraint firstItem="KDW-03-WuY" firstAttribute="top" secondItem="3vm-Bo-LtD" secondAttribute="top" id="d1b-bl-Jn1"/>
+                                                        <constraint firstAttribute="bottom" secondItem="KDW-03-WuY" secondAttribute="bottom" id="gfp-Gl-ooU"/>
+                                                        <constraint firstAttribute="trailing" secondItem="KDW-03-WuY" secondAttribute="trailing" id="xOS-kF-aus"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
