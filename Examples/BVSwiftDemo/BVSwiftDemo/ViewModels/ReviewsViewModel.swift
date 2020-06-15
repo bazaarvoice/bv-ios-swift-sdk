@@ -112,7 +112,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
         self.dispatchGroup.enter()
         
-        let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 10)
+        let reviewQuery = BVReviewQuery(productId: self.productId, limit: 10, offset: 10)
             .configure(ConfigurationManager.sharedInstance.conversationsConfig)
             .handler { [weak self] response in
                 
@@ -138,7 +138,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
         self.dispatchGroup.enter()
         
-        let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: "1800petmeds", productId: "prod1011")
+        let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: ConfigurationManager.sharedInstance.reviewHighlightsClientId, productId: ConfigurationManager.sharedInstance.reviewHighlightsProductId)
             .configure(ConfigurationManager.sharedInstance.reviewHighlightsConfig)
             .handler { [weak self] response in
                 
