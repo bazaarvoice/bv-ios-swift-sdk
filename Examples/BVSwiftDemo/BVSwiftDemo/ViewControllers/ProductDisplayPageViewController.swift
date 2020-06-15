@@ -158,6 +158,7 @@ extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDele
             strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
                 .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
                                     height: strongSelf.productImageView.frame.size.height + 20))
+                .withTintColor(UIColor.bazaarvoiceNavy)
         }
     }
     
