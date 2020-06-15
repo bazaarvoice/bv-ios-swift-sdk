@@ -101,7 +101,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     var productName: String? {
-        return self.productId
+        return self.product.name
     }
     
     var productImageURL: URL? {
