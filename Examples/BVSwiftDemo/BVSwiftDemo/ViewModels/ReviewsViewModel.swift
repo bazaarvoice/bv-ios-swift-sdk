@@ -9,22 +9,28 @@
 import UIKit
 import BVSwift
 
-private struct ReviewHighlightsSection {
-    let type: ReviewHighlightsType
-    var isExpand: Bool = false
-}
-
-private enum ReviewHighlightsType: Int, CaseIterable {
+private enum ReviewHighlightsSection: Equatable {
     
-    case pros
-    case cons
+    case pros(isExpand: Bool)
+    case cons(isExpand: Bool)
     
     var title: String {
         switch self {
-        case .pros:
+        case .pros(_):
             return "Pros Mentioned"
-        case .cons:
+        case .cons(_):
             return "Cons mentioned"
+        }
+    }
+    
+    static func == (lhs: ReviewHighlightsSection, rhs: ReviewHighlightsSection) -> Bool {
+        switch (lhs, rhs) {
+            
+        case (.pros(_), .pros(_)): return true
+            
+        case (.cons(_), .cons(_)): return true
+            
+        default: return false
         }
     }
 }
@@ -71,16 +77,16 @@ class ReviewsViewModel: ViewModelType {
     
     private var bvReviewHighlights: BVReviewHighlights?
     
-    private var productId: String = ""
+    private let productId: String
     
-    private var product: BVProduct? = nil
+    private let product: BVProduct
     
     private let dispatchGroup = DispatchGroup()
     
     private var error: Error?
     
-    private var reviewHighlightsSections: [ReviewHighlightsSection] = [ReviewHighlightsSection(type: .pros),
-                                                                      ReviewHighlightsSection(type: .cons)]
+    private var reviewHighlightsSections: [ReviewHighlightsSection] = [.pros(isExpand: false),
+                                                                       .cons(isExpand: false)]
     
     init(productId: String, product: BVProduct) {
         self.productId = productId
@@ -99,10 +105,10 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     var productImageURL: URL? {
-        return self.product?.imageUrl?.value
+        return self.product.imageUrl?.value
     }
     
-    func fectchReviewData() {
+    private func fectchReviewData() {
         
         self.dispatchGroup.enter()
         
@@ -128,7 +134,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         reviewQuery.async()
     }
     
-    func fetchReviewHighligtsData() {
+    private func fetchReviewHighlightsData() {
         
         self.dispatchGroup.enter()
         
@@ -165,7 +171,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
         self .fectchReviewData()
         
-        self.fetchReviewHighligtsData()
+        self.fetchReviewHighlightsData()
         
         self.dispatchGroup.notify(queue: .main) { [weak self] in
             
@@ -188,22 +194,31 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
     }
     
+    private func isHeaderRow(rowIndex: Int, indexPath: IndexPath) -> Bool {
+        return rowIndex == indexPath.section
+    }
+    
     func didSelectRowAt(_ indexPath: IndexPath) {
         
         for (index, _) in self.reviewHighlightsSections.enumerated() {
             
-            if index == indexPath.section {
-                self.reviewHighlightsSections[index].isExpand = !self.reviewHighlightsSections[index].isExpand
-            }
-            else {
-                self.reviewHighlightsSections[index].isExpand = false
+            let reviewHighlightsSection = self.reviewHighlightsSections[index]
+            
+            switch reviewHighlightsSection {
+                
+            case let .pros(isExpand):
+                self.reviewHighlightsSections[index] = isHeaderRow(rowIndex: index, indexPath: indexPath) ? .pros(isExpand: !isExpand) : .pros(isExpand: false)
+                
+            case let .cons(isExpand):
+                self.reviewHighlightsSections[index] = isHeaderRow(rowIndex: index, indexPath: indexPath) ? .cons(isExpand: !isExpand) : .cons(isExpand: false)
+                
             }
         }
     }
     
     
     func reviewHighlightsHeaderTitleForIndexPath(_ indexPath: IndexPath) -> String {
-        return self.reviewHighlightsSections[indexPath.section].type.title
+        return self.reviewHighlightsSections[indexPath.section].title
     }
     
     
@@ -223,13 +238,13 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
         let reviewHighlightSection = self.reviewHighlightsSections[section]
         
-        switch reviewHighlightSection.type {
+        switch reviewHighlightSection {
             
-        case .pros:
-            return reviewHighlightSection.isExpand ? (self.bvReviewHighlights?.positives?.count ?? 0) + 1 : 1
+        case let .pros(isExpand):
+            return isExpand ? (self.bvReviewHighlights?.positives?.count ?? 0) + 1 : 1
             
-        case .cons:
-             return reviewHighlightSection.isExpand ? (self.bvReviewHighlights?.negatives?.count ?? 0) + 1 : 1
+        case let .cons(isExpand):
+             return isExpand ? (self.bvReviewHighlights?.negatives?.count ?? 0) + 1 : 1
             
         }
     }
@@ -239,16 +254,25 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     var isReviewHighlightsExpanded: Bool {
-        return (self.reviewHighlightsSections.first(where: { $0.type == .pros })?.isExpand ?? false ||
-                self.reviewHighlightsSections.first(where: { $0.type == .cons })?.isExpand ?? false)
+
+        return self.reviewHighlightsSections.contains { (reviewHighlightsSection) -> Bool in
             
+            switch reviewHighlightsSection {
+            
+            case let .pros(isExpand) :
+                 return isExpand == true
+            
+            case let .cons(isExpand) :
+                return isExpand == true
+            }
+        }
     }
     
     func reviewHighlightsCountForIndexPath(_ indexPath: IndexPath) -> Int {
         
         let reviewHighlightSection = self.reviewHighlightsSections[indexPath.section]
         
-        switch reviewHighlightSection.type {
+        switch reviewHighlightSection {
             
         case .pros:
             return self.bvReviewHighlights?.positives?.count ?? 0
@@ -263,7 +287,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
         let reviewHighlightSection = self.reviewHighlightsSections[indexPath.section]
         
-        switch reviewHighlightSection.type {
+        switch reviewHighlightSection {
             
         case .pros:
             return self.bvReviewHighlights?.positives?[indexPath.row - 1].title ?? ""
