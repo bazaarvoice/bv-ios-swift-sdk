@@ -47,7 +47,7 @@ class AnswersViewModel: ViewModelType {
 
 extension  AnswersViewModel: AnswersViewModelDelegate {
     var productName: String? {
-        return self.product.productId
+        return self.product.name
     }
     
     var imageURL: URL? {
