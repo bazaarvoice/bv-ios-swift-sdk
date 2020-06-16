@@ -29,15 +29,15 @@ public struct BVRecommendationsProduct: BVAuxiliaryable {
   private enum CodingKeys: String, CodingKey {
     case averageRating = "avg_rating"
     case categoryIds = "category_ids"
-    case client = "client"
+    case client
     case imageURL = "image_url"
-    case interests = "interests"
+    case interests
     case numberOfReviews = "num_reviews"
     case productId = "product"
     case productName = "name"
     case productPageURL = "product_page_url"
-    case RS = "recommendationStats"
-    case sponsored = "sponsored"
+    case RS
+    case sponsored
   }
 }
 
