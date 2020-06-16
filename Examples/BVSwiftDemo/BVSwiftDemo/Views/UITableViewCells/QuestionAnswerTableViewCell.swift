@@ -39,7 +39,7 @@ class QuestionAnswerTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setQuestionDetails(question: BVQuestion) {
+    func setQuestionDetails(question: BVQuestion, isOnlyQuestion: Bool) {
         
         // question details
         self.questionTitle.text = question.questionSummary
@@ -56,51 +56,51 @@ class QuestionAnswerTableViewCell: UITableViewCell {
             self.questionMetaData.text = ""
         }
         
-        if let totalFeedbackCount = question.totalFeedbackCount,
-            let totalPositiveFeedbackCount = question.totalPositiveFeedbackCount,
-            totalFeedbackCount > 0 {
+        if !isOnlyQuestion {
             
-            let totalFeedbackCountString = "\(totalFeedbackCount)"
-            let totalPositiveFeedbackCountString = "\(totalPositiveFeedbackCount)"
+            if let totalFeedbackCount = question.totalFeedbackCount,
+                let totalPositiveFeedbackCount = question.totalPositiveFeedbackCount,
+                totalFeedbackCount > 0 {
+                
+                let totalFeedbackCountString = "\(totalFeedbackCount)"
+                let totalPositiveFeedbackCountString = "\(totalPositiveFeedbackCount)"
+                
+                let helpfulText = totalPositiveFeedbackCountString + " of " + totalFeedbackCountString +  " users found this question helpful"
+                
+                let attributedString = NSMutableAttributedString(string: helpfulText as String, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 12.0)])
+                
+                let boldFontAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12.0)]
+                let colorFontAttribute = [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+                
+                // Part of string to be bold
+                attributedString.addAttributes(boldFontAttribute, range: (helpfulText as NSString).range(of: totalFeedbackCountString))
+                attributedString.addAttributes(boldFontAttribute, range: (helpfulText as NSString).range(of: totalPositiveFeedbackCountString))
+                
+                // Make text black
+                attributedString.addAttributes(colorFontAttribute , range: (helpfulText as NSString).range(of: totalFeedbackCountString, options: .backwards))
+                attributedString.addAttributes(colorFontAttribute , range: (helpfulText as NSString).range(of: totalPositiveFeedbackCountString))
+                
+                usersFoundHelpfulLabel.attributedText = attributedString
+            }
+            else {
+                usersFoundHelpfulLabel.text = ""
+            }
             
-            let helpfulText = totalPositiveFeedbackCountString + " of " + totalFeedbackCountString +  " users found this question helpful"
             
-            let attributedString = NSMutableAttributedString(string: helpfulText as String, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 12.0)])
-            
-            let boldFontAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12.0)]
-            let colorFontAttribute = [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
-            
-            // Part of string to be bold
-            attributedString.addAttributes(boldFontAttribute, range: (helpfulText as NSString).range(of: totalFeedbackCountString))
-            attributedString.addAttributes(boldFontAttribute, range: (helpfulText as NSString).range(of: totalPositiveFeedbackCountString))
-            
-            // Make text black
-            attributedString.addAttributes(colorFontAttribute , range: (helpfulText as NSString).range(of: totalFeedbackCountString, options: .backwards))
-            attributedString.addAttributes(colorFontAttribute , range: (helpfulText as NSString).range(of: totalPositiveFeedbackCountString))
-            
-            usersFoundHelpfulLabel.attributedText = attributedString
+            // call to action
+            if let answers = question.answers, !answers.isEmpty {
+                let title = "Read \(answers.count) " + ((answers.count == 1) ? "answer" : "answers")
+                self.callToActionButton.setTitle(title, for: .normal)
+                self.callToActionButton.addTarget(self, action: #selector(QuestionAnswerTableViewCell.readAnswersTapped(_:)), for: .touchUpInside)
+                
+                self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.commentsIcon(withSize:))
+            }
+            else {
+                self.callToActionButton.setTitle("Be the first to answer!", for: .normal)
+                self.callToActionButton.addTarget(self, action: #selector(QuestionAnswerTableViewCell.submitAnswersTapped(_:)), for: .touchUpInside)
+                self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.plusIcon(withSize:))
+            }
         }
-        else {
-            usersFoundHelpfulLabel.text = ""
-        }
-        
-        
-        
-        
-        // call to action
-        if let answers = question.answers, !answers.isEmpty {
-            let title = "Read \(answers.count) " + ((answers.count == 1) ? "answer" : "answers")
-            self.callToActionButton.setTitle(title, for: .normal)
-            self.callToActionButton.addTarget(self, action: #selector(QuestionAnswerTableViewCell.readAnswersTapped(_:)), for: .touchUpInside)
-            
-            self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.commentsIcon(withSize:))
-        }
-        else {
-            self.callToActionButton.setTitle("Be the first to answer!", for: .normal)
-            self.callToActionButton.addTarget(self, action: #selector(QuestionAnswerTableViewCell.submitAnswersTapped(_:)), for: .touchUpInside)
-            self.callToActionLeftImageView.image = self.getIconImage(FAKFontAwesome.plusIcon(withSize:))
-        }
-        
         // store question
         self.question = question
     }

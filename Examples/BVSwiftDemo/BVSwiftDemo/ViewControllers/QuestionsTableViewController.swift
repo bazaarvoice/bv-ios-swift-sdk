@@ -117,7 +117,7 @@ extension QuestionsTableViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewController.CELL_IDENTIFIER) as? QuestionAnswerTableViewCell else { return UITableViewCell() }
         
         if let question = self.viewModel.questionForRowAtIndexPath(indexPath) {
-            cell.setQuestionDetails(question: question)
+            cell.setQuestionDetails(question: question, isOnlyQuestion: false)
         }
         
         cell.onReadAnswersTapped = { question in
