@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42566A4D247E709B008FC057 /* ConfigurationManager.swift */; };
+		42665BE12498A43A00586C9A /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42665BE02498A43A00586C9A /* AuthorViewController.swift */; };
+		42665BE32498A45900586C9A /* AuthorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42665BE22498A45900586C9A /* AuthorViewModel.swift */; };
 		42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */; };
 		42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E22473BB4E00008434 /* AppDelegate.swift */; };
 		42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E62473BB4E00008434 /* HomeViewController.swift */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 		42566A4D247E709B008FC057 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		42665BE02498A43A00586C9A /* AuthorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewController.swift; sourceTree = "<group>"; };
+		42665BE22498A45900586C9A /* AuthorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewModel.swift; sourceTree = "<group>"; };
 		42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewCell.swift; sourceTree = "<group>"; };
 		42BC40DF2473BB4E00008434 /* BVSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42BC40E22473BB4E00008434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */,
 				42FC2DE9248F9D3600947F4A /* ReviewsViewController.swift */,
 				9FA73AFC248F885C00746ACA /* AnswersTableViewController.swift */,
+				42665BE02498A43A00586C9A /* AuthorViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 				9FA2C527248632B300C0DD6C /* ProductDisplayPageViewModel.swift */,
 				42FC2DEB248F9D5400947F4A /* ReviewsViewModel.swift */,
 				9FA73AFE248F898A00746ACA /* AnswersViewModel.swift */,
+				42665BE22498A45900586C9A /* AuthorViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -387,10 +393,12 @@
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
 				42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
+				42665BE12498A43A00586C9A /* AuthorViewController.swift in Sources */,
 				42FC2DF2248FAB8800947F4A /* ReviewHighlightsHeaderTableViewCell.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
 				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
 				9FA7497E248A19E900BAA52E /* ProductDetailRecommendationsTableViewCell.swift in Sources */,
+				42665BE32498A45900586C9A /* AuthorViewModel.swift in Sources */,
 				9FA73B01248F9D4E00746ACA /* DateTimeAgo.swift in Sources */,
 				9FA2C5262486328A00C0DD6C /* ProductDisplayPageViewController.swift in Sources */,
 				9FA659852474F48600D9498F /* UIKit+Extensions.swift in Sources */,
