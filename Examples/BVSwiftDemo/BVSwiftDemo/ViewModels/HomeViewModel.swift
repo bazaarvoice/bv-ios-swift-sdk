@@ -38,6 +38,7 @@ extension HomeViewModel: HomeViewModelDelegate {
     }
     
     func productForItemAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct? {
+        
         guard let recommendationsProduct = self.bVRecommendationsProduct?[indexPath.row] else {
             return nil
         }
