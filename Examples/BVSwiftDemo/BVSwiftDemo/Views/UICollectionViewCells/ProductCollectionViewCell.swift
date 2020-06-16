@@ -21,7 +21,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label_ProductPrice: UILabel!
     
     func setRecommendationProductDetails(recommendationProduct: BVRecommendationsProduct) {
-        self.label_ProductName.text = recommendationProduct.productId?.capitalized
+        self.label_ProductName.text = recommendationProduct.productName?.capitalized
         self.view_StarRating.value = CGFloat(recommendationProduct.averageRating ?? 0)
         self.label_ProductPrice.text = ""
         self.imageView_Product.image = nil
