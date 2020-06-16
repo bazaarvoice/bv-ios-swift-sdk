@@ -31,6 +31,9 @@ class ConfigurationManager: NSObject {
     let reviewHighlightsProductId: String = "prod1011"
     let reviewHighlightsClientId: String = "1800petmeds"
     
+    //ForAuthor
+    let authorId: String = "data-gen-user-poaouvr127us1ijhpafkfacb9"
+    
     private override init() {
         
         if let currentConfigStr = Bundle.main.object(forInfoDictionaryKey: "ENV") as? String, let env = Environment.init(rawValue: currentConfigStr)  {
