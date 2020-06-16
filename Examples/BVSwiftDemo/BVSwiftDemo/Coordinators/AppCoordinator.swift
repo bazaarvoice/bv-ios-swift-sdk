@@ -21,6 +21,8 @@ class AppCoordinator: Coordinator {
         case review(productId: String, product: BVProduct)
         
         case answers(question: BVQuestion, product: BVProduct)
+        
+        case author
     }
     
     // MARK:- Initializers
@@ -29,13 +31,13 @@ class AppCoordinator: Coordinator {
     }
     
     override func start() {
-
+        
         super.start()
-
+        
         // 1. Create View Controller
         let homeViewController = HomeViewController.instantiate()
         homeViewController.navigationItem.titleView = HomeViewController.createTitleLabel()
-
+        
         // 2. Create View Model
         let viewModel = HomeViewModel()
         viewModel.coordinator = self
@@ -60,9 +62,13 @@ class AppCoordinator: Coordinator {
             
         case .answers(let question, let product):
             self.showAnswersScreen(question: question, product: product)
-
+            
         case .review(let productId, let product):
             self.showReviewScreen(productId: productId, product: product)
+            
+        case .author:
+            self.showAuthorScreen()
+            
         }
     }
     
@@ -134,5 +140,21 @@ class AppCoordinator: Coordinator {
         // 3. Assign and navigate
         answersViewController.viewModel = answersViewModel
         self.navigationController.pushViewController(answersViewController, animated: true)
+    }
+    
+    private func showAuthorScreen() {
+        //1. Create View Controller
+        let authorViewController = AuthorViewController.instantiate()
+        authorViewController.navigationItem.title = "Profile"
+        
+        //2. Create ViewModel
+        let authorViewModel = AuthorViewModel()
+        
+        authorViewModel.coordinator = self
+        authorViewModel.viewController = authorViewController
+        
+        //3. Assign and Navigate
+        authorViewController.viewModel = authorViewModel
+        self.navigationController.pushViewController(authorViewController, animated: true)
     }
 }
