@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -20,6 +20,7 @@ public struct BVRecommendationsProduct: BVAuxiliaryable {
   public let interests: [String]?
   public let numberOfReviews: Int?
   public let productId: String?
+  public let productName: String?
   public let productPageURL: URL?
   internal let RS: String?
   public let sponsored: Bool?
@@ -28,14 +29,15 @@ public struct BVRecommendationsProduct: BVAuxiliaryable {
   private enum CodingKeys: String, CodingKey {
     case averageRating = "avg_rating"
     case categoryIds = "category_ids"
-    case client
+    case client = "client"
     case imageURL = "image_url"
-    case interests
+    case interests = "interests"
     case numberOfReviews = "num_reviews"
     case productId = "product"
+    case productName = "name"
     case productPageURL = "product_page_url"
-    case RS
-    case sponsored
+    case RS = "recommendationStats"
+    case sponsored = "sponsored"
   }
 }
 
@@ -47,3 +49,4 @@ extension BVRecommendationsProduct: BVRecommendationsQueryStatsUpdateable {
     self.stats = stats
   }
 }
+
