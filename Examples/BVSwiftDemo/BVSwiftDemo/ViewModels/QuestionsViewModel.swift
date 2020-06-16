@@ -124,6 +124,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
     
     func readAnswersTapped(question: BVQuestion) {
                 
-        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(question: question, product: self.product))
+        //self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(question: question, product: self.product))
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.author)
     }
 }
