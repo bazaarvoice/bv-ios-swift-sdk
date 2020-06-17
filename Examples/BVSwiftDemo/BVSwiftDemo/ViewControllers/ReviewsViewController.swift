@@ -140,6 +140,10 @@ extension ReviewsViewController: UITableViewDataSource {
                 cell.setReview(review: review)
             }
             
+            cell.onAuthorNickNameTapped = { authorId in
+                self.viewModel.gotoAuthorProfile(authorId: authorId)
+            }
+            
             return cell
         }
     }
