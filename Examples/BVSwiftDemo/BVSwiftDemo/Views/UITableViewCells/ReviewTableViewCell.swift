@@ -30,9 +30,14 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var downVoteCountLabel: UILabel!
     @IBOutlet weak var totalCommentsLabel: UILabel!
     
+    var onAuthorNickNameTapped : ((_ authorId : String) -> Void)?
+    
+    var review: BVReview?
+    
     var totalCommentCount = 0
     var totalUpVoteCount = 0
     var totalDownVoteCount = 0
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,6 +59,16 @@ class ReviewTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @objc func tappedAuthor(_ sender:UITapGestureRecognizer) {
+        
+        guard let authorId = self.review?.authorId else { return }
+        
+        guard let onAuthorNameTapped = self.onAuthorNickNameTapped else { return }
+        
+        onAuthorNameTapped(authorId)
+        
+    }
+    
     private func getIconImage(_ icon : ((_ size: CGFloat) -> FAKFontAwesome?), color: UIColor) -> UIImage {
         
         let size = CGFloat(22)
@@ -70,8 +85,9 @@ class ReviewTableViewCell: UITableViewCell {
     
     func setReview(review: BVReview) {
         
+        self.review = review
+        
         if let imageUrl = review.photos?.first?.photoSizes?.first?.url?.value {
-            
             
             self.reviewPhoto.sd_setImage(with: imageUrl) { [weak self] (image, error, cacheType, url) in
                 
@@ -94,8 +110,15 @@ class ReviewTableViewCell: UITableViewCell {
         self.upVoteCountLabel.text = "\(review.totalPositiveFeedbackCount ?? 0)"
         self.downVoteCountLabel.text = "\(review.totalNegativeFeedbackCount ?? 0)"
         
+        
         if let submissionTime = review.submissionTime, let nickname = review.userNickname {
-            self.lastModificationTimeLabel.text = "\(dateTimeAgo(submissionTime)) by " + nickname
+            
+            self.lastModificationTimeLabel.linkAuthorNameLabel(fullText: nickname,
+                                                               author: nickname,
+                                                               target: self,
+                                                               selector: #selector(AnswerTableViewCell.tappedAuthor(_:)))
+            
+            self.lastModificationTimeLabel.text = "\(dateTimeAgo(submissionTime)) by " + (self.lastModificationTimeLabel.text ?? "")
         }
     }
 }
