@@ -22,7 +22,7 @@ class AppCoordinator: Coordinator {
         
         case answers(question: BVQuestion, product: BVProduct)
         
-        case author
+        case author(authorId: String)
     }
     
     // MARK:- Initializers
@@ -66,8 +66,8 @@ class AppCoordinator: Coordinator {
         case .review(let productId, let product):
             self.showReviewScreen(productId: productId, product: product)
             
-        case .author:
-            self.showAuthorScreen()
+        case .author(let authorId):
+            self.showAuthorScreen(authorId: authorId)
             
         }
     }
@@ -142,13 +142,13 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(answersViewController, animated: true)
     }
     
-    private func showAuthorScreen() {
+    private func showAuthorScreen(authorId: String) {
         //1. Create View Controller
         let authorViewController = AuthorViewController.instantiate()
         authorViewController.navigationItem.title = "Profile"
         
         //2. Create ViewModel
-        let authorViewModel = AuthorViewModel()
+        let authorViewModel = AuthorViewModel(authorId: authorId)
         
         authorViewModel.coordinator = self
         authorViewModel.viewController = authorViewController

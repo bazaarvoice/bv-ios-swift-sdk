@@ -26,6 +26,8 @@ protocol QuestionsViewModelDelegate: class {
     func askQuestionTapped()
     
     func readAnswersTapped(question: BVQuestion)
+    
+    func gotoAuthorProfile(authorId: String)
 }
 
 class QuestionsViewModel: ViewModelType {
@@ -118,13 +120,17 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
         questionQuery.async()
     }
     
+    func gotoAuthorProfile(authorId: String) {
+        
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.author(authorId: authorId))
+    }
+    
     func askQuestionTapped() {
         // TODO:- Navigate to Submit a Question screen
     }
     
     func readAnswersTapped(question: BVQuestion) {
-                
-        //self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(question: question, product: self.product))
-        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.author)
+    
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.answers(question: question, product: self.product))
     }
 }
