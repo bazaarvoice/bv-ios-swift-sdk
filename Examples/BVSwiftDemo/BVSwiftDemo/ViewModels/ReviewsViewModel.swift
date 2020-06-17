@@ -53,6 +53,8 @@ protocol ReviewsViewModelDelegate: class {
     
     func reviewHighlightsCountForIndexPath(_ indexPath: IndexPath) -> Int
     
+    func gotoAuthorProfile(authorId: String)
+    
     func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String
         
     func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview?
@@ -281,6 +283,10 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
              return self.bvReviewHighlights?.negatives?.count ?? 0
             
         }
+    }
+    
+    func gotoAuthorProfile(authorId: String) {
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.author(authorId: authorId))
     }
     
     func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String {
