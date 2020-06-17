@@ -26,6 +26,8 @@ protocol AnswersViewModelDelegate: class {
     var numberOfRows: Int { get }
     
     func answerForRowAtIndexPath(_ indexPath: IndexPath) -> BVAnswer?
+    
+    func gotoAuthorProfile(authorId: String)
 
 }
 
@@ -87,5 +89,9 @@ extension  AnswersViewModel: AnswersViewModelDelegate {
     
     func answerForRowAtIndexPath(_ indexPath: IndexPath) -> BVAnswer? {
         return self.question.answers?[indexPath.row]
+    }
+    
+    func gotoAuthorProfile(authorId: String) {
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.author(authorId: authorId))
     }
 }

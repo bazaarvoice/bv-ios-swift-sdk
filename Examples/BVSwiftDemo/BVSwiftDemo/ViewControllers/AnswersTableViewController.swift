@@ -87,6 +87,10 @@ extension AnswersTableViewController: UITableViewDataSource {
             cell.setAnswerDetails(answer: answer)
         }
         
+        cell.onAuthorNickNameTapped = { authorId in
+            self.viewModel.gotoAuthorProfile(authorId: authorId)
+        }
+        
         return cell
     }
 }
