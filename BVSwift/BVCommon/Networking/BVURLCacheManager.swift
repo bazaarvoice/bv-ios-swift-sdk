@@ -239,7 +239,7 @@ extension BVURLCacheManager {
       concurrentSharedQueue.async(flags: .barrier) {
         
         guard nil == self.sharedCache.cachedResponse(for: request) else {
-          fatalError()
+          return
         }
         
         self.sharedCache.storeCachedResponse(newCachedResponse, for: request)
