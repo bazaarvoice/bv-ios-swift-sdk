@@ -16,6 +16,10 @@ class AnswerTableViewCell: UITableViewCell {
     @IBOutlet weak var usersFoundHelpfulLabel: UILabel!
     @IBOutlet weak var authorNicknameLabel: UILabel!
     
+    var answer: BVAnswer?
+    
+    var onAuthorNickNameTapped : ((_ authorId : String) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,6 +32,8 @@ class AnswerTableViewCell: UITableViewCell {
     }
     
     func setAnswerDetails(answer: BVAnswer) {
+
+        self.answer = answer
         
         if let userNickname = answer.userNickname {
             self.authorNicknameLabel.linkAuthorNameLabel(fullText: userNickname,
@@ -78,6 +84,11 @@ class AnswerTableViewCell: UITableViewCell {
     
     @objc func tappedAuthor(_ sender:UITapGestureRecognizer) {
         
+        guard let authorId = self.answer?.authorId else { return }
+        
+        guard let onAuthorNameTapped = self.onAuthorNickNameTapped else { return }
+        
+        onAuthorNameTapped(authorId)
     }
     
 }
