@@ -113,12 +113,10 @@ class ReviewTableViewCell: UITableViewCell {
         
         if let submissionTime = review.submissionTime, let nickname = review.userNickname {
             
-            self.lastModificationTimeLabel.linkAuthorNameLabel(fullText: nickname,
+            self.lastModificationTimeLabel.linkAuthorNameLabel(fullText: "\(dateTimeAgo(submissionTime)) by " + nickname,
                                                                author: nickname,
                                                                target: self,
                                                                selector: #selector(AnswerTableViewCell.tappedAuthor(_:)))
-            
-            self.lastModificationTimeLabel.text = "\(dateTimeAgo(submissionTime)) by " + (self.lastModificationTimeLabel.text ?? "")
         }
     }
 }
