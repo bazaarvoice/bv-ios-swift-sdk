@@ -124,6 +124,10 @@ extension QuestionsTableViewController: UITableViewDataSource {
             self.viewModel.readAnswersTapped(question: question)
         }
         
+        cell.onAuthorNickNameTapped = { authorId in
+            self.viewModel.gotoAuthorProfile(authorId: authorId)
+        }
+        
         return cell
     }
     

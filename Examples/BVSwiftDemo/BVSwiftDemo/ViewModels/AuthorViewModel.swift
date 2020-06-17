@@ -53,9 +53,15 @@ class AuthorViewModel: ViewModelType {
     
     weak var viewController: AuthorViewControllerDelegate?
     
+    private var authorId: String
+    
     private var bvAuthor: [BVAuthor]?
     
     private var error: Error?
+    
+    init(authorId: String) {
+        self.authorId = authorId
+    }
     
     private static var config: BVConversationsConfiguration =
     { () -> BVConversationsConfiguration in
@@ -179,8 +185,7 @@ extension AuthorViewModel : AuthorViewModelDelegate {
         
         delegate.showLoadingIndicator()
         
-        let authorQuery = BVAuthorQuery(authorId: ConfigurationManager.sharedInstance.authorId)
-//            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
+        let authorQuery = BVAuthorQuery(authorId: self.authorId)
             // stats includes
             .stats(.answers)
             .stats(.questions)
@@ -196,7 +201,8 @@ extension AuthorViewModel : AuthorViewModelDelegate {
             .sort(.reviews(.submissionTime), order: .descending)
             .sort(.questions(.submissionTime), order: .descending)
             
-            .configure(AuthorViewModel.config)
+              .configure(ConfigurationManager.sharedInstance.conversationsConfig)
+           // .configure(AuthorViewModel.config)
             .handler { [weak self] response in
                 
                 delegate.hideLoadingIndicator()
