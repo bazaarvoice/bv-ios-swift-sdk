@@ -96,6 +96,8 @@ public extension URLSession {
       /// Next we ask if there's any cached responses laying around for the
       /// request
       if let cached = requestable.cached(request) {
+        requestable.process(
+            request: request, data: cached.data, urlResponse: cached.response, error: error)
         completionHandler(cached.data, cached.response, nil)
         return nil
       }
