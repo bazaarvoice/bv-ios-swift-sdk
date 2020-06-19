@@ -25,15 +25,11 @@ protocol AuthorViewModelDelegate {
     
     var answerButtonText: String { get }
     
-    var numberOfSectionsForReview: Int { get }
+    var numberOfSections: Int { get }
     
     var numberOfRowsForReview: Int { get }
     
-    var numberOfSectionsForQuestion: Int { get }
-    
     var numberOfRowsForQuestion: Int { get }
-    
-    var numberOfSectionsForAnswer: Int { get }
     
     var numberOfRowsForAnswer: Int { get }
     
@@ -63,6 +59,16 @@ class AuthorViewModel: ViewModelType {
         self.authorId = authorId
     }
     
+    enum SegmentControllerTypes: Int, CaseIterable {
+        
+        case Reviews
+        
+        case Questions
+        
+        case Answers
+    }
+    
+    //Temp
     private static var config: BVConversationsConfiguration =
     { () -> BVConversationsConfiguration in
         
@@ -81,86 +87,50 @@ extension AuthorViewModel : AuthorViewModelDelegate {
     
     var reviewButtonText: String {
         
-        if let totalReviewCount = self.bvAuthor?.first?.reviewStatistics?.totalReviewCount {
-            return "Reviews (\(totalReviewCount))"
-        }
-        else {
-            return "Reviews 0"
-        }
+        return "Reviews (\(self.bvAuthor?.first?.reviewStatistics?.totalReviewCount ?? 0))"
     }
     
     var questionButtonText: String {
         
-        if let totalQuestionCount = self.bvAuthor?.first?.qaStatistics?.totalQuestionCount {
-            return "Questions (\(totalQuestionCount))"
-        }
-        else {
-            return "Questions 0"
-        }
+        return "Questions (\(self.bvAuthor?.first?.qaStatistics?.totalQuestionCount ?? 0))"
     }
     
     var answerButtonText: String {
         
-        if let totalAnswerCount = self.bvAuthor?.first?.qaStatistics?.totalAnswerCount {
-            return "Answers (\(totalAnswerCount))"
-        }
-        else {
-            return "Answers 0"
-        }
+        return "Answer (\(self.bvAuthor?.first?.qaStatistics?.totalAnswerCount ?? 0))"
     }
     
-    var numberOfSectionsForReview: Int {
+    var numberOfSections: Int {
         return 1
     }
     
     var numberOfRowsForReview: Int {
         
-        guard let rowsCount = self.bvAuthor?.first?.reviews?.count else { return 0 }
-        
-        return rowsCount
-    }
-    
-    var numberOfSectionsForQuestion: Int {
-        return 1
+        return self.bvAuthor?.first?.reviews?.count ?? 0
     }
     
     var numberOfRowsForQuestion: Int {
         
-        guard let rowsCount = self.bvAuthor?.first?.questions?.count else { return 0 }
-        
-        return rowsCount
-    }
-    
-    var numberOfSectionsForAnswer: Int {
-        return 1
+        return self.bvAuthor?.first?.questions?.count ?? 0
     }
     
     var numberOfRowsForAnswer: Int {
         
-        guard let rowsCount = self.bvAuthor?.first?.answers?.count else { return 0 }
-        
-        return rowsCount
+        return self.bvAuthor?.first?.answers?.count ?? 0
     }
-    
     func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview? {
         
-        guard let bVReview = self.bvAuthor?.first?.reviews?[indexPath.row] else { return nil }
-        
-        return bVReview
+        return self.bvAuthor?.first?.reviews?[indexPath.row]
     }
     
     func questionForIndexPath(_ indexPath: IndexPath) -> BVQuestion? {
         
-        guard let bVQuestion = self.bvAuthor?.first?.questions?[indexPath.row] else { return nil }
-        
-        return bVQuestion
+        return self.bvAuthor?.first?.questions?[indexPath.row]
     }
     
     func answerForIndexPath(_ indexPath: IndexPath) -> BVAnswer? {
         
-        guard let bVAnswer = self.bvAuthor?.first?.answers?[indexPath.row] else { return nil }
-        
-        return bVAnswer
+        return self.bvAuthor?.first?.answers?[indexPath.row]
     }
     
     var userProfileImageURL: URL? {
@@ -201,8 +171,8 @@ extension AuthorViewModel : AuthorViewModelDelegate {
             .sort(.reviews(.submissionTime), order: .descending)
             .sort(.questions(.submissionTime), order: .descending)
             
-              .configure(ConfigurationManager.sharedInstance.conversationsConfig)
-           // .configure(AuthorViewModel.config)
+            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
+            // .configure(AuthorViewModel.config)
             .handler { [weak self] response in
                 
                 delegate.hideLoadingIndicator()
