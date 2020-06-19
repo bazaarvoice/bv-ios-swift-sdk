@@ -56,37 +56,35 @@ class AuthorViewController: UIViewController, ViewControllerType {
 extension AuthorViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let selectedSegment = AuthorViewModel.SegmentControllerTypes.init(rawValue: self.segmentedControl_UGCType.selectedSegmentIndex) else { return 0 }
         
-        switch self.segmentedControl_UGCType.selectedSegmentIndex  {
+        switch selectedSegment  {
             
-        case 0:
+        case .Reviews:
             
             return self.viewModel.numberOfRowsForReview
             
-        case 1:
+        case .Questions:
             
             return self.viewModel.numberOfRowsForQuestion
             
-        case 2:
+        case .Answers:
             
             return self.viewModel.numberOfRowsForAnswer
-            
-        default:
-            
-            return 0
-            
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.viewModel.numberOfSectionsForReview
+        return self.viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch self.segmentedControl_UGCType.selectedSegmentIndex  {
+        guard let selectedSegment = AuthorViewModel.SegmentControllerTypes.init(rawValue: self.segmentedControl_UGCType.selectedSegmentIndex) else { return UITableViewCell() }
+        
+        switch selectedSegment  {
             
-        case 0:
+        case .Reviews:
             
             let cell = tableView.dequeueReusableCell(withIdentifier: AuthorViewController.REVIEW_CELL_IDENTIFIER) as! ReviewTableViewCell
             
@@ -100,7 +98,7 @@ extension AuthorViewController: UITableViewDataSource {
             
             return cell
             
-        case 1:
+        case .Questions:
             
             let cell = tableView.dequeueReusableCell(withIdentifier: AuthorViewController.QUESTION_CELL_IDENTIFIER) as! QuestionAnswerTableViewCell
             
@@ -113,7 +111,7 @@ extension AuthorViewController: UITableViewDataSource {
             
             return cell
             
-        case 2:
+        case .Answers:
             
             let cell = tableView.dequeueReusableCell(withIdentifier: AuthorViewController.ANSWER_CELL_IDENTIFIER) as! AnswerTableViewCell
             
@@ -125,10 +123,6 @@ extension AuthorViewController: UITableViewDataSource {
             }
             
             return cell
-            
-        default:
-            
-            return UITableViewCell()
             
         }
     }
@@ -148,9 +142,11 @@ extension AuthorViewController: AuthorViewControllerDelegate {
         
         self.lbl_UserBadges.text = self.viewModel.userBadges.capitalized
         
-        self.segmentedControl_UGCType.setTitle(self.viewModel.reviewButtonText, forSegmentAt: 0)
-        self.segmentedControl_UGCType.setTitle(self.viewModel.questionButtonText, forSegmentAt: 1)
-        self.segmentedControl_UGCType.setTitle(self.viewModel.answerButtonText, forSegmentAt: 2)
+        self.segmentedControl_UGCType.setTitle(self.viewModel.reviewButtonText, forSegmentAt: AuthorViewModel.SegmentControllerTypes.Reviews.rawValue)
+        
+        self.segmentedControl_UGCType.setTitle(self.viewModel.questionButtonText, forSegmentAt: AuthorViewModel.SegmentControllerTypes.Questions.rawValue)
+        
+        self.segmentedControl_UGCType.setTitle(self.viewModel.answerButtonText, forSegmentAt: AuthorViewModel.SegmentControllerTypes.Answers.rawValue)
     }
     
     func reloadData() {
