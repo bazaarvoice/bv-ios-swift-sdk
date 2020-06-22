@@ -242,4 +242,58 @@ class BVProductQueryTest: XCTestCase {
     print(req)
     
   }
+    
+    func testMultipleStats() {
+        let expectation =
+          self.expectation(description: "testMultipleStats")
+        
+        let productQuery = BVProductQuery(productId: "test1")
+          .include(.reviews, limit: 10)
+          .include(.questions, limit: 5)
+          .stats(.reviews)
+          .stats(.questions)
+          .configure(BVProductQueryTest.config)
+          .handler { (response: BVConversationsQueryResponse<BVProduct>) in
+            
+            if case .failure(let error) = response {
+              print(error)
+              XCTFail()
+              expectation.fulfill()
+              return
+            }
+            
+            guard case let .success(_, products) = response else {
+              XCTFail()
+              expectation.fulfill()
+              return
+            }
+            
+            guard let product: BVProduct = products.first else {
+                XCTFail()
+                expectation.fulfill()
+                return
+            }
+            
+            XCTAssertNotNil(product.qaStatistics)
+            XCTAssertNotNil(product.reviewStatistics)
+            
+            expectation.fulfill()
+        }
+        
+        guard let req = productQuery.request else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        print(req)
+        
+        /// We're not testing analytics here
+        productQuery.async(urlSession: BVProductQueryTest.privateSession)
+        
+        self.waitForExpectations(timeout: 20) { (error) in
+          XCTAssertNil(
+            error, "Something went horribly wrong, request took too long.")
+        }
+    }
 }
