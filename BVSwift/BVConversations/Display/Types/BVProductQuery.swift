@@ -210,7 +210,7 @@ extension BVProductQuery: BVQueryStatable {
   @discardableResult
   public func stats(_ for: Stat) -> Self {
     let internalStat: BVURLParameter = .stats(`for`, nil)
-    add(internalStat)
+    add(internalStat, coalesce: true)
     return self
   }
 }
