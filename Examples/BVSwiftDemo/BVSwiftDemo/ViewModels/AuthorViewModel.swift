@@ -155,7 +155,7 @@ extension AuthorViewModel : AuthorViewModelDelegate {
         
         delegate.showLoadingIndicator()
         
-        let authorQuery = BVAuthorQuery(authorId: self.authorId)
+        let authorQuery = BVAuthorQuery(authorId: "data-gen-user-poaouvr127us1ijhpafkfacb9")//self.authorId)
             // stats includes
             .stats(.answers)
             .stats(.questions)
@@ -171,8 +171,8 @@ extension AuthorViewModel : AuthorViewModelDelegate {
             .sort(.reviews(.submissionTime), order: .descending)
             .sort(.questions(.submissionTime), order: .descending)
             
-            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
-            // .configure(AuthorViewModel.config)
+            //.configure(ConfigurationManager.sharedInstance.conversationsConfig)
+            .configure(AuthorViewModel.config)
             .handler { [weak self] response in
                 
                 delegate.hideLoadingIndicator()
