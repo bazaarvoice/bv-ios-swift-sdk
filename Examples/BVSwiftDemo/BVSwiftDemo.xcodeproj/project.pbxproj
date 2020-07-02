@@ -16,6 +16,27 @@
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
 		42BC40EC2473BB5100008434 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40EB2473BB5100008434 /* Assets.xcassets */; };
 		42BC40EF2473BB5100008434 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40ED2473BB5100008434 /* LaunchScreen.storyboard */; };
+		42CE5F9B24ADDE8B009D050B /* MockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CE5F9A24ADDE8B009D050B /* MockDataManager.swift */; };
+		42CE5FA224ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5F9E24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json */; };
+		42CE5FA324ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5F9F24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json */; };
+		42CE5FA424ADE297009D050B /* conversationsReviewsEnduranceCycles_SortLowestRated.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FA024ADE297009D050B /* conversationsReviewsEnduranceCycles_SortLowestRated.json */; };
+		42CE5FA524ADE297009D050B /* conversationsReviewsEnduranceCycles_FilterLocation.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FA124ADE297009D050B /* conversationsReviewsEnduranceCycles_FilterLocation.json */; };
+		42CE5FB524ADE2B4009D050B /* conversationsProductsIncludeStats.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FA624ADE2B3009D050B /* conversationsProductsIncludeStats.json */; };
+		42CE5FB624ADE2B4009D050B /* conversationsAuthorWithIncludes.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FA724ADE2B3009D050B /* conversationsAuthorWithIncludes.json */; };
+		42CE5FB724ADE2B4009D050B /* submitReview.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FA824ADE2B3009D050B /* submitReview.json */; };
+		42CE5FB824ADE2B4009D050B /* testNotificationConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FA924ADE2B3009D050B /* testNotificationConfig.json */; };
+		42CE5FB924ADE2B4009D050B /* storeBulkFeedWithStatistics.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FAA24ADE2B3009D050B /* storeBulkFeedWithStatistics.json */; };
+		42CE5FBA24ADE2B4009D050B /* conversationsReviewsEnduranceCycles.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FAB24ADE2B3009D050B /* conversationsReviewsEnduranceCycles.json */; };
+		42CE5FBB24ADE2B4009D050B /* conversationsQuestionsIncludeAnswers.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FAC24ADE2B3009D050B /* conversationsQuestionsIncludeAnswers.json */; };
+		42CE5FBC24ADE2B4009D050B /* testNotificationProductConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FAD24ADE2B3009D050B /* testNotificationProductConfig.json */; };
+		42CE5FBD24ADE2B4009D050B /* userProfile1.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FAE24ADE2B3009D050B /* userProfile1.json */; };
+		42CE5FBE24ADE2B4009D050B /* submitAnswer.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FAF24ADE2B3009D050B /* submitAnswer.json */; };
+		42CE5FBF24ADE2B4009D050B /* curationsEnduranceCycles.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FB024ADE2B4009D050B /* curationsEnduranceCycles.json */; };
+		42CE5FC024ADE2B4009D050B /* recommendationsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FB124ADE2B4009D050B /* recommendationsResult.json */; };
+		42CE5FC124ADE2B4009D050B /* post_successfulCreation.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FB224ADE2B4009D050B /* post_successfulCreation.json */; };
+		42CE5FC224ADE2B4009D050B /* submitPhotoWithReview.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FB324ADE2B4009D050B /* submitPhotoWithReview.json */; };
+		42CE5FC324ADE2B4009D050B /* submitQuestion.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FB424ADE2B4009D050B /* submitQuestion.json */; };
+		42CE5FC524AE19F1009D050B /* reviewHighlights.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5FC424AE19F1009D050B /* reviewHighlights.json */; };
 		42FC2DEA248F9D3600947F4A /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC2DE9248F9D3600947F4A /* ReviewsViewController.swift */; };
 		42FC2DEC248F9D5400947F4A /* ReviewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC2DEB248F9D5400947F4A /* ReviewsViewModel.swift */; };
 		42FC2DEE248F9D8300947F4A /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC2DED248F9D8300947F4A /* ReviewTableViewCell.swift */; };
@@ -59,6 +80,27 @@
 		42BC40EB2473BB5100008434 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42BC40EE2473BB5100008434 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42BC40F02473BB5100008434 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42CE5F9A24ADDE8B009D050B /* MockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataManager.swift; sourceTree = "<group>"; };
+		42CE5F9E24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles_SortHighestRated.json; sourceTree = "<group>"; };
+		42CE5F9F24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles_SortMostHelpful.json; sourceTree = "<group>"; };
+		42CE5FA024ADE297009D050B /* conversationsReviewsEnduranceCycles_SortLowestRated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles_SortLowestRated.json; sourceTree = "<group>"; };
+		42CE5FA124ADE297009D050B /* conversationsReviewsEnduranceCycles_FilterLocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles_FilterLocation.json; sourceTree = "<group>"; };
+		42CE5FA624ADE2B3009D050B /* conversationsProductsIncludeStats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsProductsIncludeStats.json; sourceTree = "<group>"; };
+		42CE5FA724ADE2B3009D050B /* conversationsAuthorWithIncludes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsAuthorWithIncludes.json; sourceTree = "<group>"; };
+		42CE5FA824ADE2B3009D050B /* submitReview.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = submitReview.json; sourceTree = "<group>"; };
+		42CE5FA924ADE2B3009D050B /* testNotificationConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testNotificationConfig.json; sourceTree = "<group>"; };
+		42CE5FAA24ADE2B3009D050B /* storeBulkFeedWithStatistics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = storeBulkFeedWithStatistics.json; sourceTree = "<group>"; };
+		42CE5FAB24ADE2B3009D050B /* conversationsReviewsEnduranceCycles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles.json; sourceTree = "<group>"; };
+		42CE5FAC24ADE2B3009D050B /* conversationsQuestionsIncludeAnswers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsQuestionsIncludeAnswers.json; sourceTree = "<group>"; };
+		42CE5FAD24ADE2B3009D050B /* testNotificationProductConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testNotificationProductConfig.json; sourceTree = "<group>"; };
+		42CE5FAE24ADE2B3009D050B /* userProfile1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = userProfile1.json; sourceTree = "<group>"; };
+		42CE5FAF24ADE2B3009D050B /* submitAnswer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = submitAnswer.json; sourceTree = "<group>"; };
+		42CE5FB024ADE2B4009D050B /* curationsEnduranceCycles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = curationsEnduranceCycles.json; sourceTree = "<group>"; };
+		42CE5FB124ADE2B4009D050B /* recommendationsResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = recommendationsResult.json; sourceTree = "<group>"; };
+		42CE5FB224ADE2B4009D050B /* post_successfulCreation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = post_successfulCreation.json; sourceTree = "<group>"; };
+		42CE5FB324ADE2B4009D050B /* submitPhotoWithReview.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = submitPhotoWithReview.json; sourceTree = "<group>"; };
+		42CE5FB424ADE2B4009D050B /* submitQuestion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = submitQuestion.json; sourceTree = "<group>"; };
+		42CE5FC424AE19F1009D050B /* reviewHighlights.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reviewHighlights.json; sourceTree = "<group>"; };
 		42FC2DE9248F9D3600947F4A /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
 		42FC2DEB248F9D5400947F4A /* ReviewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewModel.swift; sourceTree = "<group>"; };
 		42FC2DED248F9D8300947F4A /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -117,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				42566A4D247E709B008FC057 /* ConfigurationManager.swift */,
+				42CE5F9A24ADDE8B009D050B /* MockDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -155,6 +198,41 @@
 				9FA73B00248F9D4E00746ACA /* DateTimeAgo.swift */,
 			);
 			path = BVSwiftDemo;
+			sourceTree = "<group>";
+		};
+		42CE5F9C24ADE240009D050B /* JSONFiles */ = {
+			isa = PBXGroup;
+			children = (
+				42CE5FA724ADE2B3009D050B /* conversationsAuthorWithIncludes.json */,
+				42CE5FA624ADE2B3009D050B /* conversationsProductsIncludeStats.json */,
+				42CE5FAC24ADE2B3009D050B /* conversationsQuestionsIncludeAnswers.json */,
+				42CE5FAB24ADE2B3009D050B /* conversationsReviewsEnduranceCycles.json */,
+				42CE5FB024ADE2B4009D050B /* curationsEnduranceCycles.json */,
+				42CE5FB224ADE2B4009D050B /* post_successfulCreation.json */,
+				42CE5FB124ADE2B4009D050B /* recommendationsResult.json */,
+				42CE5FAA24ADE2B3009D050B /* storeBulkFeedWithStatistics.json */,
+				42CE5FAF24ADE2B3009D050B /* submitAnswer.json */,
+				42CE5FB324ADE2B4009D050B /* submitPhotoWithReview.json */,
+				42CE5FB424ADE2B4009D050B /* submitQuestion.json */,
+				42CE5FA824ADE2B3009D050B /* submitReview.json */,
+				42CE5FA924ADE2B3009D050B /* testNotificationConfig.json */,
+				42CE5FAD24ADE2B3009D050B /* testNotificationProductConfig.json */,
+				42CE5FAE24ADE2B3009D050B /* userProfile1.json */,
+				42CE5FC424AE19F1009D050B /* reviewHighlights.json */,
+				42CE5F9D24ADE269009D050B /* ConversationsSorting */,
+			);
+			path = JSONFiles;
+			sourceTree = "<group>";
+		};
+		42CE5F9D24ADE269009D050B /* ConversationsSorting */ = {
+			isa = PBXGroup;
+			children = (
+				42CE5FA124ADE297009D050B /* conversationsReviewsEnduranceCycles_FilterLocation.json */,
+				42CE5F9E24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json */,
+				42CE5FA024ADE297009D050B /* conversationsReviewsEnduranceCycles_SortLowestRated.json */,
+				42CE5F9F24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json */,
+			);
+			path = ConversationsSorting;
 			sourceTree = "<group>";
 		};
 		5B208956F2937CE43ED7B38C /* Frameworks */ = {
@@ -257,6 +335,7 @@
 		9FF7EB952473C1AA007FD337 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				42CE5F9C24ADE240009D050B /* JSONFiles */,
 				42BC40EB2473BB5100008434 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -331,9 +410,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42CE5FB824ADE2B4009D050B /* testNotificationConfig.json in Resources */,
+				42CE5FBF24ADE2B4009D050B /* curationsEnduranceCycles.json in Resources */,
+				42CE5FBC24ADE2B4009D050B /* testNotificationProductConfig.json in Resources */,
+				42CE5FA424ADE297009D050B /* conversationsReviewsEnduranceCycles_SortLowestRated.json in Resources */,
+				42CE5FB724ADE2B4009D050B /* submitReview.json in Resources */,
+				42CE5FBA24ADE2B4009D050B /* conversationsReviewsEnduranceCycles.json in Resources */,
 				42BC40EF2473BB5100008434 /* LaunchScreen.storyboard in Resources */,
+				42CE5FC224ADE2B4009D050B /* submitPhotoWithReview.json in Resources */,
+				42CE5FBB24ADE2B4009D050B /* conversationsQuestionsIncludeAnswers.json in Resources */,
+				42CE5FBE24ADE2B4009D050B /* submitAnswer.json in Resources */,
+				42CE5FA324ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json in Resources */,
+				42CE5FC124ADE2B4009D050B /* post_successfulCreation.json in Resources */,
+				42CE5FB524ADE2B4009D050B /* conversationsProductsIncludeStats.json in Resources */,
+				42CE5FC524AE19F1009D050B /* reviewHighlights.json in Resources */,
+				42CE5FB624ADE2B4009D050B /* conversationsAuthorWithIncludes.json in Resources */,
+				42CE5FBD24ADE2B4009D050B /* userProfile1.json in Resources */,
+				42CE5FC324ADE2B4009D050B /* submitQuestion.json in Resources */,
 				42BC40EC2473BB5100008434 /* Assets.xcassets in Resources */,
+				42CE5FB924ADE2B4009D050B /* storeBulkFeedWithStatistics.json in Resources */,
 				42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */,
+				42CE5FA224ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json in Resources */,
+				42CE5FC024ADE2B4009D050B /* recommendationsResult.json in Resources */,
+				42CE5FA524ADE297009D050B /* conversationsReviewsEnduranceCycles_FilterLocation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +492,7 @@
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
 				42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
+				42CE5F9B24ADDE8B009D050B /* MockDataManager.swift in Sources */,
 				42665BE12498A43A00586C9A /* AuthorViewController.swift in Sources */,
 				42FC2DF2248FAB8800947F4A /* ReviewHighlightsHeaderTableViewCell.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
