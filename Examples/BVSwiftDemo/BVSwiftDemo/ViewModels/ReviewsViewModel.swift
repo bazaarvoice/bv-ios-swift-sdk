@@ -181,7 +181,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
             
             delegate.hideLoadingIndicator()
             
-            // check for PDP API error
+            // check for Review API error
             if let error = strongSelf.error {
                 let errorMessage = (error as? BVError)?.message ?? "Something went wrong."
                 strongSelf.coordinator?.showAlert(title: "", message: errorMessage, handler: {

@@ -4,9 +4,9 @@
 target 'BVSwiftDemo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for BVSwiftDemo
-
+  
   pod 'BVSwift/BVAnalytics', :path => "../../"
   pod 'BVSwift/BVCommon', :path => "../../"
   pod 'BVSwift/BVConversations', :path => "../../"
@@ -15,5 +15,7 @@ target 'BVSwiftDemo' do
   pod 'FontAwesomeKit/FontAwesome'
   pod 'SDWebImage'
   pod 'HCSStarRatingView'
-
+  pod 'OHHTTPStubs/Swift'
+  pod 'SwiftyJSON'
+  
 end
