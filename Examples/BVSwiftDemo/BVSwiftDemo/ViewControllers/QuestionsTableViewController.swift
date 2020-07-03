@@ -64,6 +64,8 @@ class QuestionsTableViewController: UIViewController, ViewControllerType {
     func updateProductDetails() {
         self.productNameLabel.text = self.viewModel.productName
         
+        self.productStarRatingView.value = CGFloat(self.viewModel.productRating ?? 0.0)
+        
         if let imageURL = self.viewModel.productImageURL {
             
             self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in

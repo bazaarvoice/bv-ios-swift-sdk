@@ -49,7 +49,10 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     }
     
     func updateProductDetails() {
+        
         self.productNameLabel.text = self.viewModel.productName
+        
+        self.productRatingView.value = CGFloat(self.viewModel.productRating ?? 0.0)
         
         if let imageURL = self.viewModel.productImageURL {
             
