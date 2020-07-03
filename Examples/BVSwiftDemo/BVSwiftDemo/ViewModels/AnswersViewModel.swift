@@ -13,6 +13,8 @@ protocol AnswersViewModelDelegate: class {
     
     var productName: String? { get }
     
+    var productRating: Double? { get }
+    
     var imageURL: URL? { get }
     
     var questionSummary: String? { get }
@@ -48,8 +50,13 @@ class AnswersViewModel: ViewModelType {
 }
 
 extension  AnswersViewModel: AnswersViewModelDelegate {
+    
     var productName: String? {
         return self.product.name
+    }
+    
+    var productRating: Double? {
+        return self.product.reviewStatistics?.averageOverallRating
     }
     
     var imageURL: URL? {
