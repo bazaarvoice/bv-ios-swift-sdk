@@ -12,6 +12,7 @@ import BVSwift
 enum Environment: String {
     case staging
     case production
+    case mock
 }
 
 class ConfigurationManager: NSObject {
@@ -97,6 +98,10 @@ class ConfigurationManager: NSObject {
             self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
                 configType: .production(clientId: "1800petmeds"),
                 analyticsConfig: analyticsConfig)
+            
+        case .mock:
+            
+            MockDataManager.sharedInstance.setupMocking()
             
         } //end of case
     }

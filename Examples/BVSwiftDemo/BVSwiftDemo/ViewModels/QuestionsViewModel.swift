@@ -13,6 +13,8 @@ protocol QuestionsViewModelDelegate: class {
     
     var productName: String? { get }
     
+    var productRating: Double? { get }
+    
     var productImageURL: URL? { get }
         
     func fetchQuestions()
@@ -53,6 +55,10 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
     
     var productName: String? {
         return self.product.name
+    }
+    
+    var productRating: Double? {
+        return self.product.reviewStatistics?.averageOverallRating
     }
     
     var productImageURL: URL? {

@@ -14,7 +14,7 @@ import FontAwesomeKit
 protocol ProductDisplayPageViewControllerDelegate: class {
     
     func updateProductDetails(name: String,
-                              imageURL: URL)
+                              imageURL: URL, ratings: Double)
     func reloadData()
     
     func showLoadingIndicator()
@@ -142,12 +142,13 @@ extension ProductDisplayPageViewController: UITableViewDelegate {
 
 // MARK:- ProductDisplayPageViewControllerDelegate methods
 extension ProductDisplayPageViewController: ProductDisplayPageViewControllerDelegate {
-    
+
     func updateProductDetails(name: String,
-                              imageURL: URL) {
+                              imageURL: URL, ratings: Double) {
         
         self.productDetailsHeaderView.isHidden = false
         self.productNameLabel.text = name
+        self.productRatingView.value = CGFloat(ratings)
         
         self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
             

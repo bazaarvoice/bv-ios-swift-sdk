@@ -189,8 +189,8 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
             }
             
             // update UI
-            if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value {
-                strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL)
+            if let name = strongSelf.product?.name, let imageURL = strongSelf.product?.imageUrl?.value, let rating = strongSelf.product?.reviewStatistics?.averageOverallRating {
+                strongSelf.viewController?.updateProductDetails(name: name, imageURL: imageURL, ratings: rating)
             }
             
             strongSelf.viewController?.reloadData()
