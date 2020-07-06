@@ -73,7 +73,7 @@ class ConfigurationManager: NSObject {
             
             //ReviewHighlights Configuration
             self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
-                configType: .staging(clientId: "1800petmeds"),
+                configType: .staging(clientId: self.reviewHighlightsClientId),
                 analyticsConfig: analyticsConfig)
             
         case .production :
@@ -96,12 +96,33 @@ class ConfigurationManager: NSObject {
             
             //ReviewHighlights Configuration
             self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
-                configType: .production(clientId: "1800petmeds"),
+                configType: .production(clientId: self.reviewHighlightsClientId),
                 analyticsConfig: analyticsConfig)
             
         case .mock:
             
             MockDataManager.sharedInstance.setupMocking()
+            
+            //Conversation Configuration
+            let analyticsConfig: BVAnalyticsConfiguration =  .dryRun(configType: .staging(clientId: self.clientId))
+            self.conversationsConfig = BVConversationsConfiguration.all(clientKey: self.conversationsPassKey, configType: .staging(clientId: self.clientId), analyticsConfig: analyticsConfig)
+            
+            // Curations Configuration
+            self.curationsConfig = BVCurationsConfiguration.display(
+                clientKey: self.curationsPassKey,
+                configType: .production(clientId: self.clientId),
+                analyticsConfig: analyticsConfig)
+            
+            //Recommendation Configuration
+            self.recommendationConfig = BVRecommendationsConfiguration.display(
+                clientKey: self.recommendationPassKey,
+                configType: .production(clientId: self.clientId),
+                analyticsConfig: analyticsConfig)
+            
+            //ReviewHighlights Configuration
+            self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
+                configType: .staging(clientId: self.reviewHighlightsClientId),
+                analyticsConfig: analyticsConfig)
             
         } //end of case
     }

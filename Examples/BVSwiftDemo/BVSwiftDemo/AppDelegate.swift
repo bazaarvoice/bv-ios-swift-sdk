@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         ConfigurationManager.sharedInstance.setConfiguration()
-        MockDataManager.sharedInstance.setupMocking()
         
         let navigationController = BVSwiftDemoNavigationController()
         coordinator = AppCoordinator(navigationController: navigationController)

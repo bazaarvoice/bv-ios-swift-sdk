@@ -16,8 +16,15 @@ class CurationsCollectionViewCell: UICollectionViewCell {
     func setDetails(socialImageURL: URL?, sourceImage: String?) {
         
         // set social image
-        if let imageURL = socialImageURL {
-            self.socialImageView.sd_setImage(with: imageURL)
+        if let imageUrl = socialImageURL {
+            
+            self.socialImageView.sd_setImage(with: imageUrl) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                strongSelf.socialImageView.image = #imageLiteral(resourceName: "placeholder")
+            }
         }
         else {
             self.socialImageView.image = #imageLiteral(resourceName: "placeholder")
