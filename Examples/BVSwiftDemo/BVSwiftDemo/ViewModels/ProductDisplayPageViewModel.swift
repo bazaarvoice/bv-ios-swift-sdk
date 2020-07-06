@@ -97,9 +97,10 @@ class ProductDisplayPageViewModel: ViewModelType {
                     
                 case let .success(_, products):
                     strongSelf.product = products.first
-                    
-                    strongSelf.dispatchGroup.leave()
                 }
+                
+                strongSelf.dispatchGroup.leave()
+                
         }
         
         productQuery.async()
