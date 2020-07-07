@@ -181,48 +181,48 @@ extension BVReview {
     self.videos = nil
   }
     
-    public init(productId: String) {
-        self.title = nil
-        self.reviewText = nil
-        self.rating = nil
-        self.productId = productId
-        self.includedComments = nil
-        self.includedProducts = nil
-        self.additionalFieldsDecoder = nil
-        self.authorId = nil
-        self.badgesArray = nil
-        self.campaignId = nil
-        self.clientResponsesDecoder = nil
-        self.commentIds = nil
-        self.cons = nil
-        self.contentLocale = nil
-        self.contextDataValuesArray = nil
-        self.helpfulness = nil
-        self.isFeatured = nil
-        self.isRatingsOnly = nil
-        self.isRecommended = nil
-        self.isSyndicated = nil
-        self.lastModeratedTimeString = nil
-        self.lastModificationTimeString = nil
-        self.moderationStatus = nil
-        self.photos = nil
-        self.productRecommendationIds = nil
-        self.pros = nil
-        self.ratingRange = nil
-        self.reviewId = nil
-        self.secondaryRatingsArray = nil
-        self.submissionId = nil
-        self.submissionTimeString = nil
-        self.syndicationSource = nil
-        self.tagDimensionsArray = nil
-        self.totalCommentCount = nil
-        self.totalFeedbackCount = nil
-        self.totalNegativeFeedbackCount = nil
-        self.totalPositiveFeedbackCount = nil
-        self.userLocation = nil
-        self.userNickname = nil
-        self.videos = nil
-    }
+  public init(productId: String) {
+    self.title = nil
+    self.reviewText = nil
+    self.rating = nil
+    self.productId = productId
+    self.includedComments = nil
+    self.includedProducts = nil
+    self.additionalFieldsDecoder = nil
+    self.authorId = nil
+    self.badgesArray = nil
+    self.campaignId = nil
+    self.clientResponsesDecoder = nil
+    self.commentIds = nil
+    self.cons = nil
+    self.contentLocale = nil
+    self.contextDataValuesArray = nil
+    self.helpfulness = nil
+    self.isFeatured = nil
+    self.isRatingsOnly = nil
+    self.isRecommended = nil
+    self.isSyndicated = nil
+    self.lastModeratedTimeString = nil
+    self.lastModificationTimeString = nil
+    self.moderationStatus = nil
+    self.photos = nil
+    self.productRecommendationIds = nil
+    self.pros = nil
+    self.ratingRange = nil
+    self.reviewId = nil
+    self.secondaryRatingsArray = nil
+    self.submissionId = nil
+    self.submissionTimeString = nil
+    self.syndicationSource = nil
+    self.tagDimensionsArray = nil
+    self.totalCommentCount = nil
+    self.totalFeedbackCount = nil
+    self.totalNegativeFeedbackCount = nil
+    self.totalPositiveFeedbackCount = nil
+    self.userLocation = nil
+    self.userNickname = nil
+    self.videos = nil
+  }
 }
 
 // MARK: - BVReview: BVCommentIncludable
