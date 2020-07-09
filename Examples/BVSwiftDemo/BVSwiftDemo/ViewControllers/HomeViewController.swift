@@ -18,17 +18,35 @@ class HomeViewController: UIViewController, ViewControllerType {
     
     // MARK:- IBOutlets
     @IBOutlet weak var bvRecommendationProductCollectionView: UICollectionView!
+    @IBOutlet weak var bvHeaderCollectionView: UICollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     // MARK:- Constants
-    private static let CELL_IDENTIFIER = "ProductCollectionViewCellIdentifier"
+    private static let PRODUCT_CELL_IDENTIFIER = "ProductCollectionViewCellIdentifier"
+    private static let HEADER_CELL_IDENTIFIER = "HeaderCollectionViewCellIdentifier"
     
     // MARK:- Variables
     var viewModel: HomeViewModelDelegate!
+    var timer = Timer()
+    var counter = 0
+    
+    var images = [
+        UIImage(named: "slide_1.jpg"),
+        UIImage(named: "slide_2.jpg"),
+        UIImage(named: "slide_3.jpg")
+    ]
+    
+    var currentPageIndex : Int = 0 {
+        didSet {
+            pageControl.currentPage = currentPageIndex
+        }
+    }
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.setPageView()
         
         self.viewModel.loadProductRecommendations()
     }
@@ -43,8 +61,30 @@ class HomeViewController: UIViewController, ViewControllerType {
         return titleLabel
     }
     
-    @IBAction func showNextTapped(_ sender: Any) {
-        // self.viewModel.didTapShowNextButton()
+    private func setPageView() {
+        self.pageControl.numberOfPages = self.images.count
+        self.pageControl.currentPage = 0
+        
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        }
+    }
+    
+    @objc func changeImage() {
+        
+        if self.counter < self.images.count {
+            let index = IndexPath.init(item: self.counter, section: 0)
+            self.bvHeaderCollectionView.scrollToItem(at: index, at: .centeredVertically, animated: true)
+            self.pageControl.currentPage = self.counter
+            self.counter += 1
+        } else {
+            counter = 0
+            let index = IndexPath.init(item: self.counter, section: 0)
+            self.bvHeaderCollectionView.scrollToItem(at: index, at: .centeredVertically, animated: true)
+            self.pageControl.currentPage = self.counter
+            self.counter = 1
+        }
+        
     }
 }
 
@@ -64,7 +104,7 @@ extension HomeViewController: HomeCollectionViewControllerDelegate {
     
 }
 
-// Mark:- HomeViewControllerDatasource methods
+// Mark:- UICollectionViewDataSource methods
 extension HomeViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -72,32 +112,55 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.viewModel.numberOfItems
+        
+        if collectionView == self.bvHeaderCollectionView {
+            return self.images.count
+        }
+        else {
+            return self.viewModel.numberOfItems
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.CELL_IDENTIFIER, for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
-        
-        
-        if let product = self.viewModel.productForItemAtIndexPath(indexPath) {
-            cell.setRecommendationProductDetails(recommendationProduct: product)
+        if collectionView == self.bvHeaderCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HeaderCollectionViewCellIdentifier", for: indexPath)
+            if let vc = cell.viewWithTag(1) as? UIImageView {
+                vc.image = self.images[indexPath.row]
+            }
+            return cell
         }
-        
-        return cell
+        else {
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.PRODUCT_CELL_IDENTIFIER, for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
+            
+            
+            if let product = self.viewModel.productForItemAtIndexPath(indexPath) {
+                cell.setRecommendationProductDetails(recommendationProduct: product)
+            }
+            
+            return cell
+        }
     }
     
 }
 
-// MARK:- HomeViewControllerDelegateFlowLayout methods
+// MARK:- UICollectionViewDelegateFlowLayout methods
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((UIScreen.main.bounds.width/2) - 10), height: 200)
+        
+        if collectionView == self.bvHeaderCollectionView {
+            return CGSize(width: (UIScreen.main.bounds.width), height: 210)
+        }
+        else {
+            return CGSize(width: ((UIScreen.main.bounds.width/2) - 10), height: 200)
+        }
     }
+
 }
 
-// MARK:- HomeViewControllerDelegate methods
+// MARK:- UICollectionViewDelegate methods
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.viewModel.didSelectItemAt(indexPath: indexPath)

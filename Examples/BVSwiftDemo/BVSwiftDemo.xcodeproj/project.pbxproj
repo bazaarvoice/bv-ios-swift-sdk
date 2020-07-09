@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		422B448824B337AC009225CC /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422B448724B337AC009225CC /* URLConstants.swift */; };
+		4247D14A24B6FCBB002D6009 /* slide_2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4247D14724B6FCBB002D6009 /* slide_2@2x.jpg */; };
+		4247D14B24B6FCBB002D6009 /* slide_3@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4247D14824B6FCBB002D6009 /* slide_3@2x.jpg */; };
+		4247D14C24B6FCBB002D6009 /* slide_1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4247D14924B6FCBB002D6009 /* slide_1@2x.jpg */; };
 		42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42566A4D247E709B008FC057 /* ConfigurationManager.swift */; };
 		42665BE12498A43A00586C9A /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42665BE02498A43A00586C9A /* AuthorViewController.swift */; };
 		42665BE32498A45900586C9A /* AuthorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42665BE22498A45900586C9A /* AuthorViewModel.swift */; };
@@ -71,6 +74,9 @@
 /* Begin PBXFileReference section */
 		1A05BDCF7D654BF89CC5FC00 /* Pods-BVSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BVSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-BVSwiftDemo/Pods-BVSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 		422B448724B337AC009225CC /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
+		4247D14724B6FCBB002D6009 /* slide_2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "slide_2@2x.jpg"; sourceTree = "<group>"; };
+		4247D14824B6FCBB002D6009 /* slide_3@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "slide_3@2x.jpg"; sourceTree = "<group>"; };
+		4247D14924B6FCBB002D6009 /* slide_1@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "slide_1@2x.jpg"; sourceTree = "<group>"; };
 		42566A4D247E709B008FC057 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		42665BE02498A43A00586C9A /* AuthorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewController.swift; sourceTree = "<group>"; };
 		42665BE22498A45900586C9A /* AuthorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewModel.swift; sourceTree = "<group>"; };
@@ -157,6 +163,16 @@
 				7CF57EA0AF23C1E4FD372551 /* Pods-BVSwiftDemo.mock.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		4247D14624B6FC88002D6009 /* Home Header Images */ = {
+			isa = PBXGroup;
+			children = (
+				4247D14924B6FCBB002D6009 /* slide_1@2x.jpg */,
+				4247D14724B6FCBB002D6009 /* slide_2@2x.jpg */,
+				4247D14824B6FCBB002D6009 /* slide_3@2x.jpg */,
+			);
+			path = "Home Header Images";
 			sourceTree = "<group>";
 		};
 		42566A4C247E708B008FC057 /* Manager */ = {
@@ -339,6 +355,7 @@
 		9FF7EB952473C1AA007FD337 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4247D14624B6FC88002D6009 /* Home Header Images */,
 				42CE5F9C24ADE240009D050B /* JSONFiles */,
 				42BC40EB2473BB5100008434 /* Assets.xcassets */,
 				422B448724B337AC009225CC /* URLConstants.swift */,
@@ -424,9 +441,12 @@
 				42BC40EF2473BB5100008434 /* LaunchScreen.storyboard in Resources */,
 				42CE5FC224ADE2B4009D050B /* submitPhotoWithReview.json in Resources */,
 				42CE5FBB24ADE2B4009D050B /* conversationsQuestionsIncludeAnswers.json in Resources */,
+				4247D14A24B6FCBB002D6009 /* slide_2@2x.jpg in Resources */,
 				42CE5FBE24ADE2B4009D050B /* submitAnswer.json in Resources */,
 				42CE5FA324ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json in Resources */,
+				4247D14C24B6FCBB002D6009 /* slide_1@2x.jpg in Resources */,
 				42CE5FC124ADE2B4009D050B /* post_successfulCreation.json in Resources */,
+				4247D14B24B6FCBB002D6009 /* slide_3@2x.jpg in Resources */,
 				42CE5FB524ADE2B4009D050B /* conversationsProductsIncludeStats.json in Resources */,
 				42CE5FC524AE19F1009D050B /* reviewHighlights.json in Resources */,
 				42CE5FB624ADE2B4009D050B /* conversationsAuthorWithIncludes.json in Resources */,
