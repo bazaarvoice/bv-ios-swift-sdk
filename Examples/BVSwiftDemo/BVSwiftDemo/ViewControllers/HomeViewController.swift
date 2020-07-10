@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, ViewControllerType {
     // MARK:- Constants
     private static let PRODUCT_CELL_IDENTIFIER = "ProductCollectionViewCellIdentifier"
     private static let HEADER_CELL_IDENTIFIER = "HeaderCollectionViewCellIdentifier"
+    private static let HEADER_Ad_CELL_IDENTIFIER = "HomeAdvertisementCollectionViewCell"
     
     // MARK:- Variables
     var viewModel: HomeViewModelDelegate!
@@ -117,21 +118,25 @@ extension HomeViewController: UICollectionViewDataSource {
             return self.images.count
         }
         else {
-            return self.viewModel.numberOfItems
+            return self.viewModel.numberOfItems + 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == self.bvHeaderCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HeaderCollectionViewCellIdentifier", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.HEADER_CELL_IDENTIFIER, for: indexPath)
             if let vc = cell.viewWithTag(1) as? UIImageView {
                 vc.image = self.images[indexPath.row]
             }
             return cell
         }
-        else {
+        else if (indexPath.row == self.viewModel.numberOfItems) {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.HEADER_Ad_CELL_IDENTIFIER, for: indexPath) as? HomeAdvertisementCollectionViewCell else  { return UICollectionViewCell() }
             
+            return cell
+        }
+        else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.PRODUCT_CELL_IDENTIFIER, for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
             
             
@@ -142,7 +147,6 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         }
     }
-    
 }
 
 // MARK:- UICollectionViewDelegateFlowLayout methods
@@ -153,17 +157,25 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         if collectionView == self.bvHeaderCollectionView {
             return CGSize(width: (UIScreen.main.bounds.width), height: 210)
         }
+        else if indexPath.row == self.viewModel.numberOfItems {
+            return CGSize(width: (UIScreen.main.bounds.width), height: 200)
+        }
         else {
             return CGSize(width: ((UIScreen.main.bounds.width/2) - 10), height: 200)
         }
     }
-
+    
 }
 
 // MARK:- UICollectionViewDelegate methods
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.viewModel.didSelectItemAt(indexPath: indexPath)
+        
+        if collectionView == self.bvHeaderCollectionView {
+            return
+        } else {
+            self.viewModel.didSelectItemAt(indexPath: indexPath)
+        }
     }
 }
 

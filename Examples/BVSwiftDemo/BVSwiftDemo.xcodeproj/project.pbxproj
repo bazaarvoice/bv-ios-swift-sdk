@@ -20,6 +20,8 @@
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
 		42BC40EC2473BB5100008434 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40EB2473BB5100008434 /* Assets.xcassets */; };
 		42BC40EF2473BB5100008434 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40ED2473BB5100008434 /* LaunchScreen.storyboard */; };
+		42C84FF624B71EA5000CA49F /* HomeAdvertisementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C84FF524B71EA5000CA49F /* HomeAdvertisementCollectionViewCell.swift */; };
+		42C84FF924B7212F000CA49F /* revolution_cycles.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C84FF824B7212F000CA49F /* revolution_cycles.png */; };
 		42CE5F9B24ADDE8B009D050B /* MockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CE5F9A24ADDE8B009D050B /* MockDataManager.swift */; };
 		42CE5FA224ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5F9E24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json */; };
 		42CE5FA324ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CE5F9F24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json */; };
@@ -88,6 +90,8 @@
 		42BC40EB2473BB5100008434 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42BC40EE2473BB5100008434 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42BC40F02473BB5100008434 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42C84FF524B71EA5000CA49F /* HomeAdvertisementCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAdvertisementCollectionViewCell.swift; sourceTree = "<group>"; };
+		42C84FF824B7212F000CA49F /* revolution_cycles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = revolution_cycles.png; sourceTree = "<group>"; };
 		42CE5F9A24ADDE8B009D050B /* MockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataManager.swift; sourceTree = "<group>"; };
 		42CE5F9E24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortHighestRated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles_SortHighestRated.json; sourceTree = "<group>"; };
 		42CE5F9F24ADE297009D050B /* conversationsReviewsEnduranceCycles_SortMostHelpful.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversationsReviewsEnduranceCycles_SortMostHelpful.json; sourceTree = "<group>"; };
@@ -220,6 +224,14 @@
 			path = BVSwiftDemo;
 			sourceTree = "<group>";
 		};
+		42C84FF724B720FC000CA49F /* Home Advertisement Images */ = {
+			isa = PBXGroup;
+			children = (
+				42C84FF824B7212F000CA49F /* revolution_cycles.png */,
+			);
+			path = "Home Advertisement Images";
+			sourceTree = "<group>";
+		};
 		42CE5F9C24ADE240009D050B /* JSONFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +313,7 @@
 			children = (
 				9F8A7C6C24893F1300FA221C /* CurationsCollectionViewCell.swift */,
 				42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */,
+				42C84FF524B71EA5000CA49F /* HomeAdvertisementCollectionViewCell.swift */,
 			);
 			path = UICollectionViewCells;
 			sourceTree = "<group>";
@@ -355,6 +368,7 @@
 		9FF7EB952473C1AA007FD337 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				42C84FF724B720FC000CA49F /* Home Advertisement Images */,
 				4247D14624B6FC88002D6009 /* Home Header Images */,
 				42CE5F9C24ADE240009D050B /* JSONFiles */,
 				42BC40EB2473BB5100008434 /* Assets.xcassets */,
@@ -435,6 +449,7 @@
 				42CE5FB824ADE2B4009D050B /* testNotificationConfig.json in Resources */,
 				42CE5FBF24ADE2B4009D050B /* curationsEnduranceCycles.json in Resources */,
 				42CE5FBC24ADE2B4009D050B /* testNotificationProductConfig.json in Resources */,
+				42C84FF924B7212F000CA49F /* revolution_cycles.png in Resources */,
 				42CE5FA424ADE297009D050B /* conversationsReviewsEnduranceCycles_SortLowestRated.json in Resources */,
 				42CE5FB724ADE2B4009D050B /* submitReview.json in Resources */,
 				42CE5FBA24ADE2B4009D050B /* conversationsReviewsEnduranceCycles.json in Resources */,
@@ -513,6 +528,7 @@
 				9FA659832474F37D00D9498F /* BVSwiftDemoNavigationController.swift in Sources */,
 				42FC2DEA248F9D3600947F4A /* ReviewsViewController.swift in Sources */,
 				42FC2DEC248F9D5400947F4A /* ReviewsViewModel.swift in Sources */,
+				42C84FF624B71EA5000CA49F /* HomeAdvertisementCollectionViewCell.swift in Sources */,
 				9FA73B03248FB2BA00746ACA /* AnswerTableViewCell.swift in Sources */,
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
 				42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */,
