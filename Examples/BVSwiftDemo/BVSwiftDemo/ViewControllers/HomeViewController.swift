@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GoogleMobileAds
+import BVSwift
 
 protocol HomeCollectionViewControllerDelegate: class {
     func reloadCollectionView()
@@ -30,12 +32,7 @@ class HomeViewController: UIViewController, ViewControllerType {
     var viewModel: HomeViewModelDelegate!
     var timer = Timer()
     var counter = 0
-    
-    var images = [
-        UIImage(named: "slide_1.jpg"),
-        UIImage(named: "slide_2.jpg"),
-        UIImage(named: "slide_3.jpg")
-    ]
+    private var adLoader: GADAdLoader?
     
     var currentPageIndex : Int = 0 {
         didSet {
@@ -55,7 +52,7 @@ class HomeViewController: UIViewController, ViewControllerType {
     class func createTitleLabel() -> UILabel {
         let titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 200,height: 44))
         
-        titleLabel.text = "bazaarvoice:";
+        titleLabel.text = AppConstants.appName
         titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.systemFont(ofSize: 34)
@@ -63,17 +60,17 @@ class HomeViewController: UIViewController, ViewControllerType {
     }
     
     private func setPageView() {
-        self.pageControl.numberOfPages = self.images.count
+        self.pageControl.numberOfPages = self.viewModel.adImageArrary.count
         self.pageControl.currentPage = 0
         
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
     }
     
     @objc func changeImage() {
         
-        if self.counter < self.images.count {
+        if self.counter < self.viewModel.adImageArrary.count {
             let index = IndexPath.init(item: self.counter, section: 0)
             self.bvHeaderCollectionView.scrollToItem(at: index, at: .centeredVertically, animated: true)
             self.pageControl.currentPage = self.counter
@@ -85,7 +82,18 @@ class HomeViewController: UIViewController, ViewControllerType {
             self.pageControl.currentPage = self.counter
             self.counter = 1
         }
+    }
+    
+    private func initAdvertisement() {
         
+        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
+        multipleAdsOptions.numberOfAds = 5
+        
+        adLoader = GADAdLoader(adUnitID: AdKey.adUnitId, rootViewController: self,
+                               adTypes: [GADAdLoaderAdType.unifiedNative],
+                               options: [multipleAdsOptions])
+        adLoader?.delegate = self
+        adLoader?.load(GADRequest())
     }
 }
 
@@ -115,7 +123,7 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if collectionView == self.bvHeaderCollectionView {
-            return self.images.count
+            return self.viewModel.adImageArrary.count
         }
         else {
             return self.viewModel.numberOfItems + 1
@@ -126,13 +134,17 @@ extension HomeViewController: UICollectionViewDataSource {
         
         if collectionView == self.bvHeaderCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.HEADER_CELL_IDENTIFIER, for: indexPath)
+            
             if let vc = cell.viewWithTag(1) as? UIImageView {
-                vc.image = self.images[indexPath.row]
+                vc.image = self.viewModel.adImageArrary[indexPath.row]
             }
+            
             return cell
         }
         else if (indexPath.row == self.viewModel.numberOfItems) {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.HEADER_Ad_CELL_IDENTIFIER, for: indexPath) as? HomeAdvertisementCollectionViewCell else  { return UICollectionViewCell() }
+            
+            self.initAdvertisement()
             
             return cell
         }
@@ -173,9 +185,34 @@ extension HomeViewController: UICollectionViewDelegate {
         
         if collectionView == self.bvHeaderCollectionView {
             return
-        } else {
+        }
+        else if indexPath.row == self.viewModel.numberOfItems {
+            return
+        }
+        else {
+            
             self.viewModel.didSelectItemAt(indexPath: indexPath)
         }
     }
+}
+
+// MARK:- GADUnifiedNativeADLoaderDelegate
+extension HomeViewController: GADUnifiedNativeAdLoaderDelegate {
+    
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+        
+        if self.bvRecommendationProductCollectionView.cellForItem(at: IndexPath(row: 5, section: 1)) != nil {
+            
+            let nativeAdCell = self.bvRecommendationProductCollectionView.cellForItem(at: IndexPath(row: 5, section: 1)) as! HomeAdvertisementCollectionViewCell
+            
+            nativeAdCell.nativeContentAd = nativeAd
+        }
+    }
+    
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+        print("Failed to receive advertisement: " + error.localizedDescription)
+        self.adLoader = nil
+    }
+    
 }
 

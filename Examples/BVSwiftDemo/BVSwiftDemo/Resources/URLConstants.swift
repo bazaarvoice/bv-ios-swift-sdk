@@ -28,7 +28,15 @@ class URLConstants {
     
 }
 
+class AppConstants {
+    static let appName = "bazaarvoice:"
+}
+
 class Headers {
     static let header = ["Content-Type": "application/json"]
     static let header_utf8 = ["Content-Type": "application/json;charset=utf-8"]
+}
+
+class AdKey {
+    static let adUnitId = "/5705/bv-incubator/IncubatorEnduranceCycles"
 }

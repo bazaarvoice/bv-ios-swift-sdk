@@ -12,6 +12,7 @@ import BVSwift
 protocol HomeViewModelDelegate: class {
     var numberOfSections: Int { get }
     var numberOfItems: Int { get }
+    var adImageArrary: [UIImage?] { get }
     func productForItemAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct?
     func didSelectItemAt (indexPath: IndexPath)
     func loadProductRecommendations()
@@ -31,6 +32,14 @@ extension HomeViewModel: HomeViewModelDelegate {
     
     var numberOfSections: Int {
         return 1
+    }
+    
+    var adImageArrary: [UIImage?] {
+        return [
+            UIImage(named: "slide_1.jpg"),
+            UIImage(named: "slide_2.jpg"),
+            UIImage(named: "slide_3.jpg")
+        ]
     }
     
     var numberOfItems: Int {
