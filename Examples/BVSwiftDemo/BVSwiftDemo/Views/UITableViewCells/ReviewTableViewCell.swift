@@ -94,7 +94,7 @@ class ReviewTableViewCell: UITableViewCell {
                 guard let strongSelf = self else { return }
                 
                 guard let _ = error else { return }
-                strongSelf.reviewPhoto.image = FAKFontAwesome.photoIcon(withSize: 100.0)?
+                strongSelf.reviewPhoto.image = FAKFontAwesome.photoIcon(withSize: 80.0)?
                     .image(with: CGSize(width: strongSelf.reviewPhoto.frame.size.width,
                                         height: strongSelf.reviewPhoto.frame.size.height))
                 strongSelf.reviewPhoto.image?.withTintColor(UIColor.bazaarvoiceNavy)
