@@ -213,11 +213,11 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Um3-0G-cwr" customClass="GADNativeContentAdView">
                                                             <rect key="frame" x="0.0" y="0.0" width="404" height="218"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="747" image="revolution_cycles.png" translatesAutoresizingMaskIntoConstraints="NO" id="lan-T3-wSL">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="747" image="revolution_cycles.png" translatesAutoresizingMaskIntoConstraints="NO" id="lan-T3-wSL" customClass="nativeContentAdView">
                                                                     <rect key="frame" x="0.0" y="0.0" width="404" height="218"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Revolution Cycling Tours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4T-PT-0lf">
-                                                                    <rect key="frame" x="10" y="6" width="203" height="20.5"/>
+                                                                    <rect key="frame" x="10" y="6" width="193" height="20.5"/>
                                                                     <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="20.5" id="ihB-42-C3V"/>
@@ -239,7 +239,6 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sponsored" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFO-OH-gfS">
                                                                     <rect key="frame" x="10" y="194" width="66" height="14"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="66" id="SuE-pM-SV3"/>
                                                                         <constraint firstAttribute="height" constant="14" id="ndl-IV-a94"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -250,6 +249,7 @@
                                                                     <rect key="frame" x="215.5" y="158" width="178.5" height="50"/>
                                                                     <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="width" constant="178.5" id="DmK-zh-2M2"/>
                                                                         <constraint firstAttribute="height" constant="50" id="cld-jt-vea"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
@@ -260,18 +260,19 @@
                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="KFO-OH-gfS" firstAttribute="leading" secondItem="Um3-0G-cwr" secondAttribute="leading" constant="10" id="2Un-wz-XCg"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Y1Q-f9-PKJ" secondAttribute="trailing" constant="10" id="9xV-PU-aMw"/>
                                                                 <constraint firstAttribute="trailing" secondItem="lan-T3-wSL" secondAttribute="trailing" id="F5q-mE-8ih"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Y1Q-f9-PKJ" secondAttribute="trailing" constant="10" id="ICH-Pu-oBM"/>
                                                                 <constraint firstItem="xV0-91-GbL" firstAttribute="top" secondItem="h4T-PT-0lf" secondAttribute="bottom" constant="2" id="Mks-8J-UeS"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Y1Q-f9-PKJ" secondAttribute="trailing" constant="10" id="R1A-bi-BMX"/>
                                                                 <constraint firstItem="h4T-PT-0lf" firstAttribute="leading" secondItem="Um3-0G-cwr" secondAttribute="leading" constant="10" id="T5y-tv-brf"/>
                                                                 <constraint firstItem="Y1Q-f9-PKJ" firstAttribute="leading" secondItem="KFO-OH-gfS" secondAttribute="trailing" constant="139.5" id="UY1-l5-iRU"/>
                                                                 <constraint firstItem="lan-T3-wSL" firstAttribute="leading" secondItem="Um3-0G-cwr" secondAttribute="leading" id="VP6-bZ-gW7"/>
+                                                                <constraint firstItem="lan-T3-wSL" firstAttribute="leading" secondItem="h4T-PT-0lf" secondAttribute="trailing" constant="-203" id="Wxb-Os-QnE"/>
                                                                 <constraint firstAttribute="bottom" secondItem="lan-T3-wSL" secondAttribute="bottom" id="ZMB-mD-Sju"/>
-                                                                <constraint firstItem="lan-T3-wSL" firstAttribute="leading" secondItem="xV0-91-GbL" secondAttribute="trailing" constant="-162.5" id="ZXP-5l-t8e"/>
                                                                 <constraint firstAttribute="bottom" secondItem="Y1Q-f9-PKJ" secondAttribute="bottom" constant="10" id="agl-rG-Yqz"/>
                                                                 <constraint firstItem="lan-T3-wSL" firstAttribute="top" secondItem="Um3-0G-cwr" secondAttribute="top" id="dpt-HT-qnZ"/>
                                                                 <constraint firstAttribute="bottom" secondItem="KFO-OH-gfS" secondAttribute="bottom" constant="10" id="gGw-sd-j4x"/>
-                                                                <constraint firstItem="lan-T3-wSL" firstAttribute="leading" secondItem="h4T-PT-0lf" secondAttribute="trailing" constant="-213" id="lya-ho-R0P"/>
+                                                                <constraint firstItem="lan-T3-wSL" firstAttribute="leading" secondItem="xV0-91-GbL" secondAttribute="trailing" constant="-162.5" id="iFy-42-kd2"/>
                                                                 <constraint firstItem="xV0-91-GbL" firstAttribute="leading" secondItem="Um3-0G-cwr" secondAttribute="leading" constant="10" id="pkj-bc-pbL"/>
                                                                 <constraint firstItem="h4T-PT-0lf" firstAttribute="top" secondItem="Um3-0G-cwr" secondAttribute="top" constant="6" id="tKk-hL-txC"/>
                                                             </constraints>
@@ -284,6 +285,9 @@
                                                         <constraint firstItem="Um3-0G-cwr" firstAttribute="top" secondItem="lqY-OY-Ol3" secondAttribute="top" id="oeU-OW-gQN"/>
                                                     </constraints>
                                                 </collectionViewCellContentView>
+                                                <connections>
+                                                    <outlet property="nativeContentAdView" destination="Um3-0G-cwr" id="Mcb-tB-EnN"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                         <connections>

@@ -55,7 +55,7 @@ class ProductDisplayPageViewController: UIViewController , ViewControllerType {
     class func createTitleLabel() -> UILabel {
         let titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 200,height: 44))
         
-        titleLabel.text = "bazaarvoice:";
+        titleLabel.text = AppConstants.appName
         titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.systemFont(ofSize: 34)
