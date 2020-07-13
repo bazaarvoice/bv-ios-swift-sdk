@@ -68,19 +68,6 @@ class AuthorViewModel: ViewModelType {
         case Answers
     }
     
-    //Temp
-    private static var config: BVConversationsConfiguration =
-    { () -> BVConversationsConfiguration in
-        
-        let analyticsConfig: BVAnalyticsConfiguration =
-            .dryRun(
-                configType: .staging(clientId: "conciergeapidocumentation"))
-        
-        return BVConversationsConfiguration.display(
-            clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
-            configType: .staging(clientId: "conciergeapidocumentation"),
-            analyticsConfig: analyticsConfig)
-    }()
 }
 
 extension AuthorViewModel : AuthorViewModelDelegate {
@@ -155,7 +142,7 @@ extension AuthorViewModel : AuthorViewModelDelegate {
         
         delegate.showLoadingIndicator()
         
-        let authorQuery = BVAuthorQuery(authorId: "data-gen-user-poaouvr127us1ijhpafkfacb9")//self.authorId)
+        let authorQuery = BVAuthorQuery(authorId: self.authorId)
             // stats includes
             .stats(.answers)
             .stats(.questions)
@@ -171,8 +158,7 @@ extension AuthorViewModel : AuthorViewModelDelegate {
             .sort(.reviews(.submissionTime), order: .descending)
             .sort(.questions(.submissionTime), order: .descending)
             
-            //.configure(ConfigurationManager.sharedInstance.conversationsConfig)
-            .configure(AuthorViewModel.config)
+            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
             .handler { [weak self] response in
                 
                 delegate.hideLoadingIndicator()
