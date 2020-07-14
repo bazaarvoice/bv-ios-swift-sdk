@@ -32,6 +32,14 @@ class AppConstants {
     static let appName = "bazaarvoice:"
 }
 
+class ViewControllerTittles {
+    static let write_a_Review = "Write a Review"
+}
+
+class NavigationBarButtonNames {
+    static let write_a_Review = "Write a Review"
+}
+
 class Headers {
     static let header = ["Content-Type": "application/json"]
     static let header_utf8 = ["Content-Type": "application/json;charset=utf-8"]

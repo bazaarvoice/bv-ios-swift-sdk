@@ -47,6 +47,8 @@ protocol ReviewsViewModelDelegate: class {
         
     func numberOfRowsForReviewHighlights(_ section: Int) -> Int
     
+    func writeReviewTapped()
+    
     var numberOfSectionsForReviewHighlights: Int { get }
     
     func reviewHighlightsHeaderTitleForIndexPath(_ indexPath: IndexPath) -> String
@@ -100,6 +102,10 @@ class ReviewsViewModel: ViewModelType {
 
 extension ReviewsViewModel: ReviewsViewModelDelegate {
     
+    func writeReviewTapped() {
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.writeReview(productId: self.productId, product: self.product))
+    }
+
     func getBvReviewHighlightsData() -> BVReviewHighlights? {
         return self.bvReviewHighlights
     }
