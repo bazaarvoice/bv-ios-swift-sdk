@@ -8,6 +8,7 @@
 
 import UIKit
 import HCSStarRatingView
+import FontAwesomeKit
 
 protocol AskAQuestionViewControllerDelegate: class {
     
@@ -32,10 +33,35 @@ class AskAQuestionViewController: UIViewController, ViewControllerType {
                                                                  style: .plain,
                                                                  target: self,
                                                                  action: #selector(AskAQuestionViewController.submitQuestionTapped))
+        self.updateProductDetails()
     }
     
     @objc func submitQuestionTapped() {
         self.viewModel.submitQuestionTapped()
+    }
+    
+    private func updateProductDetails() {
+        self.productNameLabel.text = self.viewModel.productName
+        
+        self.productStarRatingView.value = CGFloat(self.viewModel.productRating ?? 0.0)
+        
+        if let imageURL = self.viewModel.productImageURL {
+            
+            self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                
+                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 70.0)?
+                    .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
+                                        height: strongSelf.productImageView.frame.size.height + 20))
+                    .withTintColor(UIColor.bazaarvoiceNavy)
+            }
+        }
+        else {
+            self.productImageView.image = #imageLiteral(resourceName: "placeholder")
+        }
     }
     
     
