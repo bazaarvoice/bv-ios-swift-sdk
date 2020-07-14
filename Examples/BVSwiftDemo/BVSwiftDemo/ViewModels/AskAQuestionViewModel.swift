@@ -7,22 +7,46 @@
 //
 
 import Foundation
+import BVSwift
 
 protocol AskAQuestionViewModelDelegate: class {
-  func submitQuestionTapped()
+    
+    var productName: String? { get }
+    
+    var productRating: Double? { get }
+    
+    var productImageURL: URL? { get }
+    
+    func submitQuestionTapped()
 }
 
 class AskAQuestionViewModel: ViewModelType {
-  
-  weak var viewController: AskAQuestionViewControllerDelegate?
-  
-  weak var coordinator: Coordinator?
     
-  
+    weak var viewController: AskAQuestionViewControllerDelegate?
+    
+    weak var coordinator: Coordinator?
+    
+    private let product: BVProduct
+    
+    init(product: BVProduct) {
+        self.product = product
+    }
 }
 
 // MARK:- AskAQuestionViewModelDelegate methods
 extension AskAQuestionViewModel: AskAQuestionViewModelDelegate {
+    
+    var productName: String? {
+        return self.product.name
+    }
+    
+    var productRating: Double? {
+        return self.product.reviewStatistics?.averageOverallRating
+    }
+    
+    var productImageURL: URL? {
+        return self.product.imageUrl?.value
+    }
     
     func submitQuestionTapped() {
         
