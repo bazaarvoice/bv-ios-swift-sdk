@@ -52,6 +52,8 @@
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */; };
 		9F32E671247FA34300CA2633 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E670247FA34300CA2633 /* CardView.swift */; };
+		9F37A8DB24BD8FC700B23DDB /* AskAQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37A8DA24BD8FC700B23DDB /* AskAQuestionViewController.swift */; };
+		9F37A8DD24BD8FDE00B23DDB /* AskAQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37A8DC24BD8FDE00B23DDB /* AskAQuestionViewModel.swift */; };
 		9F8A7C6B248938B100FA221C /* ProductDetailCurationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A7C6A248938B100FA221C /* ProductDetailCurationsTableViewCell.swift */; };
 		9F8A7C6D24893F1300FA221C /* CurationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A7C6C24893F1300FA221C /* CurationsCollectionViewCell.swift */; };
 		9FA2C5262486328A00C0DD6C /* ProductDisplayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */; };
@@ -124,6 +126,8 @@
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		9F32E670247FA34300CA2633 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		9F37A8DA24BD8FC700B23DDB /* AskAQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionViewController.swift; sourceTree = "<group>"; };
+		9F37A8DC24BD8FDE00B23DDB /* AskAQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionViewModel.swift; sourceTree = "<group>"; };
 		9F8A7C6A248938B100FA221C /* ProductDetailCurationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCurationsTableViewCell.swift; sourceTree = "<group>"; };
 		9F8A7C6C24893F1300FA221C /* CurationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayPageViewController.swift; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 				42FC2DE9248F9D3600947F4A /* ReviewsViewController.swift */,
 				9FA73AFC248F885C00746ACA /* AnswersTableViewController.swift */,
 				42665BE02498A43A00586C9A /* AuthorViewController.swift */,
+				9F37A8DA24BD8FC700B23DDB /* AskAQuestionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				42FC2DEB248F9D5400947F4A /* ReviewsViewModel.swift */,
 				9FA73AFE248F898A00746ACA /* AnswersViewModel.swift */,
 				42665BE22498A45900586C9A /* AuthorViewModel.swift */,
+				9F37A8DC24BD8FDE00B23DDB /* AskAQuestionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -535,6 +541,7 @@
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
 				42CE5F9B24ADDE8B009D050B /* MockDataManager.swift in Sources */,
 				42665BE12498A43A00586C9A /* AuthorViewController.swift in Sources */,
+				9F37A8DD24BD8FDE00B23DDB /* AskAQuestionViewModel.swift in Sources */,
 				42FC2DF2248FAB8800947F4A /* ReviewHighlightsHeaderTableViewCell.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
 				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
@@ -558,6 +565,7 @@
 				9F32E671247FA34300CA2633 /* CardView.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerType.swift in Sources */,
 				42FC2DF0248F9DAD00947F4A /* ReviewHighLightsTableViewCell.swift in Sources */,
+				9F37A8DB24BD8FC700B23DDB /* AskAQuestionViewController.swift in Sources */,
 				42FC2DEE248F9D8300947F4A /* ReviewTableViewCell.swift in Sources */,
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
 				9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */,
