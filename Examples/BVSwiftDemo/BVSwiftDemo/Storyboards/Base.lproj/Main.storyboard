@@ -919,6 +919,43 @@
             </objects>
             <point key="canvasLocation" x="3029" y="127"/>
         </scene>
+        <!--AskA Question View Controller-->
+        <scene sceneID="5rs-nU-bH0">
+            <objects>
+                <viewController id="TlC-Rq-MZ5" customClass="AskAQuestionViewController" customModule="BVSwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7ql-Ya-iH1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IcG-1Y-GFE">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ICs-Wu-icE">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ICs-Wu-icE" id="SSn-xo-qtR">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="IcG-1Y-GFE" firstAttribute="top" secondItem="dst-uc-Ccd" secondAttribute="top" id="LWx-ga-dfI"/>
+                            <constraint firstItem="IcG-1Y-GFE" firstAttribute="leading" secondItem="dst-uc-Ccd" secondAttribute="leading" id="O3e-jR-EVT"/>
+                            <constraint firstItem="dst-uc-Ccd" firstAttribute="trailing" secondItem="IcG-1Y-GFE" secondAttribute="trailing" id="pug-g4-YEC"/>
+                            <constraint firstItem="dst-uc-Ccd" firstAttribute="bottom" secondItem="IcG-1Y-GFE" secondAttribute="bottom" id="vH3-u7-4dZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="dst-uc-Ccd"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lBN-Zo-7Di" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3951" y="127"/>
+        </scene>
         <!--Product Display Page View Controller-->
         <scene sceneID="h4p-h1-FPa">
             <objects>
@@ -1850,7 +1887,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YiV-ib-nfn">
-                                                <rect key="frame" x="8" y="14" width="58.000000000000114" height="55"/>
+                                                <rect key="frame" x="8" y="14.5" width="58" height="54"/>
                                                 <color key="tintColor" red="0.0" green="0.23921568630000001" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="58" id="G2G-hJ-fQh"/>
