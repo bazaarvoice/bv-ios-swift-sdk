@@ -20,3 +20,8 @@ class AskAQuestionViewModel: ViewModelType {
     
   
 }
+
+// MARK:- AskAQuestionViewModelDelegate methods
+extension AskAQuestionViewModel: AskAQuestionViewModelDelegate {
+    
+}
