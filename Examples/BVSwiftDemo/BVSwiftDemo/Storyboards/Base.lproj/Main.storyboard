@@ -928,7 +928,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IcG-1Y-GFE">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ICs-Wu-icE">
@@ -941,16 +941,93 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wa0-Zb-cfM" customClass="ProductDetailHeaderView" customModule="BVSwiftDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="80"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fks-iZ-HSw">
+                                        <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="fks-iZ-HSw" secondAttribute="height" multiplier="1:1" id="JWk-cc-Kfe"/>
+                                            <constraint firstAttribute="height" constant="122" id="fFq-a8-mdh"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="fFq-a8-mdh"/>
+                                                <exclude reference="JWk-cc-Kfe"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="jWw-Vm-haX">
+                                        <rect key="frame" x="80" y="15.5" width="115" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                                        <color key="textColor" red="0.0" green="0.2392156869" blue="0.29803922770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gO1-Yo-Nox" customClass="HCSStarRatingView">
+                                        <rect key="frame" x="80" y="41" width="100" height="20"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.99715530870000002" green="0.85457783939999998" blue="0.063469812269999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="0Od-aC-OtP"/>
+                                            <constraint firstAttribute="height" constant="20" id="r6l-Qj-FnS"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsHalfStars" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="accurateHalfStars" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="continuous" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZLM-dh-uKC">
+                                        <rect key="frame" x="0.0" y="79.5" width="414" height="0.5"/>
+                                        <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="FQC-2A-MA0"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="jWw-Vm-haX" firstAttribute="bottom" secondItem="Wa0-Zb-cfM" secondAttribute="centerY" constant="-3" id="BXd-Yl-N5b"/>
+                                    <constraint firstItem="ZLM-dh-uKC" firstAttribute="leading" secondItem="Wa0-Zb-cfM" secondAttribute="leading" id="BXv-5F-dB0"/>
+                                    <constraint firstItem="gO1-Yo-Nox" firstAttribute="leading" secondItem="jWw-Vm-haX" secondAttribute="leading" id="Cy7-Om-DZ4"/>
+                                    <constraint firstItem="fks-iZ-HSw" firstAttribute="width" secondItem="fks-iZ-HSw" secondAttribute="height" multiplier="1:1" id="JIp-3s-zrk"/>
+                                    <constraint firstItem="gO1-Yo-Nox" firstAttribute="top" secondItem="jWw-Vm-haX" secondAttribute="bottom" constant="4" id="NwP-1L-gFc"/>
+                                    <constraint firstAttribute="height" constant="80" id="Xfy-hu-WGc"/>
+                                    <constraint firstItem="jWw-Vm-haX" firstAttribute="top" secondItem="fks-iZ-HSw" secondAttribute="top" id="a7T-Uf-jtL"/>
+                                    <constraint firstItem="fks-iZ-HSw" firstAttribute="top" secondItem="Wa0-Zb-cfM" secondAttribute="topMargin" id="bLE-SB-VuD"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZLM-dh-uKC" secondAttribute="trailing" id="h8t-6l-Gg3"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="fks-iZ-HSw" secondAttribute="bottom" id="hpK-rV-Hob"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZLM-dh-uKC" secondAttribute="bottom" id="ofr-BJ-4JE"/>
+                                    <constraint firstItem="fks-iZ-HSw" firstAttribute="leading" secondItem="Wa0-Zb-cfM" secondAttribute="leadingMargin" id="r9X-cX-Khs"/>
+                                    <constraint firstItem="jWw-Vm-haX" firstAttribute="leading" secondItem="fks-iZ-HSw" secondAttribute="trailing" constant="8" id="wdu-la-XXX"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="a7T-Uf-jtL"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="IcG-1Y-GFE" firstAttribute="top" secondItem="dst-uc-Ccd" secondAttribute="top" id="LWx-ga-dfI"/>
+                            <constraint firstItem="IcG-1Y-GFE" firstAttribute="top" secondItem="Wa0-Zb-cfM" secondAttribute="bottom" id="BLL-vl-65p"/>
+                            <constraint firstItem="Wa0-Zb-cfM" firstAttribute="trailing" secondItem="dst-uc-Ccd" secondAttribute="trailing" id="NQ9-Nn-snu"/>
                             <constraint firstItem="IcG-1Y-GFE" firstAttribute="leading" secondItem="dst-uc-Ccd" secondAttribute="leading" id="O3e-jR-EVT"/>
+                            <constraint firstItem="Wa0-Zb-cfM" firstAttribute="leading" secondItem="dst-uc-Ccd" secondAttribute="leading" id="Ttc-VR-gSl"/>
+                            <constraint firstItem="Wa0-Zb-cfM" firstAttribute="top" secondItem="dst-uc-Ccd" secondAttribute="top" id="mDD-FR-Eom"/>
                             <constraint firstItem="dst-uc-Ccd" firstAttribute="trailing" secondItem="IcG-1Y-GFE" secondAttribute="trailing" id="pug-g4-YEC"/>
                             <constraint firstItem="dst-uc-Ccd" firstAttribute="bottom" secondItem="IcG-1Y-GFE" secondAttribute="bottom" id="vH3-u7-4dZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dst-uc-Ccd"/>
                     </view>
+                    <connections>
+                        <outlet property="productImageView" destination="fks-iZ-HSw" id="5hN-ML-20s"/>
+                        <outlet property="productNameLabel" destination="jWw-Vm-haX" id="Z2r-kf-Ltj"/>
+                        <outlet property="productStarRatingView" destination="gO1-Yo-Nox" id="XZg-Ld-5Ci"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lBN-Zo-7Di" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
