@@ -42,7 +42,10 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NavigationBarButtonNames.write_a_Review,
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(ReviewsViewController.writeReviewTapped))
         self.viewModel.fetchReviews()
         
         self.updateProductDetails()
@@ -71,6 +74,10 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         else {
             self.productImageView.image = #imageLiteral(resourceName: "placeholder")
         }
+    }
+    
+    @objc func writeReviewTapped() {
+        self.viewModel.writeReviewTapped()
     }
     
     private func updateReviewHightlightsTableViewHeightConstraints(indexPath: IndexPath) {

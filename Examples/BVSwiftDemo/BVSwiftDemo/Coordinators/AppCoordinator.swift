@@ -23,6 +23,8 @@ class AppCoordinator: Coordinator {
         case answers(question: BVQuestion, product: BVProduct)
         
         case author(authorId: String)
+        
+        case writeReview(productId: String, product: BVProduct)
     }
     
     // MARK:- Initializers
@@ -69,6 +71,9 @@ class AppCoordinator: Coordinator {
         case .author(let authorId):
             self.showAuthorScreen(authorId: authorId)
             
+        case .writeReview(let productId, let product):
+            self.showWriteReviewScreen(productId: productId, product: product)
+            
         }
     }
     
@@ -88,6 +93,23 @@ class AppCoordinator: Coordinator {
         // 3. Assign View Model and Push View Controller
         productDisplayPageViewController.viewModel = productDisplayPageViewModel
         self.navigationController.pushViewController(productDisplayPageViewController, animated: true)
+    }
+    
+    private func showWriteReviewScreen(productId: String, product: BVProduct) {
+        
+        //1. Create View Controller
+        let writeReviewViewController = WriteReviewViewController.instantiate()
+        writeReviewViewController.navigationController?.title = ViewControllerTittles.write_a_Review
+        
+        //2. Create View Model
+        let writeViewModel = WriteReviewViewModel(productId: productId, product: product)
+        writeViewModel.coordinator = self
+        writeViewModel.viewController = writeReviewViewController as? WriteReviewViewControllerDelegate
+        
+        //3. Assign and Navigate
+        writeReviewViewController.viewModel = writeViewModel as? WriteReviewViewModelDelegate
+        self.navigationController.pushViewController(writeReviewViewController, animated: true)
+        
     }
     
     private func showQuestionsScreen(productId: String, product: BVProduct) {
