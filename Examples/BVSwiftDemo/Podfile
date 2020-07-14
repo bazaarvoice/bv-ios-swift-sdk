@@ -18,5 +18,6 @@ target 'BVSwiftDemo' do
   pod 'HCSStarRatingView'
   pod 'OHHTTPStubs/Swift'
   pod 'SwiftyJSON'
+  pod 'SDForms', :git => 'https://github.com/austimkelly/SDForms.git', :branch => 'master'
   
 end
