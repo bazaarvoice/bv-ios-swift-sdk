@@ -132,7 +132,7 @@ extension QuestionsViewModel: QuestionsViewModelDelegate {
     }
     
     func askQuestionTapped() {
-        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.askAQuestion)
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.askAQuestion(product: self.product))
     }
     
     func readAnswersTapped(question: BVQuestion) {
