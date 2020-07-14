@@ -9,20 +9,23 @@
 import UIKit
 import HCSStarRatingView
 import FontAwesomeKit
+import SDForms
 
 protocol AskAQuestionViewControllerDelegate: class {
-    
+    func configureForm()
 }
 
 class AskAQuestionViewController: UIViewController, ViewControllerType {
     
     // MARK:- Variables
     var viewModel: AskAQuestionViewModelDelegate!
+    var form: SDForm?
     
     // MARK:- IBOutlets
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productStarRatingView: HCSStarRatingView!
+    @IBOutlet weak var askAQuestionTableView: UITableView!
     
     // MARK:- Lifecycle methods
     override func viewDidLoad() {
@@ -30,10 +33,15 @@ class AskAQuestionViewController: UIViewController, ViewControllerType {
         
         // Do any additional setup after loading the view.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit",
-                                                                 style: .plain,
+                                                                 style: .done,
                                                                  target: self,
                                                                  action: #selector(AskAQuestionViewController.submitQuestionTapped))
         self.updateProductDetails()
+        self.configureForm()
+        
+        self.askAQuestionTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
+        self.view.backgroundColor = UIColor.appBackground
+        self.askAQuestionTableView.backgroundColor = UIColor.white
     }
     
     @objc func submitQuestionTapped() {
@@ -77,7 +85,48 @@ class AskAQuestionViewController: UIViewController, ViewControllerType {
     
 }
 
+// MARK:- SDFormDataSource and SDFormDelegate methods
+extension AskAQuestionViewController: SDFormDataSource, SDFormDelegate {
+    
+    func form(_ form: SDForm!, willDisplayHeaderView view: UIView!, forSection section: Int) {
+        let hv = view as! UITableViewHeaderFooterView
+        let color = UIColor.white
+        hv.tintColor = color
+        hv.contentView.backgroundColor = color
+        hv.textLabel?.textColor = UIColor.bazaarvoiceNavy
+    }
+    
+    func form(_ form: SDForm!, viewForFooterInSection section: Int) -> UIView! {
+        return UIView(frame: CGRect.zero)
+    }
+    
+    func numberOfSections(for form: SDForm!) -> Int {
+        return self.viewModel.numberOfSections
+    }
+    
+    func form(_ form: SDForm!, numberOfFieldsInSection section: Int) -> Int {
+        return self.viewModel.numberOfFieldsInSection(section)
+    }
+    
+    func form(_ form: SDForm!, titleForHeaderInSection section: Int) -> String! {
+        return self.viewModel.titleForHeaderInSection(section)
+    }
+    
+    func form(_ form: SDForm!, fieldForRow row: Int, inSection section: Int) -> SDFormField! {
+        return self.viewModel.formFieldForRow(row: row, inSection: section)
+    }
+    
+    func viewController(for form: SDForm!) -> UIViewController! {
+        return self
+    }
+}
+
 // MARK:- AskAQuestionViewControllerDelegate methods
 extension AskAQuestionViewController: AskAQuestionViewControllerDelegate {
     
+    func configureForm() {
+        self.form = SDForm(tableView: self.askAQuestionTableView)
+        self.form?.delegate = self
+        self.form?.dataSource = self
+    }
 }

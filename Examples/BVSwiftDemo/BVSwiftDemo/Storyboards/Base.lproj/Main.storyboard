@@ -929,7 +929,8 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IcG-1Y-GFE">
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" name="bazaarvoiceScreenBackground"/>
+                                <color key="tintColor" name="bazaarvoiceNavy"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ICs-Wu-icE">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
@@ -938,6 +939,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1024,6 +1026,7 @@
                         <viewLayoutGuide key="safeArea" id="dst-uc-Ccd"/>
                     </view>
                     <connections>
+                        <outlet property="askAQuestionTableView" destination="IcG-1Y-GFE" id="c2r-7E-Ux8"/>
                         <outlet property="productImageView" destination="fks-iZ-HSw" id="5hN-ML-20s"/>
                         <outlet property="productNameLabel" destination="jWw-Vm-haX" id="Z2r-kf-Ltj"/>
                         <outlet property="productStarRatingView" destination="gO1-Yo-Nox" id="XZg-Ld-5Ci"/>
