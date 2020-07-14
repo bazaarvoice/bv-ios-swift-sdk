@@ -9,7 +9,7 @@
 import Foundation
 
 protocol AskAQuestionViewModelDelegate: class {
-  
+  func submitQuestionTapped()
 }
 
 class AskAQuestionViewModel: ViewModelType {
@@ -24,4 +24,7 @@ class AskAQuestionViewModel: ViewModelType {
 // MARK:- AskAQuestionViewModelDelegate methods
 extension AskAQuestionViewModel: AskAQuestionViewModelDelegate {
     
+    func submitQuestionTapped() {
+        
+    }
 }
