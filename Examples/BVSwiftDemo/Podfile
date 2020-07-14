@@ -12,6 +12,7 @@ target 'BVSwiftDemo' do
   pod 'BVSwift/BVConversations', :path => "../../"
   pod 'BVSwift/BVCurations', :path => "../../"
   pod 'BVSwift/BVRecommendations', :path => "../../"
+  pod 'XLActionController'
   pod 'Google-Mobile-Ads-SDK'
   pod 'FontAwesomeKit/FontAwesome'
   pod 'SDWebImage'
