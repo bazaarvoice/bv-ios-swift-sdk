@@ -28,6 +28,37 @@ class URLConstants {
     
 }
 
+class UserFormConstants {
+    static let recommendProductSwitchKey = "recommendProductSwitch"
+    static let recommendProductSwitchText = "I recommend this product."
+    
+    static let ratingStarsKey = "ratingStars"
+    static let ratingStarsTitle = "Rate this product"
+    
+    static let reviewTitleFieldKey = "reviewTitle"
+    static let reviewTitleFieldTitle = "Review Title"
+    static let reviewTitleFieldText = "Add your review title"
+    
+    static let reviewDetailsFieldKey = "reviewDetails"
+    static let reviewDetailsFieldTitle = "Your Review"
+    static let reviewDetailsFieldText = "Add your thoughts and experinces with this product."
+    
+    static let userNicknameFieldKey = "userNickname"
+    static let userNicknameFieldTitle = "Nickname"
+    static let userNicknameFieldText = "Display name for the question"
+    
+    static let userEmailFieldKey = "userEmail"
+    static let userEmailFieldTitle = "Email address"
+    static let userEmailFieldText = "Enter a valid email address."
+    
+    static let photoKey = "photo"
+    static let photoTitle = "Add a photo (optional)"
+    
+    static let sendEmailAlertWhenPublishedFieldKey = "sendEmailAlertWhenPublished"
+    static let sendEmailAlertWhenPublishedFieldTitle = "May we contact you at this email address?"
+    static let sendEmailAlertWhenPublishedFieldText = "Send me status by email?"
+}
+
 class AppConstants {
     static let appName = "bazaarvoice:"
 }
