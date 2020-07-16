@@ -82,6 +82,47 @@ class AskAQuestionViewModel: ViewModelType {
                 
             }
         }
+        
+        func sdFormField(object: Any!) -> SDFormField {
+            
+            switch self {
+                
+            case .questionSummary:
+                let questionField = SDMultilineTextField(object: object, relatedPropertyKey: self.propertyKey)!
+                questionField.placeholder = "Example: How do I get replacement bolts?"
+                return questionField
+                
+            case .questionDetails:
+                let moreDetailsField = SDMultilineTextField(object: object, relatedPropertyKey: self.propertyKey)!
+                moreDetailsField.placeholder = "Example: I have looked at the manual and can't figure out what I'm doing wrong."
+                return moreDetailsField
+                
+            case .userNickname:
+                let nickNameField : SDTextFormField = SDTextFormField(object: object,
+                                                                      relatedPropertyKey: self.propertyKey)
+                nickNameField.placeholder = "Display name for the question"
+                return nickNameField
+                
+            case .userEmail:
+                let emailAddressField : SDTextFormField = SDTextFormField(object: object,
+                                                                          relatedPropertyKey: self.propertyKey)
+                emailAddressField.placeholder = "Enter a valid email address."
+                return emailAddressField
+                
+            case .sendEmailAlertWhenPublished:
+                let emailOKSwitchField = SDSwitchField(object: object,
+                                                       relatedPropertyKey: self.propertyKey)!
+                emailOKSwitchField.title = "Send me status by email?"
+                return emailOKSwitchField
+                
+            case .agreedToTermsAndConditions:
+                let agreeTermsAndConditions = SDSwitchField(object: object,
+                                                            relatedPropertyKey: self.propertyKey)!
+                agreeTermsAndConditions.title = "Agree?"
+                return agreeTermsAndConditions
+            }
+            
+        }
     }
     
     weak var viewController: AskAQuestionViewControllerDelegate?
@@ -92,7 +133,7 @@ class AskAQuestionViewModel: ViewModelType {
     
     private var formFields: [SDFormField] = []
     
-    private var paramsDictionary: NSMutableDictionary = [:]
+    private var questionSubmissionDictionary: NSMutableDictionary = [:]
     
     init(product: BVProduct) {
         self.product = product
@@ -101,36 +142,13 @@ class AskAQuestionViewModel: ViewModelType {
     
     private func createFormFields() {
         
-        // set all the fields value in the dictionary
         for fieldType in FieldType.allCases {
-            self.paramsDictionary.setValue(nil, forKey: fieldType.propertyKey)
+            self.questionSubmissionDictionary.setValue(nil, forKey: fieldType.propertyKey)
+            self.formFields.append(fieldType.sdFormField(object: self.questionSubmissionDictionary))
         }
         
-        let questionField = SDMultilineTextField(object: self.paramsDictionary,
-                                                 relatedPropertyKey: FieldType.questionSummary.propertyKey)!
-        questionField.placeholder = "Example: How do I get replacement bolts?"
         
-        let moreDetailsField = SDMultilineTextField(object: self.paramsDictionary,
-                                                    relatedPropertyKey: FieldType.questionDetails.propertyKey)!
-        moreDetailsField.placeholder = "Example: I have looked at the manual and can't figure out what I'm doing wrong."
         
-        let nickNameField : SDTextFormField = SDTextFormField(object: self.paramsDictionary,
-                                                              relatedPropertyKey: FieldType.userNickname.propertyKey)
-        nickNameField.placeholder = "Display name for the question"
-        
-        let emailAddressField : SDTextFormField = SDTextFormField(object: self.paramsDictionary,
-                                                                  relatedPropertyKey: FieldType.userEmail.propertyKey)
-        emailAddressField.placeholder = "Enter a valid email address."
-        
-        let emailOKSwitchField = SDSwitchField(object: self.paramsDictionary,
-                                               relatedPropertyKey: FieldType.sendEmailAlertWhenPublished.propertyKey)!
-        emailOKSwitchField.title = "Send me status by email?"
-        
-        let agreeTermsAndConditions = SDSwitchField(object: self.paramsDictionary,
-                                                    relatedPropertyKey: FieldType.agreedToTermsAndConditions.propertyKey)!
-        agreeTermsAndConditions.title = "Agree?"
-        
-        self.formFields = [questionField, moreDetailsField, nickNameField, emailAddressField, emailOKSwitchField, agreeTermsAndConditions]
         
     }
 }

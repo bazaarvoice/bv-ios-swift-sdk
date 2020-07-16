@@ -12,14 +12,13 @@ import FontAwesomeKit
 import SDForms
 
 protocol AskAQuestionViewControllerDelegate: class {
-    func configureForm()
 }
 
 class AskAQuestionViewController: UIViewController, ViewControllerType {
     
     // MARK:- Variables
     var viewModel: AskAQuestionViewModelDelegate!
-    var form: SDForm?
+    private var form: SDForm?
     
     // MARK:- IBOutlets
     @IBOutlet weak var productImageView: UIImageView!
@@ -94,10 +93,6 @@ extension AskAQuestionViewController: SDFormDataSource, SDFormDelegate {
         hv.tintColor = color
         hv.contentView.backgroundColor = color
         hv.textLabel?.textColor = UIColor.bazaarvoiceNavy
-    }
-    
-    func form(_ form: SDForm!, viewForFooterInSection section: Int) -> UIView! {
-        return UIView(frame: CGRect.zero)
     }
     
     func numberOfSections(for form: SDForm!) -> Int {
