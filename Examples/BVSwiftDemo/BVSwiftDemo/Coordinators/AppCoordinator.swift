@@ -166,7 +166,7 @@ class AppCoordinator: Coordinator {
     private func showAskAQuestionScreen(product: BVProduct) {
         // 1. Create View Controller
         let askAQuestionViewController = AskAQuestionViewController.instantiate()
-        askAQuestionViewController.navigationItem.title = "Ask A Question"
+        askAQuestionViewController.navigationItem.title = "Ask A Question!"
         
         // 2. Create ViewModel
         let askAQuestionViewModel = AskAQuestionViewModel(product: product)
