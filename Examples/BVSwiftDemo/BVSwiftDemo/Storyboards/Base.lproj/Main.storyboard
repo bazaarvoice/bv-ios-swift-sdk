@@ -2345,8 +2345,8 @@
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="cun-aa-U2y"/>
                                                         <exclude reference="4Vz-pN-L9q"/>
+                                                        <exclude reference="cun-aa-U2y"/>
                                                     </mask>
                                                 </variation>
                                             </imageView>
@@ -2373,10 +2373,18 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c7d-fT-Kfu">
+                                                <rect key="frame" x="0.0" y="79.5" width="414" height="0.5"/>
+                                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="n9T-4n-43k"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="TQN-5L-jFb" firstAttribute="leading" secondItem="CHM-I8-yej" secondAttribute="leading" id="1as-oa-Yop"/>
+                                            <constraint firstItem="c7d-fT-Kfu" firstAttribute="leading" secondItem="j5X-P4-PFk" secondAttribute="leading" id="4ii-m9-zm0"/>
                                             <constraint firstItem="pcZ-Yl-P3Q" firstAttribute="top" secondItem="j5X-P4-PFk" secondAttribute="topMargin" id="8Yr-ow-zwG"/>
                                             <constraint firstAttribute="trailing" secondItem="CHM-I8-yej" secondAttribute="trailing" constant="8" id="EfF-eN-OhN"/>
                                             <constraint firstItem="pcZ-Yl-P3Q" firstAttribute="leading" secondItem="j5X-P4-PFk" secondAttribute="leadingMargin" id="Gg8-aP-xWB"/>
@@ -2384,8 +2392,10 @@
                                             <constraint firstAttribute="height" constant="80" id="Xzc-2p-ctH"/>
                                             <constraint firstItem="CHM-I8-yej" firstAttribute="top" secondItem="pcZ-Yl-P3Q" secondAttribute="top" id="gZZ-dv-pbz"/>
                                             <constraint firstItem="TQN-5L-jFb" firstAttribute="top" secondItem="CHM-I8-yej" secondAttribute="bottom" constant="3" id="gai-j6-7EB"/>
+                                            <constraint firstAttribute="bottom" secondItem="c7d-fT-Kfu" secondAttribute="bottom" id="jTF-VY-uQw"/>
                                             <constraint firstItem="CHM-I8-yej" firstAttribute="bottom" secondItem="j5X-P4-PFk" secondAttribute="centerY" constant="-2" id="nMX-bx-BH9"/>
                                             <constraint firstItem="pcZ-Yl-P3Q" firstAttribute="width" secondItem="pcZ-Yl-P3Q" secondAttribute="height" multiplier="1:1" id="uJp-Hn-LZR"/>
+                                            <constraint firstAttribute="trailing" secondItem="c7d-fT-Kfu" secondAttribute="trailing" id="vYz-ot-Cjm"/>
                                             <constraint firstItem="CHM-I8-yej" firstAttribute="leading" secondItem="pcZ-Yl-P3Q" secondAttribute="trailing" constant="8" id="zM8-vr-gYf"/>
                                         </constraints>
                                         <variation key="default">
@@ -2394,8 +2404,8 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Umk-43-Bez">
-                                        <rect key="frame" x="0.0" y="80" width="414" height="738"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Umk-43-Bez">
+                                        <rect key="frame" x="0.0" y="90" width="414" height="728"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
                                 </subviews>
@@ -2403,7 +2413,7 @@
                                 <constraints>
                                     <constraint firstItem="j5X-P4-PFk" firstAttribute="top" secondItem="Pnz-4e-OPY" secondAttribute="top" id="CTa-rt-oD7"/>
                                     <constraint firstAttribute="trailing" secondItem="j5X-P4-PFk" secondAttribute="trailing" id="OHk-Cu-9ch"/>
-                                    <constraint firstItem="Umk-43-Bez" firstAttribute="top" secondItem="j5X-P4-PFk" secondAttribute="bottom" id="i0d-Cq-E5m"/>
+                                    <constraint firstItem="Umk-43-Bez" firstAttribute="top" secondItem="j5X-P4-PFk" secondAttribute="bottom" constant="10" id="i0d-Cq-E5m"/>
                                     <constraint firstItem="Umk-43-Bez" firstAttribute="leading" secondItem="Pnz-4e-OPY" secondAttribute="leading" id="mSJ-Q1-8Lb"/>
                                     <constraint firstAttribute="bottom" secondItem="Umk-43-Bez" secondAttribute="bottom" id="oOq-Gy-leJ"/>
                                     <constraint firstItem="j5X-P4-PFk" firstAttribute="leading" secondItem="Pnz-4e-OPY" secondAttribute="leading" id="uKI-C1-qaL"/>

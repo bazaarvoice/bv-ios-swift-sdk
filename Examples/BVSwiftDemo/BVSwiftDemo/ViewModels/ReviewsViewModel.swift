@@ -103,7 +103,7 @@ class ReviewsViewModel: ViewModelType {
 extension ReviewsViewModel: ReviewsViewModelDelegate {
     
     func writeReviewTapped() {
-        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.writeReview(productId: self.productId, product: self.product))
+        self.coordinator?.navigateTo(AppCoordinator.AppNavigation.writeReview(product: self.product))
     }
 
     func getBvReviewHighlightsData() -> BVReviewHighlights? {
