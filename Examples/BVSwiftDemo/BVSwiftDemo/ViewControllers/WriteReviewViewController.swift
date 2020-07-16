@@ -34,7 +34,7 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
         
         // Do any additional setup after loading the view.
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit",
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NavigationBarButtonNames.submit,
                                                                  style: .done,
                                                                  target: self,
                                                                  action: #selector(WriteReviewViewController.submitQuestionTapped))
