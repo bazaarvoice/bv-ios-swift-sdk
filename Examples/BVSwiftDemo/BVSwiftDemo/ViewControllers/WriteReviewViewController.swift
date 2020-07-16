@@ -14,22 +14,13 @@ import SDForms
 
 protocol WriteReviewViewControllerDelegate: class {
     
-    func reloadTableView()
-    
-    func showLoadingIndicator()
-    
-    func hideLoadingIndicator()
 }
 
 class WriteReviewViewController: UIViewController, ViewControllerType {
     
     // MARK:- Variables
     var viewModel: WriteReviewViewModelDelegate!
-    private var productReviewData: BVMultiProductFormData?
-    var formFields : [SDFormField] = []
-    var paramDict: NSMutableDictionary = [:]
-    var sectionTitles : [String] = []
-    var form : SDForm?
+    private var form: SDForm?
     
     // MARK:- IBOutlets
     @IBOutlet weak var productDetailsHeaderView: UIView!
@@ -43,7 +34,13 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
         
         // Do any additional setup after loading the view.
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit",
+                                                                 style: .done,
+                                                                 target: self,
+                                                                 action: #selector(WriteReviewViewController.submitQuestionTapped))
+        
         self.configureForm()
+        self.updateProductDetails()
     }
     
     func configureForm() {
@@ -52,21 +49,37 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
         self.form?.dataSource = self
     }
     
+    @objc func submitQuestionTapped() {
+        self.viewModel.submitQuestionTapped()
+    }
+    
+    private func updateProductDetails() {
+        self.productNameLabel.text = self.viewModel.productName
+        
+        self.productRatingView.value = CGFloat(self.viewModel.productRating ?? 0.0)
+        
+        if let imageURL = self.viewModel.productImageURL {
+            
+            self.productImageView.sd_setImage(with: imageURL) { [weak self] (image, error, cacheType, url) in
+                
+                guard let strongSelf = self else { return }
+                
+                guard let _ = error else { return }
+                
+                strongSelf.productImageView.image = FAKFontAwesome.photoIcon(withSize: 70.0)?
+                    .image(with: CGSize(width: strongSelf.productImageView.frame.size.width + 20,
+                                        height: strongSelf.productImageView.frame.size.height + 20))
+                    .withTintColor(UIColor.bazaarvoiceNavy)
+            }
+        }
+        else {
+            self.productImageView.image = #imageLiteral(resourceName: "placeholder")
+        }
+    }
+    
 }
 
 extension WriteReviewViewController: WriteReviewViewControllerDelegate {
-    
-    func reloadTableView() {
-        
-    }
-    
-    func showLoadingIndicator() {
-        
-    }
-    
-    func hideLoadingIndicator() {
-        
-    }
     
 }
 
