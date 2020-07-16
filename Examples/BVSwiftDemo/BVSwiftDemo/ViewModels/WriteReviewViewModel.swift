@@ -211,6 +211,68 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
     
     func submitQuestionTapped() {
         
+        let reviewText = "more than 50 more than 50 " +
+        "more than 50 more than 50 more than 50"
+        
+        let review: BVReview = BVReview(productId: self.product.productId!,
+                                        reviewText: reviewText,
+                                        reviewTitle: "review title",
+                                        reviewRating: 4)
+        
+        guard let reviewSubmission = BVReviewSubmission(review) else {
+            return
+        }
+        
+        let randomId = String(arc4random())
+        // let photo: BVPhoto = BVPhoto(png, "Very photogenic")
+        
+        let usLocale: Locale = Locale(identifier: "en_US")
+        
+        (reviewSubmission
+            <+> .submit
+            <+> .campaignId("BV_REVIEW_DISPLAY")
+            <+> .locale(usLocale)
+            <+> .sendEmailWhenCommented(true)
+            <+> .sendEmailWhenPublished(true)
+            <+> .nickname("UserNickname\(randomId)")
+            <+> .email("developer@bazaarvoice.com")
+            <+> .identifier("UserId\(randomId)")
+            <+> .score(5)
+            <+> .comment("Never!")
+            <+> .agree(true)
+            <+> .contextData(name: "Age", value: "18to24")
+            <+> .contextData(name: "Gender", value: "Male")
+            <+> .rating(name: "Quality", value: 1)
+            <+> .rating(name: "Value", value: 3)
+            <+> .rating(name: "HowDoes", value: 4)
+            <+> .rating(name: "Fit", value: 3)
+            <+> ["_foo": "bar"])
+            
+            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
+        
+        reviewSubmission
+            .handler { result in
+                
+                DispatchQueue.main.async(execute: {
+                  _ = SweetAlert().showAlert("Success!", subTitle: "Your review was submitted. It may take up to 72 hours before your post is live.", style: .success)
+                })
+                
+                if case let .failure(errors) = result {
+                    errors.forEach { print($0) }
+                    return
+                }
+                
+                guard case let .success(meta, _) = result else {
+                    return
+                }
+                
+                if let formFields = meta.formFields {
+                    
+                } else {
+                    
+                }
+        }
+        
+        reviewSubmission.async()
     }
-    
 }
