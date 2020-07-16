@@ -69,6 +69,7 @@ class ViewControllerTittles {
 
 class NavigationBarButtonNames {
     static let write_a_Review = "Write a Review"
+    static let submit = "Submit"
 }
 
 class Headers {
