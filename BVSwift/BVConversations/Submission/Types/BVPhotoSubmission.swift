@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
+public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
   
   private var submissionBoundary: String?
   private var boundaryQueue: DispatchQueue =
