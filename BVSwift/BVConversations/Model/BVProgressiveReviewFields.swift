@@ -24,6 +24,8 @@ public struct BVProgressiveReviewFields: BVAuxiliaryable {
         case agreedToTerms = "agreedtotermsandconditions"
         case isRecommended = "isrecommended"
         case sendEmailAlert = "sendemailalertwhenpublished"
-        
     }
+    
+    //To make accessable by CocoaPods
+    public init() {}
 }
