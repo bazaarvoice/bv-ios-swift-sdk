@@ -86,6 +86,15 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
       URLQueryItem(name: "title", value: title.urlEncode())
     ]
   }
+    
+  public init?(productId: String) {
+    
+    super.init(BVReview(productId: productId))
+    
+    submissionParameters ∪= [
+      URLQueryItem(name: "productId", value: productId.urlEncode())
+    ]
+  }
   
   override func conversationsPostflightDidSubmit(_ results: [BVReview]?) {
     guard nil != results,

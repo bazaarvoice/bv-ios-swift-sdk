@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BVProgressiveReviewSubmission: BVSubmission {
+public class BVProgressiveReviewSubmission: BVSubmission {
     var conversationsConfiguration: BVConversationsConfiguration?
     private var ignoreCompletion: Bool = false
     private var extendedResponse: Bool = false
