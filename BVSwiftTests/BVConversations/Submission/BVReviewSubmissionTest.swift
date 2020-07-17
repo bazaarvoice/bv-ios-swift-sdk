@@ -177,6 +177,56 @@ class BVReviewSubmissionTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+    
+  func testSubmitReviewFetchFormFields() {
+    
+    let expectation = self.expectation(description: "testSubmitReviewFetchFormFields")
+
+    guard let reviewSubmission = BVReviewSubmission(productId: "1000001") else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    let randomId = String(arc4random())
+    
+    (reviewSubmission
+    <+> .form
+    <+> .identifier("UserId\(randomId)"))
+    .configure(BVReviewSubmissionTest.config)
+    .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
+        
+        if case let .failure(errors) = result {
+          errors.forEach { print($0) }
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(meta, _) = result else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        XCTAssertNotNil(meta.formFields)
+        
+        if let formFields = meta.formFields {
+          XCTAssertEqual(formFields.count, 50)
+        } else {
+          XCTAssertNil(meta.formFields)
+        }
+        
+        expectation.fulfill()
+    }
+    
+    reviewSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
   
   func testSubmitReviewFailure() {
     let expectation = self.expectation(description: "testSubmitReviewFailure")
