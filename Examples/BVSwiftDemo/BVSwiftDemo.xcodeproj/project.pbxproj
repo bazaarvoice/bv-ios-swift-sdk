@@ -194,6 +194,14 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		4258AF6424C06CEC003B3306 /* AlertViewFrameWork */ = {
+			isa = PBXGroup;
+			children = (
+				42A6C79124C052FF006CF92C /* SweetAlert.swift */,
+			);
+			path = AlertViewFrameWork;
+			sourceTree = "<group>";
+		};
 		42BC40D62473BB4E00008434 = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +223,6 @@
 		42BC40E12473BB4E00008434 /* BVSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
-				42A6C79124C052FF006CF92C /* SweetAlert.swift */,
 				9F32E66D247F960500CA2633 /* Views */,
 				42566A4C247E708B008FC057 /* Manager */,
 				42BC40F02473BB5100008434 /* Info.plist */,
@@ -377,6 +384,7 @@
 		9FF7EB952473C1AA007FD337 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4258AF6424C06CEC003B3306 /* AlertViewFrameWork */,
 				42C84FF724B720FC000CA49F /* Home Advertisement Images */,
 				4247D14624B6FC88002D6009 /* Home Header Images */,
 				42CE5F9C24ADE240009D050B /* JSONFiles */,

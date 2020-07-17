@@ -27,7 +27,11 @@ protocol WriteReviewViewModelDelegate: class {
     
     func formFieldForRow(row: Int, inSection section: Int) -> SDFormField
     
-    func submitQuestionTapped()
+    func submitReviewTapped()
+    
+    func submitReviewCall()
+    
+    func progressiveSubmissionCall()
 }
 
 class WriteReviewViewModel: ViewModelType {
@@ -151,6 +155,24 @@ class WriteReviewViewModel: ViewModelType {
             }
             
         }
+        
+        func buildRequest() -> BVProgressiveReview {
+            var submissionFields = BVProgressiveReviewFields()
+            
+            submissionFields = BVProgressiveReviewFields()
+            submissionFields.rating = 4
+            submissionFields.title =  "my favorite product ever!"
+            submissionFields.reviewtext = "This Product was somewhat disapointing. I thouught it would be cool to have flowers around the house, but turns out its underwhelming."
+            submissionFields.agreedToTerms = true
+            submissionFields.sendEmailAlert = true
+            submissionFields.isRecommended = true
+            
+            var submission = BVProgressiveReview(productId:"product10", submissionFields: submissionFields)
+            submission.submissionSessionToken = "qwVlQcpCW3CbsgfbClSVWZffmL20qOorqf0J87lcklmt8GZ7tbNDDyDx/UZeV+Dv7CgRurvxkrn0uAiNjdQpq9Z2ABxVvNq/kHnElA3GTs0="
+            submission.locale = "en_US"
+            submission.userToken = "6851e5f974485291cd2c32bfbc4d00774e6d298910c3b0c674e553a4cc48562d6d61786167653d33353626484f535445443d564552494649454426646174653d323031393037323526656d61696c616464726573733d42564061696c2e636f6d267573657269643d74657374313039"
+            return submission
+        }
     }
     
     
@@ -209,34 +231,29 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
         return self.formFields[section]
     }
     
-    func submitQuestionTapped() {
-        
-        let reviewText = "more than 50 more than 50 " +
-        "more than 50 more than 50 more than 50"
+    func submitReviewTapped() {
         
         let review: BVReview = BVReview(productId: self.product.productId!,
-                                        reviewText: reviewText,
-                                        reviewTitle: "review title",
-                                        reviewRating: 4)
+                                        reviewText: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewDetailsFieldKey) as! String,
+                                        reviewTitle: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewTitleFieldKey) as! String,
+                                        reviewRating: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.ratingStarsKey) as! Int)
         
         guard let reviewSubmission = BVReviewSubmission(review) else {
             return
         }
-        
-        let randomId = String(arc4random())
         // let photo: BVPhoto = BVPhoto(png, "Very photogenic")
         
         let usLocale: Locale = Locale(identifier: "en_US")
         
         (reviewSubmission
-            <+> .submit
+            <+> .preview
             <+> .campaignId("BV_REVIEW_DISPLAY")
             <+> .locale(usLocale)
-            <+> .sendEmailWhenCommented(true)
-            <+> .sendEmailWhenPublished(true)
-            <+> .nickname("UserNickname\(randomId)")
-            <+> .email("developer@bazaarvoice.com")
-            <+> .identifier("UserId\(randomId)")
+            <+> .sendEmailWhenCommented(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as! Bool)
+            <+> .sendEmailWhenPublished(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as! Bool)
+            <+> .nickname(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userNicknameFieldKey) as! String)
+            <+> .email(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as! String)
+            <+> .identifier("UserId")
             <+> .score(5)
             <+> .comment("Never!")
             <+> .agree(true)
@@ -254,7 +271,7 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
             .handler { result in
                 
                 DispatchQueue.main.async(execute: {
-                  _ = SweetAlert().showAlert("Success!", subTitle: "Your review was submitted. It may take up to 72 hours before your post is live.", style: .success)
+                    _ = SweetAlert().showAlert("Success!", subTitle: "Your review was submitted. It may take up to 72 hours before your post is live.", style: .success)
                 })
                 
                 if case let .failure(errors) = result {
@@ -275,4 +292,38 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
         
         reviewSubmission.async()
     }
+    
+    func submitReviewCall() {
+        
+    }
+    
+    func progressiveSubmissionCall() {
+        
+        var progressiveReview: BVProgressiveReview = self.buildRequest()
+        progressiveReview.isPreview = true
+        
+        guard let progressiveReviewSubmission = BVProgressiveReviewSubmission(progressiveReview) else {
+            return
+        }
+        progressiveReviewSubmission.configure(ConfigurationManager.sharedInstance.conversationsConfig)
+        let internalURLSession: URLSession =
+            BVNetworkingManager.sharedManager.networkingSession
+        
+        BVManager.sharedManager.urlSession = internalURLSession
+        progressiveReviewSubmission
+            .handler { result in
+                
+                if case .failure(_) = result {
+                    return
+                }
+                
+                if case let .success(_ , response) = result {
+                    return
+                }
+        }
+        
+        progressiveReviewSubmission.async()
+        
+    }
+    
 }
