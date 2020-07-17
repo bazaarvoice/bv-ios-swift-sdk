@@ -25,6 +25,8 @@ class AppCoordinator: Coordinator {
         case author(authorId: String)
         
         case writeReview(product: BVProduct)
+        
+        case askAQuestion(product: BVProduct)
     }
     
     // MARK:- Initializers
@@ -73,6 +75,9 @@ class AppCoordinator: Coordinator {
             
         case .writeReview(let product):
             self.showWriteReviewScreen(product: product)
+            
+        case .askAQuestion(let product):
+            self.showAskAQuestionScreen(product: product)
             
         }
     }
@@ -178,5 +183,20 @@ class AppCoordinator: Coordinator {
         //3. Assign and Navigate
         authorViewController.viewModel = authorViewModel
         self.navigationController.pushViewController(authorViewController, animated: true)
+    }
+    
+    private func showAskAQuestionScreen(product: BVProduct) {
+        // 1. Create View Controller
+        let askAQuestionViewController = AskAQuestionViewController.instantiate()
+        askAQuestionViewController.navigationItem.title = "Ask A Question!"
+        
+        // 2. Create ViewModel
+        let askAQuestionViewModel = AskAQuestionViewModel(product: product)
+        askAQuestionViewModel.coordinator = self
+        askAQuestionViewModel.viewController = askAQuestionViewController
+        
+        // 3. Assign and Navigate
+        askAQuestionViewController.viewModel = askAQuestionViewModel
+        self.navigationController.pushViewController(askAQuestionViewController, animated: true)
     }
 }

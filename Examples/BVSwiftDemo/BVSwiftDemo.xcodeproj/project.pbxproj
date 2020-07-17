@@ -55,6 +55,8 @@
 		9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1628852473F54600959C78 /* HomeViewModel.swift */; };
 		9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */; };
 		9F32E671247FA34300CA2633 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E670247FA34300CA2633 /* CardView.swift */; };
+		9F37A8DB24BD8FC700B23DDB /* AskAQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37A8DA24BD8FC700B23DDB /* AskAQuestionViewController.swift */; };
+		9F37A8DD24BD8FDE00B23DDB /* AskAQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37A8DC24BD8FDE00B23DDB /* AskAQuestionViewModel.swift */; };
 		9F8A7C6B248938B100FA221C /* ProductDetailCurationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A7C6A248938B100FA221C /* ProductDetailCurationsTableViewCell.swift */; };
 		9F8A7C6D24893F1300FA221C /* CurationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A7C6C24893F1300FA221C /* CurationsCollectionViewCell.swift */; };
 		9FA2C5262486328A00C0DD6C /* ProductDisplayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */; };
@@ -71,6 +73,7 @@
 		9FA73B03248FB2BA00746ACA /* AnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA73B02248FB2BA00746ACA /* AnswerTableViewCell.swift */; };
 		9FA7497E248A19E900BAA52E /* ProductDetailRecommendationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA7497D248A19E900BAA52E /* ProductDetailRecommendationsTableViewCell.swift */; };
 		9FACA28624877D1200D87F11 /* ProductDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACA28524877D1200D87F11 /* ProductDetailTableViewCell.swift */; };
+		9FC63B1B24C0926C0045013E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC63B1A24C0926C0045013E /* Utils.swift */; };
 		9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB962473C2B0007FD337 /* Coordinator.swift */; };
 		9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB982473C346007FD337 /* AppCoordinator.swift */; };
 		9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */; };
@@ -130,6 +133,8 @@
 		9F1628852473F54600959C78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9F32E66E247F964300CA2633 /* QuestionAnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		9F32E670247FA34300CA2633 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		9F37A8DA24BD8FC700B23DDB /* AskAQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionViewController.swift; sourceTree = "<group>"; };
+		9F37A8DC24BD8FDE00B23DDB /* AskAQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionViewModel.swift; sourceTree = "<group>"; };
 		9F8A7C6A248938B100FA221C /* ProductDetailCurationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCurationsTableViewCell.swift; sourceTree = "<group>"; };
 		9F8A7C6C24893F1300FA221C /* CurationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA2C5252486328A00C0DD6C /* ProductDisplayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayPageViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +151,7 @@
 		9FA73B02248FB2BA00746ACA /* AnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTableViewCell.swift; sourceTree = "<group>"; };
 		9FA7497D248A19E900BAA52E /* ProductDetailRecommendationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailRecommendationsTableViewCell.swift; sourceTree = "<group>"; };
 		9FACA28524877D1200D87F11 /* ProductDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailTableViewCell.swift; sourceTree = "<group>"; };
+		9FC63B1A24C0926C0045013E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		9FF7EB962473C2B0007FD337 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9FF7EB982473C346007FD337 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 				9FF7EB952473C1AA007FD337 /* Resources */,
 				9FA659842474F48600D9498F /* UIKit+Extensions.swift */,
 				9FA73B00248F9D4E00746ACA /* DateTimeAgo.swift */,
+				9FC63B1A24C0926C0045013E /* Utils.swift */,
 			);
 			path = BVSwiftDemo;
 			sourceTree = "<group>";
@@ -344,6 +351,7 @@
 				9FA73AFC248F885C00746ACA /* AnswersTableViewController.swift */,
 				42665BE02498A43A00586C9A /* AuthorViewController.swift */,
 				42A6C78C24BDB615006CF92C /* WriteReviewViewController.swift */,
+				9F37A8DA24BD8FC700B23DDB /* AskAQuestionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -359,6 +367,7 @@
 				9FA73AFE248F898A00746ACA /* AnswersViewModel.swift */,
 				42665BE22498A45900586C9A /* AuthorViewModel.swift */,
 				42A6C78E24BDB6BA006CF92C /* WriteReviewViewModel.swift */,
+				9F37A8DC24BD8FDE00B23DDB /* AskAQuestionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -547,12 +556,14 @@
 				42FC2DEC248F9D5400947F4A /* ReviewsViewModel.swift in Sources */,
 				42C84FF624B71EA5000CA49F /* HomeAdvertisementCollectionViewCell.swift in Sources */,
 				9FA73B03248FB2BA00746ACA /* AnswerTableViewCell.swift in Sources */,
+				9FC63B1B24C0926C0045013E /* Utils.swift in Sources */,
 				9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */,
 				42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */,
 				9F1628862473F54600959C78 /* HomeViewModel.swift in Sources */,
 				42A6C78F24BDB6BA006CF92C /* WriteReviewViewModel.swift in Sources */,
 				42CE5F9B24ADDE8B009D050B /* MockDataManager.swift in Sources */,
 				42665BE12498A43A00586C9A /* AuthorViewController.swift in Sources */,
+				9F37A8DD24BD8FDE00B23DDB /* AskAQuestionViewModel.swift in Sources */,
 				42FC2DF2248FAB8800947F4A /* ReviewHighlightsHeaderTableViewCell.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
 				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
@@ -578,6 +589,7 @@
 				9F32E671247FA34300CA2633 /* CardView.swift in Sources */,
 				9FA6598724750ED800D9498F /* ViewControllerType.swift in Sources */,
 				42FC2DF0248F9DAD00947F4A /* ReviewHighLightsTableViewCell.swift in Sources */,
+				9F37A8DB24BD8FC700B23DDB /* AskAQuestionViewController.swift in Sources */,
 				42FC2DEE248F9D8300947F4A /* ReviewTableViewCell.swift in Sources */,
 				9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */,
 				9F32E66F247F964300CA2633 /* QuestionAnswerTableViewCell.swift in Sources */,
