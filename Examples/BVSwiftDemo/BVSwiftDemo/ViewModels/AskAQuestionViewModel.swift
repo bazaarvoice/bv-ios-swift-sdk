@@ -31,6 +31,36 @@ protocol AskAQuestionViewModelDelegate: class {
 
 class AskAQuestionViewModel: ViewModelType {
     
+    private enum FieldValidationError: Error {
+        
+        case questionSummaryEmptyError
+        
+        case userNicknameEmptyError
+        
+        case emailAddressEmptyError
+        
+        case emailAddressInvalidError
+        
+        case agreeToTermsAndConditionsError
+        
+        var errorMessage: String {
+            
+            switch self {
+                
+            case .questionSummaryEmptyError: return "Please enter question summary."
+                
+            case .userNicknameEmptyError: return "Please enter user nickname."
+                
+            case .emailAddressEmptyError: return "Please enter email address."
+                
+            case .emailAddressInvalidError: return "Please enter a valid email address."
+                
+            case .agreeToTermsAndConditionsError: return "Please agree to the Terms & Conditions."
+                
+            }
+        }
+    }
+    
     private enum FieldType: Int, CaseIterable {
         
         case questionSummary
@@ -146,10 +176,36 @@ class AskAQuestionViewModel: ViewModelType {
             self.questionSubmissionDictionary.setValue(nil, forKey: fieldType.propertyKey)
             self.formFields.append(fieldType.sdFormField(object: self.questionSubmissionDictionary))
         }
+    }
+    
+    private func validateFields() throws {
         
+        guard Utils.isFieldNotEmpty(self.questionSubmissionDictionary[FieldType.questionSummary.propertyKey]) else {
+            throw FieldValidationError.questionSummaryEmptyError
+        }
         
+        guard Utils.isFieldNotEmpty(self.questionSubmissionDictionary[FieldType.userNickname.propertyKey]) else {
+            throw FieldValidationError.userNicknameEmptyError
+        }
         
+        guard Utils.isFieldNotEmpty(self.questionSubmissionDictionary[FieldType.userEmail.propertyKey]) else {
+            throw FieldValidationError.emailAddressEmptyError
+        }
         
+        guard Utils.isValidEmail(self.questionSubmissionDictionary[FieldType.userEmail.propertyKey] as? String) else {
+            throw FieldValidationError.emailAddressInvalidError
+        }
+        
+        guard let agreedToTermsAndConditions = self.questionSubmissionDictionary[FieldType.agreedToTermsAndConditions.propertyKey] as? Bool, agreedToTermsAndConditions else {
+            throw FieldValidationError.agreeToTermsAndConditionsError
+        }
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }
 
