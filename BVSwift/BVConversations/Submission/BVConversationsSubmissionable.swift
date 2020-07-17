@@ -15,6 +15,9 @@ public enum BVConversationsSubmissionAction {
   
   /// Actually submit the submission
   case submit
+    
+  /// Fetch Form Fields
+  case form
 }
 
 /// Protocol defining the ability to accept a BVConversationsSubmissionAction
@@ -360,6 +363,8 @@ BVConversationsSubmissionParameterable {
       return [URLQueryItem(name: "action", value: "Preview")]
     case .submit:
       return [URLQueryItem(name: "action", value: "Submit")]
+    case .form:
+        return nil
     }
   }
 }
