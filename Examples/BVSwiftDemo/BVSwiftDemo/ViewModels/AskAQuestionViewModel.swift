@@ -241,6 +241,70 @@ extension AskAQuestionViewModel: AskAQuestionViewModelDelegate {
     }
     
     func submitQuestionTapped() {
-        
+                
+        do {
+
+            try self.validateFields()
+
+            guard let productId = self.product.productId,
+                let questionSummary = self.questionSubmissionDictionary[FieldType.questionSummary.propertyKey] as? String else {
+                    return
+            }
+
+            self.viewController?.showLoadingIndicator()
+
+            let question = BVQuestion(productId: productId,
+                                      questionDetails: self.questionSubmissionDictionary[FieldType.questionDetails.propertyKey] as? String ?? "",
+                                      questionSummary: questionSummary,
+                                      isUserAnonymous: false)
+
+            let questionSubmission = BVQuestionSubmission(question)!
+
+            let randomId = String(arc4random())
+
+            (questionSubmission
+                <+> .preview
+                <+> .identifier("UserId\(randomId)")
+                <+> .nickname(self.questionSubmissionDictionary[FieldType.userNickname.propertyKey] as? String ?? "")
+                <+> .email(self.questionSubmissionDictionary[FieldType.userNickname.propertyKey] as? String ?? "")
+                <+> .sendEmailWhenPublished(self.questionSubmissionDictionary[FieldType.sendEmailAlertWhenPublished.propertyKey] as? Bool ?? false)
+                <+> .agree(self.questionSubmissionDictionary[FieldType.agreedToTermsAndConditions.propertyKey] as? Bool ?? false)
+            )
+
+            questionSubmission
+                .configure(ConfigurationManager.sharedInstance.conversationsConfig)
+                .handler { [weak self] result in
+
+                    guard let strongSelf = self else { return }
+
+                    DispatchQueue.main.async {
+
+                        strongSelf.viewController?.hideLoadingIndicator()
+
+                        switch result {
+
+                        case let .failure(errors):
+                            var errorMessage = ""
+                            errors.forEach({ errorMessage += "\($0)."})
+                            strongSelf.coordinator?.showAlert(title: "Error Submitting Question",
+                                                              message: errorMessage,
+                                                              handler: nil)
+
+                        case .success:
+                            strongSelf.coordinator?.showAlert(title: "Success!",
+                                                              message: "Your question was submitted. It may take up to 72 hours for us to respond.",
+                                                              handler: strongSelf.coordinator?.popBack)
+
+                        }
+                    }
+            }
+
+            questionSubmission.async()
+        }
+        catch {
+            self.coordinator?.showAlert(title: "Validation Error",
+                                        message: (error as! FieldValidationError).errorMessage,
+                                        handler: nil)
+        }
     }
 }

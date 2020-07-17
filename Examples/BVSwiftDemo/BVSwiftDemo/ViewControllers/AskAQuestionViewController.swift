@@ -12,6 +12,10 @@ import FontAwesomeKit
 import SDForms
 
 protocol AskAQuestionViewControllerDelegate: class {
+    
+    func showLoadingIndicator()
+    
+    func hideLoadingIndicator()
 }
 
 class AskAQuestionViewController: UIViewController, ViewControllerType {
@@ -38,7 +42,7 @@ class AskAQuestionViewController: UIViewController, ViewControllerType {
         self.updateProductDetails()
         self.configureForm()
         
-        self.askAQuestionTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
+        self.askAQuestionTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 320, right: 0)
         self.view.backgroundColor = UIColor.appBackground
         self.askAQuestionTableView.backgroundColor = UIColor.white
     }
@@ -69,6 +73,12 @@ class AskAQuestionViewController: UIViewController, ViewControllerType {
         else {
             self.productImageView.image = #imageLiteral(resourceName: "placeholder")
         }
+    }    
+    
+    private func configureForm() {
+        self.form = SDForm(tableView: self.askAQuestionTableView)
+        self.form?.delegate = self
+        self.form?.dataSource = self
     }
     
     
@@ -119,9 +129,11 @@ extension AskAQuestionViewController: SDFormDataSource, SDFormDelegate {
 // MARK:- AskAQuestionViewControllerDelegate methods
 extension AskAQuestionViewController: AskAQuestionViewControllerDelegate {
     
-    func configureForm() {
-        self.form = SDForm(tableView: self.askAQuestionTableView)
-        self.form?.delegate = self
-        self.form?.dataSource = self
+    func showLoadingIndicator() {
+        self.showSpinner()
+    }
+    
+    func hideLoadingIndicator() {
+        self.removeSpinner()
     }
 }
