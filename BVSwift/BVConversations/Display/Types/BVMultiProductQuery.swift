@@ -8,7 +8,7 @@
 
 import UIKit
 //obj-cBVInitiateSubmitRequest
-class BVMultiProductQuery: BVSubmission {
+public class BVMultiProductQuery: BVSubmission {
     var conversationsConfiguration: BVConversationsConfiguration?
     private var ignoreCompletion: Bool = false
 
