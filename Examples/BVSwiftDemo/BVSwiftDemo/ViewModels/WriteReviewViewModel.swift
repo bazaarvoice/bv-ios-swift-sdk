@@ -307,24 +307,24 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
             return
         }
         
-        var photo: BVPhoto? = nil
-        
         if let selectedPhoto = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.photoKey) as? UIImage {
-            photo = BVPhoto(selectedPhoto)
+            (reviewSubmission <+> .photos([BVPhoto(selectedPhoto)]))
         }
+        
+        let email = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String ?? ""
         
         let usLocale: Locale = Locale(identifier: User.local)
         
-        print(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String)
-        
         (reviewSubmission
             <+> .preview // don't actually just submit for real, this is just for demo
-            //<+> .photos(photo)
             <+> .locale(usLocale)
-            <+> .sendEmailWhenCommented(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true)
-            <+> .sendEmailWhenPublished(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true)
+            <+> .sendEmailWhenCommented(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldKey) as? Bool ?? true)
+            <+> .recommended(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.recommendProductSwitchKey) as? Bool ?? true)
+            <+> .sendEmailWhenPublished(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldKey) as? Bool ?? true)
             <+> .nickname(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userNicknameFieldKey) as? String ?? "")
-            <+> .email(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String ?? ""))
+            <+> .email(email)
+            <+> .identifier(User.id)
+            )
             
             .configure(ConfigurationManager.sharedInstance.conversationsConfig)
         
@@ -362,8 +362,8 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
         submissionFields.rating = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.ratingStarsKey) as? Int ?? 0
         submissionFields.title =  self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewTitleFieldKey) as? String ?? ""
         submissionFields.reviewtext = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewDetailsFieldKey) as? String ?? ""
-        submissionFields.sendEmailAlert = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true
-        submissionFields.isRecommended = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true
+        submissionFields.sendEmailAlert = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldKey) as? Bool ?? true
+        submissionFields.isRecommended = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.recommendProductSwitchKey) as? Bool ?? true
         
         var submission = BVProgressiveReview(productId: self.product.productId ?? "", submissionFields: submissionFields)
         submission.submissionSessionToken = ConfigurationManager.sharedInstance.submissionSessionToken
