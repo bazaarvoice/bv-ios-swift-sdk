@@ -81,7 +81,7 @@ class WriteReviewViewModel: ViewModelType {
             
             switch self {
                 
-            case .recommendProductSwitch: return ""
+            case .recommendProductSwitch: return UserFormConstants.ratingStarText
                 
             case .ratingStars: return UserFormConstants.ratingStarsTitle
                 
@@ -155,23 +155,40 @@ class WriteReviewViewModel: ViewModelType {
             }
             
         }
+    }
+    
+    private enum FieldValidationError: Error {
         
-        func buildRequest() -> BVProgressiveReview {
-            var submissionFields = BVProgressiveReviewFields()
+        case reviewTitleEmptyError
+        
+        case ratingEmptyError
+        
+        case reviewDetailEmptyError
+        
+        case userNicknameEmptyError
+        
+        case emailAddressEmptyError
+        
+        case emailAddressInvalidError
+        
+        
+        var errorMessage: String {
             
-            submissionFields = BVProgressiveReviewFields()
-            submissionFields.rating = 4
-            submissionFields.title =  "my favorite product ever!"
-            submissionFields.reviewtext = "This Product was somewhat disapointing. I thouught it would be cool to have flowers around the house, but turns out its underwhelming."
-            submissionFields.agreedToTerms = true
-            submissionFields.sendEmailAlert = true
-            submissionFields.isRecommended = true
-            
-            var submission = BVProgressiveReview(productId:"product10", submissionFields: submissionFields)
-            submission.submissionSessionToken = "TOKEN_REMOVED"
-            submission.locale = "en_US"
-            submission.userToken = "SECRET_REMOVED"
-            return submission
+            switch self {
+                
+            case .reviewTitleEmptyError: return ErrorMessage.reviewTitleEmptyError
+                
+            case .ratingEmptyError: return ErrorMessage.ratingEmptyError
+                
+            case .reviewDetailEmptyError: return ErrorMessage.reviewDetailEmptyError
+                
+            case .userNicknameEmptyError: return ErrorMessage.userNicknameEmptyError
+                
+            case .emailAddressEmptyError: return ErrorMessage.emailAddressEmptyError
+                
+            case .emailAddressInvalidError: return ErrorMessage.emailAddressInvalidError
+                
+            }
         }
     }
     
@@ -183,6 +200,9 @@ class WriteReviewViewModel: ViewModelType {
     private var formFields: [SDFormField] = []
     
     private let product: BVProduct
+    
+    //Make it true if you want do Progressive Submission and pass your session token from ConfigurationManager -> submissionSessionToken
+    private var isProgressiveSubmission: Bool = false
     
     private var reviewSubmissionDictionary: NSMutableDictionary = [:]
     
@@ -196,6 +216,34 @@ class WriteReviewViewModel: ViewModelType {
         for fieldType in FieldType.allCases {
             self.reviewSubmissionDictionary.setValue(nil, forKey: fieldType.propertyKey)
             self.formFields.append(fieldType.sdFormField(object: self.reviewSubmissionDictionary))
+        }
+        
+    }
+    
+    private func validateFields() throws {
+        
+        guard Utils.isFieldNotEmpty(self.reviewSubmissionDictionary[FieldType.ratingStars.propertyKey]) else {
+            throw FieldValidationError.ratingEmptyError
+        }
+        
+        guard Utils.isFieldNotEmpty(self.reviewSubmissionDictionary[FieldType.reviewTitle.propertyKey]) else {
+            throw FieldValidationError.reviewTitleEmptyError
+        }
+        
+        guard Utils.isFieldNotEmpty(self.reviewSubmissionDictionary[FieldType.reviewDetails.propertyKey]) else {
+            throw FieldValidationError.reviewDetailEmptyError
+        }
+        
+        guard Utils.isFieldNotEmpty(self.reviewSubmissionDictionary[FieldType.userNickname.propertyKey]) else {
+            throw FieldValidationError.userNicknameEmptyError
+        }
+        
+        guard Utils.isFieldNotEmpty(self.reviewSubmissionDictionary[FieldType.userEmail.propertyKey]) else {
+            throw FieldValidationError.emailAddressEmptyError
+        }
+        
+        guard Utils.isValidEmail(self.reviewSubmissionDictionary[FieldType.userEmail.propertyKey] as? String) else {
+            throw FieldValidationError.emailAddressInvalidError
         }
         
     }
@@ -232,98 +280,138 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
     }
     
     func submitReviewTapped() {
+        do {
+            
+            try self.validateFields()
+            
+            self.isProgressiveSubmission ? self.progressiveSubmissionCall() : self.submitReviewCall()
+            
+        }
+        catch {
+            self.coordinator?.showAlert(title: ErrorMessage.validationError,
+                                        message: (error as! FieldValidationError).errorMessage,
+                                        handler: nil)
+        }
+    }
+    
+    func submitReviewCall() {
+        
+        guard let delegate = viewController else { return }
         
         let review: BVReview = BVReview(productId: self.product.productId!,
-                                        reviewText: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewDetailsFieldKey) as! String,
-                                        reviewTitle: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewTitleFieldKey) as! String,
-                                        reviewRating: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.ratingStarsKey) as! Int)
+                                        reviewText: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewDetailsFieldKey) as? String ?? "",
+                                        reviewTitle: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewTitleFieldKey) as? String ?? "",
+                                        reviewRating: self.reviewSubmissionDictionary.value(forKey: UserFormConstants.ratingStarsKey) as? Int ?? 0)
         
         guard let reviewSubmission = BVReviewSubmission(review) else {
             return
         }
-        // let photo: BVPhoto = BVPhoto(png, "Very photogenic")
         
-        let usLocale: Locale = Locale(identifier: "en_US")
+        var photo: BVPhoto? = nil
+        
+        if let selectedPhoto = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.photoKey) as? UIImage {
+            photo = BVPhoto(selectedPhoto)
+        }
+        
+        let usLocale: Locale = Locale(identifier: User.local)
+        
+        print(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String)
         
         (reviewSubmission
-            <+> .preview
-            <+> .campaignId("BV_REVIEW_DISPLAY")
+            <+> .preview // don't actually just submit for real, this is just for demo
+            //<+> .photos(photo)
             <+> .locale(usLocale)
-            <+> .sendEmailWhenCommented(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as! Bool)
-            <+> .sendEmailWhenPublished(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as! Bool)
-            <+> .nickname(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userNicknameFieldKey) as! String)
-            <+> .email(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as! String)
-            <+> .identifier("UserId")
-            <+> .score(5)
-            <+> .comment("Never!")
-            <+> .agree(true)
-            <+> .contextData(name: "Age", value: "18to24")
-            <+> .contextData(name: "Gender", value: "Male")
-            <+> .rating(name: "Quality", value: 1)
-            <+> .rating(name: "Value", value: 3)
-            <+> .rating(name: "HowDoes", value: 4)
-            <+> .rating(name: "Fit", value: 3)
-            <+> ["_foo": "bar"])
+            <+> .sendEmailWhenCommented(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true)
+            <+> .sendEmailWhenPublished(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true)
+            <+> .nickname(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userNicknameFieldKey) as? String ?? "")
+            <+> .email(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String ?? ""))
             
             .configure(ConfigurationManager.sharedInstance.conversationsConfig)
         
         reviewSubmission
-            .handler { result in
+            .handler { [weak self] result in
                 
-                DispatchQueue.main.async(execute: {
-                    _ = SweetAlert().showAlert("Success!", subTitle: "Your review was submitted. It may take up to 72 hours before your post is live.", style: .success)
-                })
+                guard let strongSelf = self else { return }
                 
-                if case let .failure(errors) = result {
-                    errors.forEach { print($0) }
-                    return
-                }
-                
-                guard case let .success(meta, _) = result else {
-                    return
-                }
-                
-                if let formFields = meta.formFields {
+                DispatchQueue.main.async {
                     
-                } else {
+                    delegate.hideLoadingIndicator()
                     
+                    switch result {
+                        
+                    case let .failure(errors):
+                        var errorMessage = ""
+                        errors.forEach({ errorMessage += "\($0)."})
+                        _ = SweetAlert().showAlert(AlertTitle.error, subTitle: errorMessage, style: .error, buttonTitle: AlertTitle.okay, action: nil)
+                        
+                    case .success:
+                        _ = SweetAlert().showAlert(AlertTitle.success, subTitle: AlertMessage.successMessage, style: .success, buttonTitle: AlertTitle.okay, action: { (Okay) in
+                            strongSelf.coordinator?.popBack()
+                        })
+                    }
                 }
         }
         
         reviewSubmission.async()
     }
     
-    func submitReviewCall() {
+    func buildRequest() -> BVProgressiveReview {
+        var submissionFields = BVProgressiveReviewFields()
         
+        submissionFields = BVProgressiveReviewFields()
+        submissionFields.rating = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.ratingStarsKey) as? Int ?? 0
+        submissionFields.title =  self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewTitleFieldKey) as? String ?? ""
+        submissionFields.reviewtext = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.reviewDetailsFieldKey) as? String ?? ""
+        submissionFields.sendEmailAlert = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true
+        submissionFields.isRecommended = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldText) as? Bool ?? true
+        
+        var submission = BVProgressiveReview(productId: self.product.productId ?? "", submissionFields: submissionFields)
+        submission.submissionSessionToken = ConfigurationManager.sharedInstance.submissionSessionToken
+        submission.locale = User.local
+        submission.userId = User.id
+        submission.userEmail = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String ?? ""
+        return submission
     }
     
     func progressiveSubmissionCall() {
         
+        guard let delegate = viewController else { return }
+        
         var progressiveReview: BVProgressiveReview = self.buildRequest()
-        progressiveReview.isPreview = true
+        progressiveReview.isPreview = true // don't actually just submit for real, this is just for demo
         
         guard let progressiveReviewSubmission = BVProgressiveReviewSubmission(progressiveReview) else {
             return
         }
         progressiveReviewSubmission.configure(ConfigurationManager.sharedInstance.conversationsConfig)
-        let internalURLSession: URLSession =
-            BVNetworkingManager.sharedManager.networkingSession
         
-        BVManager.sharedManager.urlSession = internalURLSession
         progressiveReviewSubmission
-            .handler { result in
+            .handler { [weak self] result in
                 
-                if case .failure(_) = result {
-                    return
-                }
+                guard let strongSelf = self else { return }
                 
-                if case let .success(_ , response) = result {
-                    return
+                DispatchQueue.main.async {
+                    
+                    delegate.hideLoadingIndicator()
+                    
+                    switch result {
+                        
+                    case let .failure(errors):
+                        var errorMessage = ""
+                        errors.forEach({ errorMessage += "\($0)."})
+                        _ = SweetAlert().showAlert(AlertTitle.error, subTitle: errorMessage, style: .error, buttonTitle: AlertTitle.okay, action: nil)
+                        
+                    case .success:
+                        _ = SweetAlert().showAlert(AlertTitle.success, subTitle: AlertMessage.successMessage, style: .success, buttonTitle: AlertTitle.okay, action: { (Okay) in
+                            strongSelf.coordinator?.popBack()
+                        })
+                    }
                 }
         }
         
         progressiveReviewSubmission.async()
         
     }
-    
 }
+
+

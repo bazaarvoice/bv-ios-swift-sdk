@@ -28,12 +28,42 @@ class URLConstants {
     
 }
 
+class User {
+    static let local = "en_US"
+    static let id = "123abc\(arc4random())"
+}
+
+class AlertMessage {
+    static let successMessage = "Your review was submitted. It may take up to 72 hours for us to respond."
+}
+
+class AlertTitle {
+    static let error = "Error!"
+    static let success = "Success!"
+    
+    static let okay = "Okay"
+}
+class ErrorMessage {
+    static let reviewTitleEmptyError = "Please enter review title."
+    static let ratingEmptyError = "Please give ratings"
+    
+    static let reviewDetailEmptyError = "Please enter review details."
+    static let userNicknameEmptyError = "Please enter user nickname."
+    
+    static let emailAddressEmptyError = "Please enter email address."
+    static let emailAddressInvalidError = "Please enter a valid email address."
+    
+    static let validationError = "Validation Error"
+}
+
 class UserFormConstants {
     static let recommendProductSwitchKey = "recommendProductSwitch"
     static let recommendProductSwitchText = "I recommend this product."
     
     static let ratingStarsKey = "ratingStars"
     static let ratingStarsTitle = "Rate this product"
+    static let ratingStarText = ""
+    
     
     static let reviewTitleFieldKey = "reviewTitle"
     static let reviewTitleFieldTitle = "Review Title"

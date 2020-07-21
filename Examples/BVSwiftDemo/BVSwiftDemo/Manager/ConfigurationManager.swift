@@ -35,6 +35,9 @@ class ConfigurationManager: NSObject {
     //ForAuthor
     let authorId: String = "data-gen-user-poaouvr127us1ijhpafkfacb9"
     
+    //ForProgressiveSubmission
+    let submissionSessionToken: String = "TOKEN_REMOVED"
+    
     private override init() {
         
         if let currentConfigStr = Bundle.main.object(forInfoDictionaryKey: "ENV") as? String, let env = Environment.init(rawValue: currentConfigStr)  {
