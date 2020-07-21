@@ -17,6 +17,11 @@ class Utils {
             return true
         }
         
+        if let intField = field as? Int, intField != 0 {
+            
+            return true
+        }
+        
         return false
     }
     

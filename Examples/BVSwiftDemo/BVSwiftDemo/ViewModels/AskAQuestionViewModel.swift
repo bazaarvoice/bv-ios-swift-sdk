@@ -200,13 +200,7 @@ class AskAQuestionViewModel: ViewModelType {
             throw FieldValidationError.agreeToTermsAndConditionsError
         }
     }
-    
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
-    }
 }
 
 // MARK:- AskAQuestionViewModelDelegate methods
@@ -263,7 +257,7 @@ extension AskAQuestionViewModel: AskAQuestionViewModelDelegate {
             let randomId = String(arc4random())
 
             (questionSubmission
-                <+> .preview
+                <+> .preview // don't actually just submit for real, this is just for demo
                 <+> .identifier("UserId\(randomId)")
                 <+> .nickname(self.questionSubmissionDictionary[FieldType.userNickname.propertyKey] as? String ?? "")
                 <+> .email(self.questionSubmissionDictionary[FieldType.userNickname.propertyKey] as? String ?? "")
@@ -278,23 +272,20 @@ extension AskAQuestionViewModel: AskAQuestionViewModelDelegate {
                     guard let strongSelf = self else { return }
 
                     DispatchQueue.main.async {
-
+                        
                         strongSelf.viewController?.hideLoadingIndicator()
-
+                        
                         switch result {
-
+                            
                         case let .failure(errors):
                             var errorMessage = ""
                             errors.forEach({ errorMessage += "\($0)."})
-                            strongSelf.coordinator?.showAlert(title: "Error Submitting Question",
-                                                              message: errorMessage,
-                                                              handler: nil)
-
+                            _ = SweetAlert().showAlert("Error Submitting Question!", subTitle: errorMessage, style: .error, buttonTitle: "Okay", action: nil)
+                            
                         case .success:
-                            strongSelf.coordinator?.showAlert(title: "Success!",
-                                                              message: "Your question was submitted. It may take up to 72 hours for us to respond.",
-                                                              handler: strongSelf.coordinator?.popBack)
-
+                            _ = SweetAlert().showAlert("Success!", subTitle: "Your question was submitted. It may take up to 72 hours for us to respond.", style: .success, buttonTitle: "Okay", action: { (Okay) in
+                                strongSelf.coordinator?.popBack()
+                            })
                         }
                     }
             }

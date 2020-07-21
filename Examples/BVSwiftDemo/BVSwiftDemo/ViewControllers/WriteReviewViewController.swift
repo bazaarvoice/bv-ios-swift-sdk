@@ -14,6 +14,10 @@ import SDForms
 
 protocol WriteReviewViewControllerDelegate: class {
     
+    func showLoadingIndicator()
+    
+    func hideLoadingIndicator()
+    
 }
 
 class WriteReviewViewController: UIViewController, ViewControllerType {
@@ -50,7 +54,7 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
     }
     
     @objc func submitQuestionTapped() {
-        self.viewModel.submitQuestionTapped()
+        self.viewModel.submitReviewTapped()
     }
     
     private func updateProductDetails() {
@@ -81,6 +85,12 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
 
 extension WriteReviewViewController: WriteReviewViewControllerDelegate {
     
+    func showLoadingIndicator() {
+        self.showSpinner()    }
+    
+    func hideLoadingIndicator() {
+        self.removeSpinner()
+    }
 }
 
 extension WriteReviewViewController: SDFormDataSource {
