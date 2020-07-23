@@ -54,6 +54,11 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
         self.navigationController.present(alertController, animated: true, completion: nil)
     }
     
+    func presentController(_ viewController: UIViewController) {
+        
+    }
+    
+    
     // MARK:- UINavigationControllerDelegate methods
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 

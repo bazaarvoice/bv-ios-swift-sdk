@@ -38,16 +38,20 @@ private enum ReviewHighlightsSection: Equatable {
 protocol ReviewsViewModelDelegate: class {
     
     func fetchReviews()
-        
+    
+    func didChangeFilterOption(_ option : ReviewsViewModel.FilterOptions)
+    
     var isReviewHighlightsExpanded: Bool { get }
-        
+    
     var numberOfSectionsForReviews: Int { get }
     
     var numberOfRowsForReview: Int { get }
-        
+
     func numberOfRowsForReviewHighlights(_ section: Int) -> Int
     
     func writeReviewTapped()
+    
+    func sortButtonTapped()
     
     var numberOfSectionsForReviewHighlights: Int { get }
     
@@ -58,9 +62,9 @@ protocol ReviewsViewModelDelegate: class {
     func gotoAuthorProfile(authorId: String)
     
     func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String
-        
+    
     func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview?
-        
+    
     func didSelectRowAt(_ indexPath: IndexPath)
     
     func getBvReviewHighlightsData() -> BVReviewHighlights?
@@ -76,6 +80,8 @@ protocol ReviewsViewModelDelegate: class {
 class ReviewsViewModel: ViewModelType {
     
     weak var viewController: ReviewsViewControllerDelegate?
+    
+    private var selectedFilterOption: FilterOptions = FilterOptions.mostRecent
     
     weak var coordinator: Coordinator?
     
@@ -94,6 +100,25 @@ class ReviewsViewModel: ViewModelType {
     private var reviewHighlightsSections: [ReviewHighlightsSection] = [.pros(isExpand: false),
                                                                        .cons(isExpand: false)]
     
+    enum FilterOptions : Int, CaseIterable {
+        
+        case mostRecent = 0
+        case highestRating
+        case lowestRating
+        
+        var title: String {
+            
+            switch self {
+                
+            case .mostRecent: return "Most Recent"
+            case .lowestRating: return "Lowest Rating"
+            case .highestRating: return "Highest Rating"
+                
+            }
+            
+        }
+    }
+    
     init(productId: String, product: BVProduct) {
         self.productId = productId
         self.product = product
@@ -105,7 +130,23 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     func writeReviewTapped() {
         self.coordinator?.navigateTo(AppCoordinator.AppNavigation.writeReview(product: self.product))
     }
+    
+    func sortButtonTapped() {
+        
+    }
+    
+    func didChangeFilterOption(_ option : FilterOptions) {
+        
+        if self.selectedFilterOption == option {
+            return // ignore, didn't change anything
+        }
 
+        self.selectedFilterOption = option
+
+        self.fectchReviewData(isSortRequest: true)
+        
+    }
+    
     func getBvReviewHighlightsData() -> BVReviewHighlights? {
         return self.bvReviewHighlights
     }
@@ -122,11 +163,22 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         return self.product.imageUrl?.value
     }
     
-    private func fectchReviewData() {
+    private func fectchReviewData(isSortRequest: Bool) {
         
-        self.dispatchGroup.enter()
+        isSortRequest ? self.viewController?.showLoadingIndicator() :  self.dispatchGroup.enter()
         
         let reviewQuery = BVReviewQuery(productId: self.productId, limit: 10, offset: 10)
+        
+        // Check sorting and filter FilterOptions
+        switch selectedFilterOption {
+            
+        case .highestRating: reviewQuery.sort(.rating, order: .descending)
+        case .lowestRating: reviewQuery.sort(.rating, order: .ascending)
+        case .mostRecent : break
+            
+        }
+        
+        reviewQuery
             .configure(ConfigurationManager.sharedInstance.conversationsConfig)
             .handler { [weak self] response in
                 
@@ -137,12 +189,21 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
                 case let .failure(errors):
                     strongSelf.error = errors.first
                     
-                    
                 case let .success(_, reviews):
                     strongSelf.bvReviews = reviews
                 }
                 
-                strongSelf.dispatchGroup.leave()
+                if isSortRequest {
+                    DispatchQueue.main.async {
+                        strongSelf.viewController?.hideLoadingIndicator()
+                        strongSelf.viewController?.updateSortButtonTitle(title: "Sort: \((FilterOptions(rawValue: strongSelf.selectedFilterOption.rawValue)?.title)!)")
+                            
+                        strongSelf.viewController?.reloadData()
+                    }
+                }
+                else {
+                    strongSelf.dispatchGroup.leave()
+                }
         }
         
         reviewQuery.async()
@@ -183,7 +244,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         
         delegate.showLoadingIndicator()
         
-        self .fectchReviewData()
+        self.fectchReviewData(isSortRequest: false)
         
         self.fetchReviewHighlightsData()
         
@@ -235,7 +296,6 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         return self.reviewHighlightsSections[indexPath.section].title
     }
     
-    
     var numberOfSectionsForReviews: Int {
         return 1
     }
@@ -258,7 +318,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
             return isExpand ? (self.bvReviewHighlights?.positives?.count ?? 0) + 1 : 1
             
         case let .cons(isExpand):
-             return isExpand ? (self.bvReviewHighlights?.negatives?.count ?? 0) + 1 : 1
+            return isExpand ? (self.bvReviewHighlights?.negatives?.count ?? 0) + 1 : 1
             
         }
     }
@@ -268,14 +328,14 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     var isReviewHighlightsExpanded: Bool {
-
+        
         return self.reviewHighlightsSections.contains { (reviewHighlightsSection) -> Bool in
             
             switch reviewHighlightsSection {
-            
+                
             case let .pros(isExpand) :
-                 return isExpand == true
-            
+                return isExpand == true
+                
             case let .cons(isExpand) :
                 return isExpand == true
             }
@@ -292,7 +352,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
             return self.bvReviewHighlights?.positives?.count ?? 0
             
         case .cons:
-             return self.bvReviewHighlights?.negatives?.count ?? 0
+            return self.bvReviewHighlights?.negatives?.count ?? 0
             
         }
     }
@@ -311,7 +371,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
             return self.bvReviewHighlights?.positives?[indexPath.row - 1].title ?? ""
             
         case .cons:
-             return self.bvReviewHighlights?.negatives?[indexPath.row - 1].title ?? ""
+            return self.bvReviewHighlights?.negatives?[indexPath.row - 1].title ?? ""
             
         }
     }
