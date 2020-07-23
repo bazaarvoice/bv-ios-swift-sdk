@@ -18,6 +18,8 @@
 		42A6C78F24BDB6BA006CF92C /* WriteReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6C78E24BDB6BA006CF92C /* WriteReviewViewModel.swift */; };
 		42A6C79224C052FF006CF92C /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6C79124C052FF006CF92C /* SweetAlert.swift */; };
 		42B93A20248942CB003B5D6C /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */; };
+		42BC267624C9612E000CA351 /* BVSwiftDemoActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC267524C9612D000CA351 /* BVSwiftDemoActionController.swift */; };
+		42BC267824C9653B000CA351 /* BVSwiftDemoActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42BC267724C9653B000CA351 /* BVSwiftDemoActionCell.xib */; };
 		42BC40E32473BB4E00008434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E22473BB4E00008434 /* AppDelegate.swift */; };
 		42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC40E62473BB4E00008434 /* HomeViewController.swift */; };
 		42BC40EA2473BB4E00008434 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42BC40E82473BB4E00008434 /* Main.storyboard */; };
@@ -92,6 +94,8 @@
 		42A6C78E24BDB6BA006CF92C /* WriteReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewViewModel.swift; sourceTree = "<group>"; };
 		42A6C79124C052FF006CF92C /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
 		42B93A1F248942CB003B5D6C /* ProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewCell.swift; sourceTree = "<group>"; };
+		42BC267524C9612D000CA351 /* BVSwiftDemoActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSwiftDemoActionController.swift; sourceTree = "<group>"; };
+		42BC267724C9653B000CA351 /* BVSwiftDemoActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BVSwiftDemoActionCell.xib; sourceTree = "<group>"; };
 		42BC40DF2473BB4E00008434 /* BVSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42BC40E22473BB4E00008434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42BC40E62473BB4E00008434 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +245,8 @@
 				9FA659842474F48600D9498F /* UIKit+Extensions.swift */,
 				9FA73B00248F9D4E00746ACA /* DateTimeAgo.swift */,
 				9FC63B1A24C0926C0045013E /* Utils.swift */,
+				42BC267524C9612D000CA351 /* BVSwiftDemoActionController.swift */,
+				42BC267724C9653B000CA351 /* BVSwiftDemoActionCell.xib */,
 			);
 			path = BVSwiftDemo;
 			sourceTree = "<group>";
@@ -490,6 +496,7 @@
 				4247D14B24B6FCBB002D6009 /* slide_3@2x.jpg in Resources */,
 				42CE5FB524ADE2B4009D050B /* conversationsProductsIncludeStats.json in Resources */,
 				42CE5FC524AE19F1009D050B /* reviewHighlights.json in Resources */,
+				42BC267824C9653B000CA351 /* BVSwiftDemoActionCell.xib in Resources */,
 				42CE5FB624ADE2B4009D050B /* conversationsAuthorWithIncludes.json in Resources */,
 				42CE5FBD24ADE2B4009D050B /* userProfile1.json in Resources */,
 				42CE5FC324ADE2B4009D050B /* submitQuestion.json in Resources */,
@@ -566,6 +573,7 @@
 				9F37A8DD24BD8FDE00B23DDB /* AskAQuestionViewModel.swift in Sources */,
 				42FC2DF2248FAB8800947F4A /* ReviewHighlightsHeaderTableViewCell.swift in Sources */,
 				42BC40E72473BB4E00008434 /* HomeViewController.swift in Sources */,
+				42BC267624C9612E000CA351 /* BVSwiftDemoActionController.swift in Sources */,
 				42566A4E247E709B008FC057 /* ConfigurationManager.swift in Sources */,
 				9FA7497E248A19E900BAA52E /* ProductDetailRecommendationsTableViewCell.swift in Sources */,
 				42A6C78D24BDB615006CF92C /* WriteReviewViewController.swift in Sources */,

@@ -1692,8 +1692,72 @@
                                             <outlet property="delegate" destination="l11-l0-3LU" id="Lwl-5r-VkT"/>
                                         </connections>
                                     </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLR-W7-DPI">
+                                        <rect key="frame" x="0.0" y="182" width="414" height="50"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Va7-et-fLY">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
+                                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="2LM-9E-SwD"/>
+                                                </constraints>
+                                            </view>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shift" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="q13-K0-AhB">
+                                                <rect key="frame" x="10" y="16" width="20" height="17.5"/>
+                                                <color key="tintColor" name="bazaarvoiceNavy"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="5MX-dv-hK0"/>
+                                                    <constraint firstAttribute="height" constant="20" id="j1p-aS-q7S"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Y2-QQ-zvO">
+                                                <rect key="frame" x="0.0" y="0.5" width="414" height="49"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <inset key="contentEdgeInsets" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Sort: Most Recent">
+                                                    <color key="titleColor" name="bazaarvoiceNavy"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sortButtonAction:" destination="l11-l0-3LU" eventType="touchUpInside" id="0Al-In-Tcu"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8m-vP-zju">
+                                                <rect key="frame" x="0.0" y="49.5" width="414" height="0.5"/>
+                                                <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="GCt-dl-UdE"/>
+                                                    <constraint firstAttribute="height" constant="1" id="eP0-th-hhx"/>
+                                                </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="eP0-th-hhx"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="u8m-vP-zju" secondAttribute="trailing" id="844-E1-qGx"/>
+                                            <constraint firstItem="0Y2-QQ-zvO" firstAttribute="top" secondItem="Va7-et-fLY" secondAttribute="bottom" id="CeI-ze-A9y"/>
+                                            <constraint firstAttribute="trailing" secondItem="Va7-et-fLY" secondAttribute="trailing" id="D0S-ce-pQg"/>
+                                            <constraint firstItem="u8m-vP-zju" firstAttribute="leading" secondItem="HLR-W7-DPI" secondAttribute="leading" id="LgT-wK-HuR"/>
+                                            <constraint firstAttribute="height" constant="50" id="Olk-lx-zOq"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Y2-QQ-zvO" secondAttribute="trailing" id="Ppm-ds-PZd"/>
+                                            <constraint firstItem="q13-K0-AhB" firstAttribute="leading" secondItem="HLR-W7-DPI" secondAttribute="leading" constant="10" id="RLs-Bq-wqI"/>
+                                            <constraint firstItem="Va7-et-fLY" firstAttribute="top" secondItem="HLR-W7-DPI" secondAttribute="top" id="Tgu-T7-qx2"/>
+                                            <constraint firstItem="Va7-et-fLY" firstAttribute="leading" secondItem="HLR-W7-DPI" secondAttribute="leading" id="W9p-H0-Mz0"/>
+                                            <constraint firstItem="u8m-vP-zju" firstAttribute="top" secondItem="0Y2-QQ-zvO" secondAttribute="bottom" id="cq0-LN-zD4"/>
+                                            <constraint firstItem="0Y2-QQ-zvO" firstAttribute="leading" secondItem="HLR-W7-DPI" secondAttribute="leading" id="hG8-3a-8wQ"/>
+                                            <constraint firstItem="q13-K0-AhB" firstAttribute="centerY" secondItem="HLR-W7-DPI" secondAttribute="centerY" id="ici-xL-Abs"/>
+                                            <constraint firstAttribute="bottom" secondItem="u8m-vP-zju" secondAttribute="bottom" id="tBH-ru-15f"/>
+                                        </constraints>
+                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="evh-OF-r3O">
-                                        <rect key="frame" x="0.0" y="192" width="414" height="626"/>
+                                        <rect key="frame" x="0.0" y="232" width="414" height="586"/>
                                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReviewTableViewCell" rowHeight="307" id="Cgh-ke-0Iy" customClass="ReviewTableViewCell" customModule="BVSwiftDemo" customModuleProvider="target">
@@ -1917,14 +1981,17 @@
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="JWr-Ll-EDz" firstAttribute="leading" secondItem="CR8-LT-OTn" secondAttribute="leading" id="8Mn-NB-WRl"/>
+                                    <constraint firstItem="evh-OF-r3O" firstAttribute="top" secondItem="HLR-W7-DPI" secondAttribute="bottom" id="E54-I4-big"/>
+                                    <constraint firstItem="HLR-W7-DPI" firstAttribute="leading" secondItem="CR8-LT-OTn" secondAttribute="leading" id="LCk-nc-HoM"/>
                                     <constraint firstItem="UqV-jC-oou" firstAttribute="leading" secondItem="CR8-LT-OTn" secondAttribute="leading" id="QJg-kn-3KT"/>
                                     <constraint firstAttribute="trailing" secondItem="JWr-Ll-EDz" secondAttribute="trailing" id="ZeK-G7-S9O"/>
+                                    <constraint firstAttribute="trailing" secondItem="HLR-W7-DPI" secondAttribute="trailing" id="akb-oo-jPn"/>
                                     <constraint firstItem="UqV-jC-oou" firstAttribute="top" secondItem="JWr-Ll-EDz" secondAttribute="bottom" constant="2" id="d5Q-e4-MFt"/>
                                     <constraint firstItem="evh-OF-r3O" firstAttribute="leading" secondItem="CR8-LT-OTn" secondAttribute="leading" id="gfh-K1-vf8"/>
                                     <constraint firstAttribute="bottom" secondItem="evh-OF-r3O" secondAttribute="bottom" id="iEj-Za-fUu"/>
                                     <constraint firstAttribute="trailing" secondItem="UqV-jC-oou" secondAttribute="trailing" id="pPj-l3-2dQ"/>
+                                    <constraint firstItem="HLR-W7-DPI" firstAttribute="top" secondItem="UqV-jC-oou" secondAttribute="bottom" id="sFW-Ld-y7d"/>
                                     <constraint firstItem="JWr-Ll-EDz" firstAttribute="top" secondItem="CR8-LT-OTn" secondAttribute="top" id="yy1-hl-11x"/>
-                                    <constraint firstItem="evh-OF-r3O" firstAttribute="top" secondItem="UqV-jC-oou" secondAttribute="bottom" constant="10" id="zQ9-ON-SBK"/>
                                     <constraint firstAttribute="trailing" secondItem="evh-OF-r3O" secondAttribute="trailing" id="zfh-G6-BMB"/>
                                 </constraints>
                             </view>
@@ -1946,6 +2013,7 @@
                         <outlet property="reviewHighlightsTableHeightConstraints" destination="WJs-y6-yrH" id="xwh-xW-qhG"/>
                         <outlet property="reviewHighlightsTableView" destination="UqV-jC-oou" id="O0f-Rm-MAz"/>
                         <outlet property="reviewTableView" destination="evh-OF-r3O" id="7bJ-B9-k5S"/>
+                        <outlet property="sortButton" destination="0Y2-QQ-zvO" id="5dC-dQ-wnw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tl7-ch-K4c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2569,6 +2637,7 @@
         <image name="placeholder" width="150" height="150"/>
         <image name="plus" catalog="system" width="64" height="56"/>
         <image name="revolution_cycles.png" width="640" height="240"/>
+        <image name="shift" catalog="system" width="64" height="52"/>
         <namedColor name="bazaarvoiceNavy">
             <color red="0.0" green="0.23921568627450981" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

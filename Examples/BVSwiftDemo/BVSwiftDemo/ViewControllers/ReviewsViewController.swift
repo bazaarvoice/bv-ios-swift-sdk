@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XLActionController
 import HCSStarRatingView
 import FontAwesomeKit
 
@@ -17,6 +18,8 @@ protocol ReviewsViewControllerDelegate: class {
     func showLoadingIndicator()
     
     func hideLoadingIndicator()
+    
+    func updateSortButtonTitle(title: String)
 }
 
 class ReviewsViewController: UIViewController, ViewControllerType {
@@ -32,6 +35,7 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var reviewTableView: UITableView!
     @IBOutlet weak var reviewHighlightsTableView: UITableView!
     @IBOutlet weak var reviewHighlightsTableHeightConstraints: NSLayoutConstraint!
+    @IBOutlet weak var sortButton: UIButton!
     
     // MARK:- Constants
     private static let REVIEW_CELL_IDENTIFIER: String = "ReviewTableViewCell"
@@ -49,6 +53,28 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         self.viewModel.fetchReviews()
         
         self.updateProductDetails()
+    }
+    
+    @IBAction func sortButtonAction(_ sender: UIButton) {
+        
+        let actionController = BVSwiftDemoActionController()
+
+        actionController.addAction(Action(ReviewsViewModel.FilterOptions.mostRecent.title, style: .default, handler: { action in
+            self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.mostRecent)
+        }))
+        
+        actionController.addAction(Action(ReviewsViewModel.FilterOptions.lowestRating.title, style: .default, handler: { action in
+            self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.lowestRating)
+        }))
+        
+        actionController.addAction(Action(ReviewsViewModel.FilterOptions.highestRating.title, style: .default, handler: { action in
+            self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.highestRating)
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
+
+        present(actionController, animated: true, completion: nil)
+        
     }
     
     func updateProductDetails() {
@@ -189,5 +215,7 @@ extension ReviewsViewController: ReviewsViewControllerDelegate {
         self.removeSpinner()
     }
     
-    
+    func updateSortButtonTitle(title: String) {
+        self.sortButton.setTitle(title, for: UIControl.State())
+    }
 }
