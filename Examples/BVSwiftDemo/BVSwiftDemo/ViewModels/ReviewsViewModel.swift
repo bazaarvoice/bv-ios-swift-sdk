@@ -51,7 +51,7 @@ protocol ReviewsViewModelDelegate: class {
     
     func writeReviewTapped()
     
-    func sortButtonTapped()
+    func sortButtonTapped(_ viewController: UIViewController)
     
     var numberOfSectionsForReviewHighlights: Int { get }
     
@@ -131,8 +131,8 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
         self.coordinator?.navigateTo(AppCoordinator.AppNavigation.writeReview(product: self.product))
     }
     
-    func sortButtonTapped() {
-        
+    func sortButtonTapped(_ viewController: UIViewController) {
+        self.coordinator?.presentController(viewController)
     }
     
     func didChangeFilterOption(_ option : FilterOptions) {

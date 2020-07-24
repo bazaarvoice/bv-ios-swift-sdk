@@ -58,22 +58,22 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     @IBAction func sortButtonAction(_ sender: UIButton) {
         
         let actionController = BVSwiftDemoActionController()
-
+        
         actionController.addAction(Action(ReviewsViewModel.FilterOptions.mostRecent.title, style: .default, handler: { action in
             self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.mostRecent)
         }))
-        
+
         actionController.addAction(Action(ReviewsViewModel.FilterOptions.lowestRating.title, style: .default, handler: { action in
             self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.lowestRating)
         }))
-        
+
         actionController.addAction(Action(ReviewsViewModel.FilterOptions.highestRating.title, style: .default, handler: { action in
             self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.highestRating)
         }))
         
         actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
 
-        present(actionController, animated: true, completion: nil)
+        self.viewModel.sortButtonTapped(actionController)
         
     }
     
