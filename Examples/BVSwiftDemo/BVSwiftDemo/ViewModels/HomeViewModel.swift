@@ -16,6 +16,7 @@ protocol HomeViewModelDelegate: class {
     func productForItemAtIndexPath(_ indexPath: IndexPath) -> BVRecommendationsProduct?
     func didSelectItemAt (indexPath: IndexPath)
     func loadProductRecommendations()
+    func devInfo()
 }
 
 class HomeViewModel: ViewModelType {
@@ -29,6 +30,10 @@ class HomeViewModel: ViewModelType {
 }
 
 extension HomeViewModel: HomeViewModelDelegate {
+    
+    func devInfo() {
+        self.coordinator?.showAlert(title: "Note", message: "If your in Staging scheme please add your passkeys and Ids in ConfigurationManager files or for mock data please use Mock scheme.", handler: nil)
+    }
     
     var numberOfSections: Int {
         return 1

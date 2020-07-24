@@ -47,6 +47,8 @@ class HomeViewController: UIViewController, ViewControllerType {
         self.setPageView()
         
         self.viewModel.loadProductRecommendations()
+        
+        self.viewModel.devInfo()
     }
     
     class func createTitleLabel() -> UILabel {
