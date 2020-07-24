@@ -17,26 +17,33 @@ enum Environment: String {
 
 class ConfigurationManager: NSObject {
     
+    //Shared Instance
     static let sharedInstance = ConfigurationManager()
+    
+    //Current scheme
     private let environment: Environment
-    private let clientId: String = "apitestcustomer"
-    private let conversationsPassKey: String = "kuy3zj9pr3n7i0wxajrzj04xo"
-    private let curationsPassKey: String = ""
-    private let recommendationPassKey: String = "srZ86SuQ0JupyKrtBHILGIIFsqJoeP4tXYJlQfjojBmuo"
+    
+    //Required Keys and IDs
+    private let clientId: String = "REPLACE_ME" // <--- Add your clientId key here.
+    private let conversationsPassKey: String = "REPLACE_ME" // <--- Add your conversations API key here.
+    private let curationsPassKey: String = "REPLACE_ME" // <--- Add your curations API key here.
+    private let recommendationPassKey: String = "REPLACE_ME" // <--- Add your recommendation API key here.
+    
+    //For ReviewHighligts
+    let reviewHighlightsProductId: String = "REPLACE_ME" // <--- Add your reviewHighlights ProductId here.
+    let reviewHighlightsClientId: String = "REPLACE_ME" // <--- Add your reviewHighlights ClientId here.
+    
+    //ForAuthor
+    let authorId: String = "REPLACE_ME" // <--- Add your authorId here.
+    
+    //ForProgressiveSubmission
+    let submissionSessionToken: String = "REPLACE_ME" // <--- Add your submission Session Token here.
+    
+    //Configurations
     var conversationsConfig: BVConversationsConfiguration!
     var curationsConfig: BVCurationsConfiguration!
     var recommendationConfig: BVRecommendationsConfiguration!
     var reviewHighlightsConfig: BVReviewHighlightsConfiguration!
-    
-    //For ReviewHighligts
-    let reviewHighlightsProductId: String = "prod1011"
-    let reviewHighlightsClientId: String = "1800petmeds"
-    
-    //ForAuthor
-    let authorId: String = "data-gen-user-poaouvr127us1ijhpafkfacb9"
-    
-    //ForProgressiveSubmission
-    let submissionSessionToken: String = "qwVlQcpCW3CbsgfbClSVWZffmL20qOorqf0J87lcklmt8GZ7tbNDDyDx/UZeV+Dv7CgRurvxkrn0uAiNjdQpq9Z2ABxVvNq/kHnElA3GTs0="
     
     private override init() {
         
