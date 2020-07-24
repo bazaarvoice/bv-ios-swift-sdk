@@ -55,7 +55,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate {
     }
     
     func presentController(_ viewController: UIViewController) {
-        
+            self.navigationController.present(viewController, animated: true, completion: nil)
     }
     
     
