@@ -100,23 +100,12 @@ class ReviewsViewModel: ViewModelType {
     private var reviewHighlightsSections: [ReviewHighlightsSection] = [.pros(isExpand: false),
                                                                        .cons(isExpand: false)]
     
-    enum FilterOptions : Int, CaseIterable {
+    enum FilterOptions : String, CaseIterable {
         
-        case mostRecent = 0
-        case highestRating
-        case lowestRating
-        
-        var title: String {
-            
-            switch self {
-                
-            case .mostRecent: return "Most Recent"
-            case .lowestRating: return "Lowest Rating"
-            case .highestRating: return "Highest Rating"
-                
-            }
-            
-        }
+        case mostRecent = "Most Recent"
+        case highestRating = "Highest Rating"
+        case lowestRating = "Lowest Rating"
+
     }
     
     init(productId: String, product: BVProduct) {
@@ -196,7 +185,7 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
                 if isSortRequest {
                     DispatchQueue.main.async {
                         strongSelf.viewController?.hideLoadingIndicator()
-                        strongSelf.viewController?.updateSortButtonTitle(title: "Sort: \((FilterOptions(rawValue: strongSelf.selectedFilterOption.rawValue)?.title)!)")
+                        strongSelf.viewController?.updateSortButtonTitle(title: "Sort: \(strongSelf.selectedFilterOption.rawValue)")
                             
                         strongSelf.viewController?.reloadData()
                     }
