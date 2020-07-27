@@ -78,7 +78,6 @@ class ProductDisplayPageViewModel: ViewModelType {
     
     private func fetchProductDisplayPageDetails() {
         
-        // TODO:- Testing Required after Bug fix(Bug in BVSwift SDK - When multiple stats are added they are passed as separate query params. So only first stat added will be returned).
         self.dispatchGroup.enter()
         
         let productQuery = BVProductQuery(productId: self.productId)
