@@ -44,11 +44,14 @@ class HomeViewController: UIViewController, ViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        //TODO:
+       // self.viewModel.devInfo()
+        
         self.setPageView()
         
         self.viewModel.loadProductRecommendations()
         
-        self.viewModel.devInfo()
     }
     
     class func createTitleLabel() -> UILabel {
