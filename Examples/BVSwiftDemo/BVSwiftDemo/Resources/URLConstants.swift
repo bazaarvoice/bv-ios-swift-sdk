@@ -35,6 +35,7 @@ class User {
 
 class AlertMessage {
     static let successMessage = "Your review was submitted. It may take up to 72 hours for us to respond."
+    static let launchAlertMessage = "Please add the passkeys and the Ids in the ConfigurationManager file if you are using Staging/BVSwiftDemo(Production) schemes to make the API calls for the Staging environment and BVSwiftDemo(Production)."
 }
 
 class AlertTitle {
@@ -42,6 +43,7 @@ class AlertTitle {
     static let success = "Success!"
     
     static let okay = "Okay"
+    static let note = "Note"
 }
 class ErrorMessage {
     static let reviewTitleEmptyError = "Please enter review title."

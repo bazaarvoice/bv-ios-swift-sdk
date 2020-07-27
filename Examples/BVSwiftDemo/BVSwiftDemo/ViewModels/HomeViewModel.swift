@@ -32,7 +32,7 @@ class HomeViewModel: ViewModelType {
 extension HomeViewModel: HomeViewModelDelegate {
     
     func devInfo() {
-        self.coordinator?.showAlert(title: "Note", message: "If your in Staging scheme please add your passkeys and Ids in ConfigurationManager files or for mock data please use Mock scheme.", handler: nil)
+        self.coordinator?.showAlert(title: AlertTitle.note, message: AlertMessage.launchAlertMessage, handler: nil)
     }
     
     var numberOfSections: Int {
