@@ -16,6 +16,7 @@ public enum BVReviewInclude: BVQueryInclude {
   
   case comments
   case products
+  case authors
   
   public static var includePrefix: String {
     return BVConversationsConstants.BVQueryInclude.defaultField
@@ -41,6 +42,8 @@ extension BVReviewInclude: BVConversationsQueryValue {
       return BVComment.pluralKey
     case .products:
       return BVProduct.pluralKey
+    case .authors:
+      return BVAuthor.pluralKey
     }
   }
 }
