@@ -24,6 +24,7 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   
   private var includedComments: [BVComment]?
   private var includedProducts: [BVProduct]?
+  private var includedAuthors: [BVAuthor]?
   
   public var additionalFields: Decoder? {
     return additionalFieldsDecoder?.decoder
@@ -145,6 +146,7 @@ extension BVReview {
     self.productId = productId
     self.includedComments = nil
     self.includedProducts = nil
+    self.includedAuthors = nil
     self.additionalFieldsDecoder = nil
     self.authorId = nil
     self.badgesArray = nil
@@ -188,6 +190,7 @@ extension BVReview {
     self.productId = productId
     self.includedComments = nil
     self.includedProducts = nil
+    self.includedAuthors = nil
     self.additionalFieldsDecoder = nil
     self.authorId = nil
     self.badgesArray = nil
@@ -239,6 +242,12 @@ extension BVReview: BVProductIncludable {
   }
 }
 
+extension BVReview: BVAuthorIncludable {
+  public var authors: [BVAuthor]? {
+    return includedAuthors
+  }
+}
+
 // MARK: - BVReview: BVConversationsQueryUpdateIncludable
 extension BVReview: BVConversationsQueryUpdateIncludable {
   
@@ -250,6 +259,9 @@ extension BVReview: BVConversationsQueryUpdateIncludable {
     }
     if let products: [BVProduct] = includable.products {
       self.includedProducts = products
+    }
+    if let authors: [BVAuthor] = includable.authors {
+      self.includedAuthors = authors
     }
   }
 }
