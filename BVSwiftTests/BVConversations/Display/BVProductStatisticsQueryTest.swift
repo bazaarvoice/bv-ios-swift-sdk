@@ -21,8 +21,8 @@ class BVProductStatisticsQueryTest: XCTestCase {
         configType: .staging(clientId: "apitestcustomer"))
     
     return BVConversationsConfiguration.display(
-      clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
-      configType: .staging(clientId: "apitestcustomer"),
+      clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
+      configType: .staging(clientId: ""),
       analyticsConfig: analyticsConfig)
   }()
   
@@ -93,6 +93,7 @@ class BVProductStatisticsQueryTest: XCTestCase {
       .filter((.contentLocale(usLocale), .equalTo))
       .stats(.nativeReviews)
       .stats(.reviews)
+      .incentivizedStats(.true)
       .configure(BVProductStatisticsQueryTest.config)
       .handler {
         (response: BVConversationsQueryResponse<BVProductStatistics>) in
@@ -148,6 +149,84 @@ class BVProductStatisticsQueryTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+
+    func testProductStatisticsQueryDisplayIncentivizedReviewOneProduct() {
+      
+      let expectation =
+        self.expectation(
+          description: "testProductStatisticsQueryDisplayOneProduct")
+      
+      let usLocale: Locale = Locale(identifier: "en_US")
+      
+      guard let productStatisticsQuery =
+        BVProductStatisticsQuery(productIds: ["data-gen-moppq9ekthfzbc6qff3bqokie"]) else {
+          XCTFail()
+          expectation.fulfill()
+          return
+      }
+      
+      productStatisticsQuery
+        .filter((.contentLocale(usLocale), .equalTo))
+        .stats(.nativeReviews)
+        .stats(.reviews)
+        .incentivizedStats(.true)//TODO
+        .configure(BVProductStatisticsQueryTest.config)
+        .handler {
+            (response: BVConversationsQueryResponse<BVProductStatistics>) in
+            
+            if case .failure(let error) = response {
+                print(error)
+                XCTFail()
+                expectation.fulfill()
+                return
+            }
+            
+            guard case let .success(_, productStatistics) = response else {
+                XCTFail()
+                expectation.fulfill()
+                return
+            }
+            
+            guard let firstProductStatistic: BVProductStatistics =
+                productStatistics.first,
+                let reviewStatistics =
+                firstProductStatistic.reviewStatistics, let nativeReviewStatistics =
+                firstProductStatistic.nativeReviewStatistics else {
+                    XCTFail()
+                    expectation.fulfill()
+                    return
+            }
+            
+            XCTAssertEqual(productStatistics.count, 1)
+            
+            XCTAssertEqual(firstProductStatistic.productId, "data-gen-moppq9ekthfzbc6qff3bqokie")
+            XCTAssertEqual(reviewStatistics.totalReviewCount, 55)
+            XCTAssertEqual(reviewStatistics.incentivizedReviewCount, 15)
+            XCTAssertNotNil(reviewStatistics.averageOverallRating)
+            XCTAssertEqual(reviewStatistics.overallRatingRange, 5)
+            XCTAssertEqual(nativeReviewStatistics.totalReviewCount, 55)
+            XCTAssertEqual(nativeReviewStatistics.incentivizedReviewCount, 15)
+            XCTAssertEqual(nativeReviewStatistics.overallRatingRange, 5)
+            
+            
+            expectation.fulfill()
+        }
+      
+      guard let req = productStatisticsQuery.request else {
+        XCTFail()
+        expectation.fulfill()
+        return
+      }
+      
+      print(req)
+      
+      productStatisticsQuery.async()
+      
+      self.waitForExpectations(timeout: 20) { (error) in
+        XCTAssertNil(
+          error, "Something went horribly wrong, request took too long.")
+      }
+    }
   
   
   
