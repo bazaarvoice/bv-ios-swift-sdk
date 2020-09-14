@@ -93,7 +93,6 @@ class BVProductStatisticsQueryTest: XCTestCase {
       .filter((.contentLocale(usLocale), .equalTo))
       .stats(.nativeReviews)
       .stats(.reviews)
-      .incentivizedStats(.true)
       .configure(BVProductStatisticsQueryTest.config)
       .handler {
         (response: BVConversationsQueryResponse<BVProductStatistics>) in
@@ -150,11 +149,11 @@ class BVProductStatisticsQueryTest: XCTestCase {
     }
   }
 
-    func testProductStatisticsQueryDisplayIncentivizedReviewOneProduct() {
+    func testProductStatisticsQueryDisplayIncentivizedReview() {
       
       let expectation =
         self.expectation(
-          description: "testProductStatisticsQueryDisplayOneProduct")
+          description: "testProductStatisticsQueryDisplayIncentivizedReview")
       
       let usLocale: Locale = Locale(identifier: "en_US")
       
@@ -169,7 +168,7 @@ class BVProductStatisticsQueryTest: XCTestCase {
         .filter((.contentLocale(usLocale), .equalTo))
         .stats(.nativeReviews)
         .stats(.reviews)
-        .incentivizedStats(.true)//TODO
+        .incentivizedStats(true)
         .configure(BVProductStatisticsQueryTest.config)
         .handler {
             (response: BVConversationsQueryResponse<BVProductStatistics>) in
@@ -198,12 +197,15 @@ class BVProductStatisticsQueryTest: XCTestCase {
             }
             
             XCTAssertEqual(productStatistics.count, 1)
-            
             XCTAssertEqual(firstProductStatistic.productId, "data-gen-moppq9ekthfzbc6qff3bqokie")
+            
+            // For Review Statistics
             XCTAssertEqual(reviewStatistics.totalReviewCount, 55)
             XCTAssertEqual(reviewStatistics.incentivizedReviewCount, 15)
             XCTAssertNotNil(reviewStatistics.averageOverallRating)
             XCTAssertEqual(reviewStatistics.overallRatingRange, 5)
+            
+            //For Native Review Statistics
             XCTAssertEqual(nativeReviewStatistics.totalReviewCount, 55)
             XCTAssertEqual(nativeReviewStatistics.incentivizedReviewCount, 15)
             XCTAssertEqual(nativeReviewStatistics.overallRatingRange, 5)
