@@ -51,7 +51,6 @@ internal struct BVConversationsConstants {
   
   internal struct BVQueryStat {
     static let defaultField: String = "Stats"
-    static let incentivizedstats: String = "incentivizedstats"
   }
   
   internal struct BVQueryType {
@@ -64,6 +63,7 @@ internal struct BVConversationsConstants {
       static let results: String = "Results"
       static let search: String = "Search"
       static let totalResults: String = "TotalResults"
+      static let incentivizedstats: String = "incentivizedstats"
     }
   }
   
@@ -205,11 +205,6 @@ internal struct BVConversationsConstants {
   
     internal struct BVNativeReviews {
         static let key: String = "NativeReviews"
-    }
-    
-    internal struct BVIncentivized {
-        static let `true`: String = "true"
-        static let `false`: String = "false"
     }
   
   internal struct BVProducts {
