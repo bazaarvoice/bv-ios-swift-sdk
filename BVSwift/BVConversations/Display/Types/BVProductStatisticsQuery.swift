@@ -75,7 +75,6 @@ extension BVProductStatisticsQuery: BVQueryFilterable {
 // MARK: - BVProductStatisticsQuery: BVQueryStatable
 extension BVProductStatisticsQuery: BVQueryStatable {
     public typealias Stat = BVProductStatisticsStat
-    public typealias IncentivizedStat = BVIncentivizedStat
     
     @discardableResult
     public func stats(_ for: Stat) -> Self {
@@ -85,10 +84,14 @@ extension BVProductStatisticsQuery: BVQueryStatable {
     }
     
     @discardableResult
-    public func incentivizedStats(_ for: IncentivizedStat) -> Self {
-        let incentivizedStat: BVURLParameter = .stats(`for`, nil)
+    public func incentivizedStats(_ value: Bool) -> Self {
+
+        let incentivizedStat: BVURLParameter = .field(BVIncentivizedStats.init(value), nil)
+        
         add(incentivizedStat, coalesce: true)
+        
         return self
     }
+    
 }
 

@@ -8,28 +8,24 @@
 
 import UIKit
 
-public enum BVIncentivizedStat: BVQueryStat {
+internal struct BVIncentivizedStats: BVQueryField {
     
-    case `true`
-    case `false`
+    private let value: CustomStringConvertible
     
-    public static var statPrefix: String {
-        return BVConversationsConstants.BVQueryStat.incentivizedstats
+    var internalDescription: String {
+        return BVConversationsConstants.BVQueryType.Keys.incentivizedstats
     }
     
-    public var description: String {
+    var representedValue: CustomStringConvertible {
+        return value
+    }
+    
+    var description: String {
         return internalDescription
     }
     
-}
-
-extension BVIncentivizedStat: BVConversationsQueryValue {
-    internal var internalDescription: String {
-        switch self {
-        case .true:
-            return BVConversationsConstants.BVIncentivized.true
-        case .false:
-            return BVConversationsConstants.BVIncentivized.false
-        }
+    init(_ _value: Bool) {
+        value = "\(_value)"
     }
+    
 }

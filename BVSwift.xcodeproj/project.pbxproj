@@ -961,6 +961,7 @@
 				98686C43240710AD00D67889 /* BVCommentFilter.swift */,
 				98686C41240710AC00D67889 /* BVCommentInclude.swift */,
 				98686C4C240710AD00D67889 /* BVCommentSort.swift */,
+				42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */,
 				98686C4A240710AD00D67889 /* BVProductFilter.swift */,
 				98686C44240710AD00D67889 /* BVProductInclude.swift */,
 				98686C42240710AC00D67889 /* BVProductSort.swift */,
@@ -975,7 +976,6 @@
 				98686C3B240710AC00D67889 /* BVReviewInclude.swift */,
 				98686C49240710AD00D67889 /* BVReviewSort.swift */,
 				98686C4B240710AD00D67889 /* BVReviewStat.swift */,
-				42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
