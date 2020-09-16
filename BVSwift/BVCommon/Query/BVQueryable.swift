@@ -97,6 +97,11 @@ public protocol BVQueryStatable {
   func stats(_ for: Stat) -> Self
 }
 
+/// Protocol definition for the behavior of adding  incentivizedStats
+public protocol BVQueryIncentivizedStatable {
+  func incentivizedStats(_ value: Bool) -> Self
+}
+
 /// Protocol definition for the behavior of adding custom query fields
 /// - Note:
 /// \
