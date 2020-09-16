@@ -286,39 +286,29 @@ class BVReviewSearchQueryTest: XCTestCase {
         }
         
         XCTAssertEqual(reviews.count, 1)
-        XCTAssertEqual(reviews.filter({ $0.badges!.contains(where: { $0.badgeId == "incentivizedReview" })}).count, 1)
         
-        for review in reviews {
-          
-          // author includes assertions
-          XCTAssertNotNil(review.authors)
-          XCTAssertEqual(review.authors?.count, 1)
-          XCTAssertEqual(review.authorId, review.authors?.first?.authorId)
-          XCTAssertNotNil(review.authors?.first?.reviewStatistics?.incentivizedReviewCount)
-          
-          if let incentivizedBadge = review.badges?.first(where: { $0.badgeId == "incentivizedReview"}) {
-            
-            // assertions for incentivized review badge properties
-            XCTAssertEqual(incentivizedBadge.badgeType, .custom)
-            XCTAssertEqual(incentivizedBadge.contentType, "REVIEW")
-            
-            // assertions for context data values of incentivized review
-            XCTAssertTrue(review.contextDataValues!.contains(where: {$0.contextDataValueId == "IncentivizedReview"}))
-            if let incentivizedContextDataValue = review.contextDataValues!.first(where: {$0.contextDataValueId == "IncentivizedReview"}) {
-              XCTAssertNotNil(incentivizedContextDataValue.dimensionLabel) // dimensionLabel Value could be anything so actual value check is not added
-              XCTAssertEqual(incentivizedContextDataValue.value, "True")
-              XCTAssertEqual(incentivizedContextDataValue.valueLabel, "Yes")
-            }
-          }
+        let review: BVReview = reviews.first!
+        
+        // assertions for badges
+        XCTAssertTrue(review.badges!.contains(where: { $0.badgeId == "incentivizedReview" }))
+        if let incentivizedBadge = review.badges?.first(where: { $0.badgeId == "incentivizedReview"}) {
+          XCTAssertEqual(incentivizedBadge.badgeType, .custom)
+          XCTAssertEqual(incentivizedBadge.contentType, "REVIEW")
         }
         
-        let review : BVReview = reviews.first!
+        // assertions for context data values of incentivized review
+        XCTAssertTrue(review.contextDataValues!.contains(where: {$0.contextDataValueId == "IncentivizedReview"}))
+        if let incentivizedContextDataValue = review.contextDataValues!.first(where: {$0.contextDataValueId == "IncentivizedReview"}) {
+          XCTAssertNotNil(incentivizedContextDataValue.dimensionLabel) // dimensionLabel Value could be anything so actual value check is not added
+          XCTAssertEqual(incentivizedContextDataValue.value, "True")
+          XCTAssertEqual(incentivizedContextDataValue.valueLabel, "Yes")
+        }
         
+        // assertions for product review statistics
         XCTAssertNotNil(review.products)
         XCTAssertEqual(review.products?.count, 1)
         XCTAssertEqual(review.productId, "data-gen-moppq9ekthfzbc6qff3bqokie")
         
-        // Review Statistics assertions
         XCTAssertNotNil(review.products?.first?.reviewStatistics)
         XCTAssertNotNil(review.products?.first?.reviewStatistics?.incentivizedReviewCount)
         XCTAssertEqual(review.products?.first?.reviewStatistics?.incentivizedReviewCount, 15)
@@ -329,7 +319,7 @@ class BVReviewSearchQueryTest: XCTestCase {
         XCTAssertEqual(incentivizedReview?.label, "Received an incentive for this review")
         XCTAssertEqual(incentivizedReview?.values?.count, 1)
         
-        // Filtered Review Statistics assertions
+        // assertions for product filtered review statistics
         XCTAssertNotNil(review.products?.first?.filteredReviewStatistics)
         XCTAssertNotNil(review.products?.first?.filteredReviewStatistics?.incentivizedReviewCount)
         XCTAssertEqual(review.products?.first?.filteredReviewStatistics?.incentivizedReviewCount, 1)
@@ -339,6 +329,12 @@ class BVReviewSearchQueryTest: XCTestCase {
         XCTAssertEqual(filteredIncentivizedReview?.distibutionElementId, "IncentivizedReview")
         XCTAssertEqual(filteredIncentivizedReview?.label, "Received an incentive for this review")
         XCTAssertEqual(filteredIncentivizedReview?.values?.count, 1)
+        
+        // assertions for author review statistics(Review Stats & Filtered Review Stats are mapped to the same object for BVAuthor)
+        XCTAssertNotNil(review.authors)
+        XCTAssertEqual(review.authors?.count, 1)
+        XCTAssertEqual(review.authorId, review.authors?.first?.authorId)
+        XCTAssertNotNil(review.authors?.first?.reviewStatistics?.incentivizedReviewCount)
         
         expectation.fulfill()
     }
