@@ -82,16 +82,15 @@ extension BVProductStatisticsQuery: BVQueryStatable {
         add(internalStat, coalesce: true)
         return self
     }
-    
-    @discardableResult
-    public func incentivizedStats(_ value: Bool) -> Self {
+}
 
-        let incentivizedStat: BVURLParameter = .field(BVIncentivizedStats.init(value), nil)
-        
-        add(incentivizedStat, coalesce: true)
-        
-        return self
-    }
-    
+// MARK: - BVProductStatisticsQuery: BVQueryIncentivizedStatable
+extension BVProductStatisticsQuery: BVQueryIncentivizedStatable {
+  @discardableResult
+  public func incentivizedStats(_ value: Bool) -> Self {
+    let incentivizedStat: BVURLParameter = .field(BVIncentivizedStats(value), nil)
+    add(incentivizedStat, coalesce: false)
+    return self
+  }
 }
 
