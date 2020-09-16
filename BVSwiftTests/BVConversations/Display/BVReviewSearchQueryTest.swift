@@ -25,6 +25,19 @@ class BVReviewSearchQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
   
+  private static var incentivizedStatsConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -238,6 +251,107 @@ class BVReviewSearchQueryTest: XCTestCase {
     print(req)
     
     reviewSearchQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewSearchQueryIncentivizedStats() {
+    
+    let expectation = self.expectation(description: "testReviewQueryIncentivizedStats")
+    
+    let reviewQuery = BVReviewSearchQuery(
+    productId: "data-gen-moppq9ekthfzbc6qff3bqokie", searchQuery: "king woman vietnsmeese")
+      .include(.authors)
+      .include(.products)
+      .stats(.reviews)
+      .filter(.reviews)
+      .incentivizedStats(true)
+      .configure(BVReviewSearchQueryTest.incentivizedStatsConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        XCTAssertEqual(reviews.count, 1)
+        XCTAssertEqual(reviews.filter({ $0.badges!.contains(where: { $0.badgeId == "incentivizedReview" })}).count, 1)
+        
+        for review in reviews {
+          
+          // author includes assertions
+          XCTAssertNotNil(review.authors)
+          XCTAssertEqual(review.authors?.count, 1)
+          XCTAssertEqual(review.authorId, review.authors?.first?.authorId)
+          XCTAssertNotNil(review.authors?.first?.reviewStatistics?.incentivizedReviewCount)
+          
+          if let incentivizedBadge = review.badges?.first(where: { $0.badgeId == "incentivizedReview"}) {
+            
+            // assertions for incentivized review badge properties
+            XCTAssertEqual(incentivizedBadge.badgeType, .custom)
+            XCTAssertEqual(incentivizedBadge.contentType, "REVIEW")
+            
+            // assertions for context data values of incentivized review
+            XCTAssertTrue(review.contextDataValues!.contains(where: {$0.contextDataValueId == "IncentivizedReview"}))
+            if let incentivizedContextDataValue = review.contextDataValues!.first(where: {$0.contextDataValueId == "IncentivizedReview"}) {
+              XCTAssertNotNil(incentivizedContextDataValue.dimensionLabel) // dimensionLabel Value could be anything so actual value check is not added
+              XCTAssertEqual(incentivizedContextDataValue.value, "True")
+              XCTAssertEqual(incentivizedContextDataValue.valueLabel, "Yes")
+            }
+          }
+        }
+        
+        let review : BVReview = reviews.first!
+        
+        XCTAssertNotNil(review.products)
+        XCTAssertEqual(review.products?.count, 1)
+        XCTAssertEqual(review.productId, "data-gen-moppq9ekthfzbc6qff3bqokie")
+        
+        // Review Statistics assertions
+        XCTAssertNotNil(review.products?.first?.reviewStatistics)
+        XCTAssertNotNil(review.products?.first?.reviewStatistics?.incentivizedReviewCount)
+        XCTAssertEqual(review.products?.first?.reviewStatistics?.incentivizedReviewCount, 15)
+        XCTAssertNotNil(review.products?.first?.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }))
+        
+        let incentivizedReview = review.products?.first?.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" })!
+        XCTAssertEqual(incentivizedReview?.distibutionElementId, "IncentivizedReview")
+        XCTAssertEqual(incentivizedReview?.label, "Received an incentive for this review")
+        XCTAssertEqual(incentivizedReview?.values?.count, 1)
+        
+        // Filtered Review Statistics assertions
+        XCTAssertNotNil(review.products?.first?.filteredReviewStatistics)
+        XCTAssertNotNil(review.products?.first?.filteredReviewStatistics?.incentivizedReviewCount)
+        XCTAssertEqual(review.products?.first?.filteredReviewStatistics?.incentivizedReviewCount, 1)
+        XCTAssertNotNil(review.products?.first?.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }))
+        
+        let filteredIncentivizedReview = review.products?.first?.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" })!
+        XCTAssertEqual(filteredIncentivizedReview?.distibutionElementId, "IncentivizedReview")
+        XCTAssertEqual(filteredIncentivizedReview?.label, "Received an incentive for this review")
+        XCTAssertEqual(filteredIncentivizedReview?.values?.count, 1)
+        
+        expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
     
     self.waitForExpectations(timeout: 20) { (error) in
       XCTAssertNil(
