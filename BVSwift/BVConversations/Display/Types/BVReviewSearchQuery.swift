@@ -236,7 +236,7 @@ extension BVReviewSearchQuery: BVQueryStatable {
   }
 }
 
-// MARK: - BVReviewQuery: BVQueryIncentivizedStatable
+// MARK: - BVReviewSearchQuery: BVQueryIncentivizedStatable
 extension BVReviewSearchQuery: BVQueryIncentivizedStatable {
   @discardableResult
   public func incentivizedStats(_ value: Bool) -> Self {
