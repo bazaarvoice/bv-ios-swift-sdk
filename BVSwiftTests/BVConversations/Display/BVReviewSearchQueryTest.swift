@@ -330,7 +330,7 @@ class BVReviewSearchQueryTest: XCTestCase {
         XCTAssertEqual(filteredIncentivizedReview?.label, "Received an incentive for this review")
         XCTAssertEqual(filteredIncentivizedReview?.values?.count, 1)
         
-        // assertions for author review statistics(Review Stats & Filtered Review Stats are mapped to the same object for BVAuthor)
+        // assertions for author include(Review Stats & Filtered Review Stats are mapped to the same object for BVAuthor)
         XCTAssertNotNil(review.authors)
         XCTAssertEqual(review.authors?.count, 1)
         XCTAssertEqual(review.authorId, review.authors?.first?.authorId)
