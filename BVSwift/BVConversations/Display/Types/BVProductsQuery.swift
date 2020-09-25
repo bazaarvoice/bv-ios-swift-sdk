@@ -148,3 +148,16 @@ extension BVProductsQuery: BVQueryStatable {
     return self
   }
 }
+
+// MARK: - BVProductsQuery: BVQueryFilteredStatable
+extension BVProductsQuery: BVQueryFilteredStatable {
+  public typealias FilteredStat = BVProductFilteredStat
+  
+  @discardableResult
+  public func filter(_ by: FilteredStat) -> Self {
+    let internalStat: BVURLParameter = .stats(by, nil)
+    add(internalStat, coalesce: true)
+    return self
+  }
+}
+
