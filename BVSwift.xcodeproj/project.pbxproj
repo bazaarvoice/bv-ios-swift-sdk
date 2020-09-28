@@ -258,6 +258,7 @@
 		98686D9124080D0900D67889 /* BVMultiProductQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */; };
 		98686D9324080D5E00D67889 /* BVProgressiveSubmissionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */; };
 		9F34FD7B251DCBC60023BB89 /* BVProductFilteredStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F34FD7A251DCBC60023BB89 /* BVProductFilteredStat.swift */; };
+		9F34FD7D2521B7FA0023BB89 /* BVProductsQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F34FD7C2521B7FA0023BB89 /* BVProductsQueryTest.swift */; };
 		9F5063C5242B915E005DE36B /* integrate-dynamic-framework.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9F5063C4242B915E005DE36B /* integrate-dynamic-framework.sh */; };
 		9F51CA49240CD1150043AED5 /* BVReviewHighlights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51CA3B240CD1150043AED5 /* BVReviewHighlights.swift */; };
 		9F51CA4A240CD1150043AED5 /* BVReviewHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51CA3C240CD1150043AED5 /* BVReviewHighlight.swift */; };
@@ -519,6 +520,7 @@
 		98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMultiProductQueryTest.swift; sourceTree = "<group>"; };
 		98686D9224080D5E00D67889 /* BVProgressiveSubmissionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProgressiveSubmissionTest.swift; sourceTree = "<group>"; };
 		9F34FD7A251DCBC60023BB89 /* BVProductFilteredStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductFilteredStat.swift; sourceTree = "<group>"; };
+		9F34FD7C2521B7FA0023BB89 /* BVProductsQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductsQueryTest.swift; sourceTree = "<group>"; };
 		9F5063C4242B915E005DE36B /* integrate-dynamic-framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "integrate-dynamic-framework.sh"; sourceTree = "<group>"; };
 		9F51CA3B240CD1150043AED5 /* BVReviewHighlights.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVReviewHighlights.swift; sourceTree = "<group>"; };
 		9F51CA3C240CD1150043AED5 /* BVReviewHighlight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVReviewHighlight.swift; sourceTree = "<group>"; };
@@ -1069,6 +1071,7 @@
 				98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */,
 				98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */,
 				9F51CA51240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift */,
+				9F34FD7C2521B7FA0023BB89 /* BVProductsQueryTest.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1612,6 +1615,7 @@
 				98686D4B240714A000D67889 /* BVURLParameterTest.swift in Sources */,
 				98686D53240714D100D67889 /* BVReviewSearchQueryTest.swift in Sources */,
 				98686D672407151600D67889 /* BVQuestionSubmissionTest.swift in Sources */,
+				9F34FD7D2521B7FA0023BB89 /* BVProductsQueryTest.swift in Sources */,
 				98686D6A2407151600D67889 /* BVFeedbackSubmissionTest.swift in Sources */,
 				98686BBF2406F3CF00D67889 /* BVCommentQueryTest.swift in Sources */,
 				98686D462407149100D67889 /* BVAnalyticsCommonTest.swift in Sources */,
