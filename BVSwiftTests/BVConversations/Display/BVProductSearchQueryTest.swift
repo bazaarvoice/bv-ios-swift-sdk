@@ -158,6 +158,7 @@ class BVProductSearchQueryTest: XCTestCase {
         // only include questions where isFeatured is not equal to true
         .filter((.questions(.isFeatured(true)), .notEqualTo))
         .stats(.reviews)
+        .filter(.reviews)
         .configure(BVProductSearchQueryTest.config)
         .handler { (response: BVConversationsQueryResponse<BVProduct>) in
           
@@ -179,6 +180,9 @@ class BVProductSearchQueryTest: XCTestCase {
             expectation.fulfill()
             return
           }
+          
+          XCTAssertNotNil(product.reviewStatistics)
+          XCTAssertNotNil(product.filteredReviewStatistics)
           
           guard let reviews: [BVReview] = product.reviews,
             let questions: [BVQuestion] = product.questions else {
