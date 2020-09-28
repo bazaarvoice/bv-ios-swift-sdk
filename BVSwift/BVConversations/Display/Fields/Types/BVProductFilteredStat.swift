@@ -15,6 +15,8 @@ import Foundation
 /// Used for conformance with the BVQueryStatable protocol.
 public enum BVProductFilteredStat: BVQueryFilteredStat {
   
+  case answers
+  case questions
   case reviews
   
   public static var statPrefix: String {
@@ -29,8 +31,12 @@ public enum BVProductFilteredStat: BVQueryFilteredStat {
 extension BVProductFilteredStat: BVConversationsQueryValue {
   internal var internalDescription: String {
     switch self {
-    case .reviews:
-      return BVReview.pluralKey
+      case .answers:
+        return BVAnswer.pluralKey
+      case .questions:
+        return BVQuestion.pluralKey
+      case .reviews:
+        return BVReview.pluralKey
     }
   }
 }
