@@ -251,6 +251,8 @@ class BVProductQueryTest: XCTestCase {
           .include(.reviews, limit: 10)
           .include(.questions, limit: 5)
           .stats(.reviews)
+          .filter(.reviews)
+          .filter(.questions)
           .stats(.questions)
           .configure(BVProductQueryTest.config)
           .handler { (response: BVConversationsQueryResponse<BVProduct>) in
@@ -275,7 +277,9 @@ class BVProductQueryTest: XCTestCase {
             }
             
             XCTAssertNotNil(product.qaStatistics)
+            XCTAssertNotNil(product.filteredQAStatistics)
             XCTAssertNotNil(product.reviewStatistics)
+            XCTAssertNotNil(product.filteredReviewStatistics)
             
             expectation.fulfill()
         }
