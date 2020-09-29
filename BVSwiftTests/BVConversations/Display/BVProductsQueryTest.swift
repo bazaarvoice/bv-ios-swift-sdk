@@ -36,12 +36,14 @@ class BVProductsQueryTest: XCTestCase {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
     
-  func testProductsQueryIncentivizedStats() {
+  func testProductsQueryMultipleStats() {
     let expectation = self.expectation(description: "testProductsQueryIncentivizedStats")
     
     let productQuery = BVProductsQuery(productIds: ["test1", "test2"])!
       .stats(.reviews)
+      .stats(.questions)
       .filter(.reviews)
+      .filter(.questions)
       .configure(BVProductsQueryTest.config)
       .handler { (response: BVConversationsQueryResponse<BVProduct>) in
         
@@ -64,6 +66,8 @@ class BVProductsQueryTest: XCTestCase {
           XCTAssertNotNil(product.productId)
           XCTAssertNotNil(product.reviewStatistics)
           XCTAssertNotNil(product.filteredReviewStatistics)
+          XCTAssertNotNil(product.qaStatistics)
+          XCTAssertNotNil(product.filteredQAStatistics)
         }
         
         expectation.fulfill()
