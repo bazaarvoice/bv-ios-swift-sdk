@@ -161,3 +161,12 @@ extension BVProductsQuery: BVQueryFilteredStatable {
   }
 }
 
+// MARK: - BVProductsQuery: BVQueryIncentivizedStatable
+extension BVProductsQuery: BVQueryIncentivizedStatable {
+  @discardableResult
+  public func incentivizedStats(_ value: Bool) -> Self {
+    let incentivizedStat: BVURLParameter = .field(BVIncentivizedStats(value), nil)
+    add(incentivizedStat, coalesce: false)
+    return self
+  }
+}
