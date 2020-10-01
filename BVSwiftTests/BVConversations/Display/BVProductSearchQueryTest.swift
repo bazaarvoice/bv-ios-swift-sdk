@@ -25,6 +25,19 @@ class BVProductSearchQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
   
+  private static var incentivizedStatsConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -224,5 +237,82 @@ class BVProductSearchQueryTest: XCTestCase {
       XCTAssertNil(
         error, "Something went horribly wrong, request took too long.")
     }
+  }
+  
+  func testProductSearchQueryIncentivizedStats() {
+    let expectation = self.expectation(description: "testProductSearchQueryIncentivizedStats")
+    
+    let productQuery = BVProductSearchQuery(searchQuery: "large dryer")
+      .stats(.reviews)
+      .filter(.reviews)
+      .incentivizedStats(true)
+      .configure(BVProductSearchQueryTest.incentivizedStatsConfig)
+      .handler { (response: BVConversationsQueryResponse<BVProduct>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, products) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        XCTAssertNotNil(products)
+        XCTAssertEqual(products.count, 9)
+        
+        // incentivized stats assertions
+        for product in products {
+          XCTAssertNotNil(product.reviewStatistics?.incentivizedReviewCount)
+        }
+        
+        let product = products.first!
+        
+        XCTAssertNotNil(product.productId)
+        
+        // Review Statistics assertions
+        XCTAssertNotNil(product.reviewStatistics)
+        XCTAssertEqual(product.reviewStatistics?.incentivizedReviewCount, 6)
+        XCTAssertNotNil(product.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }))
+        
+        let incentivizedReview = product.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" })!
+        XCTAssertEqual(incentivizedReview?.distibutionElementId, "IncentivizedReview")
+        XCTAssertEqual(incentivizedReview?.label, "Received an incentive for this review")
+        XCTAssertEqual(incentivizedReview?.values?.count, 1)
+        
+        // Filtered Review Statistics assertions
+        XCTAssertNotNil(product.filteredReviewStatistics)
+        XCTAssertNotNil(product.filteredReviewStatistics?.incentivizedReviewCount)
+        XCTAssertEqual(product.filteredReviewStatistics?.incentivizedReviewCount, 6)
+        XCTAssertNotNil(product.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }))
+        
+        let filtereedIncentivizedReview = product.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" })!
+        XCTAssertEqual(filtereedIncentivizedReview?.distibutionElementId, "IncentivizedReview")
+        XCTAssertEqual(filtereedIncentivizedReview?.label, "Received an incentive for this review")
+        XCTAssertEqual(filtereedIncentivizedReview?.values?.count, 1)
+        
+        expectation.fulfill()
+    }
+    
+    guard let req = productQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    /// We're not testing analytics here
+    productQuery.async(urlSession: BVProductSearchQueryTest.privateSession)
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+    
   }
 }
