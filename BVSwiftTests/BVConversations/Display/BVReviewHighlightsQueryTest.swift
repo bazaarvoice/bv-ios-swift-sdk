@@ -479,8 +479,8 @@ class BVReviewHighlightsQueryTest: XCTestCase {
         
         let expectation = self.expectation(description: "testProsAndConsSequence")
         
-        let expectedPositives: [String] = ["cleaning", "satisfaction", "ease of use"] // array of expected positives
-        let expectedNegatives: [String] = ["small", "large"] // array of expected negatives
+        let expectedPositives: [String] = ["satisfaction", "cleaning", "ease of use", "price", "compatibility"] // array of expected positives
+        let expectedNegatives: [String] = ["large", "for dogs", "small"] // array of expected negatives
         
         let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: "1800petmeds", productId: "prod1011")
             .configure(BVReviewHighlightsQueryTest.config)
