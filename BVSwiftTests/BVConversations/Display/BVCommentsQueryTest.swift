@@ -1,14 +1,15 @@
 //
-//  BVCommentQueryTest.swift
-//  BVSwiftTests
 //
-//  Copyright © 2018 Bazaarvoice. All rights reserved.
+//  BVCommentsQueryTest.swift
+//  BVSwift
 //
+//  Copyright © 2020 Bazaarvoice. All rights reserved.
+// 
 
 import XCTest
 @testable import BVSwift
 
-class BVCommentQueryTest: XCTestCase {
+class BVCommentsQueryTest: XCTestCase {
     
     private static var config: BVConversationsConfiguration =
     { () -> BVConversationsConfiguration in
@@ -31,7 +32,7 @@ class BVCommentQueryTest: XCTestCase {
                 configType: .staging(clientId: "testcust-contentoriginsynd"))
         
         return BVConversationsConfiguration.display(
-            clientKey: "ca79jZohgqUDHy625ASm2su46Iu092ZhKuhKibga3Z6zo",
+            clientKey: "carz85SqKJp9FrZgeb2irdiEBT4b0DSe7m1KUm18elijE",
             configType: .staging(clientId: "testcust-contentoriginsynd"),
             analyticsConfig: analyticsConfig)
     }()
@@ -48,13 +49,13 @@ class BVCommentQueryTest: XCTestCase {
         BVPixel.skipAllPixelEvents = false
     }
     
-    func testCommentQueryConstruction() {
+    func testCommentsQueryConstruction() {
         
-        let commentQuery:BVCommentQuery =
-            BVCommentQuery(
+        let commentsQuery:BVCommentsQuery =
+            BVCommentsQuery(
                 productId: "1000001",
-                commentId: "192548")
-                .configure(BVCommentQueryTest.config)
+                reviewId: "192548")
+                .configure(BVCommentsQueryTest.config)
                 .filter((.reviewId("testID1"), .equalTo),
                         (.reviewId("testID2"), .equalTo),
                         (.reviewId("testID3"), .equalTo),
@@ -64,7 +65,7 @@ class BVCommentQueryTest: XCTestCase {
                         (.categoryAncestorId("2"), .greaterThan),
                         (.moderatorCode("3"), .greaterThan))
         
-        guard let url = commentQuery.request?.url else {
+        guard let url = commentsQuery.request?.url else {
             XCTFail()
             return
         }
@@ -76,7 +77,7 @@ class BVCommentQueryTest: XCTestCase {
         XCTAssertTrue(url.absoluteString.contains("ReviewId:neq:testID4,testID5"))
     }
     
-    func testCommentQuery() {
+    func testCommentsQuery() {
         
         let expectation =
             self.expectation(description: "testBVConversationComment")
@@ -87,7 +88,7 @@ class BVCommentQueryTest: XCTestCase {
                 reviewId: "192548",
                 limit: 99,
                 offset: 0)
-                .configure(BVCommentQueryTest.config)
+                .configure(BVCommentsQueryTest.config)
                 .handler { (response: BVConversationsQueryResponse<BVComment>) in
                     
                     if case .failure = response {
@@ -121,20 +122,18 @@ class BVCommentQueryTest: XCTestCase {
                 error, "Something went horribly wrong, request took too long.")
         }
     }
-    
-    func testCommentQuerySyndicationSource() {
+    func testCommentsQuerySyndicationSource() {
         
         let expectation =
-            self.expectation(description: "testCommentQuerySyndicationSource")
+            self.expectation(description: "testCommentsQuerySyndicationSource")
         
-        let commentQuery:BVCommentQuery =
-            BVCommentQuery(
+        let commentQuery:BVCommentsQuery =
+            BVCommentsQuery(
                 productId: "Concierge-Common-Product-2",
-                commentId: "4312642")
-                .include(.authors)
-                .include(.products)
-                .include(.reviews)
-                .configure(BVCommentQueryTest.syndicationSourceConfig)
+                reviewId: "33950761",
+                limit: 99,
+                offset: 0)
+                .configure(BVCommentsQueryTest.syndicationSourceConfig)
                 .handler { (response: BVConversationsQueryResponse<BVComment>) in
                     
                     if case .failure = response {
@@ -148,7 +147,7 @@ class BVCommentQueryTest: XCTestCase {
                         return
                     }
                     
-                    guard let comment: BVComment = comments.first,
+                    guard let comment: BVComment = comments.first(where: { $0.commentId == "4312642" }),
                         let syndicationSource: BVSyndicationSource =
                         comment.syndicationSource else {
                             XCTFail()
@@ -176,52 +175,6 @@ class BVCommentQueryTest: XCTestCase {
         
         commentQuery.async()
         self.waitForExpectations(timeout: 2000) { (error) in
-            XCTAssertNil(
-                error, "Something went horribly wrong, request took too long.")
-        }
-    }
-    
-    func testCommentQueryIncludes() {
-        
-        let expectation =
-            self.expectation(description: "testBVConversationCommentIncludes")
-        
-        let commentQuery:BVCommentQuery =
-            BVCommentQuery(
-                productId: "1000001",
-                commentId: "12024")
-                .include(.authors)
-                .include(.products)
-                .include(.reviews)
-                .configure(BVCommentQueryTest.config)
-                .handler { (response: BVConversationsQueryResponse<BVComment>) in
-                    
-                    if case .failure = response {
-                        XCTFail()
-                        expectation.fulfill()
-                    }
-                    
-                    guard case let .success(_, comments) = response else {
-                        XCTFail()
-                        expectation.fulfill()
-                        return
-                    }
-                    
-                    XCTAssertEqual(comments.count, 1)
-                    expectation.fulfill()
-        }
-        
-        guard let req = commentQuery.request else {
-            XCTFail()
-            expectation.fulfill()
-            return
-        }
-        
-        print(req)
-        
-        commentQuery.async()
-        
-        self.waitForExpectations(timeout: 20) { (error) in
             XCTAssertNil(
                 error, "Something went horribly wrong, request took too long.")
         }

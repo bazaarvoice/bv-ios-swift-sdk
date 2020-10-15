@@ -15,10 +15,12 @@ public struct BVSyndicationSource: BVAuxiliaryable {
   public let contentLink: BVCodableSafe<URL>?
   public let logoImageUrl: String?
   public let name: String?
+  public let clientId: String?
   
   private enum CodingKeys: String, CodingKey {
     case contentLink = "ContentLink"
     case logoImageUrl = "LogoImageUrl"
     case name = "Name"
+    case clientId = "ClientId"
   }
 }
