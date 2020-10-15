@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		422C3B212538524900080544 /* BVCommentsQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C3B202538524900080544 /* BVCommentsQueryTest.swift */; };
 		42C3C3B62507951C00305A4C /* BVIncentivizedStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */; };
 		98686BBF2406F3CF00D67889 /* BVCommentQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */; };
 		98686BC724070EC700D67889 /* BVAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BC124070EC600D67889 /* BVAnalyticsManager.swift */; };
@@ -283,6 +284,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		422C3B202538524900080544 /* BVCommentsQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCommentsQueryTest.swift; sourceTree = "<group>"; };
 		42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVIncentivizedStats.swift; sourceTree = "<group>"; };
 		98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BVCommentQueryTest.swift; path = BVSwiftTests/BVConversations/Display/BVCommentQueryTest.swift; sourceTree = SOURCE_ROOT; };
 		98686BC024070EC600D67889 /* BVAnalyticsLocaleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVAnalyticsLocaleService.swift; sourceTree = "<group>"; };
@@ -1072,6 +1074,7 @@
 				98686D9024080D0900D67889 /* BVMultiProductQueryTest.swift */,
 				9F51CA51240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift */,
 				9F34FD7C2521B7FA0023BB89 /* BVProductsQueryTest.swift */,
+				422C3B202538524900080544 /* BVCommentsQueryTest.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1612,6 +1615,7 @@
 				98686D54240714D100D67889 /* BVProductQueryTest.swift in Sources */,
 				98686D9124080D0900D67889 /* BVMultiProductQueryTest.swift in Sources */,
 				98686D6F2407153C00D67889 /* BVCurationsSubmissionTest.swift in Sources */,
+				422C3B212538524900080544 /* BVCommentsQueryTest.swift in Sources */,
 				98686D4B240714A000D67889 /* BVURLParameterTest.swift in Sources */,
 				98686D53240714D100D67889 /* BVReviewSearchQueryTest.swift in Sources */,
 				98686D672407151600D67889 /* BVQuestionSubmissionTest.swift in Sources */,

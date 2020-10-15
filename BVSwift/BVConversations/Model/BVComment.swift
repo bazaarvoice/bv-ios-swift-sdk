@@ -40,6 +40,7 @@ public struct BVComment: BVQueryable, BVSubmissionable {
     return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
+  public let sourceClient: String?
   public var lastModificationTime: Date? {
     return lastModificationTimeString?.toBVDate()
   }
@@ -68,6 +69,7 @@ public struct BVComment: BVQueryable, BVSubmissionable {
     case isSyndicated = "IsSyndicated"
     case lastModeratedTimeString = "LastModeratedTime"
     case lastModificationTimeString = "LastModificationTime"
+    case sourceClient = "SourceClient"
     case reviewId = "ReviewId"
     case submissionId = "SubmissionId"
     case submissionTimeString = "SubmissionTime"
@@ -97,6 +99,7 @@ extension BVComment {
     self.contentLocale = nil
     self.isSyndicated = nil
     self.lastModeratedTimeString = nil
+    self.sourceClient = nil
     self.lastModificationTimeString = nil
     self.submissionId = nil
     self.submissionTimeString = nil
