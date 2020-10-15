@@ -38,6 +38,19 @@ class BVReviewQueryTest: XCTestCase {
       configType: .staging(clientId: "apitestcustomer"),
       analyticsConfig: analyticsConfig)
   }()
+    
+    private static var syndicationSourceConfig: BVConversationsConfiguration =
+    { () -> BVConversationsConfiguration in
+        
+        let analyticsConfig: BVAnalyticsConfiguration =
+            .dryRun(
+                configType: .staging(clientId: "testcust-contentoriginsynd"))
+        
+        return BVConversationsConfiguration.display(
+            clientKey: "ca79jZohgqUDHy625ASm2su46Iu092ZhKuhKibga3Z6zo",
+            configType: .staging(clientId: "testcust-contentoriginsynd"),
+            analyticsConfig: analyticsConfig)
+    }()
   
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
@@ -222,59 +235,118 @@ class BVReviewQueryTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+    
+    func testReviewQuerySyndicationSource() {
+        
+        let expectation =
+            self.expectation(description: "testReviewQuerySyndicationSource")
+        
+        let commentQuery:BVReviewQuery =
+            BVReviewQuery(productId: "Concierge-Common-Product-1", limit: 10, offset: 0)
+                .include(.authors)
+                .include(.products)
+                .filter(.reviews)
+                .configure(BVReviewQueryTest.syndicationSourceConfig)
+                .handler { (response: BVConversationsQueryResponse<BVReview>) in
+                    
+                    if case .failure = response {
+                        XCTFail()
+                        expectation.fulfill()
+                        return
+                    }
+                    
+                    guard case let .success(_, reviews) = response else {
+                        XCTFail()
+                        expectation.fulfill()
+                        return
+                    }
+                    
+                    guard let review: BVReview = reviews.first(where: {$0.reviewId == "33950761"}),
+                        let syndicationSource: BVSyndicationSource =
+                        review.syndicationSource else {
+                            XCTFail()
+                            return
+                    }
+                    
+                    //Source Client
+                    XCTAssertEqual(review.sourceClient, "testcust-contentoriginsynd")
+                    
+                    //Syndicated Source
+                    XCTAssertTrue(review.isSyndicated!)
+                    XCTAssertNotNil(review.syndicationSource)
+                    XCTAssertEqual(syndicationSource.name, "TestCustomer-Contentorigin_Synd1_en_US")
+                    XCTAssertEqual(review.syndicationSource?.logoImageUrl, "https://contentorigin-stg.bazaarvoice.com/testsynd1-origin/en_US/Fish03_small.jpg")
+                    
+                    expectation.fulfill()
+        }
+        
+        guard let req = commentQuery.request else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+        
+        print(req)
+        
+        commentQuery.async()
+        self.waitForExpectations(timeout: 2000) { (error) in
+            XCTAssertNil(
+                error, "Something went horribly wrong, request took too long.")
+        }
+    }
   
-  func testReviewQuerySyndicationSource() {
-    
-    let handler = { (response: BVConversationsQueryResponse<BVReview>) in
-      
-      if case .failure(let error) = response {
-        print(error)
-        XCTFail()
-        return
-      }
-      
-      guard case let .success(_, reviews) = response else {
-        XCTFail()
-        return
-      }
-      
-      guard let review: BVReview = reviews.first,
-        let syndicationSource: BVSyndicationSource =
-        review.syndicationSource else {
-          XCTFail()
-          return
-      }
-      
-      XCTAssertEqual(syndicationSource.name, "bazaarvoice")
-      XCTAssertNil(syndicationSource.contentLink)
-      XCTAssertNotNil(syndicationSource.logoImageUrl)
+    func testReviewQuerySyndicationSourceWithJsonFile() {
+        
+        let handler = { (response: BVConversationsQueryResponse<BVReview>) in
+            
+            if case .failure(let error) = response {
+                print(error)
+                XCTFail()
+                return
+            }
+            
+            guard case let .success(_, reviews) = response else {
+                XCTFail()
+                return
+            }
+            
+            guard let review: BVReview = reviews.first,
+                let syndicationSource: BVSyndicationSource =
+                review.syndicationSource else {
+                    XCTFail()
+                    return
+            }
+            
+            XCTAssertEqual(syndicationSource.name, "bazaarvoice")
+            XCTAssertNil(syndicationSource.contentLink)
+            XCTAssertNotNil(syndicationSource.logoImageUrl)
+        }
+        
+        let path =
+            Bundle(for: type(of: self))
+                .path(forResource: "testSyndicationSource", ofType: "json")!
+        let url = URL(fileURLWithPath: path)
+        guard let fileData = try? Data(contentsOf: url) else {
+            XCTFail()
+            return
+        }
+        
+        guard let response =
+            try? JSONDecoder()
+                .decode(BVConversationsQueryResponseInternal<BVReview>.self,
+                        from: fileData) else {
+                            XCTFail()
+                            return
+        }
+        
+        if let errors:[Error] = response.errors,
+            !errors.isEmpty {
+            handler(.failure(errors))
+            return
+        }
+        
+        handler(.success(response, response.results ?? []))
     }
-    
-    let path =
-      Bundle(for: type(of: self))
-        .path(forResource: "testSyndicationSource", ofType: "json")!
-    let url = URL(fileURLWithPath: path)
-    guard let fileData = try? Data(contentsOf: url) else {
-      XCTFail()
-      return
-    }
-    
-    guard let response =
-      try? JSONDecoder()
-        .decode(BVConversationsQueryResponseInternal<BVReview>.self,
-                from: fileData) else {
-                  XCTFail()
-                  return
-    }
-    
-    if let errors:[Error] = response.errors,
-      !errors.isEmpty {
-      handler(.failure(errors))
-      return
-    }
-    
-    handler(.success(response, response.results ?? []))
-  }
   
   // TODO:- commented some of the assertions in this test case as data is not returned in response.
   func testReviewQueryDisplayProductFilteredStats() {

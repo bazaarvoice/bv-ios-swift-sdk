@@ -50,6 +50,7 @@ public struct BVQuestion: BVQueryable, BVSubmissionable {
     return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
+  public let sourceClient: String?
   public var lastModificationTime: Date? {
     return lastModificationTimeString?.toBVDate()
   }
@@ -94,6 +95,7 @@ public struct BVQuestion: BVQueryable, BVSubmissionable {
     case isUserAnonymous = "IsUserAnonymous"
     case lastModeratedTimeString = "LastModeratedTime"
     case lastModificationTimeString = "LastModificationTime"
+    case sourceClient = "SourceClient"
     case moderationStatus = "ModerationStatus"
     case photos = "Photos"
     case productId = "ProductId"
@@ -141,6 +143,7 @@ extension BVQuestion {
     self.isSyndicated = nil
     self.lastModeratedTimeString = nil
     self.lastModificationTimeString = nil
+    self.sourceClient = nil
     self.moderationStatus = nil
     self.photos = nil
     self.productRecommendationIds = nil
