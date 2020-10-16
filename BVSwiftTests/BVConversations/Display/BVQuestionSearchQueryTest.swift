@@ -244,7 +244,7 @@ class BVQuestionSearchQueryTest: XCTestCase {
         print(req)
         
         questionQuery.async()
-        self.waitForExpectations(timeout: 2000) { (error) in
+        self.waitForExpectations(timeout: 20) { (error) in
             XCTAssertNil(
                 error, "Something went horribly wrong, request took too long.")
         }
