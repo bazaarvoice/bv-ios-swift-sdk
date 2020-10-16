@@ -295,7 +295,7 @@ class BVReviewSearchQueryTest: XCTestCase {
                         return
                     }
                     
-                    guard let review: BVReview = reviews.first(where: {$0.reviewId == "33950761"}),
+                    guard let review: BVReview = reviews.first(where: {$0.reviewId == "33950636"}),
                         let syndicationSource: BVSyndicationSource =
                         review.syndicationSource else {
                             XCTFail()
@@ -303,13 +303,13 @@ class BVReviewSearchQueryTest: XCTestCase {
                     }
                     
                     //Source Client
-                    XCTAssertEqual(review.sourceClient, "testcust-contentoriginsynd")
+                    XCTAssertEqual(review.sourceClient, "testcust-contentorigin")
                     
                     //Syndicated Source
                     XCTAssertTrue(review.isSyndicated!)
                     XCTAssertNotNil(review.syndicationSource)
-                    XCTAssertEqual(syndicationSource.name, "TestCustomer-Contentorigin_Synd1_en_US")
-                    XCTAssertEqual(review.syndicationSource?.logoImageUrl, "https://contentorigin-stg.bazaarvoice.com/testsynd1-origin/en_US/Fish03_small.jpg")
+                    XCTAssertEqual(syndicationSource.name, "TestCustomer-Contentorigin_Synd_en_US")
+                    XCTAssertEqual(review.syndicationSource?.logoImageUrl, "https://contentorigin-stg.bazaarvoice.com/testsynd-origin/en_US/SYND1_SKY.png")
                     
                     expectation.fulfill()
         }
@@ -324,7 +324,7 @@ class BVReviewSearchQueryTest: XCTestCase {
         
         commentQuery.async()
         
-        self.waitForExpectations(timeout: 2000) { (error) in
+        self.waitForExpectations(timeout: 20) { (error) in
             XCTAssertNil(
                 error, "Something went horribly wrong, request took too long.")
         }
