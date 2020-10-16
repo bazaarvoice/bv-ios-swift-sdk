@@ -21,8 +21,21 @@ class BVProductStatisticsQueryTest: XCTestCase {
         configType: .staging(clientId: "apitestcustomer"))
     
     return BVConversationsConfiguration.display(
+      clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+  
+  private static var incentivizedStatsConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
+    return BVConversationsConfiguration.display(
       clientKey: "caB45h2jBqXFw1OE043qoMBD1gJC8EwFNCjktzgwncXY4",
-      configType: .staging(clientId: ""),
+      configType: .staging(clientId: "apitestcustomer"),
       analyticsConfig: analyticsConfig)
   }()
   
@@ -169,7 +182,7 @@ class BVProductStatisticsQueryTest: XCTestCase {
         .stats(.nativeReviews)
         .stats(.reviews)
         .incentivizedStats(true)
-        .configure(BVProductStatisticsQueryTest.config)
+        .configure(BVProductStatisticsQueryTest.incentivizedStatsConfig)
         .handler {
             (response: BVConversationsQueryResponse<BVProductStatistics>) in
             
