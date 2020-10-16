@@ -40,7 +40,6 @@ public struct BVAuthor: BVQueryable {
     return lastModeratedTimeString?.toBVDate()
   }
   private let lastModeratedTimeString: String?
-  public let sourceClient: String?
   public var lastModificationTime: Date? {
     return lastModificationTimeString?.toBVDate()
   }
@@ -73,7 +72,6 @@ public struct BVAuthor: BVQueryable {
     case contextDataValuesArray = "ContextDataValues"
     case lastModeratedTimeString = "LastModeratedTime"
     case lastModificationTimeString = "LastModificationTime"
-    case sourceClient = "SourceClient"
     case photos = "Photos"
     case qaStatistics = "QAStatistics"
     case reviewStatistics = "ReviewStatistics"

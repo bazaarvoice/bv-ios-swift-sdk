@@ -289,7 +289,7 @@ class BVReviewQueryTest: XCTestCase {
         print(req)
         
         commentQuery.async()
-        self.waitForExpectations(timeout: 2000) { (error) in
+        self.waitForExpectations(timeout: 20) { (error) in
             XCTAssertNil(
                 error, "Something went horribly wrong, request took too long.")
         }
