@@ -203,7 +203,7 @@ internal extension URLRequest {
     
     return Data() +
       ("Content-Disposition: form-data; " +
-        "name=\"\(key)\"; filename=\"upload\"\r\n").toUTF8Data() +
+        "name=\"\(key)\"; filename=\"upload.jpg\"\r\n").toUTF8Data() +
       "Content-Type: application/octet-stream\r\n\r\n".toUTF8Data() +
       data +
       "\r\n".toUTF8Data()
