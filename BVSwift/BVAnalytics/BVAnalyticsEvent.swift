@@ -306,6 +306,8 @@ extension BVAnalyticsEvent {
       [ BVAnalyticsConstants.idfaKey: idfa ]
   }
     
+    //To present the authorization request call requestTrackingAuthorizationWithCompletionHandler:
+    //the user can grant the App Tracking Transparency permission
     @available(iOS 14, *)
     internal static func requestIDFA() {
         ATTrackingManager.requestTrackingAuthorization(completionHandler: {_ in })
