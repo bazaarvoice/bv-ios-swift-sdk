@@ -40,9 +40,6 @@ internal class BVFingerprint {
     internal var idfa: String? {
         
         #if !DISABLE_BVSDK_IDFA
-        if #available(iOS 14, *), ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
-            self.requestIDFA()
-        }
         
         guard self.isAdvertisingTrackingEnabled() else {
             return nil
@@ -66,11 +63,5 @@ internal class BVFingerprint {
             return ASIdentifierManager.shared().isAdvertisingTrackingEnabled
         }
     }
-    
-    @available(iOS 14, *)
-    func requestIDFA() {
-        ATTrackingManager.requestTrackingAuthorization(completionHandler: {_ in })
-    }
-    
 }
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppTrackingTransparency
 
 /// The BVAnalytics BVAnalyticsEvent enum
 ///
@@ -304,6 +305,11 @@ extension BVAnalyticsEvent {
     return BVAnalyticsConstants.commonValues +
       [ BVAnalyticsConstants.idfaKey: idfa ]
   }
+    
+    @available(iOS 14, *)
+    internal static func requestIDFA() {
+        ATTrackingManager.requestTrackingAuthorization(completionHandler: {_ in })
+    }
   
   internal static func clientIdentifier(
     _ clientId: String) -> [String: BVAnyEncodable] {
