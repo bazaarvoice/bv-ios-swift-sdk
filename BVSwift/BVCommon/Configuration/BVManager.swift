@@ -56,7 +56,11 @@ public class BVManager {
   private var internalURLSession: URLSession =
     BVNetworkingManager.sharedManager.networkingSession
   
-  private init() {}
+  private init() {
+    if #available(iOS 14, *) {
+        BVAnalyticsEvent.requestIDFA()
+    }
+  }
   
   /// Singleton interface
   public static let sharedManager = BVManager()
