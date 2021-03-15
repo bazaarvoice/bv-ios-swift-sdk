@@ -8,47 +8,60 @@
 
 #if !DISABLE_BVSDK_IDFA
 import AdSupport
+import AppTrackingTransparency
 #endif
 
 import Foundation
 
 internal class BVFingerprint {
-  
-  private static var bvidUserDefaultsKey: String = "BVID_STORAGE_KEY"
-  private static var nontrackingIDFA: String = "nontracking"
-  
-  private init() {}
-  
-  internal static let shared = BVFingerprint()
-  
-  internal var bvid: String {
-    if let id: String =
-      UserDefaults.standard.string(
-        forKey: BVFingerprint.bvidUserDefaultsKey),
-      0 < id.count {
-      return id
+    
+    private static var bvidUserDefaultsKey: String = "BVID_STORAGE_KEY"
+    private static var nontrackingIDFA: String = "nontracking"
+    
+    private init() {}
+    
+    internal static let shared = BVFingerprint()
+    
+    internal var bvid: String {
+        if let id: String =
+            UserDefaults.standard.string(
+                forKey: BVFingerprint.bvidUserDefaultsKey),
+           0 < id.count {
+            return id
+        }
+        
+        let uuid: String = UUID().uuidString
+        UserDefaults.standard.setValue(
+            uuid, forKey: BVFingerprint.bvidUserDefaultsKey)
+        UserDefaults.standard.synchronize()
+        return uuid
     }
     
-    let uuid: String = UUID().uuidString
-    UserDefaults.standard.setValue(
-      uuid, forKey: BVFingerprint.bvidUserDefaultsKey)
-    UserDefaults.standard.synchronize()
-    return uuid
-  }
-  
-  internal var idfa: String? {
-    #if !DISABLE_BVSDK_IDFA
-    guard ASIdentifierManager.shared()
-      .isAdvertisingTrackingEnabled else {
+    internal var idfa: String? {
+        
+        #if !DISABLE_BVSDK_IDFA
+        
+        guard self.isAdvertisingTrackingEnabled() else {
+            return nil
+        }
+        return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        #else
         return nil
+        #endif
     }
-    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
-    #else
-    return nil
-    #endif
-  }
-  
-  internal var nontrackingIDFA: String {
-    return BVFingerprint.nontrackingIDFA
-  }
+    
+    internal var nontrackingIDFA: String {
+        return BVFingerprint.nontrackingIDFA
+    }
+    
+    func isAdvertisingTrackingEnabled() -> Bool {
+        
+        if #available(iOS 14, *) {
+            return ATTrackingManager.trackingAuthorizationStatus == .authorized
+        }
+        else {
+            return ASIdentifierManager.shared().isAdvertisingTrackingEnabled
+        }
+    }
 }
+
