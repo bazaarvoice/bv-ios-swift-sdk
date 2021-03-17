@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.default_subspec = 'BVCommon'
 
   s.subspec 'BVCommon' do |common|
-   common.source_files = 'BVSwift/BVCommon/**/*.swift'
+   common.source_files = 'BVSwift/BVCommon/**/*.swift', 'BVSwift/BVAnalytics/**/*.swift'
   end
 
   s.subspec 'BVAnalytics' do |analytics|
