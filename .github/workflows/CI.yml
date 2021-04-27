@@ -1,0 +1,24 @@
+name: Swift
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: Build
+      run: '[ "$TEST_TYPE" != build_framework ] || ./ci_scripts/build_framework.sh'
+    
+    - name: Run tests
+      run: '[ "$TEST_TYPE" != unit_tests ] || ./ci_scripts/run_tests.sh'
