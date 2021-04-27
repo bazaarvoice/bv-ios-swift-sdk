@@ -28,7 +28,7 @@ echo "my pid: $pid"
 
 
 echo Running tests
-xcodebuild test -project ../BVSwift.xcodeproj -scheme "BVSwift-Tests" GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS BV_IGNORE_TESTING_STUBS=1' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest' | xcpretty -c
+xcodebuild test -project ../BVSwift.xcodeproj -scheme "BVSwift-Tests" GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS BV_IGNORE_TESTING_STUBS=1' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=latest' | xcpretty -c
 
 
 cleanup
