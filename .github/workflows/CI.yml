@@ -19,6 +19,6 @@ jobs:
 
     - name: Build
       run: '././ci_scripts/build_framework.sh'
-    
-    - name: Run tests
-      run: '././ci_scripts/run_tests.sh'
+      
+    - name: Build Demo App
+      run: '././ci_scripts/build_bvswiftdemo.sh'
