@@ -57,9 +57,11 @@ public class BVManager {
     BVNetworkingManager.sharedManager.networkingSession
   
   private init() {
+    #if !DISABLE_BVSDK_IDFA
     if #available(iOS 14, *) {
         BVAnalyticsEvent.requestIDFA()
     }
+    #endif
   }
   
   /// Singleton interface
