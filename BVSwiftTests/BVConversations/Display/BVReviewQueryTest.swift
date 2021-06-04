@@ -321,10 +321,14 @@ class BVReviewQueryTest: XCTestCase {
             XCTAssertNil(syndicationSource.contentLink)
             XCTAssertNotNil(syndicationSource.logoImageUrl)
         }
+
+        #if SWIFT_PACKAGE
+        let bundle = Bundle.module
+        #else
+        let bundle = Bundle(for: type(of: self))
+        #endif
         
-        let path =
-            Bundle(for: type(of: self))
-                .path(forResource: "testSyndicationSource", ofType: "json")!
+        let path = bundle.path(forResource: "testSyndicationSource", ofType: "json")!
         let url = URL(fileURLWithPath: path)
         guard let fileData = try? Data(contentsOf: url) else {
             XCTFail()
