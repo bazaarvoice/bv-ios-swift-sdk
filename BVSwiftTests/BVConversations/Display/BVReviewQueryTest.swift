@@ -116,7 +116,7 @@ class BVReviewQueryTest: XCTestCase {
           return
         }
         
-        guard let review: BVReview = reviews.first,
+        guard let review: BVReview = reviews.first(where: {$0.reviewId == "191985"}),
           let tagDimensions: [BVDimensionElement] = review.tagDimensions,
           let cdvs: [BVContextDataValue] = review.contextDataValues,
           let cdv: BVContextDataValue = cdvs.first,
@@ -130,30 +130,19 @@ class BVReviewQueryTest: XCTestCase {
         }
         
         XCTAssertEqual(reviews.count, 10)
-        XCTAssertEqual(review.rating, 1)
-        XCTAssertEqual(
-          review.title, "Morbi nibh risus, mattis id placerat a massa nunc.")
-        XCTAssertEqual(
-          review.reviewText,
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed " +
-            "rhoncus scelerisque semper. Morbi in sapien sit amet justo " +
-            "eleifend pellentesque! Cras sollicitudin, quam in ullamcorper " +
-            "faucibus, augue metus blandit justo, vitae ullamcorper tellus " +
-            "quam non purus. Fusce gravida rhoncus placerat. Integer tempus " +
-            "nunc sed elit mollis ut venenatis felis volutpat. Sed a velit " +
-            "et lacus lobortis aliquet? Donec dolor quam, pharetra vitae " +
-            "commodo et, mattis quis nibh? Quisque ultrices neque et lacus " +
-          "volutpat.")
+        XCTAssertEqual(review.rating, 2)
+        XCTAssertEqual(review.title, "Quisque a velit eget justo placerat imperdiet sed.")
+        XCTAssertEqual(review.reviewText, "Cras sit amet arcu mauris. Nullam vel suscipit mauris. Morbi mattis blandit lorem a rutrum. Vivamus neque mauris, lacinia nec rutrum porta, vehicula ut urna. Curabitur neque nulla, dapibus ac feugiat a, feugiat eu justo. Curabitur ut dui eget nunc iaculis facilisis. Vivamus dui velit, consequat sit amet tincidunt pulvinar, egestas nec est. Vivamus in leo a est lacinia pellentesque euismod at purus. Cras malesuada; libero eget posuere venenatis, nunc metus ultrices nisl, ac vestibulum risus amet.")
         XCTAssertEqual(review.moderationStatus, "APPROVED")
-        XCTAssertEqual(review.reviewId, "191975")
+        XCTAssertEqual(review.reviewId, "191985")
         XCTAssertNotNil(review.productId)
         XCTAssertEqual(review.isRatingsOnly, false)
         XCTAssertEqual(review.isFeatured, false)
         XCTAssertEqual(review.productId, "test1")
         XCTAssertEqual(review.authorId, "endersgame")
         XCTAssertEqual(review.userNickname, "endersgame")
-        XCTAssertEqual(review.userLocation, "San Fransisco, California")
-        
+        XCTAssertEqual(review.userLocation, "Charlottesville, VA")
+
         guard let proDimension: BVDimensionElement =
           tagDimensions.filter({ (elem: BVDimensionElement) -> Bool in
             guard let id: String = elem.dimensionElementId else {
@@ -165,30 +154,24 @@ class BVReviewQueryTest: XCTestCase {
             expectation.fulfill()
             return
         }
-        
+
         XCTAssertEqual(proDimension.label, "Pros")
         XCTAssertEqual(proDimension.dimensionElementId, "Pro")
-        
+
         guard let values: [String] = proDimension.values else {
           XCTFail()
           expectation.fulfill()
           return
         }
-        
+
         XCTAssertEqual(values, ["Organic Fabric", "Quality"])
-        
+
         XCTAssertEqual(photos.count, 1)
-        
-        XCTAssertEqual(
-          firstPhoto.caption,
-          "Etiam malesuada ultricies urna in scelerisque. Sed viverra " +
-            "blandit nibh non egestas. Sed rhoncus, ipsum in vehicula " +
-            "imperdiet, purus lectus sodales erat, eget ornare lacus lectus " +
-            "ac leo. Suspendisse tristique sollicitudin ultricies. Aliquam " +
-          "erat volutpat.")
-        XCTAssertEqual(firstPhoto.photoId, "72586")
+
+        XCTAssertNil(firstPhoto.caption)
+        XCTAssertEqual(firstPhoto.photoId, "72599")
         XCTAssertNotNil(firstPhoto.photoSizes)
-        
+
         let regexPhotoList =
           firstPhoto.photoSizes?.filter { (size: BVPhotoSize) -> Bool in
             guard let url = size.url?.value else {
@@ -199,16 +182,16 @@ class BVReviewQueryTest: XCTestCase {
               .lowercased()
               .contains("jpg?client=apireadonlysandbox"))
         }
-        
+
         XCTAssertNotNil(regexPhotoList)
-        
+
         XCTAssertEqual(cdvs.count, 1)
-        
-        XCTAssertEqual(cdv.value, "Female")
-        XCTAssertEqual(cdv.valueLabel, "Female")
+
+        XCTAssertEqual(cdv.value, "Male")
+        XCTAssertEqual(cdv.valueLabel, "Male")
         XCTAssertEqual(cdv.dimensionLabel, "Gender")
         XCTAssertEqual(cdv.contextDataValueId, "Gender")
-        
+
         XCTAssertEqual(firstBadge.badgeType, .merit)
         XCTAssertEqual(firstBadge.badgeId, "top10Contributor")
         XCTAssertEqual(firstBadge.contentType, "REVIEW")
@@ -261,21 +244,22 @@ class BVReviewQueryTest: XCTestCase {
                         return
                     }
                     
-                    guard let review: BVReview = reviews.first(where: {$0.reviewId == "33950761"}),
+                    guard let review: BVReview = reviews.first(where: {$0.reviewId == "35312658"}),
                         let syndicationSource: BVSyndicationSource =
                         review.syndicationSource else {
-                            XCTFail()
+                        XCTFail()
+                        expectation.fulfill()
                             return
                     }
                     
                     //Source Client
-                    XCTAssertEqual(review.sourceClient, "testcust-contentoriginsynd")
+                    XCTAssertEqual(review.sourceClient, "testcust-contentorigin")
                     
                     //Syndicated Source
                     XCTAssertTrue(review.isSyndicated!)
                     XCTAssertNotNil(review.syndicationSource)
-                    XCTAssertEqual(syndicationSource.name, "TestCustomer-Contentorigin_Synd1_en_US")
-                    XCTAssertEqual(review.syndicationSource?.logoImageUrl, "https://contentorigin-stg.bazaarvoice.com/testsynd1-origin/en_US/Fish03_small.jpg")
+                    XCTAssertEqual(syndicationSource.name, "TestCustomer-Contentorigin_Synd_en_US")
+                    XCTAssertEqual(review.syndicationSource?.logoImageUrl, "https://contentorigin-stg.bazaarvoice.com/testsynd-origin/en_US/SYND1_SKY.png")
                     
                     expectation.fulfill()
         }
@@ -662,7 +646,7 @@ class BVReviewQueryTest: XCTestCase {
         }
         
         XCTAssertEqual(reviews.count, 55)
-        XCTAssertEqual(reviews.filter({ $0.badges!.contains(where: { $0.badgeId == "incentivizedReview" })}).count, 15)
+        XCTAssertEqual(reviews.filter({ $0.badges!.contains(where: { $0.badgeId == "incentivizedReview" })}).count, 9)
         
         for review in reviews {
           
