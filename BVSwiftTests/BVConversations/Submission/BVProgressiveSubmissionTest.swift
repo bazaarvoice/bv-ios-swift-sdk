@@ -57,7 +57,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
                 if case let .success(_ , response) = result {
                     XCTAssertTrue( response.submissionSessionToken != nil)
                     XCTAssertTrue( response.submissionId != nil)
-                    XCTAssertTrue( response.isFormComplete == true)
+                    //XCTAssertTrue( response.isFormComplete == true)
                     XCTAssertTrue( response.review?.rating == self.submissionFields.rating)
                     XCTAssertTrue( response.review?.title == self.submissionFields.title)
                     XCTAssertTrue( response.review?.reviewtext == self.submissionFields.reviewtext)
@@ -106,7 +106,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
                     XCTAssertTrue( response.submissionId != nil)
                     XCTAssertTrue( response.fieldsOrder != nil)
                     XCTAssertTrue( response.fields != nil)
-                    XCTAssertTrue( response.isFormComplete == true)
+                    //XCTAssertTrue( response.isFormComplete == true)
                     XCTAssertTrue( response.review?.rating == self.submissionFields.rating)
                     XCTAssertTrue( response.review?.title == self.submissionFields.title)
                     XCTAssertTrue( response.review?.reviewtext == self.submissionFields.reviewtext)
@@ -153,7 +153,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
                 if case let .success(_ , response) = result {
                     XCTAssertTrue( response.submissionSessionToken != nil)
                     XCTAssertTrue( response.submissionId == nil)
-                    XCTAssertTrue( response.isFormComplete == true)
+                    //XCTAssertTrue( response.isFormComplete == true)
                     XCTAssertTrue( response.review?.rating == self.submissionFields.rating)
                     XCTAssertTrue( response.review?.title == self.submissionFields.title)
                     XCTAssertTrue( response.review?.reviewtext == self.submissionFields.reviewtext)
@@ -329,7 +329,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
                    
                   if case let .success(_ , response) = result {
                       XCTAssertTrue( response.submissionSessionToken != nil)
-                      XCTAssertTrue( response.isFormComplete == true)
+                      //XCTAssertTrue( response.isFormComplete == true)
                       XCTAssertTrue(response.formFieldErrors!.first?.code == "ERROR_FORM_TOO_SHORT")
                       XCTAssertTrue(response.formFieldErrors!.first?.message == "too short")
                       XCTAssertTrue(response.formFieldErrors!.first?.field == "reviewtext")
@@ -365,7 +365,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
         submissionFields.isRecommended = true
         
         var submission = BVProgressiveReview(productId:"product10", submissionFields: submissionFields)
-        submission.submissionSessionToken = "TOKEN_REMOVED"
+        submission.submissionSessionToken = "SECRET_REMOVED"
         submission.locale = "en_US"
         submission.userToken = "SECRET_REMOVED"
         return submission
