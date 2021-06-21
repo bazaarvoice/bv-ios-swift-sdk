@@ -246,7 +246,7 @@ class BVReviewSubmissionTest: XCTestCase {
     (reviewSubmission
       <+> .submit
       <+> .nickname("cgil")
-      <+> .identifier("craiggiddl"))
+      <+> .identifier("craiggiddll"))
       .configure(BVReviewSubmissionTest.config)
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
@@ -257,7 +257,7 @@ class BVReviewSubmissionTest: XCTestCase {
         }
         
         errors.forEach { print("Expected Failure Item: \($0)") }
-        XCTAssertEqual(errors.count, 5)
+        XCTAssertEqual(errors.count, 4)
         expectation.fulfill()
     }
     
@@ -287,7 +287,7 @@ class BVReviewSubmissionTest: XCTestCase {
     (reviewSubmission
       <+> .submit
       <+> .nickname("cgil")
-      <+> .identifier("craiggiddl"))
+      <+> .identifier("craiggiddll"))
       .configure(BVReviewSubmissionTest.config)
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
@@ -321,7 +321,7 @@ class BVReviewSubmissionTest: XCTestCase {
         }
         
         XCTAssertEqual(formRequiredCount, 3)
-        XCTAssertEqual(formDuplicateCount, 1)
+        XCTAssertEqual(formDuplicateCount, 0)
         XCTAssertEqual(formTooHighCount, 1)
         
         expectation.fulfill()
