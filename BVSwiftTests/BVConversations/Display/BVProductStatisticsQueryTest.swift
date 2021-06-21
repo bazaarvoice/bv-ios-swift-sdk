@@ -213,13 +213,13 @@ class BVProductStatisticsQueryTest: XCTestCase {
             XCTAssertEqual(firstProductStatistic.productId, "data-gen-moppq9ekthfzbc6qff3bqokie")
             
             // For Review Statistics
-            XCTAssertEqual(reviewStatistics.totalReviewCount, 55)
+            XCTAssertEqual(reviewStatistics.totalReviewCount, 75)
             XCTAssertEqual(reviewStatistics.incentivizedReviewCount, 15)
             XCTAssertNotNil(reviewStatistics.averageOverallRating)
             XCTAssertEqual(reviewStatistics.overallRatingRange, 5)
             
             //For Native Review Statistics
-            XCTAssertEqual(nativeReviewStatistics.totalReviewCount, 55)
+            XCTAssertEqual(nativeReviewStatistics.totalReviewCount, 75)
             XCTAssertEqual(nativeReviewStatistics.incentivizedReviewCount, 15)
             XCTAssertEqual(nativeReviewStatistics.overallRatingRange, 5)
             
