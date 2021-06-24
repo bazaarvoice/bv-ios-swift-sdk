@@ -177,7 +177,7 @@ class BVQuestionSubmissionTest: XCTestCase {
         }
         
         XCTAssertEqual(formRequiredCount, 1)
-        XCTAssertEqual(formDuplicateCount, 1)
+        XCTAssertEqual(formDuplicateCount, 0)
         expectation.fulfill()
     }
     
