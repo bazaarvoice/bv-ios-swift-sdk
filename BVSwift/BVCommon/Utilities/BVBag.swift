@@ -26,7 +26,7 @@ internal class BVBag<T> {
   
   internal func remove(_ uuid: UUID) {
     dict[uuid] = nil
-    if let idx = array.index(of: uuid) {
+    if let idx = array.firstIndex(of: uuid) {
       array.remove(at: idx)
     }
   }
