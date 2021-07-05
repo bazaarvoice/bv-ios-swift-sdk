@@ -321,7 +321,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
            BVManager.sharedManager.urlSession = internalURLSession
            progressiveReviewSubmission
                .handler { result in
-                   if case let .failure(errors) = result, let error = errors.first {
+                   if case let .failure(errors) = result, let _ = errors.first {
                        XCTFail()
                        expectation.fulfill()
                        return
