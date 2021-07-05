@@ -479,7 +479,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
         
         let expectation = self.expectation(description: "testProsAndConsSequence")
         
-        let expectedPositives: [String] = ["satisfaction", "cleaning", "ease of use", "price", "compatibility"] // array of expected positives
+      let _: [String] = ["satisfaction", "cleaning", "ease of use", "price", "compatibility"] // array of expected positives
         let expectedNegatives: [String] = ["large", "for dogs", "small"] // array of expected negatives
         
         let reviewHighlightsQuery = BVProductReviewHighlightsQuery(clientId: "1800petmeds", productId: "prod1011")
@@ -516,7 +516,7 @@ class BVReviewHighlightsQueryTest: XCTestCase {
                 if let positives = reviewHighlights.positives {
                     XCTAssertFalse(positives.isEmpty)
                     
-                    for (index, positive) in positives.enumerated() {
+                  for (_, positive) in positives.enumerated() {
                         XCTAssertNotNil(positive.title)
                         // commenting this as th positives returned can be in anySequence when mentionsCount is same.
                         //XCTAssertEqual(positive.title, expectedPositives[index])
