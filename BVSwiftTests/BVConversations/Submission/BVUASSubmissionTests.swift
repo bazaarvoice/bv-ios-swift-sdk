@@ -89,7 +89,7 @@ class BVUASSubmissionTests: XCTestCase {
                   return
                 }
                 
-                guard case let .success(_, uas) = result else {
+              guard case .success(_, _) = result else {
                   XCTFail()
                   expectation.fulfill()
                   return
