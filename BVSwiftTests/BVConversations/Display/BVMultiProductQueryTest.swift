@@ -55,7 +55,7 @@ class BVMultiProductQueryTest: XCTestCase {
         
         multiProductSubmission
             .handler { result in
-                if case let .failure(errors) = result {
+              if case .failure(_) = result {
                     XCTFail()
                     expectation.fulfill()
                     return
