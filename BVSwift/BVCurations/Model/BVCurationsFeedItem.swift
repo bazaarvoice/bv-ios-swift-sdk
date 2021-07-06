@@ -13,8 +13,9 @@ import Foundation
 /// \
 /// It conforms to BVQueryable and, therefore, it is used only for BVQuery.
 public struct BVCurationsFeedItem: BVQueryable, Hashable {
-  public var hashValue: Int {
-    return contentId?.hashValue ?? 0
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(contentId?.hashValue ?? 0)
   }
   
   public static func == (
