@@ -33,8 +33,8 @@ internal struct BVLogNotifier: Hashable {
     }
   }
   
-  var hashValue: Int {
-    return ptrHash
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(ptrHash)
   }
   
   internal func isActive() -> Bool {
