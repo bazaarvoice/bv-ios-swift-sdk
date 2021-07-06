@@ -38,11 +38,12 @@ extension BVWeak: Hashable {
     return ptr
   }
   
-  var hashValue: Int {
+  func hash(into hasher: inout Hasher) {
     guard let ptr = unsafePointer else {
-      return 0
+      hasher.combine(0)
+      return
     }
-    return ptr.hashValue
+    hasher.combine(ptr.hashValue)
   }
   
   static func == (lhs: BVWeak, rhs: BVWeak) -> Bool {
