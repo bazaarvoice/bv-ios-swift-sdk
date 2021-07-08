@@ -8,7 +8,7 @@
 import Foundation
 
 internal protocol BVInternalSubmissionDelegate:
-class,
+AnyObject,
 BVURLRequestBodyTypeable,
 BVURLQueryItemable,
 BVURLRequestUserAgentable { }

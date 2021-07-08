@@ -16,7 +16,7 @@ public protocol BVSubmissionable: BVResourceable { }
 public protocol BVSubmissionActionable: BVURLRequestableWithHandler { }
 
 // MARK: - BVSubmissionableBodyTypeable
-internal protocol BVSubmissionableBodyTypeable: class,
+internal protocol BVSubmissionableBodyTypeable: AnyObject,
 BVURLRequestBodyTypeable {
   var submissionableInternal: BVSubmissionableInternal? { get }
 }
