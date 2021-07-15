@@ -8,7 +8,7 @@
 import Foundation
 
 internal protocol BVInternalQueryDelegate:
-class, BVURLQueryItemable, BVURLRequestUserAgentable { }
+AnyObject, BVURLQueryItemable, BVURLRequestUserAgentable { }
 
 // MARK: - BVInternalQuery
 internal class BVInternalQuery<T: BVQueryable>: BVURLRequest {
