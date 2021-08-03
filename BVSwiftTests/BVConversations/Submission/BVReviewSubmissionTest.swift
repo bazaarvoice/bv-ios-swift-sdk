@@ -24,6 +24,19 @@ class BVReviewSubmissionTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
   
+  private static var dateOfConsumerExperienceConfig: BVConversationsConfiguration =
+    { () -> BVConversationsConfiguration in
+      
+      let analyticsConfig: BVAnalyticsConfiguration =
+        .dryRun(
+          configType: .staging(clientId: "Testcustomer-56"))
+      
+      return BVConversationsConfiguration.all(
+        clientKey: "caYgyVsPvUkcK2a4aBCu0CK64S3vx6ERor9FpgAM32Uew",
+        configType: .staging(clientId: "Testcustomer-56"),
+        analyticsConfig: analyticsConfig)
+    }()
+  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -385,6 +398,95 @@ class BVReviewSubmissionTest: XCTestCase {
         
         expectation.fulfill()
     }
+    
+    reviewSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSubmitReviewDateOfUserExperienceFetchFormFields() {
+    
+    let expectation = self.expectation(description: "testSubmitReviewDateOfUserExperienceFetchFormFields")
+    
+    guard let reviewSubmission = BVReviewSubmission(productId: "test1") else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    (reviewSubmission
+      <+> .form)
+      .configure(BVReviewSubmissionTest.dateOfConsumerExperienceConfig)
+      .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
+        
+        if case let .failure(errors) = result {
+          errors.forEach { print($0) }
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(meta, _) = result else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        let formFields = meta.formFields
+        XCTAssertNotNil(formFields)
+        XCTAssertNotNil(formFields?.first(where: { $0.identifier == "additionalfield_DateOfUserExperience"}))
+        expectation.fulfill()
+      }
+    
+    reviewSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSubmitReviewDateOfUserExperience() {
+    
+    let expectation = self.expectation(description: "testSubmitReviewDateOfUserExperience")
+    
+    let review: BVReview = BVReview(productId: "test1",
+                                    reviewText: "Testing date of consumer.Testing date of consumer. More then 50",
+                                    reviewTitle: "Testing date of consumer",
+                                    reviewRating: 4)
+    
+    guard let reviewSubmission = BVReviewSubmission(review) else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    (reviewSubmission
+      <+> .submit
+      <+> .additional(name: "DateOfUserExperience", value: " 2021-04-03"))
+      .configure(BVReviewSubmissionTest.dateOfConsumerExperienceConfig)
+      .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
+        
+        if case let .failure(errors) = result {
+          errors.forEach { print($0) }
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(meta, _) = result else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        let formFields = meta.formFields
+        XCTAssertNil(formFields)
+        expectation.fulfill()
+      }
     
     reviewSubmission.async()
     
