@@ -483,8 +483,68 @@ class BVReviewSubmissionTest: XCTestCase {
           return
         }
         
-        let formFields = meta.formFields
-        XCTAssertNil(formFields)
+        if let formFields = meta.formFields {
+          XCTAssertEqual(formFields.count, 0)
+        } else {
+          XCTAssertNil(meta.formFields)
+        }
+        
+        expectation.fulfill()
+      }
+    
+    reviewSubmission.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSubmitReviewDateOfUserExperienceErrorInvalidDateFormat() {
+    
+    let expectation = self.expectation(description: "testSubmitReviewDateOfUserExperienceErrorInvalidDateFormat")
+    
+    let review: BVReview = BVReview(productId: "test1",
+                                    reviewText: "Testing date of consumer.Testing date of consumer. More then 50",
+                                    reviewTitle: "Testing date of consumer",
+                                    reviewRating: 4)
+    
+    guard let reviewSubmission = BVReviewSubmission(review) else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    (reviewSubmission
+      <+> .submit
+      <+> .additional(name: "DateOfUserExperience", value: "03-04-2021"))
+      .configure(BVReviewSubmissionTest.dateOfConsumerExperienceConfig)
+      .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
+        
+        guard let errors = result.errors else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        var patternMismatch = 0
+       
+        errors.forEach { (error: Error) in
+          guard let bverror: BVError = error as? BVError,
+            let conversationsError =
+            BVConversationsError(bverror.code, message: bverror.message) else {
+              return
+          }
+          
+        switch conversationsError {
+          case .patternMismatch:
+            patternMismatch += 1
+          default:
+            break
+          }
+        }
+        
+        XCTAssertEqual(patternMismatch, 1)
         expectation.fulfill()
       }
     
