@@ -255,6 +255,12 @@ public enum BVConversationsError {
   /// \
   /// ERROR_UNSUPPORTED
   case unsupported(String?)
+    
+  /// This field is not in the correct format.
+  /// - Note:
+  /// \
+  /// ERROR_FORM_FUTURE_DATE
+  case futureDate(String?)
   
   /// Unknown error (internal server error, for instance)
   /// - Note:
@@ -427,6 +433,10 @@ extension BVConversationsError: Codable {
       
     case let (.some(code), message) where "ERROR_UNSUPPORTED" == code:
       self = .unsupported(message)
+        
+    case let (.some(code), message) where
+      "ERROR_FORM_FUTURE_DATE" == code:
+      self = .futureDate(message)
       
     /// Non-standard default "catch all" unknown errors
     case let (_, message):
@@ -481,6 +491,7 @@ extension BVConversationsError: BVError {
     case .tooShort: return "ERROR_FORM_TOO_SHORT"
     case .uploadIO: return "ERROR_FORM_UPLOAD_IO"
     case .unsupported: return "ERROR_UNSUPPORTED"
+    case .futureDate: return "ERROR_FORM_FUTURE_DATE"
     case .unknown: return "ERROR_UNKNOWN"
     }
   }
@@ -629,6 +640,8 @@ extension BVConversationsError {
       self = .uploadIO(message)
     case "ERROR_UNSUPPORTED":
       self = .unsupported(message)
+    case "ERROR_FORM_FUTURE_DATE":
+      self = .futureDate(message)
     /// Non-standard default "catch all" unknown errors
     default:
       self = .unknown(message)
