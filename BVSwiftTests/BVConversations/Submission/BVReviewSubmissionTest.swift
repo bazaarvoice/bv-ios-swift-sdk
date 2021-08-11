@@ -36,6 +36,19 @@ class BVReviewSubmissionTest: XCTestCase {
         configType: .staging(clientId: "Testcustomer-56"),
         analyticsConfig: analyticsConfig)
     }()
+    
+    private static var dateOfConsumerExperienceFutureDateFormErrorConfig: BVConversationsConfiguration =
+      { () -> BVConversationsConfiguration in
+        
+        let analyticsConfig: BVAnalyticsConfiguration =
+          .dryRun(
+            configType: .staging(clientId: "testcustomermobilesdk"))
+        
+        return BVConversationsConfiguration.all(
+          clientKey: "cauPFGiXDMZYw1QQ11PBmJXt5YdK5oEvirFBMxlyshhlU",
+          configType: .staging(clientId: "testcustomermobilesdk"),
+          analyticsConfig: analyticsConfig)
+      }()
   
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
@@ -466,7 +479,7 @@ class BVReviewSubmissionTest: XCTestCase {
     
     (reviewSubmission
       <+> .submit
-      <+> .additional(name: "DateOfUserExperience", value: " 2021-04-03"))
+      <+> .additional(name: "DateOfUserExperience", value: "2021-04-03"))
       .configure(BVReviewSubmissionTest.dateOfConsumerExperienceConfig)
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
@@ -574,7 +587,7 @@ class BVReviewSubmissionTest: XCTestCase {
     (reviewSubmission
       <+> .submit
       <+> .additional(name: "DateOfUserExperience", value: "2022-04-08"))
-      .configure(BVReviewSubmissionTest.dateOfConsumerExperienceConfig)
+      .configure(BVReviewSubmissionTest.dateOfConsumerExperienceFutureDateFormErrorConfig)
       .handler { (result: BVConversationsSubmissionResponse<BVReview>) in
         
         guard let errors = result.errors else {
@@ -583,24 +596,24 @@ class BVReviewSubmissionTest: XCTestCase {
           return
         }
         
-//        var patternMismatch = 0
-//
-//        errors.forEach { (error: Error) in
-//          guard let bverror: BVError = error as? BVError,
-//            let conversationsError =
-//            BVConversationsError(bverror.code, message: bverror.message) else {
-//              return
-//          }
-//
-//        switch conversationsError {
-//          case .patternMismatch:
-//            patternMismatch += 1
-//          default:
-//            break
-//          }
-//        }
-//
-//        XCTAssertEqual(patternMismatch, 1)
+        var futureDate = 0
+
+        errors.forEach { (error: Error) in
+          guard let bverror: BVError = error as? BVError,
+            let conversationsError =
+            BVConversationsError(bverror.code, message: bverror.message) else {
+              return
+          }
+
+        switch conversationsError {
+          case .futureDate:
+            futureDate += 1
+          default:
+            break
+          }
+        }
+
+        XCTAssertEqual(futureDate, 1)
         expectation.fulfill()
       }
     
