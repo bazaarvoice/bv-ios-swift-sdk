@@ -25,6 +25,19 @@ class BVReviewQueryTest: XCTestCase {
       configType: .staging(clientId: "apitestcustomer"),
       analyticsConfig: analyticsConfig)
   }()
+    
+    private static var dateOfUserExperienceconfig: BVConversationsConfiguration =
+    { () -> BVConversationsConfiguration in
+      
+      let analyticsConfig: BVAnalyticsConfiguration =
+        .dryRun(
+          configType: .staging(clientId: "Testcustomer-56"))
+      
+      return BVConversationsConfiguration.display(
+        clientKey: "caYgyVsPvUkcK2a4aBCu0CK64S3vx6ERor9FpgAM32Uew",
+        configType: .staging(clientId: "Testcustomer-56"),
+        analyticsConfig: analyticsConfig)
+    }()
   
   private static var incentivizedStatsConfig: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
@@ -718,4 +731,44 @@ class BVReviewQueryTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+
+    func testReviewQueryDateOfUXDisplay() {
+      
+      let expectation = self.expectation(description: "testReviewQueryDisplay")
+      
+      let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
+        .configure(BVReviewQueryTest.dateOfUserExperienceconfig)
+        .handler { (response: BVConversationsQueryResponse<BVReview>) in
+          
+          if case .failure(let error) = response {
+            print(error)
+            XCTFail()
+            expectation.fulfill()
+            return
+          }
+          
+          guard case let .success(_, reviews) = response else {
+            XCTFail()
+            expectation.fulfill()
+            return
+          }
+          
+            expectation.fulfill()
+      }
+      
+      guard let req = reviewQuery.request else {
+        XCTFail()
+        expectation.fulfill()
+        return
+      }
+      
+      print(req)
+      
+      reviewQuery.async()
+      
+      self.waitForExpectations(timeout: 20) { (error) in
+        XCTAssertNil(
+          error, "Something went horribly wrong, request took too long.")
+      }
+    }
 }
