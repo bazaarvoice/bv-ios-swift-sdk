@@ -26,11 +26,15 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   private var includedProducts: [BVProduct]?
   private var includedAuthors: [BVAuthor]?
   
-  public var additionalFields: Decoder? {
-    return additionalFieldsDecoder?.decoder
-  }
-  private let additionalFieldsDecoder: BVCodableRawDecoder?
-  public let authorId: String?
+//  public var additionalFields: Decoder? {
+//    return additionalFieldsDecoder?.decoder
+//  }
+//  private let additionalFieldsDecoder: BVCodableRawDecoder?
+    public var aditionalFields: [String: [String: String]]? {
+        return additionalFieldsArray?.dictionary
+    }
+    private let additionalFieldsArray: BVCodableDictionary<[String: String]>?
+public let authorId: String?
   public var badges: [BVBadge]? {
     return badgesArray?.array
   }
@@ -94,7 +98,7 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   public let videos: [BVVideo]?
   
   private enum CodingKeys: String, CodingKey {
-    case additionalFieldsDecoder = "AdditionalFields"
+    case additionalFieldsArray = "AdditionalFields"
     case authorId = "AuthorId"
     case badgesArray = "Badges"
     case campaignId = "CampaignId"
@@ -149,7 +153,7 @@ extension BVReview {
     self.includedComments = nil
     self.includedProducts = nil
     self.includedAuthors = nil
-    self.additionalFieldsDecoder = nil
+    self.additionalFieldsArray = nil
     self.authorId = nil
     self.badgesArray = nil
     self.campaignId = nil
@@ -194,7 +198,7 @@ extension BVReview {
     self.includedComments = nil
     self.includedProducts = nil
     self.includedAuthors = nil
-    self.additionalFieldsDecoder = nil
+    self.additionalFieldsArray = nil
     self.authorId = nil
     self.badgesArray = nil
     self.campaignId = nil
