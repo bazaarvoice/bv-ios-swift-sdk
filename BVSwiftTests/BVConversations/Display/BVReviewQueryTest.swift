@@ -732,43 +732,59 @@ class BVReviewQueryTest: XCTestCase {
     }
   }
 
-    func testReviewQueryDateOfUXDisplay() {
-      
-      let expectation = self.expectation(description: "testReviewQueryDisplay")
-      
-      let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
-        .configure(BVReviewQueryTest.dateOfUserExperienceconfig)
-        .handler { (response: BVConversationsQueryResponse<BVReview>) in
+  func testReviewQueryDateOfUXDisplay() {
+    
+    let expectation = self.expectation(description: "testReviewQueryDateOfUXDisplay")
+    let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 4)
+      .configure(BVReviewQueryTest.dateOfUserExperienceconfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        for review in reviews {
           
-          if case .failure(let error) = response {
-            print(error)
+          XCTAssertNotNil(review.additionalFields)
+          guard let additionalFields = review.additionalFields else {
             XCTFail()
             expectation.fulfill()
             return
           }
+          XCTAssertNotNil(additionalFields["DateOfUserExperience"])
           
-          guard case let .success(_, reviews) = response else {
-            XCTFail()
-            expectation.fulfill()
-            return
-          }
+          let dateOfConsumerExperienceField = additionalFields["DateOfUserExperience"]!
           
-            expectation.fulfill()
-      }
-      
-      guard let req = reviewQuery.request else {
-        XCTFail()
+          XCTAssertEqual(dateOfConsumerExperienceField["Id"], "DateOfUserExperience")
+          XCTAssertEqual(dateOfConsumerExperienceField["Label"], "Date of user experience")
+          XCTAssertNotNil(dateOfConsumerExperienceField["Value"])
+          
+        }
         expectation.fulfill()
-        return
       }
-      
-      print(req)
-      
-      reviewQuery.async()
-      
-      self.waitForExpectations(timeout: 20) { (error) in
-        XCTAssertNil(
-          error, "Something went horribly wrong, request took too long.")
-      }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
     }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
 }
