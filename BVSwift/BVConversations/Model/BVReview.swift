@@ -25,16 +25,11 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   private var includedComments: [BVComment]?
   private var includedProducts: [BVProduct]?
   private var includedAuthors: [BVAuthor]?
-  
-//  public var additionalFields: Decoder? {
-//    return additionalFieldsDecoder?.decoder
-//  }
-//  private let additionalFieldsDecoder: BVCodableRawDecoder?
-    public var aditionalFields: [String: [String: String]]? {
-        return additionalFieldsArray?.dictionary
-    }
-    private let additionalFieldsArray: BVCodableDictionary<[String: String]>?
-public let authorId: String?
+  public var additionalFields: [String: [String: String]]? {
+    return additionalFieldsArray?.dictionary
+  }
+  private let additionalFieldsArray: BVCodableDictionary<[String: String]>?
+  public let authorId: String?
   public var badges: [BVBadge]? {
     return badgesArray?.array
   }
