@@ -112,9 +112,6 @@ internal struct BVAnalyticsRemoteLog: BVSubmissionable {
       BVAnalyticsRemoteLog.typeKey,
       forKey: .commonKey(BVAnalyticsConstants.typeKey))
     try container.encode(
-      BVFingerprint.shared.nontrackingIDFA,
-      forKey: .commonKey(BVAnalyticsConstants.idfaKey))
-    try container.encode(
       "false",
       forKey: .commonKey(BVAnalyticsConstants.hadPIIKey))
 
