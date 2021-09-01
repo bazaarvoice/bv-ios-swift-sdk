@@ -93,8 +93,6 @@ extension BVRecommendationsProfile {
 
 extension BVRecommendationsProfile: BVQueryableInternal {
   internal static var getResource: String? {
-    return
-      BVRecommendationsConstants.BVRecommendationsProfile.getResource +
-        (BVFingerprint.shared.idfa ?? BVFingerprint.shared.nontrackingIDFA)
+    return BVRecommendationsConstants.BVRecommendationsProfile.getResource + "nontracking"
   }
 }

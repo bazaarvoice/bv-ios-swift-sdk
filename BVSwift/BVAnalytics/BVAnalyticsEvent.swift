@@ -295,15 +295,8 @@ extension BVAnalyticsEvent {
   
   internal static func commonAnalyticsValues(
     _ anonymous: () -> Bool) -> [String: String] {
-    
-    guard let idfa = BVFingerprint.shared.idfa, !anonymous() else {
-      return [
-        BVAnalyticsConstants.idfaKey: BVFingerprint.shared.nontrackingIDFA
-      ]
-    }
-    
-    return BVAnalyticsConstants.commonValues +
-      [ BVAnalyticsConstants.idfaKey: idfa ]
+
+      return BVAnalyticsConstants.commonValues
   }
     
     //To present the authorization request call requestTrackingAuthorizationWithCompletionHandler:
