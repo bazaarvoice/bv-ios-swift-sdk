@@ -645,6 +645,7 @@ class BVReviewSubmissionTest: XCTestCase {
     let photo: BVPhoto = BVPhoto(png, "Very photogenic")
     
     let usLocale: Locale = Locale(identifier: "en_US")
+    
     return (reviewSubmission
       <+> action
       <+> .campaignId("BV_REVIEW_DISPLAY")
