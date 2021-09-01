@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 #if !DISABLE_BVSDK_IDFA
 import AdSupport
@@ -36,36 +36,5 @@ internal class BVFingerprint {
         UserDefaults.standard.synchronize()
         return uuid
     }
-    
-    internal var idfa: String? {
-        
-        #if !DISABLE_BVSDK_IDFA
-        
-        guard self.isAdvertisingTrackingEnabled() else {
-            return nil
-        }
-        return ASIdentifierManager.shared().advertisingIdentifier.uuidString
-        #else
-        return nil
-        #endif
-    }
-    
-    internal var nontrackingIDFA: String {
-        return BVFingerprint.nontrackingIDFA
-    }
-    
-    func isAdvertisingTrackingEnabled() -> Bool {
-
-        #if !DISABLE_BVSDK_IDFA
-        if #available(iOS 14, *) {
-            return ATTrackingManager.trackingAuthorizationStatus == .authorized
-        }
-        else {
-            return ASIdentifierManager.shared().isAdvertisingTrackingEnabled
-        }
-        #else
-        return false
-        #endif
-    }
-}
+  }
 

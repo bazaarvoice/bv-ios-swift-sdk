@@ -10,11 +10,7 @@ let package = Package(
     .library(
       name: "BVSwift",
       targets: ["BVSwift"]
-    ),
-    .library(
-        name: "BVSwiftNoIDFA",
-        targets: ["BVSwiftNoIDFA"]
-    ),
+    )
   ],
   
   dependencies: [],
@@ -25,13 +21,7 @@ let package = Package(
     // https://forums.swift.org/t/spm-shared-targets-files-use-case-whats-the-alternative/38888/4
     // pitch with possible solution:
     // https://forums.swift.org/t/pitch-mutually-exclusive-groups-of-targets/47518
-    .target(
-        name: "BVSwiftNoIDFA",
-        dependencies: [],
-        path: "BVSwiftNoIDFA",
-        exclude: ["Support"],
-        swiftSettings: [.define("DISABLE_BVSDK_IDFA")]
-    ),
+    
     .testTarget(
       name: "BVSwiftTests",
       dependencies: ["BVSwift"],
