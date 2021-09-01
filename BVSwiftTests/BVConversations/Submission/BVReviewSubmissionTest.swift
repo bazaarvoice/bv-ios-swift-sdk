@@ -56,7 +56,6 @@ class BVReviewSubmissionTest: XCTestCase {
   
   override class func setUp() {
     super.setUp()
-    BVManager.sharedManager.logLevel = .debug
     
     BVPixel.skipAllPixelEvents = true
   }
@@ -646,10 +645,8 @@ class BVReviewSubmissionTest: XCTestCase {
     let photo: BVPhoto = BVPhoto(png, "Very photogenic")
     
     let usLocale: Locale = Locale(identifier: "en_US")
-    reviewSubmission.add(BVConversationsSubmissionLocale.locale(NSLocale.current))
-    reviewSubmission.add(BVConversationsSubmissionAction.submit)
     return (reviewSubmission
-     // <+> action
+      <+> action
       <+> .campaignId("BV_REVIEW_DISPLAY")
       <+> .locale(usLocale)
       <+> .sendEmailWhenCommented(true)
@@ -666,8 +663,7 @@ class BVReviewSubmissionTest: XCTestCase {
       <+> .rating(name: "Value", value: 3)
       <+> .rating(name: "HowDoes", value: 4)
       <+> .rating(name: "Fit", value: 3)
-              
-    //  <+> .photos([photo])
+      <+> .photos([photo])
       <+> ["_foo": "bar"])
       .configure(BVReviewSubmissionTest.config)
   }
