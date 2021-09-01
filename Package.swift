@@ -17,11 +17,6 @@ let package = Package(
   
   targets: [
     .target(name: "BVSwift", path: "BVSwift", exclude: ["Support"]),
-    // current workaround to avoid exclusive path checks is to use a symlink:
-    // https://forums.swift.org/t/spm-shared-targets-files-use-case-whats-the-alternative/38888/4
-    // pitch with possible solution:
-    // https://forums.swift.org/t/pitch-mutually-exclusive-groups-of-targets/47518
-    
     .testTarget(
       name: "BVSwiftTests",
       dependencies: ["BVSwift"],
