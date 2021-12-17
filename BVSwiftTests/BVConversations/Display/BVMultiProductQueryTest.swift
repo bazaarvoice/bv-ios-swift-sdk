@@ -223,4 +223,44 @@ class BVMultiProductQueryTest: XCTestCase {
                 error, "Something went horribly wrong, request took too long.")
         }
     }
+  
+  func testHostedAuthMultiProduct() {
+      let expectation =
+          self.expectation(description: "testHostedAuthMultiProduct")
+      
+      var multiProduct: BVMultiProduct = BVMultiProduct(productIds: ["product4", "product2", "product3"], locale: "en_US")
+      multiProduct.hostedAuth = true
+      
+      guard let multiProductSubmission = BVMultiProductQuery(multiProduct) else {
+          XCTFail()
+          expectation.fulfill()
+          return
+      }
+      multiProductSubmission.configure(BVMultiProductQueryTest.config)
+      
+      multiProductSubmission
+          .handler { result in
+            if case .failure(_) = result {
+                  XCTFail()
+                  expectation.fulfill()
+                  return
+              }
+              
+              if case let .success(_ , response) = result {
+                  XCTAssertTrue( response.productFormData!.count == 3)
+                  XCTAssertNotNil(response.B)
+                  expectation.fulfill()
+                  return
+              }
+              
+              expectation.fulfill()
+      }
+      
+      multiProductSubmission.async()
+      
+      self.waitForExpectations(timeout: 20) { (error) in
+          XCTAssertNil(
+              error, "Something went horribly wrong, request took too long.")
+      }
+  }
 }
