@@ -16,6 +16,9 @@ public struct BVProgressiveReviewFields: BVAuxiliaryable {
     public var agreedToTerms: Bool?
     public var isRecommended: Bool?
     public var sendEmailAlert: Bool?
+    public var hostedAuthenticationEmail: String?
+    public var hostedAuthenticationCallbackurl: String?
+  
 
     private enum CodingKeys: String, CodingKey {
         case rating = "rating"
@@ -24,6 +27,8 @@ public struct BVProgressiveReviewFields: BVAuxiliaryable {
         case agreedToTerms = "agreedtotermsandconditions"
         case isRecommended = "isrecommended"
         case sendEmailAlert = "sendemailalertwhenpublished"
+        case hostedAuthenticationEmail = "hostedauthentication_authenticationemail"
+        case hostedAuthenticationCallbackurl = "hostedauthentication_callbackurl"
     }
     
     //To make accessable by CocoaPods
