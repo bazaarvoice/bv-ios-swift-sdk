@@ -36,6 +36,7 @@ public struct BVProgressiveReview: BVSubmissionable {
     public var extendedResponse: Bool = false
     public var includeFields: Bool = false
     public var isPreview: Bool = false
+    public var hostedAuth: Bool = false
 
     private enum CodingKeys: String, CodingKey {
         case productId = "productId"

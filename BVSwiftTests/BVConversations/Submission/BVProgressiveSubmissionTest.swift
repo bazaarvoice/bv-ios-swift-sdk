@@ -23,6 +23,19 @@ class BVProgressiveSubmissionTest: XCTestCase {
               configType: .staging(clientId: "testcustomermobilesdk"),
               analyticsConfig: analyticsConfig)
       }()
+  
+    private static var configHostedAuth: BVConversationsConfiguration =
+      { () -> BVConversationsConfiguration in
+          
+          let analyticsConfig: BVAnalyticsConfiguration =
+              .dryRun(
+                  configType: .staging(clientId: "yeti"))
+          
+          return BVConversationsConfiguration.all(
+              clientKey: "do29rx4gb97ti1kb5n0eosf3k",
+              configType: .staging(clientId: "yeti"),
+              analyticsConfig: analyticsConfig)
+      }()
     
     private static var privateSession:URLSession = {
         return URLSession(configuration: .default)
@@ -347,6 +360,94 @@ class BVProgressiveSubmissionTest: XCTestCase {
                    error, "Something went horribly wrong, request took too long.")
            }
        }
+       
+      func testProgressiveSubmissionWithHostedAuthSuccess() {
+          let expectation =
+              self.expectation(description: "testProgressiveSubmissionWithHostedAuth")
+          
+          let progressiveReview: BVProgressiveReview = self.buildRequestHostedAuthSuccess()
+       
+          guard let progressiveReviewSubmission = BVProgressiveReviewSubmission(progressiveReview) else {
+              XCTFail()
+              expectation.fulfill()
+              return
+          }
+          progressiveReviewSubmission.configure(BVProgressiveSubmissionTest.configHostedAuth)
+          let internalURLSession: URLSession =
+          BVNetworkingManager.sharedManager.networkingSession
+          
+          BVManager.sharedManager.urlSession = internalURLSession
+          progressiveReviewSubmission
+              .handler { result in
+                  if case .failure(_) = result {
+                      XCTFail()
+                      expectation.fulfill()
+                      return
+                  }
+                  
+                  if case let .success(_ , response) = result {
+                      XCTAssertTrue( response.submissionSessionToken != nil)
+                      XCTAssertTrue( response.submissionId != nil)
+                      //XCTAssertTrue( response.isFormComplete == true)
+                      XCTAssertTrue( response.review?.rating == self.submissionFields.rating)
+                      XCTAssertTrue( response.review?.title == self.submissionFields.title)
+                      XCTAssertTrue( response.review?.reviewtext == self.submissionFields.reviewtext)
+                      expectation.fulfill()
+                      return
+                  }
+                  
+                  expectation.fulfill()
+          }
+          
+          progressiveReviewSubmission.async()
+          
+          self.waitForExpectations(timeout: 20) { (error) in
+              XCTAssertNil(
+                  error, "Something went horribly wrong, request took too long.")
+          }
+      }
+  
+      func testProgressiveSubmissionWithHostedAuthFailure() {
+           let expectation =
+               self.expectation(description: "testProgressiveSubmissionWithHostedAuthFailure")
+           
+            let progressiveReview: BVProgressiveReview = self.buildRequestHostedAuthFailure()
+         
+            guard let progressiveReviewSubmission = BVProgressiveReviewSubmission(progressiveReview) else {
+                XCTFail()
+                expectation.fulfill()
+                return
+            }
+           progressiveReviewSubmission.configure(BVProgressiveSubmissionTest.configHostedAuth)
+           let internalURLSession: URLSession =
+           BVNetworkingManager.sharedManager.networkingSession
+           
+           BVManager.sharedManager.urlSession = internalURLSession
+           progressiveReviewSubmission
+               .handler { result in
+                   if case let .failure(errors) = result, let error = errors.first {
+                       XCTAssertEqual(
+                         String(describing: error), "Supplied Submission session token does not match the Review and Subject")
+                       expectation.fulfill()
+                       return
+                   }
+                   
+                  if case .success(_ , _) = result {
+                       XCTFail()
+                       expectation.fulfill()
+                       return
+                   }
+                   
+                   expectation.fulfill()
+           }
+           
+           progressiveReviewSubmission.async()
+           
+           self.waitForExpectations(timeout: 20) { (error) in
+               XCTAssertNil(
+                   error, "Something went horribly wrong, request took too long.")
+           }
+       }
     
     override class func setUp() {
         super.setUp()
@@ -370,14 +471,52 @@ class BVProgressiveSubmissionTest: XCTestCase {
         submission.userToken = "6b1549daa5df7eb481d8cf95c0d3e4d2646174653d3230323130363134267573657269643d746573743039383826456d61696c416464726573733d646576656c6f70657225343062617a616172766f6963652e636f6d26557365724e616d653d3039383874657374266d61786167653d333635"
         return submission
     }
-
     
     override class func tearDown() {
         super.tearDown()
-        
+          
         BVPixel.skipAllPixelEvents = false
-        
     }
+  
+  func buildRequestHostedAuthSuccess() -> BVProgressiveReview {
+
+      self.submissionFields = BVProgressiveReviewFields()
+      submissionFields.rating = 4
+      submissionFields.title =  "my favorite product ever!"
+      submissionFields.reviewtext = "This Product was somewhat disapointing. I thouught it would be cool to have flowers around the house, but turns out its underwhelming."
+      submissionFields.agreedToTerms = true
+      submissionFields.isRecommended = true
+      submissionFields.hostedAuthenticationEmail = "developer@bazaarvoice.com"
+      submissionFields.hostedAuthenticationCallbackurl = "https://bazaarvoice.com"
+      
+      var submission = BVProgressiveReview(productId:"Product1", submissionFields: submissionFields)
+      submission.submissionSessionToken = "DueNHADxCKCHad5AvUHlz6Md3kxA9aVmrVEYiJ1ln3KD9E0yC+kNJ/rAjukeSdiS9h73xtnxerVFyafTPT53nSloTr6GvV5hDaelalQ+cPB8ajya2zak2AfHwBEv5R8v"
+      submission.locale = "en_US"
+      submission.userId = "z9x8k8khtyc2pzmcfqnsr778bl"
+      submission.hostedAuth = true
+      return submission
+  }
+  
+  func buildRequestHostedAuthFailure() -> BVProgressiveReview {
+
+      self.submissionFields = BVProgressiveReviewFields()
+      submissionFields.rating = 4
+      submissionFields.title =  "my favorite product ever!"
+      submissionFields.reviewtext = "This Product was somewhat disapointing. I thouught it would be cool to have flowers around the house, but turns out its underwhelming."
+      submissionFields.agreedToTerms = true
+      submissionFields.isRecommended = true
+      submissionFields.hostedAuthenticationEmail = "developer@bazaarvoice.com"
+      submissionFields.hostedAuthenticationCallbackurl = "https://bazaarvoice.com"
+      
+      var submission = BVProgressiveReview(productId:"Product1", submissionFields: submissionFields)
+      submission.submissionSessionToken = "DueNHADxCKCHad5AvUHlz6Md3kxA9aVmrVEYiJ1ln3KD9E0yC+kNJ/rAjukeSdiS9h73xtnxerVFyafTPT53nSloTr6GvV5hDaelalQ+cPB8ajya2zak2AfHwBEv5R8v"
+      submission.locale = "en_US"
+      submission.userId = "invalid"
+      submission.hostedAuth = true
+      return submission
+  }
+  
+ 
     
     
 }
