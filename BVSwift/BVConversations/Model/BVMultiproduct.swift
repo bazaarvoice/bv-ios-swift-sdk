@@ -26,6 +26,7 @@ public struct BVMultiProduct: BVSubmissionable {
     public var productFormData: [BVMultiProductFormData]? {
       return productFormDataArray?.array
     }
+    public var hostedAuth: Bool = false
     private let productFormDataArray: BVCodableDictionary<BVMultiProductFormData>?
 
     private enum CodingKeys: String, CodingKey {

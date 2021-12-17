@@ -14,11 +14,13 @@ public class BVProgressiveReviewSubmission: BVSubmission {
     private var extendedResponse: Bool = false
     private var includeFields: Bool = false
     private var isPreview: Bool = false
+    private var hostedAuth: Bool = false
     
     public init?(_ progressiveReview: BVProgressiveReview) {
         self.extendedResponse = progressiveReview.extendedResponse
         self.includeFields = progressiveReview.includeFields
         self.isPreview = progressiveReview.isPreview
+        self.hostedAuth = progressiveReview.hostedAuth
         super.init(internalType: progressiveReview)
     }
     
@@ -42,6 +44,10 @@ public class BVProgressiveReviewSubmission: BVSubmission {
             if self.isPreview {
                 submissionParameters += [URLQueryItem(name: "preview",
                 value: nil)]
+            }
+            if self.hostedAuth {
+                submissionParameters += [URLQueryItem(name: "hostedauth",
+                                                      value: "true")]
             }
             return submissionParameters
         }

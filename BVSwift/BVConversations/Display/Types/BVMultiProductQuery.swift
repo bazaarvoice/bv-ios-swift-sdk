@@ -11,6 +11,7 @@ import UIKit
 public class BVMultiProductQuery: BVSubmission {
     var conversationsConfiguration: BVConversationsConfiguration?
     private var ignoreCompletion: Bool = false
+    public var hostedAuth: Bool = false
 
     /// The initializer for BVReviewSubmission
     /// - Parameters:
@@ -31,18 +32,23 @@ public class BVMultiProductQuery: BVSubmission {
     }
     
     public init?(_ multiProduct: BVMultiProduct) {
+      self.hostedAuth = multiProduct.hostedAuth
         super.init(internalType: multiProduct)
     }
     
     override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
         return {
-             let submissionParameters: [URLQueryItem] =
+             var submissionParameters: [URLQueryItem] =
                 [URLQueryItem(name: "siteName",
                               value: "main_site"),
                  URLQueryItem(name: "PassKey",
                               value: self.configuration?.configurationKey),
                  URLQueryItem(name: "apiversion",
-                              value: "5.4")]
+                              value: "5.4"),]
+                if self.hostedAuth {
+                    submissionParameters += [URLQueryItem(name: "hostedauth",
+                                                          value: "true")]
+                }
             
             return submissionParameters
         }
