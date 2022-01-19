@@ -57,7 +57,9 @@ internal struct BVAnalyticsConstants {
     "TestCase",
     "TestSession",
     "dc",
-    "ref"
+    "ref",
+    "deploymentZone",
+    "discount"
   ]
   
   static let commonValues: [String: String] = [
