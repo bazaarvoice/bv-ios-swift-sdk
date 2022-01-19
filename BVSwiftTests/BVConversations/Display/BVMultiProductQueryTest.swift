@@ -248,7 +248,7 @@ class BVMultiProductQueryTest: XCTestCase {
               
               if case let .success(_ , response) = result {
                   XCTAssertTrue( response.productFormData!.count == 3)
-                  XCTAssertNotNil(response.B)
+                  XCTAssertNotNil(response.userId)
                   expectation.fulfill()
                   return
               }
