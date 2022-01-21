@@ -23,6 +23,13 @@
 /* Begin PBXBuildFile section */
 		422C3B212538524900080544 /* BVCommentsQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C3B202538524900080544 /* BVCommentsQueryTest.swift */; };
 		42C3C3B62507951C00305A4C /* BVIncentivizedStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */; };
+		895FB971279846BB0031DDED /* BVFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FB970279846BB0031DDED /* BVFeature.swift */; };
+		895FB972279847750031DDED /* BVFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C852407112F00D67889 /* BVFeedback.swift */; };
+		895FB97627994A300031DDED /* BVLanguageStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FB97527994A300031DDED /* BVLanguageStat.swift */; };
+		899900092706E45F0005275A /* BVReviewFilterQweryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899900082706E45F0005275A /* BVReviewFilterQweryTest.swift */; };
+		8999000B270B454D0005275A /* BVFeatureStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8999000A270B454D0005275A /* BVFeatureStats.swift */; };
+		89DB2B4026F1C726006E8CAC /* BVTopicFilterQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */; };
+		89DB2B4226F1C7F8006E8CAC /* BVFilterReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */; };
 		98686BBF2406F3CF00D67889 /* BVCommentQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */; };
 		98686BC724070EC700D67889 /* BVAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BC124070EC600D67889 /* BVAnalyticsManager.swift */; };
 		98686BC824070EC700D67889 /* BVAnalyticsLocaleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BC024070EC600D67889 /* BVAnalyticsLocaleService.swift */; };
@@ -127,7 +134,6 @@
 		98686C9B2407113100D67889 /* BVAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C822407112F00D67889 /* BVAnswer.swift */; };
 		98686C9C2407113100D67889 /* BVReviewStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C832407112F00D67889 /* BVReviewStatistics.swift */; };
 		98686C9D2407113100D67889 /* BVVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C842407112F00D67889 /* BVVideo.swift */; };
-		98686C9E2407113100D67889 /* BVFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C852407112F00D67889 /* BVFeedback.swift */; };
 		98686C9F2407113100D67889 /* BVContextDataValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C862407112F00D67889 /* BVContextDataValue.swift */; };
 		98686CA02407113100D67889 /* BVReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C872407112F00D67889 /* BVReview.swift */; };
 		98686CA12407113100D67889 /* BVAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C882407112F00D67889 /* BVAuthor.swift */; };
@@ -286,6 +292,12 @@
 /* Begin PBXFileReference section */
 		422C3B202538524900080544 /* BVCommentsQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCommentsQueryTest.swift; sourceTree = "<group>"; };
 		42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVIncentivizedStats.swift; sourceTree = "<group>"; };
+		895FB970279846BB0031DDED /* BVFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVFeature.swift; sourceTree = "<group>"; };
+		895FB97527994A300031DDED /* BVLanguageStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVLanguageStat.swift; sourceTree = "<group>"; };
+		899900082706E45F0005275A /* BVReviewFilterQweryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewFilterQweryTest.swift; sourceTree = "<group>"; };
+		8999000A270B454D0005275A /* BVFeatureStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatureStats.swift; sourceTree = "<group>"; };
+		89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTopicFilterQuery.swift; sourceTree = "<group>"; };
+		89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFilterReview.swift; sourceTree = "<group>"; };
 		98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BVCommentQueryTest.swift; path = BVSwiftTests/BVConversations/Display/BVCommentQueryTest.swift; sourceTree = SOURCE_ROOT; };
 		98686BC024070EC600D67889 /* BVAnalyticsLocaleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVAnalyticsLocaleService.swift; sourceTree = "<group>"; };
 		98686BC124070EC600D67889 /* BVAnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVAnalyticsManager.swift; sourceTree = "<group>"; };
@@ -887,6 +899,7 @@
 				98686C7E2407112F00D67889 /* BVDistributionElement.swift */,
 				98686C892407113000D67889 /* BVDistributionValue.swift */,
 				98686C852407112F00D67889 /* BVFeedback.swift */,
+				895FB970279846BB0031DDED /* BVFeature.swift */,
 				98686C8F2407113000D67889 /* BVFormField.swift */,
 				98686C902407113000D67889 /* BVPhoto.swift */,
 				98686C7D2407112F00D67889 /* BVProduct.swift */,
@@ -909,6 +922,7 @@
 				98686D882408089E00D67889 /* ProgressiveSubmissionReview.swift */,
 				98686D8A240808BD00D67889 /* BVProgressiveReview.swift */,
 				98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */,
+				89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -941,6 +955,7 @@
 				98686C702407110300D67889 /* BVReviewSearchQuery.swift */,
 				98686D842408067100D67889 /* BVMultiProductQuery.swift */,
 				98686D862408069600D67889 /* BVMultiProductQueryResponse.swift */,
+				89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -983,6 +998,8 @@
 				98686C49240710AD00D67889 /* BVReviewSort.swift */,
 				98686C4B240710AD00D67889 /* BVReviewStat.swift */,
 				9F34FD7A251DCBC60023BB89 /* BVProductFilteredStat.swift */,
+				8999000A270B454D0005275A /* BVFeatureStats.swift */,
+				895FB97527994A300031DDED /* BVLanguageStat.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1075,6 +1092,7 @@
 				9F51CA51240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift */,
 				9F34FD7C2521B7FA0023BB89 /* BVProductsQueryTest.swift */,
 				422C3B202538524900080544 /* BVCommentsQueryTest.swift */,
+				899900082706E45F0005275A /* BVReviewFilterQweryTest.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1384,6 +1402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98686D27240712F700D67889 /* BVManagerRecommendations.swift in Sources */,
+				8999000B270B454D0005275A /* BVFeatureStats.swift in Sources */,
 				98686CF12407120700D67889 /* BVCurationsBrand.swift in Sources */,
 				98686CCE240711B800D67889 /* BVCurationsConfiguration.swift in Sources */,
 				98686D302407131200D67889 /* BVRecommendationsQuery.swift in Sources */,
@@ -1413,6 +1432,7 @@
 				98686D072407123F00D67889 /* BVCurationsCustomContentSubmission.swift in Sources */,
 				98686CF22407120700D67889 /* BVCurationsPhoto.swift in Sources */,
 				98686C0A2407100900D67889 /* BVURLParameter.swift in Sources */,
+				895FB97627994A300031DDED /* BVLanguageStat.swift in Sources */,
 				98686CF62407120700D67889 /* BVCurationsProduct.swift in Sources */,
 				98686C952407113100D67889 /* BVProductAttribute.swift in Sources */,
 				98686CD5240711CF00D67889 /* BVCurationsQueryable.swift in Sources */,
@@ -1428,6 +1448,7 @@
 				98686BF424070FC300D67889 /* BVManager.swift in Sources */,
 				98686D8D240808F300D67889 /* BVProgressiveReviewFields.swift in Sources */,
 				98686C62240710AE00D67889 /* BVReviewStat.swift in Sources */,
+				895FB972279847750031DDED /* BVFeedback.swift in Sources */,
 				98686D412407136400D67889 /* BVRecommendationsProduct.swift in Sources */,
 				98686BFC24070FE600D67889 /* BVLogNotifier.swift in Sources */,
 				98686C9C2407113100D67889 /* BVReviewStatistics.swift in Sources */,
@@ -1560,6 +1581,7 @@
 				98686CCD240711B800D67889 /* BVCurationsConstants.swift in Sources */,
 				98686D392407133500D67889 /* BVRecommendationsProfileQuery.swift in Sources */,
 				9F51CA49240CD1150043AED5 /* BVReviewHighlights.swift in Sources */,
+				895FB971279846BB0031DDED /* BVFeature.swift in Sources */,
 				98686BEA24070F7D00D67889 /* BVAnalyticsEventConversion.swift in Sources */,
 				98686C762407110300D67889 /* BVCommentsQuery.swift in Sources */,
 				98686BD824070F3800D67889 /* BVAnalyticsRemoteLog.swift in Sources */,
@@ -1575,7 +1597,6 @@
 				98686D852408067100D67889 /* BVMultiProductQuery.swift in Sources */,
 				98686BEE24070F7D00D67889 /* BVAnalyticsEventPersonalization.swift in Sources */,
 				98686C5F240710AE00D67889 /* BVReviewFilter.swift in Sources */,
-				98686C9E2407113100D67889 /* BVFeedback.swift in Sources */,
 				98686D8B240808BD00D67889 /* BVProgressiveReview.swift in Sources */,
 				98686C992407113100D67889 /* BVBrand.swift in Sources */,
 				98686BFD24070FE600D67889 /* BVLogger.swift in Sources */,
@@ -1590,6 +1611,8 @@
 				98686CEC2407120700D67889 /* BVCurationsProductAttribute.swift in Sources */,
 				98686C7A2407110300D67889 /* BVQuestionQuery.swift in Sources */,
 				98686CA92407113100D67889 /* BVPhoto.swift in Sources */,
+				89DB2B4226F1C7F8006E8CAC /* BVFilterReview.swift in Sources */,
+				89DB2B4026F1C726006E8CAC /* BVTopicFilterQuery.swift in Sources */,
 				98686C53240710AE00D67889 /* BVAuthorStat.swift in Sources */,
 				98686D1D240712BB00D67889 /* BVFingerprint.swift in Sources */,
 				98686C58240710AE00D67889 /* BVCommentInclude.swift in Sources */,
@@ -1630,6 +1653,7 @@
 				98686D712407157A00D67889 /* BVRecommendationsQueryTest.swift in Sources */,
 				98686D9324080D5E00D67889 /* BVProgressiveSubmissionTest.swift in Sources */,
 				98686D4A240714A000D67889 /* BVCommonTest.swift in Sources */,
+				899900092706E45F0005275A /* BVReviewFilterQweryTest.swift in Sources */,
 				98686D6B2407151600D67889 /* BVReviewSubmissionTest.swift in Sources */,
 				98686D5A240714DF00D67889 /* BVReviewQueryTest.swift in Sources */,
 				98686D662407151600D67889 /* BVPhotoSubmissionTest.swift in Sources */,

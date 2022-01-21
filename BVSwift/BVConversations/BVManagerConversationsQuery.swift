@@ -11,6 +11,11 @@ import Foundation
 /// generate types which are likely generative of all of the query types.
 public protocol BVConversationsQueryGenerator {
   
+  // Generator for BVAuthorQuery
+  /// - Parameters:
+  ///   - authorId: Author id to query against
+  func query(productId: String) -> BVTopicFilterQuery?
+  
   /// Generator for BVAuthorQuery
   /// - Parameters:
   ///   - authorId: Author id to query against
@@ -112,6 +117,16 @@ public protocol BVConversationsQueryGenerator {
 /// integration with any future advamcements made in the configuration layer
 /// instead of having to manually configure each type.
 extension BVManager: BVConversationsQueryGenerator {
+  
+  public func query(productId: String) -> BVTopicFilterQuery? {
+    guard let config = BVManager.conversationsConfiguration else {
+      return nil
+    }
+    
+    return
+      BVTopicFilterQuery(productId: productId)
+        .configure(config)
+  }
   
   public func query(authorId: String) -> BVAuthorQuery? {
     guard let config = BVManager.conversationsConfiguration else {

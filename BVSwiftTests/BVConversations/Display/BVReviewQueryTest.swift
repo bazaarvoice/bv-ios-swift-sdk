@@ -91,6 +91,7 @@ class BVReviewQueryTest: XCTestCase {
               (.categoryAncestorId("testID3"), .equalTo),
               (.categoryAncestorId("testID4"), .notEqualTo),
               (.categoryAncestorId("testID5"), .notEqualTo))
+              .feature("satisfaction")
     
     guard let url = reviewQuery.request?.url else {
       XCTFail()
@@ -103,6 +104,9 @@ class BVReviewQueryTest: XCTestCase {
       "CategoryAncestorId:eq:testID1,testID2,testID3"))
     XCTAssertTrue(url.absoluteString.contains(
       "CategoryAncestorId:neq:testID4,testID5"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "Feature=satisfaction"))
+    
   }
   
   func testReviewQueryDisplay() {
