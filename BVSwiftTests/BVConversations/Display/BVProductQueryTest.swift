@@ -64,7 +64,6 @@ class BVProductQueryTest: XCTestCase {
               (.categoryAncestorId("testID3"), .equalTo),
               (.categoryAncestorId("testID4"), .notEqualTo),
               (.categoryAncestorId("testID5"), .notEqualTo))
-    
     guard let url = productQuery.request?.url else {
       XCTFail()
       return

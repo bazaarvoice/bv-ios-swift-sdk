@@ -43,6 +43,10 @@ internal struct BVConversationsConstants {
     static let defaultField: String = "Search"
   }
   
+  internal struct BVProductId {
+    static let defaultField: String = "productId"
+  }
+  
   internal struct BVQuerySort {
     static let defaultField: String = "Sort"
     static let typeSeparatorField: String = "_"
@@ -64,6 +68,9 @@ internal struct BVConversationsConstants {
       static let search: String = "Search"
       static let totalResults: String = "TotalResults"
       static let incentivizedstats: String = "incentivizedstats"
+      static let productId: String = "productId"
+      static let feature: String = "Feature"
+      static let language: String = "language"
     }
   }
   
@@ -365,6 +372,14 @@ internal struct BVConversationsConstants {
       "TotalPositiveFeedbackCount"
       static let userLocation: String = "UserLocation"
     }
+  }
+  
+  internal struct BVFilterReviews{
+    
+    static let singularKey: String = "feature"
+    static let pluralKey: String = "features"
+    static let getResource: String = "data/features.json"
+    
   }
   
   internal struct BVSyndicationSource {

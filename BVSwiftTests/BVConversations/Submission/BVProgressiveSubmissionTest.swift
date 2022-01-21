@@ -474,7 +474,6 @@ class BVProgressiveSubmissionTest: XCTestCase {
     
     override class func tearDown() {
         super.tearDown()
-          
         BVPixel.skipAllPixelEvents = false
     }
   
@@ -492,7 +491,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
       var submission = BVProgressiveReview(productId:"Product1", submissionFields: submissionFields)
       submission.submissionSessionToken = "SECRET_REMOVED"
       submission.locale = "en_US"
-      submission.userId = "z9x8k8khtyc2pzmcfqnsr778bl"
+      submission.userId = "z6amcrde52q0hppiaym3h5flpf"
       submission.hostedAuth = true
       return submission
   }

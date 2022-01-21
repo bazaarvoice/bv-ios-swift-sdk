@@ -105,6 +105,27 @@ internal struct BVConversationsQuerySearchField: BVQueryField {
   }
 }
 
+// MARK: - BVConversationsProductIdfield
+internal struct BVConversationsProductIdfield: BVQueryField {
+  private let value: CustomStringConvertible
+  
+  var internalDescription: String {
+    return BVConversationsConstants.BVQueryType.Keys.productId
+  }
+  
+  var representedValue: CustomStringConvertible {
+    return value
+  }
+  
+  var description: String {
+    return internalDescription
+  }
+  
+  init(_ productId: String) {
+    value = productId
+  }
+}
+
 // MARK: - BVConversationsQueryLimitField
 internal struct BVConversationsQueryLimitField: BVQueryField {
   private let value: CustomStringConvertible
