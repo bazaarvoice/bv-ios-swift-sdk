@@ -474,7 +474,6 @@ class BVProgressiveSubmissionTest: XCTestCase {
     
     override class func tearDown() {
         super.tearDown()
-          
         BVPixel.skipAllPixelEvents = false
     }
   
@@ -490,9 +489,9 @@ class BVProgressiveSubmissionTest: XCTestCase {
       submissionFields.hostedAuthenticationCallbackurl = "https://bazaarvoice.com"
       
       var submission = BVProgressiveReview(productId:"Product1", submissionFields: submissionFields)
-      submission.submissionSessionToken = "DueNHADxCKCHad5AvUHlz6Md3kxA9aVmrVEYiJ1ln3KD9E0yC+kNJ/rAjukeSdiS9h73xtnxerVFyafTPT53nSloTr6GvV5hDaelalQ+cPB8ajya2zak2AfHwBEv5R8v"
+      submission.submissionSessionToken = "9y8kITDlqeFpCLH634OJJr7ErGP13y3oZ8ePKsYT/jOAITIj2GQ31eD2NX4oz74SujG3c4PTgkiMHBdF2FGvRI7qDUSM2SP8sGT3maxErGudQPMh9TGx8kc/8Dgn6Ik1"
       submission.locale = "en_US"
-      submission.userId = "z9x8k8khtyc2pzmcfqnsr778bl"
+      submission.userId = "z6amcrde52q0hppiaym3h5flpf"
       submission.hostedAuth = true
       return submission
   }

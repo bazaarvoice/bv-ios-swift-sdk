@@ -65,7 +65,7 @@ class BVAuthorQueryTest: XCTestCase {
             expectation.fulfill()
             return
           }
-          
+        
           guard let limit: UInt16 = meta.limit,
             let offset: UInt16 = meta.offset,
             let locale: String = meta.locale,

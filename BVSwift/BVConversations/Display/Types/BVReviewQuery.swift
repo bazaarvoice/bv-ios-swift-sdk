@@ -243,3 +243,13 @@ extension BVReviewQuery: BVQueryIncentivizedStatable {
     return self
   }
 }
+
+// MARK: - BVReviewQuery: BVQueryFeatureStatable
+extension BVReviewQuery: BVQueryFeatureStatable {
+  @discardableResult
+  public func feature(_ value: String) -> Self {
+    let featureStat: BVURLParameter = .field(BVFeaturesStats(value), nil)
+    add(featureStat)
+    return self
+  }
+}
