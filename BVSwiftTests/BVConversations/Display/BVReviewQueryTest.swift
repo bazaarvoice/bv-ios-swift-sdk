@@ -91,6 +91,7 @@ class BVReviewQueryTest: XCTestCase {
               (.categoryAncestorId("testID3"), .equalTo),
               (.categoryAncestorId("testID4"), .notEqualTo),
               (.categoryAncestorId("testID5"), .notEqualTo))
+      .filter((.contextDataValue(id: "Age", value: "17orUnder"), .equalTo))
               .feature("satisfaction")
     
     guard let url = reviewQuery.request?.url else {
@@ -106,6 +107,8 @@ class BVReviewQueryTest: XCTestCase {
       "CategoryAncestorId:neq:testID4,testID5"))
     XCTAssertTrue(url.absoluteString.contains(
       "Feature=satisfaction"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "ContextDataValue_Age:eq:17orUnder"))
     
   }
   
@@ -775,6 +778,60 @@ class BVReviewQueryTest: XCTestCase {
         }
         expectation.fulfill()
       }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewCDVFilter(){
+    
+    let expectation = self.expectation(description: "testReviewCDVFilter")
+    
+    let reviewQuery = BVReviewQuery(productId: "data-gen-moppq9ekthfzbc6qff3bqokie", limit: 10, offset: 0)
+      .filter((.contextDataValue(id: "Age", value: "17orUnder"), .equalTo))
+      
+      .configure(BVReviewQueryTest.incentivizedStatsConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        for review in reviews {
+        
+          XCTAssertTrue(review.contextDataValues!.contains(where: {$0.contextDataValueId == "Age"}))
+          if let contextDataValue = review.contextDataValues!.first(where: {$0.contextDataValueId == "Age"}) {
+            XCTAssertNotNil(contextDataValue.dimensionLabel) // dimensionLabel Value could be anything so actual value check is not added
+            XCTAssertEqual(contextDataValue.value, "17orUnder")
+            XCTAssertEqual(contextDataValue.contextDataValueId, "Age")
+            XCTAssertEqual(contextDataValue.valueLabel, "17 or under")
+            XCTAssertEqual(contextDataValue.dimensionLabel, "Age")
+          }
+        }
+        
+        expectation.fulfill()
+    }
     
     guard let req = reviewQuery.request else {
       XCTFail()
