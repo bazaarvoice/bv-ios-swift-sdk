@@ -41,6 +41,7 @@ public enum BVReviewFilter: BVQueryFilter {
   case totalPositiveFeedbackCount(Int)
   case userLocation(String)
   case contextDataValue(id: String, value: String)
+  case secondaryRating(id: String, value: String)
   
   public static var filterPrefix: String {
     return BVConversationsConstants.BVQueryFilter.defaultField
@@ -114,6 +115,8 @@ public enum BVReviewFilter: BVQueryFilter {
       return filter
     case let .contextDataValue(_, filter):
       return filter
+    case let .secondaryRating(_, filter):
+      return filter
     }
   }
 }
@@ -177,7 +180,10 @@ extension BVReviewFilter: BVConversationsQueryValue {
       return BVConversationsConstants.BVReviews.Keys.userLocation
     case let .contextDataValue(field, _):
       return BVConversationsConstants
-        .BVAuthors.Keys.contextDataValue + "_" + field
+        .BVReviews.Keys.contextDataValue + "_" + field
+    case let .secondaryRating(field, _):
+      return BVConversationsConstants
+        .BVReviews.Keys.SecondaryRating + "_" + field
     }
   }
 }

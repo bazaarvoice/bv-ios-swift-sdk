@@ -92,7 +92,8 @@ class BVReviewQueryTest: XCTestCase {
               (.categoryAncestorId("testID4"), .notEqualTo),
               (.categoryAncestorId("testID5"), .notEqualTo))
       .filter((.contextDataValue(id: "Age", value: "17orUnder"), .equalTo))
-              .feature("satisfaction")
+      .feature("satisfaction")
+      .filter((.secondaryRating(id: "Quality", value: "5"), .equalTo))
     
     guard let url = reviewQuery.request?.url else {
       XCTFail()
@@ -109,6 +110,8 @@ class BVReviewQueryTest: XCTestCase {
       "Feature=satisfaction"))
     XCTAssertTrue(url.absoluteString.contains(
       "ContextDataValue_Age:eq:17orUnder"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "SecondaryRating_Quality:eq:5"))
     
   }
   
@@ -830,6 +833,57 @@ class BVReviewQueryTest: XCTestCase {
           }
         }
         
+        expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewSecondaryRatingFilter(){
+    
+    let expectation = self.expectation(description: "testReviewSecondaryRatingFilter")
+    
+    let reviewQuery = BVReviewQuery(productId: "data-gen-moppq9ekthfzbc6qff3bqokie", limit: 10, offset: 0)
+      .filter((.secondaryRating(id: "Quality", value: "5"), .equalTo))
+      
+      .configure(BVReviewQueryTest.incentivizedStatsConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        for review in reviews {
+        
+          XCTAssertTrue(review.secondaryRatings!.contains(where: {$0.secondaryRatingId == "Quality"}))
+          if let secondaryRatings = review.secondaryRatings!.first(where: {$0.secondaryRatingId == "Quality"}) {
+            XCTAssertEqual(secondaryRatings.value, 5)
+            XCTAssertEqual(secondaryRatings.label, "Quality of Product")
+            XCTAssertEqual(secondaryRatings.displayType, "NORMAL")
+          }
+        }
         expectation.fulfill()
     }
     

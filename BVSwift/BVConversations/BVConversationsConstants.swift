@@ -371,6 +371,8 @@ internal struct BVConversationsConstants {
       static let totalPositiveFeedbackCount: String =
       "TotalPositiveFeedbackCount"
       static let userLocation: String = "UserLocation"
+      static let contextDataValue: String = "ContextDataValue"
+      static let SecondaryRating: String = "SecondaryRating"
     }
   }
   
