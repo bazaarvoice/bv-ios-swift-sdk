@@ -902,4 +902,60 @@ class BVReviewQueryTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+  
+  func testReviewAdditionalFieldFilter(){
+    
+    let expectation = self.expectation(description: "testReviewAdditionalFieldFilter")
+    
+    let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 0)
+      .filter((.additionalField(id: "DateOfUserExperience", value: "2021-04-03"), .equalTo))
+      
+      .configure(BVReviewQueryTest.dateOfUserExperienceconfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        for review in reviews {
+          
+          XCTAssertNotNil(review.additionalFields)
+          guard let additionalFields = review.additionalFields else {
+            XCTFail()
+            expectation.fulfill()
+            return
+          }
+          XCTAssertNotNil(additionalFields["DateOfUserExperience"])
+          
+          let dateOfConsumerExperienceField = additionalFields["DateOfUserExperience"]!
+          
+          XCTAssertEqual(dateOfConsumerExperienceField["Id"], "DateOfUserExperience")
+        }
+        expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
 }
