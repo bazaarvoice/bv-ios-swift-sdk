@@ -65,6 +65,19 @@ class BVReviewQueryTest: XCTestCase {
             analyticsConfig: analyticsConfig)
     }()
   
+  private static var tagDimensionFilterConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "caYeBHjUvQaSNY1gJwSfQwpOMgoCc0Dhq2yBPcnyxRQwo",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -939,6 +952,73 @@ class BVReviewQueryTest: XCTestCase {
           let dateOfConsumerExperienceField = additionalFields["DateOfUserExperience"]!
           
           XCTAssertEqual(dateOfConsumerExperienceField["Id"], "DateOfUserExperience")
+        }
+        expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewTagDimensionFilter(){
+    
+    let expectation = self.expectation(description: "testReviewTagDimensionFilter")
+    
+    let reviewQuery = BVReviewQuery(productId: "JAM5BLK", limit: 10, offset: 0)
+      .filter((.tagDimension(id: "TagsSet", value: "Volume"), .equalTo))
+      
+      .configure(BVReviewQueryTest.tagDimensionFilterConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        for review in reviews {
+         
+          let tagDimension = review.tagDimensions!
+          guard let proDimension: BVDimensionElement =
+                  tagDimension.filter({ (elem: BVDimensionElement) -> Bool in
+              guard let id: String = elem.dimensionElementId else {
+                return false
+              }
+              return id.contains("TagsSet")
+            }).first else {
+              XCTFail()
+              expectation.fulfill()
+              return
+          }
+
+          XCTAssertEqual(proDimension.dimensionElementId, "TagsSet")
+
+          guard let values: [String] = proDimension.values else {
+            XCTFail()
+            expectation.fulfill()
+            return
+          }
+          XCTAssertTrue(values.contains("Volume"))
+          
         }
         expectation.fulfill()
     }

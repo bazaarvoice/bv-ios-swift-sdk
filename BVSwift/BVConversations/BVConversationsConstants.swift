@@ -374,6 +374,7 @@ internal struct BVConversationsConstants {
       static let contextDataValue: String = "ContextDataValue"
       static let secondaryRating: String = "SecondaryRating"
       static let additionalField: String = "AdditionalField"
+      static let tagDimension: String = "tag"
     }
   }
   
