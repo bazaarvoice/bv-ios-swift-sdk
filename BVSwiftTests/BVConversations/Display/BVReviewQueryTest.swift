@@ -78,6 +78,20 @@ class BVReviewQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
   
+  private static var contextDataValueLabelConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "capzzMW2lY94Fn1dwEiOjlzweCsVjZ4VDpQcY4Nlx8VWQ",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+
+  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -1021,6 +1035,58 @@ class BVReviewQueryTest: XCTestCase {
           
         }
         expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testContextDataValueLableIncludes(){
+    
+    let expectation = self.expectation(description: "testContextDataValueLableIncludes")
+    
+    let frLocale: Locale = Locale(identifier: "fr_FR")
+    
+    let reviewQuery = BVReviewQuery(productId: "WAX32LH1FF", limit: 10, offset: 0)
+      .include(.products)
+      .stats(.reviews)
+      .filter((.contentLocale(frLocale), .equalTo))
+      .configure(BVReviewQueryTest.contextDataValueLabelConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        for review in reviews {
+         
+          for product in review.products! {
+            //Assertion to check value label.. value label can be differnt hence adding only not nil assertion
+            XCTAssertNotNil( product.reviewStatistics?.contextDataDistribution?.first?.values?.first?.valueLabel)
+          }
+        }
+      expectation.fulfill()
     }
     
     guard let req = reviewQuery.request else {
