@@ -170,3 +170,14 @@ extension BVProductsQuery: BVQueryIncentivizedStatable {
     return self
   }
 }
+
+// MARK: - BVReviewQuery: BVQueryTagStatStatable
+extension BVProductsQuery: BVQueryTagStatStatable {
+  @discardableResult
+  public func tagStats(_ value: Bool) -> Self {
+    let tagStat: BVURLParameter = .field(BVTagStats(value), nil)
+    add(tagStat, coalesce: false)
+    return self
+  }
+}
+

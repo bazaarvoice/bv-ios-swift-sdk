@@ -30,6 +30,7 @@
 		8999000B270B454D0005275A /* BVFeatureStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8999000A270B454D0005275A /* BVFeatureStats.swift */; };
 		89DB2B4026F1C726006E8CAC /* BVTopicFilterQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */; };
 		89DB2B4226F1C7F8006E8CAC /* BVFilterReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */; };
+		89E3106F27F4C9F700D42042 /* BVTagStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E3106E27F4C9F700D42042 /* BVTagStats.swift */; };
 		98686BBF2406F3CF00D67889 /* BVCommentQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */; };
 		98686BC724070EC700D67889 /* BVAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BC124070EC600D67889 /* BVAnalyticsManager.swift */; };
 		98686BC824070EC700D67889 /* BVAnalyticsLocaleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686BC024070EC600D67889 /* BVAnalyticsLocaleService.swift */; };
@@ -298,6 +299,7 @@
 		8999000A270B454D0005275A /* BVFeatureStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatureStats.swift; sourceTree = "<group>"; };
 		89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTopicFilterQuery.swift; sourceTree = "<group>"; };
 		89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFilterReview.swift; sourceTree = "<group>"; };
+		89E3106E27F4C9F700D42042 /* BVTagStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTagStats.swift; sourceTree = "<group>"; };
 		98686BBE2406F3CF00D67889 /* BVCommentQueryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BVCommentQueryTest.swift; path = BVSwiftTests/BVConversations/Display/BVCommentQueryTest.swift; sourceTree = SOURCE_ROOT; };
 		98686BC024070EC600D67889 /* BVAnalyticsLocaleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVAnalyticsLocaleService.swift; sourceTree = "<group>"; };
 		98686BC124070EC600D67889 /* BVAnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVAnalyticsManager.swift; sourceTree = "<group>"; };
@@ -1000,6 +1002,7 @@
 				9F34FD7A251DCBC60023BB89 /* BVProductFilteredStat.swift */,
 				8999000A270B454D0005275A /* BVFeatureStats.swift */,
 				895FB97527994A300031DDED /* BVLanguageStat.swift */,
+				89E3106E27F4C9F700D42042 /* BVTagStats.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1559,6 +1562,7 @@
 				98686C372407109900D67889 /* BVConversationsSortOrder.swift in Sources */,
 				98686D1B240712BB00D67889 /* BVUtilities.swift in Sources */,
 				98686D18240712BB00D67889 /* BVAtomic.swift in Sources */,
+				89E3106F27F4C9F700D42042 /* BVTagStats.swift in Sources */,
 				98686C722407110300D67889 /* BVProductSearchQuery.swift in Sources */,
 				98686BDD24070F3800D67889 /* BVAnalyticsProductType.swift in Sources */,
 				98686CCF240711B800D67889 /* BVManagerCurationsSubmission.swift in Sources */,

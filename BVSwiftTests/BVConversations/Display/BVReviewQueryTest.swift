@@ -65,7 +65,7 @@ class BVReviewQueryTest: XCTestCase {
             analyticsConfig: analyticsConfig)
     }()
   
-  private static var tagDimensionFilterConfig: BVConversationsConfiguration =
+  private static var tagDimensionConfig: BVConversationsConfiguration =
   { () -> BVConversationsConfiguration in
     
     let analyticsConfig: BVAnalyticsConfiguration =
@@ -993,7 +993,7 @@ class BVReviewQueryTest: XCTestCase {
     let reviewQuery = BVReviewQuery(productId: "JAM5BLK", limit: 10, offset: 0)
       .filter((.tagDimension(id: "TagsSet", value: "Volume"), .equalTo))
       
-      .configure(BVReviewQueryTest.tagDimensionFilterConfig)
+      .configure(BVReviewQueryTest.tagDimensionConfig)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
         
         if case .failure(let error) = response {
@@ -1054,33 +1054,33 @@ class BVReviewQueryTest: XCTestCase {
   }
   
   func testContextDataValueLableIncludes(){
-    
+
     let expectation = self.expectation(description: "testContextDataValueLableIncludes")
-    
+
     let frLocale: Locale = Locale(identifier: "fr_FR")
-    
+
     let reviewQuery = BVReviewQuery(productId: "WAX32LH1FF", limit: 10, offset: 0)
       .include(.products)
       .stats(.reviews)
       .filter((.contentLocale(frLocale), .equalTo))
       .configure(BVReviewQueryTest.contextDataValueLabelConfig)
       .handler { (response: BVConversationsQueryResponse<BVReview>) in
-        
+
         if case .failure(let error) = response {
           print(error)
           XCTFail()
           expectation.fulfill()
           return
         }
-        
+
         guard case let .success(_, reviews) = response else {
           XCTFail()
           expectation.fulfill()
           return
         }
-        
+
         for review in reviews {
-         
+
           for product in review.products! {
             //Assertion to check value label.. value label can be differnt hence adding only not nil assertion
             XCTAssertNotNil( product.reviewStatistics?.contextDataDistribution?.first?.values?.first?.valueLabel)
@@ -1088,17 +1088,75 @@ class BVReviewQueryTest: XCTestCase {
         }
       expectation.fulfill()
     }
-    
+
     guard let req = reviewQuery.request else {
       XCTFail()
       expectation.fulfill()
       return
     }
-    
+
     print(req)
-    
+
     reviewQuery.async()
-    
+
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testTagStatDistribustion(){
+
+    let expectation = self.expectation(description: "testReviewTagDimensionFilter")
+
+    let reviewQuery = BVReviewQuery(productId: "JAM5BLK", limit: 10, offset: 0)
+      .tagStats(true)
+      .include(.products)
+      .stats(.reviews)
+
+      .configure(BVReviewQueryTest.tagDimensionConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+
+        for review in reviews {
+
+          if let tagDistibutionValues =  review.products?.first?.reviewStatistics?.tagDistribution!.first(where: {$0.distibutionElementId == "ProductVariant"}){
+
+            //Get TagDistibution Values
+            let values = tagDistibutionValues.values
+
+            values?.forEach{ (value) in
+              //Assertions to check Tagdistribution. value and count may differ hence not nil assertions
+              XCTAssertNotNil(value.value)
+              XCTAssertNotNil(value.count)
+            }
+          }
+        }
+        expectation.fulfill()
+    }
+
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+
+    print(req)
+
+    reviewQuery.async()
+
     self.waitForExpectations(timeout: 20) { (error) in
       XCTAssertNil(
         error, "Something went horribly wrong, request took too long.")

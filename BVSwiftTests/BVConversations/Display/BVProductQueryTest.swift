@@ -39,6 +39,20 @@ class BVProductQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
   
+  private static var tagDimensionConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "apitestcustomer"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "caYeBHjUvQaSNY1gJwSfQwpOMgoCc0Dhq2yBPcnyxRQwo",
+      configType: .staging(clientId: "apitestcustomer"),
+      analyticsConfig: analyticsConfig)
+  }()
+
+  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -383,6 +397,72 @@ class BVProductQueryTest: XCTestCase {
       XCTAssertNil(
         error, "Something went horribly wrong, request took too long.")
     }
+  }
+  
+  func testProductQueryTagStats(){
     
+    let expectation = self.expectation(description: "testProductQueryIncentivizedStats")
+    
+    let productQuery = BVProductQuery(productId: "JAM5BLK")
+      .stats(.reviews)
+      .tagStats(true)
+      .configure(BVProductQueryTest.tagDimensionConfig)
+      .handler { (response: BVConversationsQueryResponse<BVProduct>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, products) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard let product: BVProduct = products.first else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+        
+        XCTAssertEqual(product.productId, "JAM5BLK")
+        
+        let tagDistribution = product.reviewStatistics?.tagDistribution?.first(where: {$0.distibutionElementId == "ProductVariant"})!
+        
+        //Assertions to check TagDistribution
+        XCTAssertNotNil(tagDistribution)
+        //Get TagDistibution Values
+        let tagdiStributionValues = tagDistribution?.values!
+        
+        tagdiStributionValues?.forEach{ (value) in
+          //Assertions to check Tagdistribution value and count, they may differ hence not nil assertions
+          XCTAssertNotNil(value.value)
+          XCTAssertNotNil(value.count)
+        
+        }
+
+        
+        
+        expectation.fulfill()
+    }
+    
+    guard let req = productQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    /// We're not testing analytics here
+    productQuery.async(urlSession: BVProductQueryTest.privateSession)
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
   }
 }

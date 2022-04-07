@@ -255,3 +255,13 @@ extension BVReviewSearchQuery: BVQueryFeatureStatable {
     return self
   }
 }
+
+// MARK: - BVReviewSearchQuery: BVQueryTagStatStatable
+extension BVReviewSearchQuery: BVQueryTagStatStatable {
+  @discardableResult
+  public func tagStats(_ value: Bool) -> Self {
+    let tagStat: BVURLParameter = .field(BVTagStats(value), nil)
+    add(tagStat, coalesce: false)
+    return self
+  }
+}
