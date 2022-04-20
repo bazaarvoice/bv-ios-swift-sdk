@@ -90,6 +90,20 @@ class BVReviewQueryTest: XCTestCase {
       configType: .staging(clientId: "apitestcustomer"),
       analyticsConfig: analyticsConfig)
   }()
+  
+  private static var secondaryRatingValueLabelConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "testcustomermobilesdk"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "cavNO70oED9uDIo3971pfLc9IJET3eaozVNHJhL1vnAK4",
+      configType: .staging(clientId: "testcustomermobilesdk"),
+      analyticsConfig: analyticsConfig)
+  }()
+
 
   
   private static var privateSession:URLSession = {
@@ -1105,9 +1119,9 @@ class BVReviewQueryTest: XCTestCase {
     }
   }
   
-  func testTagStatDistribustion(){
+  func testTagStatDistribution(){
 
-    let expectation = self.expectation(description: "testReviewTagDimensionFilter")
+    let expectation = self.expectation(description: "testTagStatDistribution")
 
     let reviewQuery = BVReviewQuery(productId: "JAM5BLK", limit: 10, offset: 0)
       .tagStats(true)
@@ -1143,6 +1157,63 @@ class BVReviewQueryTest: XCTestCase {
               XCTAssertNotNil(value.count)
             }
           }
+        }
+        expectation.fulfill()
+    }
+
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+
+    print(req)
+
+    reviewQuery.async()
+
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSecondaryRatingsValueLabel(){
+
+    let expectation = self.expectation(description: "testSecondaryRatingsValueLabel")
+
+    let reviewQuery = BVReviewQuery(productId: "Product1", limit: 10, offset: 0)
+      .include(.products)
+      .stats(.reviews)
+
+      .configure(BVReviewQueryTest.secondaryRatingValueLabelConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+
+        for review in reviews {
+          //Asserions for secondary ratings averages
+          XCTAssertNotNil(review.products?.first?.reviewStatistics?.secondaryRatingsAverages!.first(where: {$0.secondaryRatingsId == "WhatSizeIsTheProduct"}))
+          let secondaryRatingsAverages = review.products?.first?.reviewStatistics?.secondaryRatingsAverages!.first(where: {$0.secondaryRatingsId == "WhatSizeIsTheProduct"})
+          //Assertions for all secondary ratings averages value
+          XCTAssertEqual(secondaryRatingsAverages?.averageRating, 2.111111111111111)
+          XCTAssertEqual(secondaryRatingsAverages?.displayType, "SLIDER")
+          XCTAssertEqual(secondaryRatingsAverages?.valueRange, 3)
+          XCTAssertEqual(secondaryRatingsAverages?.maxLabel, "Large")
+          XCTAssertEqual(secondaryRatingsAverages?.minLabel, "Small")
+          XCTAssertEqual(secondaryRatingsAverages?.label, "What size is the product?")
+          XCTAssertEqual(secondaryRatingsAverages?.valueLabel?.count, 3)
+          XCTAssertEqual(secondaryRatingsAverages?.valueLabel, ["Small","Medium","Large"])
         }
         expectation.fulfill()
     }
