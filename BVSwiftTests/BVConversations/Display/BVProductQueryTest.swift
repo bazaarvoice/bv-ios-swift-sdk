@@ -52,7 +52,19 @@ class BVProductQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
 
-  
+  private static var secondaryRatingValueLabelConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "testcustomermobilesdk"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "cavNO70oED9uDIo3971pfLc9IJET3eaozVNHJhL1vnAK4",
+      configType: .staging(clientId: "testcustomermobilesdk"),
+      analyticsConfig: analyticsConfig)
+  }()
+
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -401,7 +413,7 @@ class BVProductQueryTest: XCTestCase {
   
   func testProductQueryTagStats(){
     
-    let expectation = self.expectation(description: "testProductQueryIncentivizedStats")
+    let expectation = self.expectation(description: "testProductQueryTagStats")
     
     let productQuery = BVProductQuery(productId: "JAM5BLK")
       .stats(.reviews)
@@ -429,24 +441,82 @@ class BVProductQueryTest: XCTestCase {
         }
         
         XCTAssertEqual(product.productId, "JAM5BLK")
-        
+        //Assertions to check TagDistribution
+        XCTAssertNotNil(product.reviewStatistics?.tagDistribution?.first(where: {$0.distibutionElementId == "ProductVariant"})!)
         let tagDistribution = product.reviewStatistics?.tagDistribution?.first(where: {$0.distibutionElementId == "ProductVariant"})!
         
-        //Assertions to check TagDistribution
-        XCTAssertNotNil(tagDistribution)
         //Get TagDistibution Values
+        XCTAssertNotNil(tagDistribution?.values!)
         let tagdiStributionValues = tagDistribution?.values!
         
         tagdiStributionValues?.forEach{ (value) in
           //Assertions to check Tagdistribution value and count, they may differ hence not nil assertions
           XCTAssertNotNil(value.value)
           XCTAssertNotNil(value.count)
-        
         }
-
+      expectation.fulfill()
+    }
+    
+    guard let req = productQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    /// We're not testing analytics here
+    productQuery.async(urlSession: BVProductQueryTest.privateSession)
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSecondaryRatingsDistribution(){
+    
+    let expectation = self.expectation(description: "testSecondaryRatingsDistribution")
+    
+    let productQuery = BVProductQuery(productId: "Product1")
+      .stats(.reviews)
+      .secondaryRatingstats(true)
+      .configure(BVProductQueryTest.secondaryRatingValueLabelConfig)
+      .handler { (response: BVConversationsQueryResponse<BVProduct>) in
         
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
         
-        expectation.fulfill()
+        guard case let .success(_, products) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard let product: BVProduct = products.first else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+  
+        //Get secondary rating distribution if it is not null
+        XCTAssertNotNil(product.reviewStatistics?.secondaryRatingsDistribution?.first(where: {$0.secondaryDistributionId == "WhatSizeIsTheProduct" })!)
+        let secondaryRatingsDistrinution = product.reviewStatistics?.secondaryRatingsDistribution?.first(where: {$0.secondaryDistributionId == "WhatSizeIsTheProduct" })!
+        XCTAssertEqual(secondaryRatingsDistrinution?.label, "What size is the product?")
+        //Check Not nil for Secondary rating distrinution value
+        XCTAssertNotNil(secondaryRatingsDistrinution?.values!)
+        let secondaryRatingsDistrinutionValues = secondaryRatingsDistrinution?.values!
+        secondaryRatingsDistrinutionValues?.forEach{ (value) in
+          //Assertions to check Tagdistribution value and count, they may differ hence not nil assertions
+          XCTAssertNotNil(value.value)
+          XCTAssertNotNil(value.count)
+          XCTAssertNotNil(value.valueLabel)
+        }
+      expectation.fulfill()
     }
     
     guard let req = productQuery.request else {

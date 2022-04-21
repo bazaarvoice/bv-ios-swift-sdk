@@ -265,3 +265,13 @@ extension BVReviewSearchQuery: BVQueryTagStatStatable {
     return self
   }
 }
+
+// MARK: - BVReviewQuery: BVQuerySecondaryRatingstatable
+extension BVReviewSearchQuery: BVQuerySecondaryRatingstatable {
+  @discardableResult
+  public func secondaryRatingstats(_ value: Bool) -> Self {
+    let secondaryRatingstat: BVURLParameter = .field(BVSecondaryRatingStat(value), nil)
+    add(secondaryRatingstat, coalesce: false)
+    return self
+  }
+}

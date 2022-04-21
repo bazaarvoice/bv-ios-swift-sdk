@@ -112,6 +112,11 @@ public protocol BVQueryTagStatStatable {
   func tagStats(_ value: Bool) -> Self
 }
 
+/// Protocol definition for the behavior of adding  tagstats
+public protocol BVQuerySecondaryRatingstatable {
+  func secondaryRatingstats(_ value: Bool) -> Self
+}
+
 /// Protocol definition for the behavior of adding  features
 public protocol BVQueryLanguageStatable {
   func language(_ value: String) -> Self

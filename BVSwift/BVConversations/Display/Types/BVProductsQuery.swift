@@ -181,3 +181,12 @@ extension BVProductsQuery: BVQueryTagStatStatable {
   }
 }
 
+// MARK: - BVProductsQuery: BVQuerySecondaryRatingstatable
+extension BVProductsQuery: BVQuerySecondaryRatingstatable {
+  @discardableResult
+  public func secondaryRatingstats(_ value: Bool) -> Self {
+    let secondaryRatingstat: BVURLParameter = .field(BVSecondaryRatingStat(value), nil)
+    add(secondaryRatingstat, coalesce: false)
+    return self
+  }
+}

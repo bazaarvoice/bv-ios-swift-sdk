@@ -104,8 +104,6 @@ class BVReviewQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
 
-
-  
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -1145,20 +1143,81 @@ class BVReviewQueryTest: XCTestCase {
         }
 
         for review in reviews {
+          //Assertion to check tag distribution
+          XCTAssertNotNil(review.products?.first?.reviewStatistics?.tagDistribution!.first(where: {$0.distibutionElementId == "ProductVariant"}))
+          let tagDistibutionValues =  review.products?.first?.reviewStatistics?.tagDistribution!.first(where: {$0.distibutionElementId == "ProductVariant"})!
 
-          if let tagDistibutionValues =  review.products?.first?.reviewStatistics?.tagDistribution!.first(where: {$0.distibutionElementId == "ProductVariant"}){
-
-            //Get TagDistibution Values
-            let values = tagDistibutionValues.values
-
-            values?.forEach{ (value) in
-              //Assertions to check Tagdistribution. value and count may differ hence not nil assertions
-              XCTAssertNotNil(value.value)
-              XCTAssertNotNil(value.count)
-            }
+          //Assetion to check tagdistribution value
+          XCTAssertNotNil(tagDistibutionValues?.values!)
+          let values = tagDistibutionValues?.values!
+          values?.forEach{ (value) in
+            //Assertions to check Tagdistribution. value and count may differ hence not nil assertions
+            XCTAssertNotNil(value.value)
+            XCTAssertNotNil(value.count)
           }
         }
         expectation.fulfill()
+    }
+
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+
+    print(req)
+
+    reviewQuery.async()
+
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testSecondaryRatingDistribution(){
+
+    let expectation = self.expectation(description: "testSecondaryRatingDistribution")
+
+    let reviewQuery = BVReviewQuery(productId: "Product1", limit: 10, offset: 0)
+      .secondaryRatingstats(true)
+      .include(.products)
+      .stats(.reviews)
+
+      .configure(BVReviewQueryTest.secondaryRatingValueLabelConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+
+        for review in reviews {
+          //Assertions to check Secondary Distribution
+          XCTAssertNotNil(review.products?.first?.reviewStatistics?.secondaryRatingsDistribution!.first(where:{$0.secondaryDistributionId == "WhatSizeIsTheProduct"})!)
+          //Get secondary rating distribution
+          let secondaryRatingsDistribution = review.products?.first?.reviewStatistics?.secondaryRatingsDistribution!.first(where:{$0.secondaryDistributionId == "WhatSizeIsTheProduct"})!
+          XCTAssertEqual(secondaryRatingsDistribution?.label, "What size is the product?")
+          //Get secondary rating distribution Values
+          XCTAssertNotNil(secondaryRatingsDistribution?.values!)
+          let secondaryRatingsDistributionalues = secondaryRatingsDistribution?.values!
+
+          secondaryRatingsDistributionalues?.forEach{ (value) in
+              //Assertions to check Tagdistribution. value, count and valuelabel may differ hence not nil assertions
+              XCTAssertNotNil(value.value)
+              XCTAssertNotNil(value.count)
+              XCTAssertNotNil(value.valueLabel)
+            }
+          }
+      expectation.fulfill()
     }
 
     guard let req = reviewQuery.request else {
@@ -1206,7 +1265,7 @@ class BVReviewQueryTest: XCTestCase {
           XCTAssertNotNil(review.products?.first?.reviewStatistics?.secondaryRatingsAverages!.first(where: {$0.secondaryRatingsId == "WhatSizeIsTheProduct"}))
           let secondaryRatingsAverages = review.products?.first?.reviewStatistics?.secondaryRatingsAverages!.first(where: {$0.secondaryRatingsId == "WhatSizeIsTheProduct"})
           //Assertions for all secondary ratings averages value
-          XCTAssertEqual(secondaryRatingsAverages?.averageRating, 2.111111111111111)
+          XCTAssertNotNil(secondaryRatingsAverages?.averageRating)
           XCTAssertEqual(secondaryRatingsAverages?.displayType, "SLIDER")
           XCTAssertEqual(secondaryRatingsAverages?.valueRange, 3)
           XCTAssertEqual(secondaryRatingsAverages?.maxLabel, "Large")

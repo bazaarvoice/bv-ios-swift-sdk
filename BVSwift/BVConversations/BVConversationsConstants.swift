@@ -72,6 +72,7 @@ internal struct BVConversationsConstants {
       static let feature: String = "Feature"
       static let language: String = "language"
       static let tagStats: String = "tagstats"
+      static let secondaryRatingStats: String = "secondaryratingstats"
     }
   }
   
