@@ -384,7 +384,7 @@ internal struct BVConversationsConstants {
     
     static let singularKey: String = "feature"
     static let pluralKey: String = "features"
-    static let getResource: String = "data/features.json"
+    static let getResource: String = "features.json"
     
   }
   

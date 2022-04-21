@@ -26,10 +26,10 @@
 		895FB971279846BB0031DDED /* BVFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FB970279846BB0031DDED /* BVFeature.swift */; };
 		895FB972279847750031DDED /* BVFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C852407112F00D67889 /* BVFeedback.swift */; };
 		895FB97627994A300031DDED /* BVLanguageStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FB97527994A300031DDED /* BVLanguageStat.swift */; };
-		899900092706E45F0005275A /* BVReviewFilterQweryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899900082706E45F0005275A /* BVReviewFilterQweryTest.swift */; };
+		899900092706E45F0005275A /* BVFeatureQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899900082706E45F0005275A /* BVFeatureQueryTest.swift */; };
 		8999000B270B454D0005275A /* BVFeatureStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8999000A270B454D0005275A /* BVFeatureStats.swift */; };
-		89DB2B4026F1C726006E8CAC /* BVTopicFilterQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */; };
-		89DB2B4226F1C7F8006E8CAC /* BVFilterReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */; };
+		89DB2B4026F1C726006E8CAC /* BVFeatureQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B3F26F1C726006E8CAC /* BVFeatureQuery.swift */; };
+		89DB2B4226F1C7F8006E8CAC /* BVFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DB2B4126F1C7F8006E8CAC /* BVFeatures.swift */; };
 		89E3106F27F4C9F700D42042 /* BVTagStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E3106E27F4C9F700D42042 /* BVTagStats.swift */; };
 		89F1351E27FD92D4006BBBF5 /* BVSecondaryRatingStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1351D27FD92D4006BBBF5 /* BVSecondaryRatingStat.swift */; };
 		89F1352027FEE9EA006BBBF5 /* BVSecondaryRatingsDistributionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1351F27FEE9EA006BBBF5 /* BVSecondaryRatingsDistributionValue.swift */; };
@@ -298,10 +298,10 @@
 		42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVIncentivizedStats.swift; sourceTree = "<group>"; };
 		895FB970279846BB0031DDED /* BVFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVFeature.swift; sourceTree = "<group>"; };
 		895FB97527994A300031DDED /* BVLanguageStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVLanguageStat.swift; sourceTree = "<group>"; };
-		899900082706E45F0005275A /* BVReviewFilterQweryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVReviewFilterQweryTest.swift; sourceTree = "<group>"; };
+		899900082706E45F0005275A /* BVFeatureQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatureQueryTest.swift; sourceTree = "<group>"; };
 		8999000A270B454D0005275A /* BVFeatureStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatureStats.swift; sourceTree = "<group>"; };
-		89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTopicFilterQuery.swift; sourceTree = "<group>"; };
-		89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFilterReview.swift; sourceTree = "<group>"; };
+		89DB2B3F26F1C726006E8CAC /* BVFeatureQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatureQuery.swift; sourceTree = "<group>"; };
+		89DB2B4126F1C7F8006E8CAC /* BVFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatures.swift; sourceTree = "<group>"; };
 		89E3106E27F4C9F700D42042 /* BVTagStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTagStats.swift; sourceTree = "<group>"; };
 		89F1351D27FD92D4006BBBF5 /* BVSecondaryRatingStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSecondaryRatingStat.swift; sourceTree = "<group>"; };
 		89F1351F27FEE9EA006BBBF5 /* BVSecondaryRatingsDistributionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSecondaryRatingsDistributionValue.swift; sourceTree = "<group>"; };
@@ -930,6 +930,7 @@
 				98686D882408089E00D67889 /* ProgressiveSubmissionReview.swift */,
 				98686D8A240808BD00D67889 /* BVProgressiveReview.swift */,
 				98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */,
+				89DB2B4126F1C7F8006E8CAC /* BVFeatures.swift */,
 				89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */,
 				89F1351F27FEE9EA006BBBF5 /* BVSecondaryRatingsDistributionValue.swift */,
 				89F1352127FEEC2B006BBBF5 /* BVSecondaryRatingsDistribution.swift */,
@@ -965,7 +966,7 @@
 				98686C702407110300D67889 /* BVReviewSearchQuery.swift */,
 				98686D842408067100D67889 /* BVMultiProductQuery.swift */,
 				98686D862408069600D67889 /* BVMultiProductQueryResponse.swift */,
-				89DB2B3F26F1C726006E8CAC /* BVTopicFilterQuery.swift */,
+				89DB2B3F26F1C726006E8CAC /* BVFeatureQuery.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1104,7 +1105,7 @@
 				9F51CA51240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift */,
 				9F34FD7C2521B7FA0023BB89 /* BVProductsQueryTest.swift */,
 				422C3B202538524900080544 /* BVCommentsQueryTest.swift */,
-				899900082706E45F0005275A /* BVReviewFilterQweryTest.swift */,
+				899900082706E45F0005275A /* BVFeatureQueryTest.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1627,8 +1628,8 @@
 				98686CEC2407120700D67889 /* BVCurationsProductAttribute.swift in Sources */,
 				98686C7A2407110300D67889 /* BVQuestionQuery.swift in Sources */,
 				98686CA92407113100D67889 /* BVPhoto.swift in Sources */,
-				89DB2B4226F1C7F8006E8CAC /* BVFilterReview.swift in Sources */,
-				89DB2B4026F1C726006E8CAC /* BVTopicFilterQuery.swift in Sources */,
+				89DB2B4226F1C7F8006E8CAC /* BVFeatures.swift in Sources */,
+				89DB2B4026F1C726006E8CAC /* BVFeatureQuery.swift in Sources */,
 				98686C53240710AE00D67889 /* BVAuthorStat.swift in Sources */,
 				98686D1D240712BB00D67889 /* BVFingerprint.swift in Sources */,
 				98686C58240710AE00D67889 /* BVCommentInclude.swift in Sources */,
@@ -1669,7 +1670,7 @@
 				98686D712407157A00D67889 /* BVRecommendationsQueryTest.swift in Sources */,
 				98686D9324080D5E00D67889 /* BVProgressiveSubmissionTest.swift in Sources */,
 				98686D4A240714A000D67889 /* BVCommonTest.swift in Sources */,
-				899900092706E45F0005275A /* BVReviewFilterQweryTest.swift in Sources */,
+				899900092706E45F0005275A /* BVFeatureQueryTest.swift in Sources */,
 				98686D6B2407151600D67889 /* BVReviewSubmissionTest.swift in Sources */,
 				98686D5A240714DF00D67889 /* BVReviewQueryTest.swift in Sources */,
 				98686D662407151600D67889 /* BVPhotoSubmissionTest.swift in Sources */,

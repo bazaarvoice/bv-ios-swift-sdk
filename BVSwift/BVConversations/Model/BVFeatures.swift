@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct BVFilterReview: BVQueryable {
+public struct BVFeatures: BVQueryable {
   
   public static var singularKey: String {
     return BVConversationsConstants.BVFilterReviews.singularKey
@@ -20,18 +20,18 @@ public struct BVFilterReview: BVQueryable {
   }
   
   public let productId : String
-  public let topicFilter : [BVFeature]
+  public let features : [BVFeature]
   public let language : String
   
   private enum CodingKeys: String, CodingKey {
     case productId = "productId"
-    case topicFilter = "features"
+    case features = "features"
     case language = "language"
    
   }
 }
 
-extension BVFilterReview: BVQueryableInternal {
+extension BVFeatures: BVQueryableInternal {
   internal static var getResource: String? {
     return BVConversationsConstants.BVFilterReviews.getResource
   }

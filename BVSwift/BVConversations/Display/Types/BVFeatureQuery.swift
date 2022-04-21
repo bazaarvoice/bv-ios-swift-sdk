@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class BVTopicFilterQuery: BVConversationsQuery<BVFilterReview> {
+public class BVFeatureQuery: BVConversationsQuery<BVFeatures> {
   
   /// The Product identifier to query
   public let productId: String?
@@ -23,7 +23,7 @@ public class BVTopicFilterQuery: BVConversationsQuery<BVFilterReview> {
     self.productId = productId
    
     
-    super.init(BVFilterReview.self)
+    super.init(BVFeatures.self)
     
     let queryField: BVConversationsProductIdfield =
       BVConversationsProductIdfield(productId)
@@ -34,7 +34,7 @@ public class BVTopicFilterQuery: BVConversationsQuery<BVFilterReview> {
 }
 
 // MARK: - BVReviewQuery: BVQueryFeatureStatable
-extension BVTopicFilterQuery: BVQueryLanguageStatable {
+extension BVFeatureQuery: BVQueryLanguageStatable {
   @discardableResult
   public func language(_ value: String) -> Self {
     let language: BVURLParameter = .field(BVLanguageStat(value), nil)
