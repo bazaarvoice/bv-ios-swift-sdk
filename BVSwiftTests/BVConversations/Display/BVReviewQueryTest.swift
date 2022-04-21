@@ -942,6 +942,44 @@ class BVReviewQueryTest: XCTestCase {
     }
   }
   
+    func testReviewFilterByPassingArrayInsteadOfVariadicArguments(){
+        
+      let expectation = self.expectation(description: "testReviewFilterByPassingArrayInsteadOfVariadicArguments")
+      
+      let reviewQuery = BVReviewQuery(productId: "test1", limit: 10, offset: 0)
+                        .configure(BVReviewQueryTest.config)
+                        .filter([(.rating(4), .equalTo),(.rating(5), .equalTo)])
+                        .handler { (response: BVConversationsQueryResponse<BVReview>) in
+                          
+                          if case .failure(let error) = response {
+                            print(error)
+                            XCTFail()
+                            expectation.fulfill()
+                            return
+                          }
+                          
+                          guard case let .success(_, reviews) = response else {
+                            XCTFail()
+                            expectation.fulfill()
+                            return
+                          }
+                          
+                          for review in reviews {
+                              XCTAssert(review.rating == 5 || review.rating == 4);
+                          }
+                          expectation.fulfill()
+                      }
+
+
+        XCTAssert(reviewQuery.request?.url?.absoluteString.contains("Filter=Rating:eq:4,5") == true)
+        
+        reviewQuery.async()
+        
+        self.waitForExpectations(timeout: 20) { (error) in
+          XCTAssertNil(
+            error, "Something went horribly wrong, request took too long.")
+        }
+    }
   func testReviewAdditionalFieldFilter(){
     
     let expectation = self.expectation(description: "testReviewAdditionalFieldFilter")

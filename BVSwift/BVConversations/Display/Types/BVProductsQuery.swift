@@ -61,7 +61,7 @@ extension BVProductsQuery: BVQueryFilterable {
   /// If more than one tuple is provided then it is assumed that the proper
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
-  public func filter(_ apply: (Filter, Operator)...) -> Self {
+  public func filter(_ apply: [(Filter, Operator)]) -> Self {
     
     let preflight: ((Filter, Operator) -> BVURLParameter?) = {
       /// I think we can let everything pass...
@@ -88,6 +88,10 @@ extension BVProductsQuery: BVQueryFilterable {
     }
     return self
   }
+    
+    public func filter(_ apply: (Filter, Operator)...) -> Self {
+        self.filter(apply)
+    }
 }
 
 // MARK: - BVProductsQuery: BVQueryIncludeable

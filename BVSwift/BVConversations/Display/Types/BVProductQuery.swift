@@ -126,7 +126,7 @@ extension BVProductQuery: BVQueryFilterable {
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
   public func filter(
-    _ apply: (BVProductFilter, BVConversationsFilterOperator)...) -> Self {
+    _ apply: [(Filter, Operator)]) -> Self {
     
     let preflight: ((Filter, Operator) -> BVURLParameter?) = {
       /// We don't allow regular product filters since that wouldn't make sense
@@ -154,6 +154,10 @@ extension BVProductQuery: BVQueryFilterable {
     }
     return self
   }
+    
+    public func filter(_ apply: (Filter, Operator)...) -> Self {
+        self.filter(apply)
+    }
 }
 
 // MARK: - BVProductQuery: BVQueryIncludeable

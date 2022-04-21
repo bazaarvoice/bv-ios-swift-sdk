@@ -69,6 +69,7 @@ public protocol BVQueryFieldable {
 public protocol BVQueryFilterable {
   associatedtype Filter: BVQueryFilter
   associatedtype Operator: BVQueryFilterOperator
+  func filter(_ apply: [(Filter, Operator)]) -> Self
   func filter(_ apply: (Filter, Operator)...) -> Self
 }
 
