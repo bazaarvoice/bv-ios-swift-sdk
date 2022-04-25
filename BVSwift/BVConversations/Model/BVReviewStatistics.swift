@@ -43,6 +43,10 @@ public struct BVReviewStatistics: BVAuxiliaryable {
   private let tagDistributionArray: BVCodableDictionary<BVDistributionElement>?
   public let totalReviewCount: Int?
   public let incentivizedReviewCount: Int?
+  public var secondaryRatingsDistribution: [BVSecondaryRatingsDistribution]? {
+    return secondaryDistributionArray?.array
+  }
+  private let secondaryDistributionArray: BVCodableDictionary<BVSecondaryRatingsDistribution>?
   
   private enum CodingKeys: String, CodingKey {
     case averageOverallRating = "AverageOverallRating"
@@ -61,5 +65,6 @@ public struct BVReviewStatistics: BVAuxiliaryable {
     case tagDistributionArray = "TagDistribution"
     case totalReviewCount = "TotalReviewCount"
     case incentivizedReviewCount = "IncentivizedReviewCount"
+    case secondaryDistributionArray = "SecondaryRatingsDistribution"
   }
 }

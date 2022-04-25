@@ -61,7 +61,7 @@ extension BVProductsQuery: BVQueryFilterable {
   /// If more than one tuple is provided then it is assumed that the proper
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
-  public func filter(_ apply: (Filter, Operator)...) -> Self {
+  public func filter(_ apply: [(Filter, Operator)]) -> Self {
     
     let preflight: ((Filter, Operator) -> BVURLParameter?) = {
       /// I think we can let everything pass...
@@ -88,6 +88,10 @@ extension BVProductsQuery: BVQueryFilterable {
     }
     return self
   }
+    
+    public func filter(_ apply: (Filter, Operator)...) -> Self {
+        self.filter(apply)
+    }
 }
 
 // MARK: - BVProductsQuery: BVQueryIncludeable
@@ -167,6 +171,26 @@ extension BVProductsQuery: BVQueryIncentivizedStatable {
   public func incentivizedStats(_ value: Bool) -> Self {
     let incentivizedStat: BVURLParameter = .field(BVIncentivizedStats(value), nil)
     add(incentivizedStat, coalesce: false)
+    return self
+  }
+}
+
+// MARK: - BVReviewQuery: BVQueryTagStatStatable
+extension BVProductsQuery: BVQueryTagStatStatable {
+  @discardableResult
+  public func tagStats(_ value: Bool) -> Self {
+    let tagStat: BVURLParameter = .field(BVTagStats(value), nil)
+    add(tagStat, coalesce: false)
+    return self
+  }
+}
+
+// MARK: - BVProductsQuery: BVQuerySecondaryRatingstatable
+extension BVProductsQuery: BVQuerySecondaryRatingstatable {
+  @discardableResult
+  public func secondaryRatingstats(_ value: Bool) -> Self {
+    let secondaryRatingstat: BVURLParameter = .field(BVSecondaryRatingStat(value), nil)
+    add(secondaryRatingstat, coalesce: false)
     return self
   }
 }
