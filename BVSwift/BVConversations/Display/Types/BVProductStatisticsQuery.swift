@@ -62,7 +62,7 @@ extension BVProductStatisticsQuery: BVQueryFilterable {
   /// If more than one tuple is provided then it is assumed that the proper
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
-  public func filter(_ apply: (Filter, Operator)...) -> Self {
+  public func filter(_ apply: [(Filter, Operator)]) -> Self {
     type(of: self).groupFilters(apply).forEach { group in
       let expr: BVQueryFilterExpression<Filter, Operator> =
         1 < group.count ? .or(group) : .and(group)
@@ -70,6 +70,10 @@ extension BVProductStatisticsQuery: BVQueryFilterable {
     }
     return self
   }
+    
+    public func filter(_ apply: (Filter, Operator)...) -> Self {
+        self.filter(apply)
+    }
 }
 
 // MARK: - BVProductStatisticsQuery: BVQueryStatable

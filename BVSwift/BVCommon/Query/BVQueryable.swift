@@ -69,6 +69,7 @@ public protocol BVQueryFieldable {
 public protocol BVQueryFilterable {
   associatedtype Filter: BVQueryFilter
   associatedtype Operator: BVQueryFilterOperator
+  func filter(_ apply: [(Filter, Operator)]) -> Self
   func filter(_ apply: (Filter, Operator)...) -> Self
 }
 
@@ -105,6 +106,16 @@ public protocol BVQueryIncentivizedStatable {
 /// Protocol definition for the behavior of adding  features
 public protocol BVQueryFeatureStatable {
   func feature(_ value: String) -> Self
+}
+
+/// Protocol definition for the behavior of adding  tagstats
+public protocol BVQueryTagStatStatable {
+  func tagStats(_ value: Bool) -> Self
+}
+
+/// Protocol definition for the behavior of adding  tagstats
+public protocol BVQuerySecondaryRatingstatable {
+  func secondaryRatingstats(_ value: Bool) -> Self
 }
 
 /// Protocol definition for the behavior of adding  features

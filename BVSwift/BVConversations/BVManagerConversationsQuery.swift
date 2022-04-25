@@ -14,7 +14,7 @@ public protocol BVConversationsQueryGenerator {
   // Generator for BVAuthorQuery
   /// - Parameters:
   ///   - authorId: Author id to query against
-  func query(productId: String) -> BVTopicFilterQuery?
+  func query(productId: String) -> BVFeatureQuery?
   
   /// Generator for BVAuthorQuery
   /// - Parameters:
@@ -118,13 +118,13 @@ public protocol BVConversationsQueryGenerator {
 /// instead of having to manually configure each type.
 extension BVManager: BVConversationsQueryGenerator {
   
-  public func query(productId: String) -> BVTopicFilterQuery? {
+  public func query(productId: String) -> BVFeatureQuery? {
     guard let config = BVManager.conversationsConfiguration else {
       return nil
     }
     
     return
-      BVTopicFilterQuery(productId: productId)
+      BVFeatureQuery(productId: productId)
         .configure(config)
   }
   
