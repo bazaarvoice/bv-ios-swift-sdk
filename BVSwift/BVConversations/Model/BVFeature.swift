@@ -13,11 +13,11 @@ public struct BVFeature: BVAuxiliaryable {
   
 
   public let feature: String
-  public let localized_feature: String
+  public let localizedFeature: String
   
   private enum CodingKeys: String, CodingKey {
     case feature = "feature"
-    case localized_feature = "localizedFeature"
+    case localizedFeature = "localizedFeature"
   }
 }
   

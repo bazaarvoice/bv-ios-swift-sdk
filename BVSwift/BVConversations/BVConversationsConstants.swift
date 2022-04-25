@@ -71,6 +71,8 @@ internal struct BVConversationsConstants {
       static let productId: String = "productId"
       static let feature: String = "Feature"
       static let language: String = "language"
+      static let tagStats: String = "tagstats"
+      static let secondaryRatingStats: String = "secondaryratingstats"
     }
   }
   
@@ -371,6 +373,10 @@ internal struct BVConversationsConstants {
       static let totalPositiveFeedbackCount: String =
       "TotalPositiveFeedbackCount"
       static let userLocation: String = "UserLocation"
+      static let contextDataValue: String = "ContextDataValue"
+      static let secondaryRating: String = "SecondaryRating"
+      static let additionalField: String = "AdditionalField"
+      static let tagDimension: String = "tag"
     }
   }
   
@@ -378,7 +384,7 @@ internal struct BVConversationsConstants {
     
     static let singularKey: String = "feature"
     static let pluralKey: String = "features"
-    static let getResource: String = "data/features.json"
+    static let getResource: String = "features.json"
     
   }
   

@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 @testable import BVSwift
 
-class BVReviewFilterQweryTest: XCTestCase {
+class BVFeatureQueryTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
     { () -> BVConversationsConfiguration in
@@ -44,9 +44,9 @@ class BVReviewFilterQweryTest: XCTestCase {
   
   func testReviewFilterConstructor(){
     
-    let filterReview = BVTopicFilterQuery(productId: "test1")
+    let filterReview = BVFeatureQuery(productId: "test1")
       .language("fr")
-      .configure(BVReviewFilterQweryTest.config)
+      .configure(BVFeatureQueryTest.config)
     
     guard let url = filterReview.request?.url else {
       XCTFail()
@@ -62,9 +62,9 @@ class BVReviewFilterQweryTest: XCTestCase {
     
     let expectation = self.expectation(description: "testReviewFilter")
     
-    let filterReview = BVTopicFilterQuery(productId: "XYZ123-prod-3-4-ExternalId")
-      .configure(BVReviewFilterQweryTest.config)
-      .handler { (response: BVConversationsQueryResponse<BVFilterReview>) in
+    let filterReview = BVFeatureQuery(productId: "XYZ123-prod-3-4-ExternalId")
+      .configure(BVFeatureQueryTest.config)
+      .handler { (response: BVConversationsQueryResponse<BVFeatures>) in
         
         if case .failure(let error) = response {
           print(error)
@@ -80,16 +80,16 @@ class BVReviewFilterQweryTest: XCTestCase {
         }
         
         XCTAssertNotNil(filterReviews)
-        XCTAssertNotNil(filterReviews.first?.topicFilter)
+        XCTAssertNotNil(filterReviews.first?.features)
         XCTAssertNotNil(filterReviews.first?.productId)
         XCTAssertEqual(filterReviews.first?.productId,"XYZ123-prod-3-4-ExternalId")
         XCTAssertNotNil(filterReviews.first?.language)
         XCTAssertEqual(filterReviews.first?.language, "en")
-        let features = filterReviews.first?.topicFilter
+        let features = filterReviews.first?.features
         XCTAssertNotNil(features?.first?.feature)
         XCTAssertEqual(features?.first?.feature,"speed")
-        XCTAssertNotNil(features?.first?.localized_feature)
-        XCTAssertEqual(features?.first?.localized_feature,"speed")
+        XCTAssertNotNil(features?.first?.localizedFeature)
+        XCTAssertEqual(features?.first?.localizedFeature,"speed")
        
         expectation.fulfill()
       }
@@ -114,10 +114,10 @@ class BVReviewFilterQweryTest: XCTestCase {
     
     let expectation = self.expectation(description: "testReviewFilter")
     
-    let filterReview = BVTopicFilterQuery(productId: "XYZ123-prod-3-4-ExternalId")
+    let filterReview = BVFeatureQuery(productId: "XYZ123-prod-3-4-ExternalId")
       .language("test")
-      .configure(BVReviewFilterQweryTest.config)
-      .handler { (response: BVConversationsQueryResponse<BVFilterReview>) in
+      .configure(BVFeatureQueryTest.config)
+      .handler { (response: BVConversationsQueryResponse<BVFeatures>) in
         
         if case .failure(let error) = response {
           print(error)
