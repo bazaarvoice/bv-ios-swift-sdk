@@ -169,7 +169,7 @@ extension BVReviewQuery: BVQueryFilterable {
   /// If more than one tuple is provided then it is assumed that the proper
   /// coalescing is to apply a logical OR to the supplied filter tuples.
   @discardableResult
-  public func filter(_ apply: (Filter, Operator)...) -> Self {
+  public func filter(_ apply: [(Filter, Operator)]) -> Self {
     type(of: self).groupFilters(apply).forEach { group in
       let expr: BVQueryFilterExpression<Filter, Operator> =
         1 < group.count ? .or(group) : .and(group)
@@ -177,6 +177,10 @@ extension BVReviewQuery: BVQueryFilterable {
     }
     return self
   }
+    
+    public func filter(_ apply: (Filter, Operator)...) -> Self {
+        self.filter(apply)
+    }
 }
 
 // MARK: - BVReviewQuery: BVQueryFilteredStatable
@@ -250,6 +254,26 @@ extension BVReviewQuery: BVQueryFeatureStatable {
   public func feature(_ value: String) -> Self {
     let featureStat: BVURLParameter = .field(BVFeaturesStats(value), nil)
     add(featureStat)
+    return self
+  }
+}
+
+// MARK: - BVReviewQuery: BVQueryTagStatStatable
+extension BVReviewQuery: BVQueryTagStatStatable {
+  @discardableResult
+  public func tagStats(_ value: Bool) -> Self {
+    let tagStat: BVURLParameter = .field(BVTagStats(value), nil)
+    add(tagStat, coalesce: false)
+    return self
+  }
+}
+
+// MARK: - BVReviewQuery: BVQuerySecondaryRatingstatable
+extension BVReviewQuery: BVQuerySecondaryRatingstatable {
+  @discardableResult
+  public func secondaryRatingstats(_ value: Bool) -> Self {
+    let secondaryRatingstat: BVURLParameter = .field(BVSecondaryRatingStat(value), nil)
+    add(secondaryRatingstat, coalesce: false)
     return self
   }
 }

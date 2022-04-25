@@ -242,4 +242,45 @@ class BVQuestionQueryTest: XCTestCase {
                 error, "Something went horribly wrong, request took too long.")
         }
     }
+    
+    func testQuestionFilterByPassingArrayInsteadOfVariadicArguments() {
+        
+        let expectation =
+            self.expectation(description: "testQuestionFilterByPassingArrayInsteadOfVariadicArguments")
+        
+        let questionQuery =
+            BVQuestionQuery(productId: "test1")
+            .filter([(.contentLocale(Locale(identifier: "en_US")), .equalTo),(.contentLocale(Locale(identifier: "en_CA")), .equalTo)])
+                .configure(BVQuestionQueryTest.config)
+                .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
+                    
+                    if case .failure(let error) = response {
+                        print(error)
+                        XCTFail()
+                        expectation.fulfill()
+                        return
+                    }
+                    
+                    guard case let .success(_, questions) = response else {
+                        XCTFail()
+                        expectation.fulfill()
+                        return
+                    }
+                    
+                    questions.forEach { (question) in
+                        XCTAssert(question.contentLocale == "en_US" || question.contentLocale == "en_CA")
+                    }
+                    
+                    expectation.fulfill()
+        }
+        
+        XCTAssert(questionQuery.request?.url?.absoluteString.contains("Filter=ContentLocale:eq:en_CA,en_US") == true)
+        
+        questionQuery.async()
+        
+        self.waitForExpectations(timeout: 20) { (error) in
+            XCTAssertNil(
+                error, "Something went horribly wrong, request took too long.")
+        }
+    }
 }
