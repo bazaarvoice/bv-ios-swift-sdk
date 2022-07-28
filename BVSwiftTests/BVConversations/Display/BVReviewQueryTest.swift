@@ -117,7 +117,6 @@ class BVReviewQueryTest: XCTestCase {
       analyticsConfig: analyticsConfig)
   }()
 
-
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
   }()
@@ -170,7 +169,7 @@ class BVReviewQueryTest: XCTestCase {
     XCTAssertTrue(url.absoluteString.contains(
       "Sort=ContentLocale:en_US,fr_FR"))
     XCTAssertTrue(url.absoluteString.contains("Sort=relevancy:a2"))
-    
+  
   }
   
   func testReviewQueryDisplay() {

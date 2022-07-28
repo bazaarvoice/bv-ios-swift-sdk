@@ -937,6 +937,7 @@
 				98686D8A240808BD00D67889 /* BVProgressiveReview.swift */,
 				98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */,
 				89DB2B4126F1C7F8006E8CAC /* BVFeatures.swift */,
+				89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */,
 				89F1351F27FEE9EA006BBBF5 /* BVSecondaryRatingsDistributionValue.swift */,
 				89F1352127FEEC2B006BBBF5 /* BVSecondaryRatingsDistribution.swift */,
 			);

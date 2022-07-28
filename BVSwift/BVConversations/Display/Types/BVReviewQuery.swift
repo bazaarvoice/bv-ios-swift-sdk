@@ -295,4 +295,3 @@ extension BVReviewQuery: BVQuerySecondaryRatingstatable {
     return self
   }
 }
-
