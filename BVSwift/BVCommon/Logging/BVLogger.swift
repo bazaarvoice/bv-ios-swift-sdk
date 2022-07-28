@@ -73,11 +73,16 @@ public class BVLogger {
     DispatchQueue(label: "com.bvswift.BVLogger.listenerQueue")
   
   private var listeners = [BVLogNotifier]()
+    
+  private var _logger : OSLog? = nil
   
   @available(iOS 10.0, *)
-  lazy private var logger = {
-    return OSLog(subsystem: "com.bvswift.BVLogger", category: "Module")
-  }()
+  private var logger:OSLog  {
+      if _logger == nil {
+          _logger = OSLog(subsystem: "com.bvswift.BVLogger", category: "Module")
+      }
+      return _logger!
+  }
   
   private var internalLogLevel: LogLevel = .error
   

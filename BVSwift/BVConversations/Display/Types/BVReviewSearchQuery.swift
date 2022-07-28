@@ -210,6 +210,30 @@ extension BVReviewSearchQuery: BVQueryFilteredStatable {
   }
 }
 
+// MARK: - BVReviewSearchQuery: BVQuerySortable
+extension BVReviewSearchQuery: BVQuerySortable {
+  public typealias Sort = BVReviewSort
+  public typealias Order = BVConversationsSortOrder
+  public typealias RelavancySort = BVRelevancySort
+  public typealias RelanvancySortType = BVRelencySortType
+
+  
+  
+  @discardableResult
+  public func sort(_ on: Sort, order: Order) -> Self {
+    let internalSort: BVURLParameter = .sort(on, order, nil)
+    add(internalSort)
+    return self
+  }
+  
+  @discardableResult
+  public func sort(_ on: RelavancySort, order: RelanvancySortType) -> Self {
+    let internalSort: BVURLParameter = .sort(on, order, nil)
+    add(internalSort)
+    return self
+  }
+}
+
 // MARK: - BVReviewSearchQuery: BVQueryIncludeable
 extension BVReviewSearchQuery: BVQueryIncludeable {
   public typealias Include = BVReviewInclude
