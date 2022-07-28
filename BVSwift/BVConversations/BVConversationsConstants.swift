@@ -210,6 +210,7 @@ internal struct BVConversationsConstants {
   internal struct BVConversationsSortOrder {
     static let ascending: String = "asc"
     static let descending: String = "desc"
+    static let orderTwo = "a2"
   }
   
     internal struct BVNativeReviews {
@@ -368,6 +369,7 @@ internal struct BVConversationsConstants {
       static let submissionTime: String = "SubmissionTime"
       static let totalCommentCount: String = "TotalCommentCount"
       static let totalFeedbackCount: String = "TotalFeedbackCount"
+      static let relavancy: String = "relevancy"
       static let totalNegativeFeedbackCount: String =
       "TotalNegativeFeedbackCount"
       static let totalPositiveFeedbackCount: String =
