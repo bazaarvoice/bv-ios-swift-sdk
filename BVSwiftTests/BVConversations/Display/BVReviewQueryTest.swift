@@ -103,6 +103,20 @@ class BVReviewQueryTest: XCTestCase {
       configType: .staging(clientId: "testcustomermobilesdk"),
       analyticsConfig: analyticsConfig)
   }()
+  
+  private static var relevancySortConfig: BVConversationsConfiguration =
+  { () -> BVConversationsConfiguration in
+    
+    let analyticsConfig: BVAnalyticsConfiguration =
+      .dryRun(
+        configType: .staging(clientId: "mobile_test_customer_stg"))
+    
+    return BVConversationsConfiguration.display(
+      clientKey: "caht73JSvhpl41pvD8vrIIPjLeMR0oPV6vMyd15lM2sig",
+      configType: .staging(clientId: "mobile_test_customer_stg"),
+      analyticsConfig: analyticsConfig)
+  }()
+
 
   private static var privateSession:URLSession = {
     return URLSession(configuration: .default)
@@ -133,6 +147,8 @@ class BVReviewQueryTest: XCTestCase {
       .filter((.contextDataValue(id: "Age", value: "17orUnder"), .equalTo))
       .feature("satisfaction")
       .filter((.secondaryRating(id: "Quality", value: "5"), .equalTo))
+      .sort(.contentLocale, contentLocales: ["en_US", "fr_FR"])
+      .sort(.relevancy, order: .a2)
     
     guard let url = reviewQuery.request?.url else {
       XCTFail()
@@ -151,6 +167,9 @@ class BVReviewQueryTest: XCTestCase {
       "ContextDataValue_Age:eq:17orUnder"))
     XCTAssertTrue(url.absoluteString.contains(
       "SecondaryRating_Quality:eq:5"))
+    XCTAssertTrue(url.absoluteString.contains(
+      "Sort=ContentLocale:en_US,fr_FR"))
+    XCTAssertTrue(url.absoluteString.contains("Sort=relevancy:a2"))
     
   }
   
@@ -1325,6 +1344,137 @@ class BVReviewQueryTest: XCTestCase {
 
     reviewQuery.async()
 
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewRelevancySort() {
+    
+    let expectation = self.expectation(description: "testReviewQueryDisplay")
+    
+    let reviewQuery = BVReviewQuery(productId: "product1", limit: 10, offset: 0)
+      .sort(.relevancy, order: .a2)
+      .configure(BVReviewQueryTest.relevancySortConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        XCTAssertEqual(reviews.count, 10)
+        XCTAssertEqual(reviews.first?.reviewId, "34016202")
+        expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewCustomContentLocaleSort() {
+    
+    let expectation = self.expectation(description: "testReviewQueryDisplay")
+    
+    let reviewQuery = BVReviewQuery(productId: "product1", limit: 20, offset: 0)
+      .sort(.contentLocale, contentLocales: ["es_US","en_US"])
+      .configure(BVReviewQueryTest.relevancySortConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        XCTAssertEqual(reviews.count, 20)
+        
+        let ContentLocales = reviews.map { review in
+                        review.contentLocale
+        }
+        
+        XCTAssertTrue(ContentLocales.firstIndex(of: "es_US")! < ContentLocales.firstIndex(of: "en_US")!);
+        expectation.fulfill()
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
+  
+  func testReviewCustomContentLocaleSortErrorMoreValues() {
+    
+    let expectation = self.expectation(description: "testReviewQueryDisplay")
+    
+    let reviewQuery = BVReviewQuery(productId: "product1", limit: 20, offset: 0)
+      .sort(.contentLocale, contentLocales: ["fr_FR","en_GB","en_US","en_ZH","en_CA","en_DE"])
+      .configure(BVReviewQueryTest.relevancySortConfig)
+      .handler { (response: BVConversationsQueryResponse<BVReview>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_,reviews) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        XCTAssertNil(reviews)
+        expectation.fulfill()
+        
+    }
+    
+    guard let req = reviewQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    reviewQuery.async()
+    
     self.waitForExpectations(timeout: 20) { (error) in
       XCTAssertNil(
         error, "Something went horribly wrong, request took too long.")
