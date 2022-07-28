@@ -92,6 +92,14 @@ public protocol BVQuerySortable {
   func sort(_ on: Sort, order: Order) -> Self
 }
 
+/// Protocol definition for the behavior of adding sort filters
+public protocol BVQueryCustomSortable {
+  associatedtype Sort: BVQuerySort
+ 
+  func coustomSort(_ on: Sort, contentLocales: [String]) -> Self
+}
+
+
 /// Protocol definition for the behavior of adding stat filters
 public protocol BVQueryStatable {
   associatedtype Stat: BVQueryStat

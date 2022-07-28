@@ -40,6 +40,10 @@ internal indirect enum BVURLParameter: BVParameter {
     CustomStringConvertible,
     CustomStringConvertible,
     BVURLParameter?)
+  case customSort(
+    BVQuerySort,
+    CustomStringConvertible,
+    BVURLParameter?)
   
   var name: String {
     switch self {
@@ -70,6 +74,8 @@ internal indirect enum BVURLParameter: BVParameter {
       return type(of: stats).statPrefix.escaping()
     case .unsafe(let field, _, _):
       return field.description.escaping()
+    case .customSort(let sort, _, _):
+      return type(of: sort).sortPrefix.escaping()
     }
   }
   
@@ -119,6 +125,8 @@ internal indirect enum BVURLParameter: BVParameter {
       self = .stats(stats, child)
     case let .unsafe(field, value, _):
       self = .unsafe(field, value, child)
+    case let .customSort(sort, op, _):
+      self = .customSort(sort, op, child)
     }
   }
   
@@ -186,6 +194,12 @@ internal indirect enum BVURLParameter: BVParameter {
       return stats.description.escaping()
     case .unsafe(_, let value, _):
       return value.description.escaping()
+    case .customSort(let sort, let order, _):
+      let separator = type(of: sort).sortValueSeparator
+      return
+        [sort.description.escaping(),
+         order.description].joined(separator: separator)
+
     }
   }
   
@@ -209,6 +223,8 @@ internal indirect enum BVURLParameter: BVParameter {
       return .stats(stats, nil)
     case let .unsafe(field, value, _):
       return .unsafe(field, value, nil)
+    case let .customSort(sort, op, _):
+      return .customSort(sort, op, nil)
     }
   }
   
@@ -231,6 +247,8 @@ internal indirect enum BVURLParameter: BVParameter {
     case .stats(_, let child):
       return child
     case .unsafe(_, _, let child):
+      return child
+    case .customSort(_, _, let child):
       return child
     }
   }

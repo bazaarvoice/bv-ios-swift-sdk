@@ -78,6 +78,7 @@ class BVReviewSearchQueryTest: XCTestCase {
                     (.categoryAncestorId("testID4"), .notEqualTo),
                     (.categoryAncestorId("testID5"), .notEqualTo))
           .feature("satisfaction")
+          .sort(.relevancy, order: .a2)
         
         guard let url = reviewSearchQuery.request?.url else {
             XCTFail()
@@ -92,6 +93,8 @@ class BVReviewSearchQueryTest: XCTestCase {
             "CategoryAncestorId:neq:testID4,testID5"))
       XCTAssertTrue(url.absoluteString.contains(
         "Feature=satisfaction"))
+      XCTAssertTrue(url.absoluteString.contains(
+        "Sort=relevancy:a2"))
     }
     
     func testReviewSearchQueryDisplay() {
