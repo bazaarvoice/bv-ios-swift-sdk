@@ -18,6 +18,9 @@ public enum BVProductStatisticsStat: BVQueryStat {
   
   case nativeReviews
   case reviews
+  case answers
+  case questions
+
   
   public static var statPrefix: String {
     return BVConversationsConstants.BVQueryStat.defaultField
@@ -35,6 +38,11 @@ extension BVProductStatisticsStat: BVConversationsQueryValue {
       return BVConversationsConstants.BVNativeReviews.key
     case .reviews:
       return BVReview.pluralKey
+    case .answers:
+      return BVAnswer.pluralKey
+    case .questions:
+      return BVQuestion.pluralKey
+
     }
   }
 }

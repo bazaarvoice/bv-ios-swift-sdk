@@ -406,4 +406,73 @@ class BVProductStatisticsQueryTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+  
+  func testQAStatistics() {
+    
+    let expectation =
+      self.expectation(
+        description: "testQAStatistics")
+    
+    let usLocale: Locale = Locale(identifier: "en_US")
+    
+    guard let productStatisticsQuery =
+      BVProductStatisticsQuery(productIds: ["test3"]) else {
+        XCTFail()
+        expectation.fulfill()
+        return
+    }
+    
+    productStatisticsQuery
+      .filter((.contentLocale(usLocale), .equalTo))
+      .stats(.questions)
+      .stats(.answers)
+      .configure(BVProductStatisticsQueryTest.config)
+      .handler {
+        (response: BVConversationsQueryResponse<BVProductStatistics>) in
+        
+        if case .failure(let error) = response {
+          print(error)
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard case let .success(_, productStatistics) = response else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        guard let firstProductStatistic: BVProductStatistics =
+          productStatistics.first,
+          let qaStatistics =
+          firstProductStatistic.qaStatistics else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+        
+        XCTAssertEqual(productStatistics.count, 1)
+        XCTAssertNotNil(qaStatistics)
+        XCTAssertNotNil(qaStatistics.totalAnswerCount)
+        XCTAssertNotNil(qaStatistics.totalQuestionCount)
+        
+        expectation.fulfill()
+    }
+    
+    guard let req = productStatisticsQuery.request else {
+      XCTFail()
+      expectation.fulfill()
+      return
+    }
+    
+    print(req)
+    
+    productStatisticsQuery.async()
+    
+    self.waitForExpectations(timeout: 20) { (error) in
+      XCTAssertNil(
+        error, "Something went horribly wrong, request took too long.")
+    }
+  }
 }
