@@ -34,17 +34,24 @@ public struct BVProductStatistics: BVQueryable {
     return productStatisticsInternal?.nativeReviewStatistics
   }
   
+  public var qaStatistics: BVQAStatistics? {
+    return productStatisticsInternal?.qaStatistics
+  }
+
+  
   private let productStatisticsInternal: BVProductStatisticsInternal?
   private struct BVProductStatisticsInternal: Codable {
     
     let productId: String?
     let reviewStatistics: BVReviewStatistics?
     let nativeReviewStatistics: BVReviewStatistics?
+    let qaStatistics: BVQAStatistics?
     
     internal enum CodingKeys: String, CodingKey {
       case productId = "ProductId"
       case reviewStatistics = "ReviewStatistics"
       case nativeReviewStatistics = "NativeReviewStatistics"
+      case qaStatistics = "QAStatistics"
     }
   }
   
