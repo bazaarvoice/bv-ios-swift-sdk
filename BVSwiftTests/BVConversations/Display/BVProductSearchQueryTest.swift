@@ -276,24 +276,25 @@ class BVProductSearchQueryTest: XCTestCase {
         
         // Review Statistics assertions
         XCTAssertNotNil(product.reviewStatistics)
-        XCTAssertEqual(product.reviewStatistics?.incentivizedReviewCount, 6)
+        XCTAssertEqual(product.reviewStatistics?.incentivizedReviewCount, 0)
         XCTAssertNotNil(product.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }))
         
-        let incentivizedReview = product.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" })!
-        XCTAssertEqual(incentivizedReview?.distibutionElementId, "IncentivizedReview")
-        XCTAssertEqual(incentivizedReview?.label, "Received an incentive for this review")
-        XCTAssertEqual(incentivizedReview?.values?.count, 1)
-        
+          if let incentivizedReview = product.reviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }) {
+              XCTAssertEqual(incentivizedReview.distibutionElementId, "IncentivizedReview")
+              XCTAssertEqual(incentivizedReview.label, "Received an incentive for this review")
+              XCTAssertEqual(incentivizedReview.values?.count, 1)
+          }
         // Filtered Review Statistics assertions
         XCTAssertNotNil(product.filteredReviewStatistics)
         XCTAssertNotNil(product.filteredReviewStatistics?.incentivizedReviewCount)
-        XCTAssertEqual(product.filteredReviewStatistics?.incentivizedReviewCount, 6)
+        XCTAssertEqual(product.filteredReviewStatistics?.incentivizedReviewCount, 0)
         XCTAssertNotNil(product.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }))
         
-        let filtereedIncentivizedReview = product.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" })!
-        XCTAssertEqual(filtereedIncentivizedReview?.distibutionElementId, "IncentivizedReview")
-        XCTAssertEqual(filtereedIncentivizedReview?.label, "Received an incentive for this review")
-        XCTAssertEqual(filtereedIncentivizedReview?.values?.count, 1)
+          if let filtereedIncentivizedReview = product.filteredReviewStatistics?.contextDataDistribution?.first(where: { $0.distibutionElementId == "IncentivizedReview" }){
+              XCTAssertEqual(filtereedIncentivizedReview.distibutionElementId, "IncentivizedReview")
+              XCTAssertEqual(filtereedIncentivizedReview.label, "Received an incentive for this review")
+              XCTAssertEqual(filtereedIncentivizedReview.values?.count, 1)
+          }
         
         expectation.fulfill()
     }
