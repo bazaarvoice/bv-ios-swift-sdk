@@ -227,10 +227,10 @@ internal class BVAnalyticsManager {
   
   private func augmentEventWithClientData(
     _ event: BVAnalyticsEventable?,
-    configuration: BVAnalyticsConfiguration) -> BVAnalyticsEventable? {
+    configuration: BVAnalyticsConfiguration?) -> BVAnalyticsEventable? {
     
     guard let analyticsConfig: BVAnalyticsConfiguration =
-      BVAnalyticsManager.analyticsConfiguration,
+      BVAnalyticsManager.analyticsConfiguration ?? configuration,
       var mutate: BVAnalyticsEventable = event else {
         assert(
           false, "No valid BVAnalyticsConfiguration for BVAnalyticsManager")
