@@ -48,6 +48,7 @@ internal struct BVAnalyticsConstants {
     "country",
     "currency",
     "items",
+    "client",
     "locale",
     "type",
     "label",
