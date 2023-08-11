@@ -21,7 +21,7 @@ internal class BVAnalyticsManager {
     return analyticsConfig
   }
   
-  private static var clientId: String? {
+  internal var clientId: String? {
     guard let analyticsConfig =
       BVAnalyticsManager.analyticsConfiguration else {
         return nil
