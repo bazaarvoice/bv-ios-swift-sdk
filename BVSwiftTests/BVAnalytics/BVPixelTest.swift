@@ -342,86 +342,11 @@ class BVPixelTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
-
-  func testPixelTransactionEventNonPII() {
-      
-      let expectation =
-      self.expectation(description: "testPixelTransactionEventNonPII")
-      
-      let items: [BVAnalyticsTransactionItem] = [
-          BVAnalyticsTransactionItem(
-              category: "fruit",
-              imageURL: nil,
-              name: "apples",
-              price: 5.35,
-              quantity: 10,
-              sku: "$%#$%#jksfgjsdkf$554353"),
-          BVAnalyticsTransactionItem(
-              category: "fruit",
-              imageURL: nil,
-              name: "oranges",
-              price: 8.35,
-              quantity: 10,
-              sku: "$%#$%#$jfhdjfhdf"),
-          BVAnalyticsTransactionItem(
-              category: "fruit",
-              imageURL: nil,
-              name: "bananas",
-              price: 10.35,
-              quantity: 10,
-              sku: "$%#$%#djfhdjhf554353")
-      ]
-      
-      let transaction: BVAnalyticsEvent =
-          .transaction(items: items,
-                       orderId: "id-924859485",
-                       total: 20.75,
-                       city: "Austin",
-                       country: "USA",
-                       currency: "US",
-                       shipping: 7.50,
-                       state: "TX",
-                       tax: 3.25,
-                       additional: ["locale": "en_US"])
-      
-      let numberOfEvents: UInt = 1
-      
-      BVPixel.track(transaction)
-      
-      BVAnalyticsManager.sharedManager.flush
-      { (successes: UInt?, errors: [Error]?) in
-          if let errs = errors {
-              print(errs)
-              XCTFail()
-              expectation.fulfill()
-              return
-          }
-          
-          guard let wins = successes else {
-              XCTFail()
-              expectation.fulfill()
-              return
-          }
-            
-          if numberOfEvents != wins {
-              XCTFail()
-              expectation.fulfill()
-              return
-          }
-            
-          expectation.fulfill()
-      }
-        
-      self.waitForExpectations(timeout: 20) { (error) in
-          XCTAssertNil(
-              error, "Something went horribly wrong, request took too long.")
-      }
-  }
-    
-  func testPixelTransactionEventPII() {
+  
+  func testPixelTransactionEvent() {
     
     let expectation =
-      self.expectation(description: "testPixelTransactionEventPII")
+      self.expectation(description: "testPixelTransactionEvent")
     
     let items: [BVAnalyticsTransactionItem] = [
       BVAnalyticsTransactionItem(
@@ -477,6 +402,7 @@ class BVPixelTest: XCTestCase {
           expectation.fulfill()
           return
         }
+        
         
         if numberOfEvents != wins {
           XCTFail()
