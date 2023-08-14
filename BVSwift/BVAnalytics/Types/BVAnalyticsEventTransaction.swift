@@ -25,7 +25,6 @@ extension BVAnalyticsEvent {
     
     dict[BVAnalyticsConstants.clKey] = "Conversion"
     dict["type"] = "Transaction"
-    dict["client"] = client
     
     if hasPII {
       dict[BVAnalyticsConstants.hadPIIKey] = "true"

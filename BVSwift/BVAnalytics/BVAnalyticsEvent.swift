@@ -199,10 +199,6 @@ extension BVAnalyticsEvent {
   internal var hasNonPII: Bool {
     return !toWhitelistDict.isEmpty
   }
-    
-  internal var client: String {
-    return BVAnalyticsManager.sharedManager.clientId ?? ""
-  }
   
   internal var toWhitelistDict: [String: Encodable] {
     return toDict.filter {
