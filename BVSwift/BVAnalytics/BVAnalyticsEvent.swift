@@ -202,13 +202,13 @@ extension BVAnalyticsEvent {
   
   internal var toWhitelistDict: [String: Encodable] {
     return toDict.filter {
-      BVAnalyticsEvent.whiteList.contains($0.key)
+      BVAnalyticsEvent.whiteList.contains($0.key) || $0.key == "client"
     }
   }
   
   internal var toBlacklistDict: [String: Encodable] {
     return toDict.filter {
-      !BVAnalyticsEvent.whiteList.contains($0.key)
+      !BVAnalyticsEvent.whiteList.contains($0.key) && $0.key != "client"
     }
   }
   
