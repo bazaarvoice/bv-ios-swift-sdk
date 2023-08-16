@@ -18,8 +18,8 @@ Pod::Spec.new do |s|
   s.source            = { :git => "https://github.com/bazaarvoice/bv-ios-swift-sdk.git", :tag => s.version.to_s }
   s.social_media_url  = 'https://twitter.com/bazaarvoice'
 
-  s.ios.deployment_target = '8.0'
-  s.platform = :ios, '8.0'
+  s.ios.deployment_target = '11.0'
+  s.platform = :ios, '11.0'
   s.swift_version = '5.0'
   s.default_subspec = 'BVCommon'
 
