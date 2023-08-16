@@ -23,9 +23,9 @@
 /* Begin PBXBuildFile section */
 		422C3B212538524900080544 /* BVCommentsQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C3B202538524900080544 /* BVCommentsQueryTest.swift */; };
 		42C3C3B62507951C00305A4C /* BVIncentivizedStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */; };
-		894615B228913424007B2138 /* BVCostomSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894615B128913424007B2138 /* BVCostomSort.swift */; };
 		894615AE288FE812007B2138 /* BVRelevancySort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894615AD288FE812007B2138 /* BVRelevancySort.swift */; };
 		894615B0288FEB6B007B2138 /* BVRelevancySortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894615AF288FEB6B007B2138 /* BVRelevancySortOrder.swift */; };
+		894615B228913424007B2138 /* BVCostomSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894615B128913424007B2138 /* BVCostomSort.swift */; };
 		895FB971279846BB0031DDED /* BVFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FB970279846BB0031DDED /* BVFeature.swift */; };
 		895FB972279847750031DDED /* BVFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98686C852407112F00D67889 /* BVFeedback.swift */; };
 		895FB97627994A300031DDED /* BVLanguageStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FB97527994A300031DDED /* BVLanguageStat.swift */; };
@@ -299,9 +299,9 @@
 /* Begin PBXFileReference section */
 		422C3B202538524900080544 /* BVCommentsQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCommentsQueryTest.swift; sourceTree = "<group>"; };
 		42C3C3B52507951C00305A4C /* BVIncentivizedStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVIncentivizedStats.swift; sourceTree = "<group>"; };
-		894615B128913424007B2138 /* BVCostomSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCostomSort.swift; sourceTree = "<group>"; };
 		894615AD288FE812007B2138 /* BVRelevancySort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRelevancySort.swift; sourceTree = "<group>"; };
 		894615AF288FEB6B007B2138 /* BVRelevancySortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVRelevancySortOrder.swift; sourceTree = "<group>"; };
+		894615B128913424007B2138 /* BVCostomSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVCostomSort.swift; sourceTree = "<group>"; };
 		895FB970279846BB0031DDED /* BVFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVFeature.swift; sourceTree = "<group>"; };
 		895FB97527994A300031DDED /* BVLanguageStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVLanguageStat.swift; sourceTree = "<group>"; };
 		899900082706E45F0005275A /* BVFeatureQueryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVFeatureQueryTest.swift; sourceTree = "<group>"; };
@@ -937,7 +937,6 @@
 				98686D8A240808BD00D67889 /* BVProgressiveReview.swift */,
 				98686D8C240808F300D67889 /* BVProgressiveReviewFields.swift */,
 				89DB2B4126F1C7F8006E8CAC /* BVFeatures.swift */,
-				89DB2B4126F1C7F8006E8CAC /* BVFilterReview.swift */,
 				89F1351F27FEE9EA006BBBF5 /* BVSecondaryRatingsDistributionValue.swift */,
 				89F1352127FEEC2B006BBBF5 /* BVSecondaryRatingsDistribution.swift */,
 			);
@@ -1849,6 +1848,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = BVSwift/Support/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bazaarvoice.BVSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1872,6 +1872,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = BVSwift/Support/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bazaarvoice.BVSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1890,6 +1891,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BVSwiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bazaarvoice.BVSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1907,6 +1909,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BVSwiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bazaarvoice.BVSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
