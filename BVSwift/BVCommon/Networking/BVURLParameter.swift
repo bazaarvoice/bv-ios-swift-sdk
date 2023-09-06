@@ -193,7 +193,7 @@ internal indirect enum BVURLParameter: BVParameter {
     case .stats(let stats, _):
       return stats.description.escaping()
     case .unsafe(_, let value, _):
-      return value.description.escaping()
+      return value.description
     case .customSort(let sort, let order, _):
       let separator = type(of: sort).sortValueSeparator
       return
