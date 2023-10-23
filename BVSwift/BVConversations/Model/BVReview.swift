@@ -91,7 +91,8 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   public let userLocation: String?
   public let userNickname: String?
   public let videos: [BVVideo]?
-  
+  public let originalProductName: String?
+
   private enum CodingKeys: String, CodingKey {
     case additionalFieldsDictionary = "AdditionalFields"
     case authorId = "AuthorId"
@@ -132,6 +133,7 @@ public struct BVReview: BVQueryable, BVSubmissionable {
     case userLocation = "UserLocation"
     case userNickname = "UserNickname"
     case videos = "Videos"
+    case originalProductName = "OriginalProductName"
   }
 }
 
@@ -183,6 +185,7 @@ extension BVReview {
     self.userLocation = nil
     self.userNickname = nil
     self.videos = nil
+    self.originalProductName = nil
   }
     
   public init(productId: String) {
@@ -228,6 +231,7 @@ extension BVReview {
     self.userLocation = nil
     self.userNickname = nil
     self.videos = nil
+    self.originalProductName = nil
   }
 }
 
