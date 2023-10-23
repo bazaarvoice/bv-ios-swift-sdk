@@ -222,6 +222,7 @@ class BVReviewQueryTest: XCTestCase {
         XCTAssertEqual(review.authorId, "endersgame")
         XCTAssertEqual(review.userNickname, "endersgame")
         XCTAssertEqual(review.userLocation, "Charlottesville, VA")
+        XCTAssertEqual(review.originalProductName, nil)
 
         guard let proDimension: BVDimensionElement =
           tagDimensions.filter({ (elem: BVDimensionElement) -> Bool in
@@ -1479,4 +1480,68 @@ class BVReviewQueryTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+    
+    func testReviewQueryDisplayOriginalProductName() {
+        
+        let expectation = self.expectation(description: "testReviewQueryDisplayOriginalProductName")
+        
+        let reviewQuery = BVReviewQuery(productId: "data-gen-moppq9ekthfzbc6qff3bqokie", limit: 10, offset: 0)
+          .sort(.rating, order: .descending)
+          .configure(BVReviewQueryTest.incentivizedStatsConfig)
+          .handler { (response: BVConversationsQueryResponse<BVReview>) in
+            
+            if case .failure(let error) = response {
+              print(error)
+              XCTFail()
+              expectation.fulfill()
+              return
+            }
+            
+            guard case let .success(_, reviews) = response else {
+              XCTFail()
+              expectation.fulfill()
+              return
+            }
+              
+              
+            guard let review: BVReview = reviews.first(where: {$0.reviewId == "45570991"}),
+              let originalProductName = review.originalProductName else {
+                XCTFail()
+                expectation.fulfill()
+                return
+            }
+            
+            XCTAssertEqual(reviews.count, 10)
+            XCTAssertEqual(review.rating, 5)
+            XCTAssertEqual(review.title, "Test test")
+            XCTAssertEqual(review.reviewText, "test test test test test test test test tes ttesttest")
+            XCTAssertEqual(review.moderationStatus, "APPROVED")
+            XCTAssertEqual(review.reviewId, "45570991")
+            XCTAssertNotNil(review.productId)
+            XCTAssertEqual(review.isRatingsOnly, false)
+            XCTAssertEqual(review.isFeatured, false)
+            XCTAssertEqual(review.productId, "data-gen-moppq9ekthfzbc6qff3bqokie")
+            XCTAssertEqual(review.authorId, "jhan23")
+            XCTAssertEqual(review.userNickname, "jhcontentent")
+            XCTAssertEqual(review.userLocation, nil)
+            XCTAssertEqual(originalProductName, "14K White Gold Diamond Teardrop Necklace")
+
+            expectation.fulfill()
+        }
+        
+        guard let req = reviewQuery.request else {
+          XCTFail()
+          expectation.fulfill()
+          return
+        }
+        
+        print(req)
+        
+        reviewQuery.async()
+        
+        self.waitForExpectations(timeout: 20) { (error) in
+          XCTAssertNil(
+            error, "Something went horribly wrong, request took too long.")
+        }
+      }
 }
