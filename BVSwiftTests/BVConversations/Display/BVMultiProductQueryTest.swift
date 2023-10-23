@@ -81,8 +81,7 @@ class BVMultiProductQueryTest: XCTestCase {
     func testMultiProductQueryWithUserId() {
         let expectation =
             self.expectation(description: "testMultiProductQueryWithUserId")
-        
-        let multiProduct: BVMultiProduct = BVMultiProduct(productIds: ["product4", "product2", "product3"], locale: "en_US", userId: "test109")
+        let multiProduct: BVMultiProduct = BVMultiProduct(productIds: ["product4", "product2", "product3"], locale: "en_US", userId: BVTestKeys().loadKeyForId(fromJSON: .userIdJSON, forId: BVTestKeys.userIdKeys.validUserId.rawValue))
         
         guard let multiProductSubmission = BVMultiProductQuery(multiProduct) else {
             XCTFail()
@@ -155,8 +154,7 @@ class BVMultiProductQueryTest: XCTestCase {
     func testMultiProductQueryMissingProductsError() {
         let expectation =
             self.expectation(description: "testMultiProductQueryMissingProductsError")
-        
-        let multiProduct: BVMultiProduct = BVMultiProduct(productIds: [], locale: "en_US", userId: "test109")
+        let multiProduct: BVMultiProduct = BVMultiProduct(productIds: [], locale: "en_US", userId: BVTestKeys().loadKeyForId(fromJSON: .userIdJSON, forId: BVTestKeys.userIdKeys.validUserId.rawValue))
         
         guard let multiProductSubmission = BVMultiProductQuery(multiProduct) else {
             XCTFail()
@@ -191,8 +189,7 @@ class BVMultiProductQueryTest: XCTestCase {
     func testMultiProductQueryMissingLocaleError() {
         let expectation =
             self.expectation(description: "testMultiProductQueryMissingLocaleError")
-        
-        let multiProduct: BVMultiProduct = BVMultiProduct(productIds: ["product4", "product2", "product3"], locale: "", userId: "test109")
+        let multiProduct: BVMultiProduct = BVMultiProduct(productIds: ["product4", "product2", "product3"], locale: "", userId: BVTestKeys().loadKeyForId(fromJSON: .userIdJSON, forId: BVTestKeys.userIdKeys.validUserId.rawValue))
         
         guard let multiProductSubmission = BVMultiProductQuery(multiProduct) else {
             XCTFail()
