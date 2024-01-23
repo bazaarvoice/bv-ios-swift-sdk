@@ -7,37 +7,30 @@
 // 
 
 import Foundation
-
 class BVTestKeys {
-    enum idJson: String {
-        case userIdJSON = "userIdJSON"
-        case sessionTokenJSON = "sessionIdJSON"
-    }
-    
-    enum userIdKeys: String {
-        case validUserId = "validUserId"
-        case invalidUserId = "invalidUserId"
-    }
-    
-    enum sessionTokenKeys: String {
-        case buildRequest = "buildRequest"
+    enum testTokenKeys: String {
+        case validUser = "validUser"
+        case invalidUser = "invalidUser"
+        case multiProductUser = "multiProductUser"
+        case progressiveReviewUser = "progressiveReviewUser"
+        case buildRequestSession = "buildRequestSession"
         case buildRequestHostedAuthFailure = "buildRequestHostedAuthFailure"
         case buildRequestHostedAuthSuccess = "buildRequestHostedAuthSuccess"
     }
     
-    func loadKeyForId(fromJSON: idJson, forId: String) -> String {
+    func loadKey(key: testTokenKeys) -> String {
         guard let resourceURL =
                 Bundle(
                     for: BVTestKeys.self)
                     .url(
-                        forResource: fromJSON.rawValue,
+                        forResource: "testTokens",
                         withExtension: ".json") else {
             return ""
         }
         do {
             let data = try Data(contentsOf: resourceURL, options: [])
             if let json = try JSONSerialization.jsonObject(with: data) as? [String : Any] {
-                return json[forId] as? String ?? ""
+                return json[key.rawValue] as? String ?? ""
             } else {
                 return ""
             }

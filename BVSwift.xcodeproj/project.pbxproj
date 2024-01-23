@@ -284,8 +284,7 @@
 		9F51CA50240CD1150043AED5 /* BVReviewHighlightsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51CA44240CD1150043AED5 /* BVReviewHighlightsConfiguration.swift */; };
 		9F51CA52240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51CA51240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift */; };
 		B5B31E1D20B36ABD002DBEC8 /* BVSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */; };
-		B736C2022ABAF76600299F42 /* userIdJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = B736C2012ABAF76600299F42 /* userIdJSON.json */; };
-		B76D94E22ADE5E5800B0BF9D /* sessionTokenJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = B76D94E12ADE5E5800B0BF9D /* sessionTokenJSON.json */; };
+		B73006C02B32C71D00BFEFA8 /* testTokens.json in Resources */ = {isa = PBXBuildFile; fileRef = B73006BF2B32C71D00BFEFA8 /* testTokens.json */; };
 		B7CBDC532ABC3BF100CBE042 /* BVTestKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CBDC522ABC3BF100CBE042 /* BVTestKeys.swift */; };
 /* End PBXBuildFile section */
 
@@ -565,8 +564,7 @@
 		B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BVSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B31E1720B36ABD002DBEC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5B31E1C20B36ABD002DBEC8 /* BVSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BVSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B736C2012ABAF76600299F42 /* userIdJSON.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = userIdJSON.json; sourceTree = "<group>"; };
-		B76D94E12ADE5E5800B0BF9D /* sessionTokenJSON.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sessionTokenJSON.json; sourceTree = "<group>"; };
+		B73006BF2B32C71D00BFEFA8 /* testTokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = testTokens.json; sourceTree = "<group>"; };
 		B7CBDC512ABC3BCB00CBE042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = ../../../Xcode/BVSwiftTests/BVSwiftTests/Info.plist; sourceTree = "<group>"; };
 		B7CBDC522ABC3BF100CBE042 /* BVTestKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTestKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1080,8 +1078,7 @@
 				98686D722407159300D67889 /* testCurationsFeedTest.json */,
 				98686D752407159400D67889 /* testJPEGPhotoResourceDecode.json */,
 				98686D762407159400D67889 /* testSyndicationSource.json */,
-				B736C2012ABAF76600299F42 /* userIdJSON.json */,
-				B76D94E12ADE5E5800B0BF9D /* sessionTokenJSON.json */,
+				B73006BF2B32C71D00BFEFA8 /* testTokens.json */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -1381,11 +1378,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B73006C02B32C71D00BFEFA8 /* testTokens.json in Resources */,
 				98686D772407159400D67889 /* testCurationsFeedTest.json in Resources */,
 				98686D7A2407159400D67889 /* testJPEGPhotoResourceDecode.json in Resources */,
-				B76D94E22ADE5E5800B0BF9D /* sessionTokenJSON.json in Resources */,
 				98686D7B2407159400D67889 /* testSyndicationSource.json in Resources */,
-				B736C2022ABAF76600299F42 /* userIdJSON.json in Resources */,
 				98686D782407159400D67889 /* ph.png in Resources */,
 				98686D792407159400D67889 /* skelly_android.jpg in Resources */,
 			);
