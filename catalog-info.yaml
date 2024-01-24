@@ -1,0 +1,176 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: mobile-sdk
+  github.com/project-slug: bazaarvoice/bv-ios-sdk-dev
+  description: Bazaarvoice Mobile SDKs make it easy to integrate core products in Android and iOS mobile apps.
+  links:
+    - url: https://bazaarvoice.slack.com/app_redirect?channel=sme-mobile-sdk
+      title: Mobile Slack channel
+      icon: send
+    - url: https://developer.bazaarvoice.com/mobile-sdks
+      title: Mobile SDKs documentation
+      icon: send
+  tags:
+    - mobile-sdk
+spec:
+  owner: mobile-sdk
+  lifecycle: production
+  dependsOn:
+    - component:bv-ios-sdk
+    - component:bv-ios-swift-sdk
+    - component:bv-android-sdk
+
+---
+
+#########################################################################################
+#   Resources - Secrets
+#########################################################################################
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: multiProductUser
+  title: multiProductUser
+  description: Run test case for BVMultiProduct with user token
+  tags:
+    - secret
+    - mobile-sdk
+    - security
+  links:
+    - url: https://bazaarvoice.atlassian.net/wiki/spaces/DEV/pages/78625898606/MOBILE+SDK+-Secrets+Catalog
+      title: MOBILE SDK - Secrets Catalog
+      icon: docs
+spec:
+  type: secret
+  system: mobile-sdk
+  owner: mobile-sdk
+  lifecycle: production
+  dependsOn:
+    - resource:aws-secrets-manager
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: progressiveReviewUser
+  title: progressiveReviewUser
+  description: Run test case for BVProgressiveReview with user token
+  tags:
+    - secret
+    - mobile-sdk
+    - security
+  links:
+    - url: https://bazaarvoice.atlassian.net/wiki/spaces/DEV/pages/78625898606/MOBILE+SDK+-Secrets+Catalog
+      title: MOBILE SDK - Secrets Catalog
+      icon: docs
+spec:
+  type: secret
+  system: mobile-sdk
+  owner: mobile-sdk
+  lifecycle: production
+  dependsOn:
+    - resource:aws-secrets-manager
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildRequestSession
+  title: buildRequestSession
+  description: Run test case for BVProgressiveReview with session token
+  tags:
+    - secret
+    - mobile-sdk
+    - security
+  links:
+    - url: https://bazaarvoice.atlassian.net/wiki/spaces/DEV/pages/78625898606/MOBILE+SDK+-Secrets+Catalog
+      title: MOBILE SDK - Secrets Catalog
+      icon: docs
+spec:
+  type: secret
+  system: mobile-sdk
+  owner: mobile-sdk
+  lifecycle: production
+  dependsOn:
+    - resource:aws-secrets-manager
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildRequestFailureSession
+  title: buildRequestFailureSession
+  description: Run test case for BVProgressiveReview with failure session token
+  tags:
+    - secret
+    - mobile-sdk
+    - security
+  links:
+    - url: https://bazaarvoice.atlassian.net/wiki/spaces/DEV/pages/78625898606/MOBILE+SDK+-Secrets+Catalog
+      title: MOBILE SDK - Secrets Catalog
+      icon: docs
+spec:
+  type: secret
+  system: mobile-sdk
+  owner: mobile-sdk
+  lifecycle: production
+  dependsOn:
+    - resource:aws-secrets-manager
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildRequestSuccessSession
+  title: buildRequestSuccessSession
+  description: Run test case for BVProgressiveReview with success session token
+  tags:
+    - secret
+    - mobile-sdk
+    - security
+  links:
+    - url: https://bazaarvoice.atlassian.net/wiki/spaces/DEV/pages/78625898606/MOBILE+SDK+-Secrets+Catalog
+      title: MOBILE SDK - Secrets Catalog
+      icon: docs
+spec:
+  type: secret
+  system: mobile-sdk
+  owner: mobile-sdk
+  lifecycle: production
+  dependsOn:
+    - resource:aws-secrets-manager
+
+---
+
+#########################################################################################
+#   Component
+#########################################################################################
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: bv-ios-swift-sdk
+  description: Bazaarvoice Mobile SDK for iOS which supports Swift programming language.
+  links:
+    - url: https://github.com/bvengineering/bv-ios-sdk-swift-dev
+      title: bv-ios-swift-sdk repository
+  tags:
+    - mobile-sdk
+spec:
+  type: service
+  lifecycle: production
+  owner: mobile-sdk
+  system: mobile-sdk
+  dependsOn:
+    - resource:multiProductUser
+    - resource:progressiveReviewUser
+    - resource:buildRequestSession
+    - resource:buildRequestFailureSession
+    - resource:buildRequestSuccessSession
+
+---
