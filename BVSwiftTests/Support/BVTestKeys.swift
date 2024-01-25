@@ -14,8 +14,8 @@ class BVTestKeys {
         case multiProductUser = "multiProductUser"
         case progressiveReviewUser = "progressiveReviewUser"
         case buildRequestSession = "buildRequestSession"
-        case buildRequestHostedAuthFailure = "buildRequestHostedAuthFailure"
-        case buildRequestHostedAuthSuccess = "buildRequestHostedAuthSuccess"
+        case buildHostedRequestFailureSession = "buildHostedRequestFailureSession"
+        case buildHostedRequestSuccessSession = "buildHostedRequestSuccessSession"
     }
     
     func loadKey(key: testTokenKeys) -> String {
