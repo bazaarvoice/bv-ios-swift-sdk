@@ -284,8 +284,11 @@
 		9F51CA50240CD1150043AED5 /* BVReviewHighlightsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51CA44240CD1150043AED5 /* BVReviewHighlightsConfiguration.swift */; };
 		9F51CA52240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51CA51240CD8A80043AED5 /* BVReviewHighlightsQueryTest.swift */; };
 		B5B31E1D20B36ABD002DBEC8 /* BVSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */; };
+		B72EA4512BCFA5D000462116 /* testVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B72EA4502BCFA5CA00462116 /* testVideo.mp4 */; };
 		B73006C02B32C71D00BFEFA8 /* testTokens.json in Resources */ = {isa = PBXBuildFile; fileRef = B73006BF2B32C71D00BFEFA8 /* testTokens.json */; };
 		B7CBDC532ABC3BF100CBE042 /* BVTestKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CBDC522ABC3BF100CBE042 /* BVTestKeys.swift */; };
+		B7E800472B72318000458E25 /* BVVideoSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E800462B72318000458E25 /* BVVideoSubmission.swift */; };
+		B7E8004F2B738CF100458E25 /* BVVideoSubmissionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E8004E2B738CF100458E25 /* BVVideoSubmissionTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -564,9 +567,12 @@
 		B5B31E1320B36ABD002DBEC8 /* BVSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BVSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B31E1720B36ABD002DBEC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5B31E1C20B36ABD002DBEC8 /* BVSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BVSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B72EA4502BCFA5CA00462116 /* testVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = testVideo.mp4; sourceTree = "<group>"; };
 		B73006BF2B32C71D00BFEFA8 /* testTokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = testTokens.json; sourceTree = "<group>"; };
 		B7CBDC512ABC3BCB00CBE042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = ../../../Xcode/BVSwiftTests/BVSwiftTests/Info.plist; sourceTree = "<group>"; };
 		B7CBDC522ABC3BF100CBE042 /* BVTestKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTestKeys.swift; sourceTree = "<group>"; };
+		B7E800462B72318000458E25 /* BVVideoSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVVideoSubmission.swift; sourceTree = "<group>"; };
+		B7E8004E2B738CF100458E25 /* BVVideoSubmissionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVVideoSubmissionTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1052,6 +1058,7 @@
 				98686CB72407117300D67889 /* BVReviewSubmission.swift */,
 				98686CBB2407117400D67889 /* BVUASSubmission.swift */,
 				98686D8E2408091F00D67889 /* BVProgressiveReviewSubmission.swift */,
+				B7E800462B72318000458E25 /* BVVideoSubmission.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1073,6 +1080,7 @@
 		B5B31F2820B373D8002DBEC8 /* MockData */ = {
 			isa = PBXGroup;
 			children = (
+				B72EA4502BCFA5CA00462116 /* testVideo.mp4 */,
 				98686D732407159400D67889 /* ph.png */,
 				98686D742407159400D67889 /* skelly_android.jpg */,
 				98686D722407159300D67889 /* testCurationsFeedTest.json */,
@@ -1126,6 +1134,7 @@
 		B5B31F3920B373D8002DBEC8 /* Submission */ = {
 			isa = PBXGroup;
 			children = (
+				B7E8004E2B738CF100458E25 /* BVVideoSubmissionTest.swift */,
 				98686D622407151600D67889 /* BVAnswerSubmissionTests.swift */,
 				98686D612407151600D67889 /* BVCommentSubmissionTest.swift */,
 				98686D632407151600D67889 /* BVFeedbackSubmissionTest.swift */,
@@ -1381,6 +1390,7 @@
 				B73006C02B32C71D00BFEFA8 /* testTokens.json in Resources */,
 				98686D772407159400D67889 /* testCurationsFeedTest.json in Resources */,
 				98686D7A2407159400D67889 /* testJPEGPhotoResourceDecode.json in Resources */,
+				B72EA4512BCFA5D000462116 /* testVideo.mp4 in Resources */,
 				98686D7B2407159400D67889 /* testSyndicationSource.json in Resources */,
 				98686D782407159400D67889 /* ph.png in Resources */,
 				98686D792407159400D67889 /* skelly_android.jpg in Resources */,
@@ -1637,6 +1647,7 @@
 				98686D062407123F00D67889 /* BVCurationsChannelContentSubmission.swift in Sources */,
 				98686D1A240712BB00D67889 /* BVProxyObject.swift in Sources */,
 				98686C2C2407106B00D67889 /* BVConversationsConstants.swift in Sources */,
+				B7E800472B72318000458E25 /* BVVideoSubmission.swift in Sources */,
 				98686C0D2407100900D67889 /* BVURLCacheManager.swift in Sources */,
 				98686D372407132000D67889 /* BVRecommendationsProfileField.swift in Sources */,
 				98686BEB24070F7D00D67889 /* BVAnalyticsEventFeature.swift in Sources */,
@@ -1678,6 +1689,7 @@
 				98686D53240714D100D67889 /* BVReviewSearchQueryTest.swift in Sources */,
 				98686D672407151600D67889 /* BVQuestionSubmissionTest.swift in Sources */,
 				9F34FD7D2521B7FA0023BB89 /* BVProductsQueryTest.swift in Sources */,
+				B7E8004F2B738CF100458E25 /* BVVideoSubmissionTest.swift in Sources */,
 				98686D6A2407151600D67889 /* BVFeedbackSubmissionTest.swift in Sources */,
 				98686BBF2406F3CF00D67889 /* BVCommentQueryTest.swift in Sources */,
 				98686D462407149100D67889 /* BVAnalyticsCommonTest.swift in Sources */,

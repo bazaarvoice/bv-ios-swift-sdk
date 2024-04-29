@@ -407,6 +407,11 @@ internal struct BVConversationsConstants {
   internal struct BVVideo {
     static let singularKey: String = "Video"
     static let pluralKey: String = "Videos"
+    internal struct Keys {
+      static let contentTypeKey: String = "contenttype"
+      static let dataKey: String = "video"
+      static let passKey: String = "passkey"
+    }
   }
 }
 
