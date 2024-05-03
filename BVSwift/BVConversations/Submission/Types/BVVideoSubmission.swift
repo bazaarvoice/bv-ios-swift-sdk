@@ -1,27 +1,28 @@
 //
 //
-//  BVPhotoSubmission.swift
+//  BVVideoSubmission.swift
 //  BVSwift
 //
-//  Copyright © 2018 Bazaarvoice. All rights reserved.
+//  Copyright © 2024 Bazaarvoice. All rights reserved.
 // 
 
 import Foundation
 
-public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
+public class BVVideoSubmission: BVConversationsSubmission<BVVideo> {
   
   private var submissionBoundary: String?
   private var boundaryQueue: DispatchQueue =
-    DispatchQueue(label: "com.bvswift.BVPhotoSubmission.boundaryQueue")
-  
+    DispatchQueue(label: "com.bvswift.BVVideoSubmission.boundaryQueue")
+  private var fileName: String?
+
   private func generateBodyContent(
     _ type: BVSubmissionableInternal) -> [String: Any]? {
-    guard let photo: BVPhoto = type as? BVPhoto,
-      let photoData: Data = photo.encodeImageToData(),
+    guard let video: BVVideo = type as? BVVideo,
+      let videoData: Data = video.encodeVideoToData(),
       let config: BVConversationsConfiguration = self.configuration else {
         return nil
     }
-    
+    self.fileName = video.videoUrl?.value?.lastPathComponent
     let checkConfigurationForSubmission = { () -> String? in
       switch config {
       case .all:
@@ -34,15 +35,15 @@ public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
     }
     
     guard let passKey = checkConfigurationForSubmission(),
-      let contentType = photo.contentType?.description else {
+      let contentType = video.contentType?.description else {
         return nil
     }
     
     return [
       BVConstants.apiVersionField: Bundle.conversationsApiVersion,
-      BVConversationsConstants.BVPhoto.Keys.passKey: passKey,
-      BVConversationsConstants.BVPhoto.Keys.contentTypeKey: contentType,
-      BVConversationsConstants.BVPhoto.Keys.dataKey: photoData
+      BVConversationsConstants.BVVideo.Keys.passKey: passKey,
+      BVConversationsConstants.BVVideo.Keys.contentTypeKey: contentType,
+      BVConversationsConstants.BVVideo.Keys.dataKey: videoData
     ]
   }
   
@@ -63,7 +64,7 @@ public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
             .generateKeyValueForString(key: $1.key, string: value)
         case let value as Data:
           $0 += URLRequest
-            .generateKeyValueForData(key: $1.key, data: value, fileName: "photo.jpg")
+                .generateKeyValueForData(key: $1.key, data: value, fileName: self.fileName ?? "upload.mp4")
         default:
           break
         }
@@ -99,10 +100,11 @@ public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
     (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
     return { [weak self] in
       guard let body = self?.generateBodyContent($0),
+        let fileName = self?.fileName,
         let boundary = self?.generateBoundary(body) else {
           return nil
       }
-      return .multipart(content: body, fileName: "photo.jpg", boundary: boundary)
+        return .multipart(content: body, fileName: fileName, boundary: boundary)
     }
   }
 }

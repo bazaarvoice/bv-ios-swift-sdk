@@ -196,14 +196,14 @@ internal extension URLRequest {
     return Array(String.rfc4648).randomString(length)
   }
   
-  static func generateKeyValueForData(key: String, data: Data) -> Data? {
+  static func generateKeyValueForData(key: String, data: Data, fileName: String) -> Data? {
     guard !key.isEmpty && !data.isEmpty else {
       return nil
     }
     
     return Data() +
       ("Content-Disposition: form-data; " +
-        "name=\"\(key)\"; filename=\"upload.jpg\"\r\n").toUTF8Data() +
+        "name=\"\(key)\"; filename=\"\(fileName)\"\r\n").toUTF8Data() +
       "Content-Type: application/octet-stream\r\n\r\n".toUTF8Data() +
       data +
       "\r\n".toUTF8Data()
@@ -254,6 +254,7 @@ internal extension URLRequest {
   static func multipartData(
     key: String,
     data: Data,
+    fileName: String,
     boundary: String?,
     isLast: Bool = false) -> Data? {
     
@@ -263,8 +264,8 @@ internal extension URLRequest {
       fatalError("Invalid boundary value")
     }
     
-    if !key.isEmpty && !data.isEmpty {
-      if let content = generateKeyValueForData(key: key, data: data) {
+    if !key.isEmpty && !data.isEmpty && !fileName.isEmpty {
+      if let content = generateKeyValueForData(key: key, data: data, fileName: fileName) {
         body += "--\(delimiter)\r\n".toUTF8Data()
         body += content
       }

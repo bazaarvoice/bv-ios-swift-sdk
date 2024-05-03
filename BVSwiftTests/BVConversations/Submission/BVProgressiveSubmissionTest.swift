@@ -190,7 +190,7 @@ class BVProgressiveSubmissionTest: XCTestCase {
              self.expectation(description: "testProgressiveSubmissionMissingEmailError")
          var progressiveReview: BVProgressiveReview = self.buildRequest()
          progressiveReview.userToken = nil
-        progressiveReview.userId = BVTestKeys().loadKeyForId(fromJSON: .userIdJSON, forId: BVTestKeys.userIdKeys.validUserId.rawValue)
+        progressiveReview.userId = BVTestKeys().loadKey(key: .validUser)
          
          guard let progressiveReviewSubmission = BVProgressiveReviewSubmission(progressiveReview) else {
              XCTFail()
@@ -465,9 +465,9 @@ class BVProgressiveSubmissionTest: XCTestCase {
         submissionFields.isRecommended = true
         
         var submission = BVProgressiveReview(productId:"product10", submissionFields: submissionFields)
-        submission.submissionSessionToken = BVTestKeys().loadKeyForId(fromJSON: .sessionTokenJSON, forId: BVTestKeys.sessionTokenKeys.buildRequest.rawValue)
+        submission.submissionSessionToken = BVTestKeys().loadKey(key: .buildRequestSession)
         submission.locale = "en_US"
-        submission.userToken = "SECRET_REMOVED"
+        submission.userToken = BVTestKeys().loadKey(key: .progressiveReviewUser)
         return submission
     }
     
@@ -487,9 +487,9 @@ class BVProgressiveSubmissionTest: XCTestCase {
       submissionFields.hostedAuthenticationCallbackurl = "https://bazaarvoice.com"
       
       var submission = BVProgressiveReview(productId:"Product1", submissionFields: submissionFields)
-      submission.submissionSessionToken = BVTestKeys().loadKeyForId(fromJSON: .sessionTokenJSON, forId: BVTestKeys.sessionTokenKeys.buildRequestHostedAuthSuccess.rawValue)
+      submission.submissionSessionToken = BVTestKeys().loadKey(key: .buildHostedRequestSuccessSession)
       submission.locale = "en_US"
-      submission.userId = BVTestKeys().loadKeyForId(fromJSON: .userIdJSON, forId: BVTestKeys.userIdKeys.validUserId.rawValue)
+      submission.userId = BVTestKeys().loadKey(key: .validUser)
       submission.hostedAuth = true
       return submission
   }
@@ -505,9 +505,9 @@ class BVProgressiveSubmissionTest: XCTestCase {
       submissionFields.hostedAuthenticationCallbackurl = "https://bazaarvoice.com"
       
       var submission = BVProgressiveReview(productId:"Product1", submissionFields: submissionFields)
-      submission.submissionSessionToken = BVTestKeys().loadKeyForId(fromJSON: .sessionTokenJSON, forId: BVTestKeys.sessionTokenKeys.buildRequestHostedAuthFailure.rawValue)
+      submission.submissionSessionToken = BVTestKeys().loadKey(key: .buildHostedRequestFailureSession)
       submission.locale = "en_US"
-      submission.userId = BVTestKeys().loadKeyForId(fromJSON: .userIdJSON, forId: BVTestKeys.userIdKeys.invalidUserId.rawValue)
+      submission.userId = BVTestKeys().loadKey(key: .invalidUser)
       submission.hostedAuth = true
       return submission
   }

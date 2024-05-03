@@ -55,7 +55,7 @@ internal enum BVURLRequestableResponseInternal {
 
 // MARK: - BVURLRequestBodyType
 internal enum BVURLRequestBodyType {
-  case multipart(content: [String: Any], boundary: String)
+  case multipart(content: [String: Any], fileName: String, boundary: String)
   case json(Data)
   case urlencoded(Data)
 }
@@ -63,7 +63,7 @@ internal enum BVURLRequestBodyType {
 extension BVURLRequestBodyType: CustomStringConvertible {
   var description: String {
     switch self {
-    case let .multipart(_, boundary):
+    case let .multipart(_, _, boundary):
       return "multipart/form-data; boundary=" + boundary
     case .json:
       return "application/json"
@@ -77,7 +77,7 @@ extension BVURLRequestBodyType: CustomStringConvertible {
 extension BVURLRequestBodyTypeable {
   public var bodyData: Data? {
     switch requestBodyType {
-    case let .some(.multipart(map, boundary)):
+    case let .some(.multipart(map, fileName, boundary)):
       
       let multipartData = map.reduce(into: Data()) {
         switch $1.value {
@@ -88,7 +88,7 @@ extension BVURLRequestBodyTypeable {
         case let value as Data:
           $0 += URLRequest
             .multipartData(
-              key: $1.key, data: value, boundary: boundary)
+              key: $1.key, data: value, fileName: fileName, boundary: boundary)
         default:
           break
         }
