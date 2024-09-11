@@ -132,6 +132,25 @@ public class BVReviewSubmission: BVMediaSubmission<BVReview> {
       analyticsEvent,
       analyticConfiguration: self.configuration?.analyticsConfiguration)
   }
+    
+    override func conversationsPostflightDidSubmitVideoUpload(
+      _ results: [BVReview]?) {
+      guard nil != results,
+        let id = self.productId else {
+          return
+      }
+      
+      let analyticsEvent: BVAnalyticsEvent =
+        .feature(
+          bvProduct: .reviews,
+          name: .video,
+          productId: id,
+          brand: nil,
+          additional: nil)
+      BVPixel.track(
+        analyticsEvent,
+        analyticConfiguration: self.configuration?.analyticsConfiguration)
+    }
 }
 
 // MARK: - BVReviewSubmission: BVConversationsSubmissionAlertable

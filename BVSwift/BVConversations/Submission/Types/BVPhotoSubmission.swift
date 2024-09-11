@@ -14,6 +14,15 @@ public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
   private var boundaryQueue: DispatchQueue =
     DispatchQueue(label: "com.bvswift.BVPhotoSubmission.boundaryQueue")
   
+    public convenience init?(
+        photo: BVPhoto) {
+      self.init(photo)
+    }
+    
+    private override init?(_ photo: BVPhoto) {
+      super.init(photo)
+    }
+    
   private func generateBodyContent(
     _ type: BVSubmissionableInternal) -> [String: Any]? {
     guard let photo: BVPhoto = type as? BVPhoto,

@@ -9,6 +9,7 @@
 import XCTest
 @testable import BVSwift
 
+@available(iOS 16.0, *)
 class BVReviewSubmissionTest: XCTestCase {
   
   private static var config: BVConversationsConfiguration =
@@ -203,6 +204,55 @@ class BVReviewSubmissionTest: XCTestCase {
         error, "Something went horribly wrong, request took too long.")
     }
   }
+    
+    func testPreviewReviewWithUploadVideo() {
+      
+      let expectation =
+        self.expectation(description: "testPreviewReviewWithUploadVideo")
+      
+      guard let reviewSubmission = fillOutReview(.preview) else {
+        XCTFail()
+        expectation.fulfill()
+        return
+      }
+      
+        guard let videoPath = BVVideoSubmissionTest.getVideoPath() else {
+            return
+        }
+          
+        let video: BVVideo = BVVideo(URL(filePath: videoPath), caption: "Test Video", uploadVideo: true)
+      
+      (reviewSubmission <+> .videos([video]))
+        .handler { result in
+          if case let .failure(errors) = result {
+            errors.forEach { print($0) }
+            XCTFail()
+            expectation.fulfill()
+            return
+          }
+          
+          guard case let .success(meta, _) = result else {
+            XCTFail()
+            expectation.fulfill()
+            return
+          }
+          
+          if let formFields = meta.formFields {
+            XCTAssertEqual(formFields.count, 50)
+          } else {
+            XCTAssertNil(meta.formFields)
+          }
+          
+          expectation.fulfill()
+      }
+      
+      reviewSubmission.async()
+      
+      self.waitForExpectations(timeout: 20) { (error) in
+        XCTAssertNil(
+          error, "Something went horribly wrong, request took too long.")
+      }
+    }
     
   func testSubmitReviewFetchFormFields() {
     

@@ -14,6 +14,15 @@ public class BVVideoSubmission: BVConversationsSubmission<BVVideo> {
   private var boundaryQueue: DispatchQueue =
     DispatchQueue(label: "com.bvswift.BVVideoSubmission.boundaryQueue")
   private var fileName: String?
+    
+    public convenience init?(
+        video: BVVideo) {
+      self.init(video)
+    }
+    
+    private override init?(_ video: BVVideo) {
+      super.init(video)
+    }
 
   private func generateBodyContent(
     _ type: BVSubmissionableInternal) -> [String: Any]? {

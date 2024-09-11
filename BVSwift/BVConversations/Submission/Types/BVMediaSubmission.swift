@@ -54,7 +54,7 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
         self?.submissionParameters ∪= items
       }
       
-      return getPhotoSubmissionHandler(
+      return getMediaSubmissionHandler(
         configurationHandler: configurationHandler,
         urlQueryItemHandler: urlQueryItemHandler)
       
@@ -67,6 +67,7 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
     ([BVType]?) -> Void)? {
     return { [weak self] (results: [BVType]?) in
       self?.conversationsPostflightDidSubmitPhotoUpload(results)
+      self?.conversationsPostflightDidSubmitVideoUpload(results)
       self?.conversationsPostflightDidSubmit(results)
     }
   }
@@ -76,6 +77,11 @@ BVMediaSubmission<BVType: BVSubmissionable>: BVConversationsSubmission<BVType> {
   }
   
   internal func conversationsPostflightDidSubmitPhotoUpload(
+    _ results: [BVType]?) {
+    return
+  }
+    
+  internal func conversationsPostflightDidSubmitVideoUpload(
     _ results: [BVType]?) {
     return
   }
@@ -117,7 +123,15 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
       
       photos += actualPhotos
     case let .videos(value):
-      videos += value
+        let contentTypeVideo: BVVideo = BVVideo(contentType: .review)
+        let actualVideos: [BVVideo] =
+          value.compactMap {
+            guard nil != $0.videoUrl else {
+              return nil
+            }
+            return contentTypeVideo.merge($0)
+        }
+        videos += actualVideos
     }
     
     return self
@@ -125,102 +139,146 @@ extension BVMediaSubmission: BVConversationsSubmissionMediable {
 }
 
 extension BVMediaSubmission {
-  internal func getPhotoSubmissionHandler(
+  internal func getMediaSubmissionHandler(
     configurationHandler: ((() -> BVConversationsConfiguration?)?),
     urlQueryItemHandler: (([URLQueryItem]?) -> Void)?) ->
     BVURLRequestablePreflightHandler? {
-      
-      guard let config = configurationHandler?(),
-        !photos.isEmpty else {
-          return nil
-      }
-      
-      return { [weak self] handlerCompletion in
         
-        guard let photos = self?.photos,
-          let videos = self?.videos else {
-            let noMediaError =
-              BVCommonError.unknown(
-                "BVMediaSubmission isn't properly initialized, or it was " +
-                "reaped before it could execute.")
-            handlerCompletion?(noMediaError)
-            return
+        guard let config = configurationHandler?() else {
+            return nil
         }
         
-        self?.submissionParameters ∪=
-          BVConversationsSubmissionMedia.videos(videos).urlQueryItems
-        
-        let concurrentQueue =
-          DispatchQueue(
-            label: "BVConversationsSubmission.BVPhoto.concurrentQueue",
-            qos: .userInitiated,
-            attributes: .concurrent)
-        
-        let serialQueue =
-          DispatchQueue(
-            label: "BVConversationsSubmission.BVPhoto.serialQueue")
-        
-        let concurrentGroup = DispatchGroup()
-        
-        concurrentQueue.async {
-          
-          var returnedPhotos: [BVPhoto] = []
-          var returnedErrors: [Error] = []
-          
-          for actualPhoto in photos {
+        return { [weak self] handlerCompletion in
             
-            guard let photoSubmission = BVPhotoSubmission(actualPhoto) else {
-              continue
+            guard let photos = self?.photos, let videos = self?.videos else {
+                let noMediaError =
+                BVCommonError.unknown(
+                    "BVMediaSubmission isn't properly initialized, or it was " +
+                    "reaped before it could execute.")
+                handlerCompletion?(noMediaError)
+                return
             }
             
-            concurrentGroup.enter()
+            let concurrentQueue =
+            DispatchQueue(
+                label: "BVConversationsSubmission.BVMedia.concurrentQueue",
+                qos: .userInitiated,
+                attributes: .concurrent)
             
-            BVLogger.sharedLogger.debug(
-              BVLogMessage(
-                BVConversationsConstants.bvProduct,
-                msg: "Attempting to Upload Photo"))
+            let serialQueue =
+            DispatchQueue(
+                label: "BVConversationsSubmission.BVMedia.serialQueue")
             
-            photoSubmission
-              .configure(config)
-              .handler
-              { (result: BVConversationsSubmissionResponse<BVPhoto>) in
+            let concurrentGroup = DispatchGroup()
+            
+            concurrentQueue.async {
                 
-                if case let .failure(errors) = result {
-                  serialQueue.sync {
-                    returnedErrors += errors
-                  }
+                var returnedPhotos: [BVPhoto] = []
+                var returnedVideos: [BVVideo] = []
+                var returnedErrors: [Error] = []
+                
+                for actualPhoto in photos {
+                    
+                    guard let photoSubmission = BVPhotoSubmission(photo: actualPhoto) else {
+                        continue
+                    }
+                    
+                    concurrentGroup.enter()
+                    
+                    BVLogger.sharedLogger.debug(
+                        BVLogMessage(
+                            BVConversationsConstants.bvProduct,
+                            msg: "Attempting to Upload Photo"))
+                    
+                    photoSubmission
+                        .configure(config)
+                        .handler
+                    { (result: BVConversationsSubmissionResponse<BVPhoto>) in
+                        
+                        if case let .failure(errors) = result {
+                            serialQueue.sync {
+                                returnedErrors += errors
+                            }
+                        }
+                        
+                        if case let .success(_, photo) = result {
+                            serialQueue.sync {
+                                returnedPhotos.append(actualPhoto.merge(photo))
+                            }
+                            
+                            BVLogger.sharedLogger.debug(
+                                BVLogMessage(
+                                    BVConversationsConstants.bvProduct,
+                                    msg: "Uploaded Photo"))
+                        }
+                        
+                        concurrentGroup.leave()
+                    }
+                    
+                    photoSubmission.async()
                 }
                 
-                if case let .success(_, photo) = result {
-                  serialQueue.sync {
-                    returnedPhotos.append(actualPhoto.merge(photo))
-                  }
-                  
-                  BVLogger.sharedLogger.debug(
-                    BVLogMessage(
-                      BVConversationsConstants.bvProduct,
-                      msg: "Uploaded Photo"))
+                for actualVideo in videos {
+                    
+                    if actualVideo.uploadVideo ?? false {
+                        
+                        guard let videoSubmission = BVVideoSubmission(video: actualVideo) else {
+                            continue
+                        }
+                        
+                        concurrentGroup.enter()
+                        
+                        BVLogger.sharedLogger.debug(
+                            BVLogMessage(
+                                BVConversationsConstants.bvProduct,
+                                msg: "Attempting to Upload Video"))
+                        
+                        videoSubmission
+                            .configure(config)
+                            .handler
+                        { (result: BVConversationsSubmissionResponse<BVVideo>) in
+                            
+                            if case let .failure(errors) = result {
+                                serialQueue.sync {
+                                    returnedErrors += errors
+                                }
+                            }
+                            
+                            if case let .success(_, video) = result {
+                                serialQueue.sync {
+                                    returnedVideos.append(actualVideo.merge(video))
+                                }
+                                
+                                BVLogger.sharedLogger.debug(
+                                    BVLogMessage(
+                                        BVConversationsConstants.bvProduct,
+                                        msg: "Uploaded Video"))
+                            }
+                            
+                            concurrentGroup.leave()
+                        }
+                        
+                        videoSubmission.async()
+                    } else {
+                        returnedVideos.append(actualVideo)
+                    }
                 }
                 
-                concurrentGroup.leave()
+                concurrentGroup.notify(queue: concurrentQueue) {
+                    if let error = returnedErrors.first {
+                        handlerCompletion?(error)
+                        return
+                    }
+                    
+                    var queryItems = [URLQueryItem]()
+                    queryItems = BVConversationsSubmissionMedia.photos(returnedPhotos).urlQueryItems ?? [URLQueryItem]()
+                    queryItems += BVConversationsSubmissionMedia.videos(returnedVideos).urlQueryItems ?? [URLQueryItem]()
+                    
+                    urlQueryItemHandler?(queryItems)
+                    
+                    handlerCompletion?(nil)
+                }
             }
-            
-            photoSubmission.async()
-          }
-          
-          concurrentGroup.notify(queue: concurrentQueue) {
-            if let error = returnedErrors.first {
-              handlerCompletion?(error)
-              return
-            }
-            
-            urlQueryItemHandler?(
-              BVConversationsSubmissionMedia
-                .photos(returnedPhotos).urlQueryItems)
-            
-            handlerCompletion?(nil)
-          }
         }
-      }
-  }
+    }
 }
