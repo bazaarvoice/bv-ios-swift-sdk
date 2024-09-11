@@ -32,7 +32,10 @@ public enum BVAnalyticsFeatureType: Encodable {
   
   /// Type when user photo has been uploaded
   case photo
-  
+    
+  /// Type when user photo has been uploaded
+  case video
+
   /// Type when user profile has been viewed, edited, etc.
   case profile
   
@@ -64,6 +67,8 @@ public enum BVAnalyticsFeatureType: Encodable {
       try "InView".encode(to: encoder)
     case .photo:
       try "Photo".encode(to: encoder)
+    case .video:
+      try "Video".encode(to: encoder)
     case .profile:
       try "Profile".encode(to: encoder)
     case .reviewComment:

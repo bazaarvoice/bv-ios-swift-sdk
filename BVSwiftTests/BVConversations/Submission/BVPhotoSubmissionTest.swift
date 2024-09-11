@@ -186,8 +186,13 @@ class BVPhotoSubmissionTest: XCTestCase {
               contentType: .review,
               image: image)
     
-    let photoSubmission: BVPhotoSubmission =
-      BVPhotoSubmission(jpg)
+    guard let photoSubmission: BVPhotoSubmission =
+            BVPhotoSubmission(photo: jpg) else {
+        XCTFail()
+        expectation.fulfill()
+        return
+    }
+      photoSubmission
         .configure(BVPhotoSubmissionTest.config)
         .handler
         { (result: BVConversationsSubmissionResponse<BVPhoto>) in
@@ -225,8 +230,13 @@ class BVPhotoSubmissionTest: XCTestCase {
               contentType: .review,
               image: image)
     
-    let photoSubmission: BVPhotoSubmission =
-      BVPhotoSubmission(jpg)
+      guard let photoSubmission: BVPhotoSubmission =
+              BVPhotoSubmission(photo: jpg) else {
+          XCTFail()
+          expectation.fulfill()
+          return
+      }
+        photoSubmission
         .configure(BVPhotoSubmissionTest.config)
         .handler
         { (result: BVConversationsSubmissionResponse<BVPhoto>) in

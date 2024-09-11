@@ -24,6 +24,16 @@ final class BVVideoSubmissionTest: XCTestCase {
             analyticsConfig: analyticsConfig)
     }()
     
+    internal class func getVideoPath() -> String? {
+        let bundle = Bundle(for: BVVideoSubmissionTest.self)
+        guard let path = bundle.path(forResource: "testVideo", ofType: "mp4")
+        else {
+            debugPrint("testVideo.mp4 not found")
+            return nil
+        }
+        return path
+    }
+    
     override func setUpWithError() throws {
         BVPixel.skipAllPixelEvents = true
         BVManager.sharedManager.logLevel = .debug
@@ -51,18 +61,20 @@ final class BVVideoSubmissionTest: XCTestCase {
         let expectation =
         self.expectation(description: "testUploadVideo")
         
-        let bundle = Bundle(for: BVVideoSubmissionTest.self)
-        guard let path = bundle.path(forResource: "testVideo", ofType: "mp4")
-        else {
-            debugPrint("testVideo.mp4 not found")
+        guard let path = BVVideoSubmissionTest.getVideoPath() else {
             XCTFail()
             expectation.fulfill()
             return
         }
         
-        let video: BVVideo = BVVideo(URL(filePath: path), contentType: .review)
+        let video: BVVideo = BVVideo(URL(filePath: path), caption: "Test Video", uploadVideo: true)
         
-        let videoSubmission: BVVideoSubmission = BVVideoSubmission(video)
+        guard let videoSubmission: BVVideoSubmission = BVVideoSubmission(video: video) else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+        videoSubmission
             .configure(BVVideoSubmissionTest.config)
             .handler { (response: BVConversationsSubmissionResponse<BVVideo>) in
                 
