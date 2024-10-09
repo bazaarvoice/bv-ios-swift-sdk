@@ -289,6 +289,16 @@
 		B7CBDC532ABC3BF100CBE042 /* BVTestKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CBDC522ABC3BF100CBE042 /* BVTestKeys.swift */; };
 		B7E800472B72318000458E25 /* BVVideoSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E800462B72318000458E25 /* BVVideoSubmission.swift */; };
 		B7E8004F2B738CF100458E25 /* BVVideoSubmissionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E8004E2B738CF100458E25 /* BVVideoSubmissionTest.swift */; };
+		B7FE555B2CA2C24D005A3F1C /* BVProductSentimentsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE555A2CA2C24D005A3F1C /* BVProductSentimentsConstants.swift */; };
+		B7FE555D2CA2C27D005A3F1C /* BVProductSentimentsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE555C2CA2C27D005A3F1C /* BVProductSentimentsError.swift */; };
+		B7FE555F2CA2C28F005A3F1C /* BVManagerProductSentiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE555E2CA2C28F005A3F1C /* BVManagerProductSentiments.swift */; };
+		B7FE55612CA2C2A4005A3F1C /* BVProductSentimentsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE55602CA2C2A4005A3F1C /* BVProductSentimentsConfiguration.swift */; };
+		B7FE55632CA2C2B8005A3F1C /* BVManagerProductSentimentsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE55622CA2C2B8005A3F1C /* BVManagerProductSentimentsQuery.swift */; };
+		B7FE55742CA3F85A005A3F1C /* BVSummarisedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE55732CA3F85A005A3F1C /* BVSummarisedFeature.swift */; };
+		B7FE55762CB00F57005A3F1C /* BVProductSentimentsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE55752CB00F57005A3F1C /* BVProductSentimentsQuery.swift */; };
+		B7FE55782CB00F65005A3F1C /* BVProductSentimentsQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE55772CB00F65005A3F1C /* BVProductSentimentsQueryable.swift */; };
+		B7FE557A2CB00F71005A3F1C /* BVProductSentimentsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE55792CB00F71005A3F1C /* BVProductSentimentsResponse.swift */; };
+		B7FE557D2CB51BA4005A3F1C /* BVSummarisedFeaturesQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE557C2CB51BA4005A3F1C /* BVSummarisedFeaturesQuery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -573,6 +583,16 @@
 		B7CBDC522ABC3BF100CBE042 /* BVTestKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVTestKeys.swift; sourceTree = "<group>"; };
 		B7E800462B72318000458E25 /* BVVideoSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVVideoSubmission.swift; sourceTree = "<group>"; };
 		B7E8004E2B738CF100458E25 /* BVVideoSubmissionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVVideoSubmissionTest.swift; sourceTree = "<group>"; };
+		B7FE555A2CA2C24D005A3F1C /* BVProductSentimentsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSentimentsConstants.swift; sourceTree = "<group>"; };
+		B7FE555C2CA2C27D005A3F1C /* BVProductSentimentsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSentimentsError.swift; sourceTree = "<group>"; };
+		B7FE555E2CA2C28F005A3F1C /* BVManagerProductSentiments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVManagerProductSentiments.swift; sourceTree = "<group>"; };
+		B7FE55602CA2C2A4005A3F1C /* BVProductSentimentsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSentimentsConfiguration.swift; sourceTree = "<group>"; };
+		B7FE55622CA2C2B8005A3F1C /* BVManagerProductSentimentsQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVManagerProductSentimentsQuery.swift; sourceTree = "<group>"; };
+		B7FE55732CA3F85A005A3F1C /* BVSummarisedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSummarisedFeature.swift; sourceTree = "<group>"; };
+		B7FE55752CB00F57005A3F1C /* BVProductSentimentsQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSentimentsQuery.swift; sourceTree = "<group>"; };
+		B7FE55772CB00F65005A3F1C /* BVProductSentimentsQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSentimentsQueryable.swift; sourceTree = "<group>"; };
+		B7FE55792CB00F71005A3F1C /* BVProductSentimentsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVProductSentimentsResponse.swift; sourceTree = "<group>"; };
+		B7FE557C2CB51BA4005A3F1C /* BVSummarisedFeaturesQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVSummarisedFeaturesQuery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -805,6 +825,7 @@
 				B5B31E8920B373A3002DBEC8 /* BVConversations */,
 				B5EC2F7220CACE74002F8233 /* BVCurations */,
 				B53984B320D94F4D00EF77DA /* BVRecommendations */,
+				B7FE55532CA2C064005A3F1C /* BVProductSentiments */,
 				B5B31F6A20B375DC002DBEC8 /* Support */,
 			);
 			path = BVSwift;
@@ -1279,6 +1300,47 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		B7FE55532CA2C064005A3F1C /* BVProductSentiments */ = {
+			isa = PBXGroup;
+			children = (
+				B7FE55722CA3EC42005A3F1C /* Sentiments */,
+				B7FE55712CA3EC18005A3F1C /* Model */,
+				B7FE555A2CA2C24D005A3F1C /* BVProductSentimentsConstants.swift */,
+				B7FE555C2CA2C27D005A3F1C /* BVProductSentimentsError.swift */,
+				B7FE55602CA2C2A4005A3F1C /* BVProductSentimentsConfiguration.swift */,
+				B7FE555E2CA2C28F005A3F1C /* BVManagerProductSentiments.swift */,
+				B7FE55622CA2C2B8005A3F1C /* BVManagerProductSentimentsQuery.swift */,
+			);
+			path = BVProductSentiments;
+			sourceTree = "<group>";
+		};
+		B7FE55712CA3EC18005A3F1C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B7FE55732CA3F85A005A3F1C /* BVSummarisedFeature.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B7FE55722CA3EC42005A3F1C /* Sentiments */ = {
+			isa = PBXGroup;
+			children = (
+				B7FE557B2CB51B6C005A3F1C /* Types */,
+				B7FE55752CB00F57005A3F1C /* BVProductSentimentsQuery.swift */,
+				B7FE55772CB00F65005A3F1C /* BVProductSentimentsQueryable.swift */,
+				B7FE55792CB00F71005A3F1C /* BVProductSentimentsResponse.swift */,
+			);
+			path = Sentiments;
+			sourceTree = "<group>";
+		};
+		B7FE557B2CB51B6C005A3F1C /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				B7FE557C2CB51BA4005A3F1C /* BVSummarisedFeaturesQuery.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1458,11 +1520,13 @@
 				98686D872408069600D67889 /* BVMultiProductQueryResponse.swift in Sources */,
 				98686C61240710AE00D67889 /* BVProductFilter.swift in Sources */,
 				98686D19240712BB00D67889 /* BVCodable.swift in Sources */,
+				B7FE55632CA2C2B8005A3F1C /* BVManagerProductSentimentsQuery.swift in Sources */,
 				98686C59240710AE00D67889 /* BVProductSort.swift in Sources */,
 				9F51CA4B240CD1150043AED5 /* BVReviewHighlightsReview.swift in Sources */,
 				98686C962407113100D67889 /* BVProduct.swift in Sources */,
 				98686CF42407120700D67889 /* BVCurationsQAStatistics.swift in Sources */,
 				98686BD124070ED000D67889 /* BVPixel.swift in Sources */,
+				B7FE557D2CB51BA4005A3F1C /* BVSummarisedFeaturesQuery.swift in Sources */,
 				98686CD7240711E000D67889 /* BVCurationsFeedItemField.swift in Sources */,
 				98686CC02407117400D67889 /* BVFeedbackSubmission.swift in Sources */,
 				98686C772407110300D67889 /* BVAuthorQuery.swift in Sources */,
@@ -1486,12 +1550,14 @@
 				98686D8D240808F300D67889 /* BVProgressiveReviewFields.swift in Sources */,
 				98686C62240710AE00D67889 /* BVReviewStat.swift in Sources */,
 				895FB972279847750031DDED /* BVFeedback.swift in Sources */,
+				B7FE55782CB00F65005A3F1C /* BVProductSentimentsQueryable.swift in Sources */,
 				98686D412407136400D67889 /* BVRecommendationsProduct.swift in Sources */,
 				98686BFC24070FE600D67889 /* BVLogNotifier.swift in Sources */,
 				98686C9C2407113100D67889 /* BVReviewStatistics.swift in Sources */,
 				98686BD024070ED000D67889 /* BVAnalyticsRemoteLogger.swift in Sources */,
 				98686C7B2407110300D67889 /* BVReviewSearchQuery.swift in Sources */,
 				98686C55240710AE00D67889 /* BVQuestionSort.swift in Sources */,
+				B7FE555F2CA2C28F005A3F1C /* BVManagerProductSentiments.swift in Sources */,
 				98686CB12407115900D67889 /* BVConversationsSubmissionResponse.swift in Sources */,
 				98686CD4240711CF00D67889 /* BVCurationsQuery.swift in Sources */,
 				98686CBD2407117400D67889 /* BVQuestionSubmission.swift in Sources */,
@@ -1531,6 +1597,7 @@
 				98686CAB2407113100D67889 /* BVDimensionElement.swift in Sources */,
 				98686CF92407120700D67889 /* BVCurationsFeedItem.swift in Sources */,
 				98686CEF2407120700D67889 /* BVCurationsCustomContent.swift in Sources */,
+				B7FE555B2CA2C24D005A3F1C /* BVProductSentimentsConstants.swift in Sources */,
 				894615B228913424007B2138 /* BVCostomSort.swift in Sources */,
 				98686C0B2407100900D67889 /* BVURLRequestable.swift in Sources */,
 				98686C56240710AE00D67889 /* BVProductStat.swift in Sources */,
@@ -1549,6 +1616,7 @@
 				98686D012407122D00D67889 /* BVCurationsSubmissionResponse.swift in Sources */,
 				98686BC824070EC700D67889 /* BVAnalyticsLocaleService.swift in Sources */,
 				98686C5E240710AE00D67889 /* BVQuestionFilter.swift in Sources */,
+				B7FE55762CB00F57005A3F1C /* BVProductSentimentsQuery.swift in Sources */,
 				98686BED24070F7D00D67889 /* BVAnalyticsEventTransaction.swift in Sources */,
 				98686D29240712F700D67889 /* BVRecommendationsAnalytics.swift in Sources */,
 				98686C54240710AE00D67889 /* BVAuthorFilter.swift in Sources */,
@@ -1573,6 +1641,7 @@
 				98686C202407103D00D67889 /* BVInternalSubmission.swift in Sources */,
 				98686BCC24070EC700D67889 /* BVAnalyticsManagerAppState.swift in Sources */,
 				98686C782407110300D67889 /* BVProductsQuery.swift in Sources */,
+				B7FE55612CA2C2A4005A3F1C /* BVProductSentimentsConfiguration.swift in Sources */,
 				98686CA02407113100D67889 /* BVReview.swift in Sources */,
 				98686CC32407117400D67889 /* BVUASSubmission.swift in Sources */,
 				98686C792407110300D67889 /* BVCommentQuery.swift in Sources */,
@@ -1594,6 +1663,7 @@
 				98686BCD24070EC700D67889 /* BVAnalyticsEventable.swift in Sources */,
 				98686C2A2407106B00D67889 /* BVManagerConversationsQuery.swift in Sources */,
 				98686BDB24070F3800D67889 /* BVAnalyticsImpressionType.swift in Sources */,
+				B7FE555D2CA2C27D005A3F1C /* BVProductSentimentsError.swift in Sources */,
 				98686C5C240710AE00D67889 /* BVProductStatisticsStat.swift in Sources */,
 				98686C2B2407106B00D67889 /* BVConversationsError.swift in Sources */,
 				98686C372407109900D67889 /* BVConversationsSortOrder.swift in Sources */,
@@ -1637,6 +1707,7 @@
 				98686BF524070FC300D67889 /* BVConstants.swift in Sources */,
 				98686BCA24070EC700D67889 /* BVAnalyticsConstants.swift in Sources */,
 				98686C082407100900D67889 /* BVURLRequest.swift in Sources */,
+				B7FE557A2CB00F71005A3F1C /* BVProductSentimentsResponse.swift in Sources */,
 				98686D26240712F700D67889 /* BVRecommendationsConstants.swift in Sources */,
 				98686D852408067100D67889 /* BVMultiProductQuery.swift in Sources */,
 				98686BEE24070F7D00D67889 /* BVAnalyticsEventPersonalization.swift in Sources */,
@@ -1662,6 +1733,7 @@
 				98686D1D240712BB00D67889 /* BVFingerprint.swift in Sources */,
 				98686C58240710AE00D67889 /* BVCommentInclude.swift in Sources */,
 				98686CAC2407113100D67889 /* BVUAS.swift in Sources */,
+				B7FE55742CA3F85A005A3F1C /* BVSummarisedFeature.swift in Sources */,
 				98686CA72407113100D67889 /* BVSecondaryRatingsAverage.swift in Sources */,
 				98686CD3240711CF00D67889 /* BVCurationsQueryResponse.swift in Sources */,
 				98686CED2407120700D67889 /* BVCurationsRatingDistribution.swift in Sources */,
