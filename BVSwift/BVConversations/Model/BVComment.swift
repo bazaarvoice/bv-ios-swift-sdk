@@ -53,6 +53,7 @@ public struct BVComment: BVQueryable, BVSubmissionable {
   private let submissionTimeString: String?
   public let syndicationSource: BVSyndicationSource?
   public let title: String?
+  public let totalInappropriateFeedbackCount: UInt?
   public let totalFeedbackCount: UInt?
   public let totalNegativeFeedbackCount: UInt?
   public let totalPositiveFeedbackCount: UInt?
@@ -75,6 +76,7 @@ public struct BVComment: BVQueryable, BVSubmissionable {
     case submissionTimeString = "SubmissionTime"
     case syndicationSource = "SyndicationSource"
     case title = "Title"
+    case totalInappropriateFeedbackCount = "TotalInappropriateFeedbackCount"
     case totalFeedbackCount = "TotalFeedbackCount"
     case totalNegativeFeedbackCount = "TotalNegativeFeedbackCount"
     case totalPositiveFeedbackCount = "TotalPositiveFeedbackCount"
@@ -104,6 +106,7 @@ extension BVComment {
     self.submissionId = nil
     self.submissionTimeString = nil
     self.syndicationSource = nil
+    self.totalInappropriateFeedbackCount = nil
     self.totalFeedbackCount = nil
     self.totalNegativeFeedbackCount = nil
     self.totalPositiveFeedbackCount = nil

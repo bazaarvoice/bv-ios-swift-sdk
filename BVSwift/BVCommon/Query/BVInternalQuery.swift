@@ -8,7 +8,7 @@
 import Foundation
 
 internal protocol BVInternalQueryDelegate:
-AnyObject, BVURLQueryItemable, BVURLRequestUserAgentable { }
+AnyObject, BVURLQueryItemable, BVURLRequestUserAgentable, BVURLRequestUserAuthorization { }
 
 // MARK: - BVInternalQuery
 internal class BVInternalQuery<T: BVQueryable>: BVURLRequest {
@@ -28,4 +28,8 @@ internal class BVInternalQuery<T: BVQueryable>: BVURLRequest {
   override var userAgent: String? {
     return queryItemable?.userAgent
   }
+    
+    override var userAuthorization: String? {
+      return queryItemable?.userAuthorization
+    }
 }

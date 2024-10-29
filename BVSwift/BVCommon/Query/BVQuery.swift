@@ -40,6 +40,10 @@ public class BVQuery<BVType: BVQueryable> {
   internal var userAgentClosure: (() -> String)? {
     return nil
   }
+    
+    internal var userAuthorizationClosure: (() -> String)? {
+      return nil
+    }
 }
 
 // MARK: - BVQuery: BVURLRequestable
@@ -175,6 +179,10 @@ extension BVQuery: BVInternalQueryDelegate {
   internal var userAgent: String? {
     return userAgentClosure?()
   }
+    
+     internal var userAuthorization: String? {
+         return userAuthorizationClosure?()
+     }
   
   internal var urlQueryItems: [URLQueryItem]? {
     return urlQueryItemsClosure?()

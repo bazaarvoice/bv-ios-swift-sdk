@@ -9,7 +9,7 @@
 import Foundation
 
 internal class BVURLRequest:
-BVURLRequestable, BVURLQueryItemable, BVURLRequestUserAgentable {
+BVURLRequestable, BVURLQueryItemable, BVURLRequestUserAgentable, BVURLRequestUserAuthorization {
   
   /// Private
   final private var rawConfig: BVRawConfiguration?
@@ -27,6 +27,10 @@ BVURLRequestable, BVURLQueryItemable, BVURLRequestUserAgentable {
   }
   
   internal var userAgent: String? {
+    return nil
+  }
+    
+  internal var userAuthorization: String? {
     return nil
   }
   
@@ -61,6 +65,10 @@ BVURLRequestable, BVURLQueryItemable, BVURLRequestUserAgentable {
     
     if let ua = userAgent {
       request.setValue(ua, forHTTPHeaderField: "User-Agent")
+    }
+      
+    if let userAuthorization = userAuthorization {
+      request.setValue(userAuthorization, forHTTPHeaderField: "Authorization")
     }
     
     return request

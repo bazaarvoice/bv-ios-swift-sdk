@@ -99,6 +99,7 @@ internal struct BVConversationsConstants {
       static let questionId: String = "QuestionId"
       static let submissionId: String = "SubmissionId"
       static let submissionTime: String = "SubmissionTime"
+      static let totalInappropriateFeedbackCount: String = "TotalInappropriateFeedbackCount"
       static let totalFeedbackCount: String = "TotalFeedbackCount"
       static let totalNegativeFeedbackCount: String =
       "TotalNegativeFeedbackCount"
@@ -173,6 +174,7 @@ internal struct BVConversationsConstants {
       static let submissionTime: String = "SubmissionTime"
       static let lastModeratedTime: String = "LastModeratedTime"
       static let lastModificationTime: String = "LastModificationTime"
+      static let totalInappropriateFeedbackCount: String = "TotalInappropriateFeedbackCount"
       static let totalFeedbackCount: String = "TotalFeedbackCount"
       static let totalPositiveFeedbackCount: String =
       "TotalPositiveFeedbackCount"
@@ -295,6 +297,7 @@ internal struct BVConversationsConstants {
       static let submissionTime: String = "SubmissionTime"
       static let summary: String = "Summary"
       static let totalAnswerCount: String = "TotalAnswerCount"
+      static let totalInappropriateFeedbackCount: String = "TotalInappropriateFeedbackCount"
       static let totalFeedbackCount: String = "TotalFeedbackCount"
       static let totalNegativeFeedbackCount: String =
       "TotalNegativeFeedbackCount"
@@ -368,6 +371,7 @@ internal struct BVConversationsConstants {
       static let submissionId: String = "SubmissionId"
       static let submissionTime: String = "SubmissionTime"
       static let totalCommentCount: String = "TotalCommentCount"
+      static let totalInappropriateFeedbackCount: String = "TotalInappropriateFeedbackCount"
       static let totalFeedbackCount: String = "TotalFeedbackCount"
       static let relavancy: String = "relevancy"
       static let totalNegativeFeedbackCount: String =

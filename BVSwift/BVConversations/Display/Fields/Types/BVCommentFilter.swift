@@ -27,6 +27,7 @@ public enum BVCommentFilter: BVQueryFilter {
   case reviewId(String)
   case submissionId(String)
   case submissionTime(Date)
+  case totalInappropriateFeedbackCount(Int)
   case totalFeedbackCount(Int)
   case totalNegativeFeedbackCount(Int)
   case totalPositiveFeedbackCount(Int)
@@ -76,6 +77,8 @@ public enum BVCommentFilter: BVQueryFilter {
       return filter
     case let .submissionTime(filter):
       return filter.toBVFormat
+    case let .totalInappropriateFeedbackCount(filter):
+      return filter
     case let .totalFeedbackCount(filter):
       return filter
     case let .totalNegativeFeedbackCount(filter):
@@ -118,6 +121,9 @@ extension BVCommentFilter: BVConversationsQueryValue {
       return BVConversationsConstants.BVComments.Keys.submissionId
     case .submissionTime:
       return BVConversationsConstants.BVComments.Keys.submissionTime
+    case .totalInappropriateFeedbackCount:
+      return BVConversationsConstants
+        .BVComments.Keys.totalInappropriateFeedbackCount
     case .totalFeedbackCount:
       return BVConversationsConstants
         .BVComments.Keys.totalFeedbackCount

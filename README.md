@@ -7,4 +7,4 @@
 [![Platform](https://img.shields.io/cocoapods/p/BVSwift.svg?style=flat)](https://cocoapods.org/pods/BVSwift)
 
 ## Bazaarvoice iOS SDK
-Full documentation for this SDK lives at: https://developer.bazaarvoice.com/mobile-sdks/ios
+Full documentation for this SDK is live at: [iOS Mobile SDK Documentation](https://developers.bazaarvoice.com/v1.0-MobileSDK/docs/ios-requirements)

@@ -85,6 +85,7 @@ public struct BVReview: BVQueryable, BVSubmissionable {
   private let tagDimensionsArray: BVCodableDictionary<BVDimensionElement>?
   public let title: String?
   public let totalCommentCount: Int?
+  public let totalInappropriateFeedbackCount: Int?
   public let totalFeedbackCount: Int?
   public let totalNegativeFeedbackCount: Int?
   public let totalPositiveFeedbackCount: Int?
@@ -127,6 +128,7 @@ public struct BVReview: BVQueryable, BVSubmissionable {
     case tagDimensionsArray = "TagDimensions"
     case title = "Title"
     case totalCommentCount = "TotalCommentCount"
+    case totalInappropriateFeedbackCount = "TotalInappropriateFeedbackCount"
     case totalFeedbackCount = "TotalFeedbackCount"
     case totalNegativeFeedbackCount = "TotalNegativeFeedbackCount"
     case totalPositiveFeedbackCount = "TotalPositiveFeedbackCount"
@@ -179,6 +181,7 @@ extension BVReview {
     self.syndicationSource = nil
     self.tagDimensionsArray = nil
     self.totalCommentCount = nil
+    self.totalInappropriateFeedbackCount = nil
     self.totalFeedbackCount = nil
     self.totalNegativeFeedbackCount = nil
     self.totalPositiveFeedbackCount = nil
@@ -225,6 +228,7 @@ extension BVReview {
     self.syndicationSource = nil
     self.tagDimensionsArray = nil
     self.totalCommentCount = nil
+    self.totalInappropriateFeedbackCount = nil
     self.totalFeedbackCount = nil
     self.totalNegativeFeedbackCount = nil
     self.totalPositiveFeedbackCount = nil

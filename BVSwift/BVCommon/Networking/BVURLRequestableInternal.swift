@@ -26,6 +26,10 @@ internal protocol BVURLRequestUserAgentable: BVURLRequestable {
   var userAgent: String? { get }
 }
 
+internal protocol BVURLRequestUserAuthorization: BVURLRequestable {
+  var userAuthorization: String? { get }
+}
+
 internal typealias BVURLRequestableHandler =
   ((BVURLRequestableResponseInternal) -> Void)
 

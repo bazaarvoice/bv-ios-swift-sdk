@@ -35,6 +35,7 @@ public enum BVQuestionSort: BVQuerySort {
   case submissionTime
   case summary
   case totalAnswerCount
+  case totalInappropriateFeedbackCount
   case totalFeedbackCount
   case totalNegativeFeedbackCount
   case totalPositiveFeedbackCount
@@ -103,6 +104,8 @@ extension BVQuestionSort: BVConversationsQueryValue {
       return BVConversationsConstants.BVQuestions.Keys.summary
     case .totalAnswerCount:
       return BVConversationsConstants.BVQuestions.Keys.totalAnswerCount
+    case .totalInappropriateFeedbackCount:
+      return BVConversationsConstants.BVQuestions.Keys.totalInappropriateFeedbackCount
     case .totalFeedbackCount:
       return BVConversationsConstants.BVQuestions.Keys.totalFeedbackCount
     case .totalNegativeFeedbackCount:

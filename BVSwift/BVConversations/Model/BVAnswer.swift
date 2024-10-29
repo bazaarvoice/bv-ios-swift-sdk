@@ -61,6 +61,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
   }
   private let submissionTimeString: String?
   public let syndicationSource: BVSyndicationSource?
+  public let totalInappropriateFeedbackCount: Int?
   public let totalFeedbackCount: Int?
   public let totalNegativeFeedbackCount: Int?
   public let totalPositiveFeedbackCount: Int?
@@ -90,6 +91,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
     case submissionId = "SubmissionId"
     case submissionTimeString = "SubmissionTime"
     case syndicationSource = "SyndicationSource"
+    case totalInappropriateFeedbackCount = "TotalInappropriateFeedbackCount"
     case totalFeedbackCount = "TotalFeedbackCount"
     case totalNegativeFeedbackCount = "TotalNegativeFeedbackCount"
     case totalPositiveFeedbackCount = "TotalPositiveFeedbackCount"
@@ -122,6 +124,7 @@ extension BVAnswer {
     self.submissionId = nil
     self.submissionTimeString = nil
     self.syndicationSource = nil
+    self.totalInappropriateFeedbackCount = nil
     self.totalFeedbackCount = nil
     self.totalNegativeFeedbackCount = nil
     self.totalPositiveFeedbackCount = nil
