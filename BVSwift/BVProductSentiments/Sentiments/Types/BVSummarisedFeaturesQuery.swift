@@ -52,7 +52,7 @@ public class BVSummarisedFeaturesQuery: BVProductSentimentsQuery<BVSummarisedFea
 extension BVSummarisedFeaturesQuery: BVQueryLanguageStatable {
     @discardableResult
     public func language(_ value: String) -> Self {
-        let language: BVURLParameter = .field(BVLanguageStat(value), nil)
+        let language: BVURLParameter = .field(BVLanguageStats(value), nil)
         add(language)
         return self
     }

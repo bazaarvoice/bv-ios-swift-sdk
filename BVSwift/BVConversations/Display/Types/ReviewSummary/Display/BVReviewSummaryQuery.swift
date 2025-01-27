@@ -215,7 +215,7 @@ extension BVReviewSummaryQuery: BVQueryUnsafeField {
 // MARK: - BVReviewSummaryQuery: BVQueryEmbedStatable
 extension BVReviewSummaryQuery: BVQueryFormatStatable {
     @discardableResult
-    public func formatType(_ value: BVReviewSummaryFormatFilter) -> Self {
+    public func formatType(_ value: String) -> Self {
         let formatType: BVURLParameter = .field(BVReviewSummaryFormatStats(value), nil)
         add(formatType)
         return self

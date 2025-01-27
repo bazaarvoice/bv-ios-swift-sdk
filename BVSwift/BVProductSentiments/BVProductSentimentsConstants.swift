@@ -62,7 +62,7 @@ internal extension Bundle {
 
 internal let defaultPSSDKParameters: BVURLParameters =
   [
-    BVConstants.apiVersionField: Bundle.conversationsApiVersion,
+    BVConstants.apiVersionField: Bundle.productSentimentsApiVersion,
     BVConstants.appIdField: Bundle.mainBundleIdentifier,
     BVConstants.appVersionField: Bundle.releaseVersionNumber,
     BVConstants.buildNumberField: Bundle.buildVersionNumber,

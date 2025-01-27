@@ -47,7 +47,7 @@ class BVReviewSummaryQueryTest: XCTestCase {
             description: "testProductReviewSummaryQuery")
         
         let reviewSummaryQueryRequest = BVProductReviewSummaryQuery(productId: "P000036")
-            .formatType(.bullet)
+            .formatType("bullet") //paragraph
             .configure(BVReviewSummaryQueryTest.config)
             .handler { (response: BVReviewSummaryQueryResponse<BVReviewSummary>) in
                 // success
