@@ -41,9 +41,9 @@ public class BVQuery<BVType: BVQueryable> {
     return nil
   }
     
-    internal var userAuthorizationClosure: (() -> String)? {
-      return nil
-    }
+  internal var userAuthorizationClosure: (() -> String)? {
+    return nil
+  }
 }
 
 // MARK: - BVQuery: BVURLRequestable

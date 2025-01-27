@@ -136,6 +136,11 @@ public protocol BVQueryEmbedStatable {
   func embed(_ value: String) -> Self
 }
 
+/// Protocol definition for the behavior of adding summary format values
+public protocol BVQueryFormatStatable {
+  func formatType(_ value: BVReviewSummaryFormatFilter) -> Self
+}
+
 /// Protocol definition for the behavior of adding custom query fields
 /// - Note:
 /// \

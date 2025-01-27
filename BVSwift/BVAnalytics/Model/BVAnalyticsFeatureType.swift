@@ -51,7 +51,10 @@ public enum BVAnalyticsFeatureType: Encodable {
   /// Type when review highlights has been generated
   case reviewHighlights
   
-  public func encode(to encoder: Encoder) throws {
+  /// Type when review highlights has been generated
+  case reviewSummary
+
+    public func encode(to encoder: Encoder) throws {
     switch self {
     case .answerQuestion:
       try "Answer".encode(to: encoder)
@@ -79,6 +82,8 @@ public enum BVAnalyticsFeatureType: Encodable {
       try "Write".encode(to: encoder)
     case .reviewHighlights:
       try "ReviewHighlights".encode(to: encoder)
+    case .reviewSummary:
+      try "ReviewSummary".encode(to: encoder)
     }
   }
 }

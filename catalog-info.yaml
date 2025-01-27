@@ -15,7 +15,7 @@ metadata:
     - mobile-sdk
     - mobile
 spec:
-  owner: mobile
+  owner: mobile-sdk
   lifecycle: production
   dependsOn:
     - component:bv-ios-sdk
@@ -46,7 +46,7 @@ metadata:
 spec:
   type: secret
   system: mobile-sdk
-  owner: mobile
+  owner: mobile-sdk
   lifecycle: production
   dependsOn:
     - resource:aws-secrets-manager
@@ -71,7 +71,7 @@ metadata:
 spec:
   type: secret
   system: mobile-sdk
-  owner: mobile
+  owner: mobile-sdk
   lifecycle: production
   dependsOn:
     - resource:aws-secrets-manager
@@ -96,7 +96,7 @@ metadata:
 spec:
   type: secret
   system: mobile-sdk
-  owner: mobile
+  owner: mobile-sdk
   lifecycle: production
   dependsOn:
     - resource:aws-secrets-manager
@@ -121,7 +121,7 @@ metadata:
 spec:
   type: secret
   system: mobile-sdk
-  owner: mobile
+  owner: mobile-sdk
   lifecycle: production
   dependsOn:
     - resource:aws-secrets-manager
@@ -146,7 +146,7 @@ metadata:
 spec:
   type: secret
   system: mobile-sdk
-  owner: mobile
+  owner: mobile-sdk
   lifecycle: production
   dependsOn:
     - resource:aws-secrets-manager
@@ -170,9 +170,9 @@ metadata:
     - mobile
     - swift
 spec:
-  type: service
+  type: library
   lifecycle: production
-  owner: mobile
+  owner: mobile-sdk
   system: mobile-sdk
   dependsOn:
     - resource:multiProductUser

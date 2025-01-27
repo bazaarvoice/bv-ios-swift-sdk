@@ -21,7 +21,7 @@ public class BVProductSentimentsQuery<BVType: BVQueryable>: BVQuery<BVType> {
   private var productSentimentsConfiguration: BVProductSentimentsConfiguration?
   
   private func postSuperInit() {
-//todo    defaultSDKParameters.forEach { add(.unsafe($0.0, $0.1, nil)) }
+    defaultPSSDKParameters.forEach { add(.unsafe($0.0, $0.1, nil)) }
     
     /// We do this after super.init() so that in the future we can capture any
     /// call being set from below.
@@ -65,11 +65,11 @@ public class BVProductSentimentsQuery<BVType: BVQueryable>: BVQuery<BVType> {
     }
   }
     
-    final internal override var userAuthorizationClosure: (() -> String)? {
-      return { [weak self] in
-          return self?.productSentimentsConfiguration?.configurationKey ?? ""
-      }
+  final internal override var userAuthorizationClosure: (() -> String)? {
+    return { [weak self] in
+        return self?.productSentimentsConfiguration?.configurationKey ?? ""
     }
+  }
   
   internal var productSentimentsPreflightResultsClosure: BVURLRequestablePreflightHandler? {
     return nil

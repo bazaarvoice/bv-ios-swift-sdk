@@ -393,6 +393,18 @@ internal struct BVConversationsConstants {
     static let getResource: String = "features.json"
     
   }
+    
+    internal struct BVReviewSummary {
+      static let singularKey: String = ""
+      static let pluralKey: String = ""
+      static let getResource: String = "reviewsummary"
+      
+      internal struct Keys {
+          static let formatType: String = "formatType"
+          static let bullet: String = "bullet"
+          static let paragraph: String = "paragraph"
+      }
+    }
   
   internal struct BVSyndicationSource {
     internal struct Keys {

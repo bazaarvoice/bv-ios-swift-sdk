@@ -7,31 +7,6 @@
 // 
 
 import Foundation
-//todo
-/// Protocol definition for the Summarised Features includable instances
-public protocol BVSummarisedFeaturesIncludable: BVQueryable {
-  var summarisedFeatures: BVSummarisedFeatures? { get }
-}
-
-/// Protocol definition for the Summarised Features Quotes includable instances
-public protocol BVSummarisedFeaturesQuotesIncludable: BVQueryable {
-  var summarisedFeaturesQuotes: [BVQuote]? { get }
-}
-
-/// Protocol definition for the Product Features includable instances
-public protocol BVProductFeaturesIncludable: BVQueryable {
-  var productFeatures: [BVProductFeatures]? { get }
-}
-
-/// Protocol definition for the Product Quotes includable instances
-public protocol BVProductQuotesIncludable: BVQueryable {
-  var productQuotes: [BVQuote]? { get }
-}
-
-/// Protocol definition for the Product Expressions includable instances
-public protocol BVProductExpressionsIncludable: BVQueryable {
-  var questions: [BVExpressions]? { get }
-}
 
 // MARK: - BVProductSentimentsQueryValue
 internal protocol BVProductSentimentsQueryValue: BVCustomStringConvertible { }
