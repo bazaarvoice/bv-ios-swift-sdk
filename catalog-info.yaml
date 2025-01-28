@@ -1,29 +1,3 @@
-apiVersion: backstage.io/v1alpha1
-kind: System
-metadata:
-  name: mobile-sdk
-  github.com/project-slug: bazaarvoice/bv-ios-sdk-dev
-  description: Bazaarvoice Mobile SDKs make it easy to integrate core products in Android and iOS mobile apps.
-  links:
-    - url: https://bazaarvoice.slack.com/app_redirect?channel=sme-mobile-sdk
-      title: Mobile Slack channel
-      icon: send
-    - url: https://developer.bazaarvoice.com/mobile-sdks
-      title: Mobile SDKs documentation
-      icon: send
-  tags:
-    - mobile-sdk
-    - mobile
-spec:
-  owner: mobile-sdk
-  lifecycle: production
-  dependsOn:
-    - component:bv-ios-sdk
-    - component:bv-ios-swift-sdk
-    - component:bv-android-sdk
-
----
-
 #########################################################################################
 #   Resources - Secrets
 #########################################################################################
