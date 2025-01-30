@@ -28,7 +28,9 @@ internal struct BVProductSentimentsConstants {
             static let productId: String = "productId"
             static let limit: String = "limit"
             static let embed: String = "embed"
+            static let quotes: String = "quotes"
             static let feature: String = "feature"
+            static let language: String = "language"
         }
     }
     

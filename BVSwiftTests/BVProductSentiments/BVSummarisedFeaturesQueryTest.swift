@@ -43,7 +43,7 @@ class BVSummarisedFeaturesQueryTest: XCTestCase {
         self.expectation(description: "testProductSummarisedFeatures")
         
         let query = BVSummarisedFeaturesQuery(productId: "P000010")
-            .embed("quotes")
+            .embed(.quotes)
             .language("en")
             .configure(BVSummarisedFeaturesQueryTest.config)
             .handler { (response: BVProductSentimentsQueryResponse<BVSummarisedFeatures>) in

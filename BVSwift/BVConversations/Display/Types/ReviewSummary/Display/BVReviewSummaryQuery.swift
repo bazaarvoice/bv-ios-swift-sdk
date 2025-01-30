@@ -212,11 +212,9 @@ extension BVReviewSummaryQuery: BVQueryUnsafeField {
   }
 }
 
-// MARK: - BVReviewSummaryQuery: BVQueryEmbedStatable
-extension BVReviewSummaryQuery: BVQueryFormatStatable {
-    @discardableResult
-    public func formatType(_ value: String) -> Self {
-        let formatType: BVURLParameter = .field(BVReviewSummaryFormatStats(value), nil)
+extension BVReviewSummaryQuery {
+    public func formatType(_ value: BVFormatStatsType) -> Self {
+        let formatType: BVURLParameter = .field(BVFormatStats(value), nil)
         add(formatType)
         return self
     }

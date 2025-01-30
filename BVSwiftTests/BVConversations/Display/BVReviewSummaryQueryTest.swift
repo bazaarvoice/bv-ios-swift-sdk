@@ -47,7 +47,7 @@ class BVReviewSummaryQueryTest: XCTestCase {
             description: "testProductReviewSummaryQuery")
         
         let reviewSummaryQueryRequest = BVProductReviewSummaryQuery(productId: "P000036")
-            .formatType("bullet") //paragraph
+            .formatType(.paragraph) //.bullet
             .configure(BVReviewSummaryQueryTest.config)
             .handler { (response: BVReviewSummaryQueryResponse<BVReviewSummary>) in
                 // success
@@ -68,7 +68,6 @@ class BVReviewSummaryQueryTest: XCTestCase {
                 XCTAssertNotNil(reviewSummary.summary)
                 expectation.fulfill()
             }
-        
         reviewSummaryQueryRequest.async()
         self.waitForExpectations(timeout: 20) { (error) in
             XCTAssertNil(

@@ -58,10 +58,8 @@ extension BVSummarisedFeaturesQuery: BVQueryLanguageStatable {
     }
 }
 
-// MARK: - BVSummarisedFeaturesQuery: BVQueryEmbedStatable
-extension BVSummarisedFeaturesQuery: BVQueryEmbedStatable {
-    @discardableResult
-    public func embed(_ value: String) -> Self {
+extension BVSummarisedFeaturesQuery {
+    public func embed(_ value: BVEmbedStatsType) -> Self {
         let embed: BVURLParameter = .field(BVEmbedStats(value), nil)
         add(embed)
         return self

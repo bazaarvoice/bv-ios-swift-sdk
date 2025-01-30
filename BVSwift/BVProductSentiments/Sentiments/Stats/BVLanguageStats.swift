@@ -13,7 +13,7 @@ internal struct BVLanguageStats: BVQueryField {
     private let value: CustomStringConvertible
     
     var internalDescription: String {
-      return BVConversationsConstants.BVQueryType.Keys.language
+      return BVProductSentimentsConstants.BVQueryType.Keys.language
     }
     
     var representedValue: CustomStringConvertible {

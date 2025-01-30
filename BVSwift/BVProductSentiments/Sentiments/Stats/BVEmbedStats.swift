@@ -25,7 +25,20 @@ internal struct BVEmbedStats: BVQueryField {
         return internalDescription
     }
     
-    init(_ _value: String) {
-        value = "\(_value)"
+    init(_ _value: BVEmbedStatsType) {
+        value = _value.representedValue
     }
+}
+
+
+public enum BVEmbedStatsType: Int {
+  
+  case quotes
+
+  public var representedValue: CustomStringConvertible {
+    switch self {
+    case .quotes:
+        return BVProductSentimentsConstants.BVQueryType.Keys.quotes
+    }
+  }
 }
