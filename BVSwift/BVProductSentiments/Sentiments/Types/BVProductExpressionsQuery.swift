@@ -24,7 +24,7 @@ public class BVProductExpressionsQuery: BVProductSentimentsQuery<BVExpressions> 
               let productId = self?.productId {
               let reviewHighlightsFeatureEvent: BVAnalyticsEvent =
                 .feature(
-                  bvProduct: .reviews,
+                  bvProduct: .productSentiments,
                   name: .reviewHighlights,
                   productId: productId,
                   brand: nil,

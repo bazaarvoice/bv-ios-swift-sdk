@@ -26,7 +26,10 @@ public enum BVAnalyticsProductType: Encodable {
   
   /// Type when reviews feature leveraged
   case reviews
-  
+
+  /// Type when product sentiments leveraged
+  case productSentiments
+
   public func encode(to encoder: Encoder) throws {
     switch self {
     case .curations:
@@ -39,6 +42,8 @@ public enum BVAnalyticsProductType: Encodable {
       try "Personalization".encode(to: encoder)
     case .reviews:
       try "RatingsAndReviews".encode(to: encoder)
+    case .productSentiments:
+        try "ProductSentiments".encode(to: encoder)
     }
   }
 }

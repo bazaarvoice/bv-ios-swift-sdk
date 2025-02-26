@@ -115,12 +115,12 @@ extension BVProductSentimentsQuery: BVQueryActionable {
             try JSONSerialization.jsonObject(with: jsonData, options: [])
           BVLogger.sharedLogger.debug(
             BVLogMessage(
-              BVConversationsConstants.bvProduct,
+                BVProductSentimentsConstants.bvProduct,
               msg: "RAW JSON:\n\(jsonObject)"))
         } catch {
           BVLogger.sharedLogger.error(
             BVLogMessage(
-              BVConversationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
+                BVProductSentimentsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
         }
         #endif
         
