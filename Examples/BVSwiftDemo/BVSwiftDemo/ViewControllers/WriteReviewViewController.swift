@@ -11,6 +11,7 @@ import HCSStarRatingView
 import BVSwift
 import FontAwesomeKit
 import SDForms
+import MobileCoreServices
 
 protocol WriteReviewViewControllerDelegate: class {
     
@@ -32,7 +33,8 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var WriteReviewTableView: UITableView!
-    
+    @IBOutlet weak var addVideoButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +47,10 @@ class WriteReviewViewController: UIViewController, ViewControllerType {
         
         self.configureForm()
         self.updateProductDetails()
+    }
+    
+    @IBAction func addVideoButtonPressed(_ sender: Any) {
+        self.openVideoPicker()
     }
     
     func configureForm() {
@@ -125,5 +131,33 @@ extension WriteReviewViewController: SDFormDelegate {
     
     func viewController(for form: SDForm!) -> UIViewController! {
         return self
+    }
+}
+
+extension WriteReviewViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func openVideoPicker() {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let pickerController = UIImagePickerController()
+            pickerController.delegate = self
+            pickerController.sourceType = .photoLibrary
+            pickerController.mediaTypes = [kUTTypeMovie as String, kUTTypeVideo as String]
+            self.present(pickerController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("No item selected")
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let videoUrl = info[.mediaURL] as? URL {
+            print(videoUrl)
+            self.addVideoButton.setTitle("Video \(videoUrl.lastPathComponent) added", for: .normal)
+            self.viewModel.addVideo(url: videoUrl)
+            picker.dismiss(animated: true, completion: nil)
+        } else {
+            print("Something went wrong")
+        }
     }
 }

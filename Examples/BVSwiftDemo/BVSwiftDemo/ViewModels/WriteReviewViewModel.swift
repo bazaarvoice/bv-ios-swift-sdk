@@ -32,6 +32,8 @@ protocol WriteReviewViewModelDelegate: class {
     func submitReviewCall()
     
     func progressiveSubmissionCall()
+    
+    func addVideo(url: URL)
 }
 
 class WriteReviewViewModel: ViewModelType {
@@ -206,6 +208,8 @@ class WriteReviewViewModel: ViewModelType {
     
     private var reviewSubmissionDictionary: NSMutableDictionary = [:]
     
+    private var videoPath: URL?
+    
     init(product: BVProduct) {
         self.product = product
         self.createFormFields()
@@ -311,6 +315,13 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
             (reviewSubmission <+> .photos([BVPhoto(selectedPhoto)]))
         }
         
+        //let youtubeVideoPath = "https://www.youtube.com/watch?v=oHg5SJYRHA0"
+        //reviewSubmission <+> .videos([BVVideo(youtubeVideoPath, caption: "Test Video")])
+        
+        if let selectedVideo = videoPath {
+            reviewSubmission <+> .videos([BVVideo(selectedVideo, caption: "Test Video", uploadVideo: true)])
+        }
+        
         let email = self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userEmailFieldKey) as? String ?? ""
         
         let usLocale: Locale = Locale(identifier: User.local)
@@ -414,4 +425,8 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
     }
 }
 
-
+extension WriteReviewViewModel {
+    func addVideo(url: URL) {
+        self.videoPath = url
+    }
+}

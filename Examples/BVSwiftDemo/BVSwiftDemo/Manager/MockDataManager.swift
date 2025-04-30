@@ -44,13 +44,14 @@ class MockDataManager {
         let containsConversationsQuestions = url.contains(URLConstants.conversationsQuestionsMatch)
         let containsConversationsProducts = url.contains(URLConstants.conversationsProductMatch)
         let containsConversationsAuthors = url.contains(URLConstants.conversationsAuthorsMatch)
+        let containsConversationsReviewSummary = url.contains(URLConstants.conversationsReviewSummary)
         let containsSubmitReviews = url.contains(URLConstants.submitReviewMatch)
         let containsSubmitPhotoReviews = url.contains(URLConstants.submitReviewPhotoMatch)
         let containsSubmitQuestion = url.contains(URLConstants.submitQuestionMatch)
         let containsSubmitAnswers = url.contains(URLConstants.submitAnswerMatch)
         let containsPINRequest = url.contains(URLConstants.pinRequestMatch)
         
-        return containsCurations || containsCurationsPhotoPost || containsRecommendations || containsProfile || containsConversationsReviews || containsConversationsQuestions || containsConversationsProducts || containsConversationsAuthors || containsSubmitReviews || containsSubmitPhotoReviews || containsSubmitQuestion || containsSubmitAnswers || containsPINRequest || containsConversationsReviewHighlights
+        return containsCurations || containsCurationsPhotoPost || containsRecommendations || containsProfile || containsConversationsReviews || containsConversationsQuestions || containsConversationsProducts || containsConversationsReviewSummary || containsConversationsAuthors || containsSubmitReviews || containsSubmitPhotoReviews || containsSubmitQuestion || containsSubmitAnswers || containsPINRequest || containsConversationsReviewHighlights
         
     }
     
@@ -87,6 +88,15 @@ class MockDataManager {
             
             return HTTPStubsResponse(
                 fileAtPath: OHPathForFile("userProfile1.json", type(of: self))!,
+                statusCode: 200,
+                headers: Headers.header
+            )
+        }
+        
+        if url.contains(URLConstants.conversationsReviewSummary) {
+            
+            return HTTPStubsResponse(
+                fileAtPath: OHPathForFile("conversationsReviewSummary.json", type(of: self))!,
                 statusCode: 200,
                 headers: Headers.header
             )

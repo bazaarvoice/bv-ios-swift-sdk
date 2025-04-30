@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -79,6 +79,7 @@
 		9FF7EB972473C2B0007FD337 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB962473C2B0007FD337 /* Coordinator.swift */; };
 		9FF7EB992473C346007FD337 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB982473C346007FD337 /* AppCoordinator.swift */; };
 		9FF7EB9D2473DA11007FD337 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */; };
+		B7794A322DC0A986009B6D4E /* conversationsReviewSummary.json in Resources */ = {isa = PBXBuildFile; fileRef = B7794A312DC0A986009B6D4E /* conversationsReviewSummary.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +161,7 @@
 		9FF7EB982473C346007FD337 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		9FF7EB9C2473DA11007FD337 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		A417D650407251B9FF79AE8A /* Pods_BVSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BVSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7794A312DC0A986009B6D4E /* conversationsReviewSummary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conversationsReviewSummary.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 			children = (
 				42CE5FA724ADE2B3009D050B /* conversationsAuthorWithIncludes.json */,
 				42CE5FA624ADE2B3009D050B /* conversationsProductsIncludeStats.json */,
+				B7794A312DC0A986009B6D4E /* conversationsReviewSummary.json */,
 				42CE5FAC24ADE2B3009D050B /* conversationsQuestionsIncludeAnswers.json */,
 				42CE5FAB24ADE2B3009D050B /* conversationsReviewsEnduranceCycles.json */,
 				42CE5FB024ADE2B4009D050B /* curationsEnduranceCycles.json */,
@@ -498,6 +501,7 @@
 				42CE5FC524AE19F1009D050B /* reviewHighlights.json in Resources */,
 				42BC267824C9653B000CA351 /* BVSwiftDemoActionCell.xib in Resources */,
 				42CE5FB624ADE2B4009D050B /* conversationsAuthorWithIncludes.json in Resources */,
+				B7794A322DC0A986009B6D4E /* conversationsReviewSummary.json in Resources */,
 				42CE5FBD24ADE2B4009D050B /* userProfile1.json in Resources */,
 				42CE5FC324ADE2B4009D050B /* submitQuestion.json in Resources */,
 				42BC40EC2473BB5100008434 /* Assets.xcassets in Resources */,
@@ -687,6 +691,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = BVSwiftDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -763,6 +769,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = BVSwiftDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -900,6 +908,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = BVSwiftDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -921,6 +931,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BVSwiftDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (

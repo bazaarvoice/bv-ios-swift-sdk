@@ -92,11 +92,16 @@ extension ProductDisplayPageViewController: UITableViewDataSource {
         }
         
         switch rowType {
-            
+        case .summary:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CELL_IDENTIFIER) as! ProductDetailTableViewCell
+            cell.setProductDetails(name: self.viewModel.titleForIndexPath(indexPath),
+                                   icon: self.viewModel.iconForIndexPath(indexPath), hideRightIcon: true)
+            return cell
+
         case .reviews, .questions, .curationsAddPhoto, .curationsPhotoMap:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductDisplayPageViewController.PRODUCT_DETAIL_CELL_IDENTIFIER) as! ProductDetailTableViewCell
             cell.setProductDetails(name: self.viewModel.titleForIndexPath(indexPath),
-                                          icon: self.viewModel.iconForIndexPath(indexPath))
+                                   icon: self.viewModel.iconForIndexPath(indexPath), hideRightIcon: false)
             return cell
             
         case .curations:

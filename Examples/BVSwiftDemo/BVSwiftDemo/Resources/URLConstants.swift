@@ -20,12 +20,13 @@ class URLConstants {
     static let conversationsProductMatch = "bazaarvoice.com/data/products"
     static let conversationsAuthorsMatch = "bazaarvoice.com/data/authors"
     static let conversationsReviewHighlightsMatch = "bazaarvoice.com/highlights"
+    static let conversationsReviewSummary = "bazaarvoice.com/data/reviewsummary"
     static let submitReviewMatch = "bazaarvoice.com/data/submitreview"
     static let submitReviewPhotoMatch = "bazaarvoice.com/data/uploadphoto"
     static let submitQuestionMatch = "bazaarvoice.com/data/submitquestion"
     static let submitAnswerMatch = "bazaarvoice.com/data/submitanswer"
     static let pinRequestMatch = "bazaarvoice.com/pin/toreview"
-    
+
 }
 
 class User {

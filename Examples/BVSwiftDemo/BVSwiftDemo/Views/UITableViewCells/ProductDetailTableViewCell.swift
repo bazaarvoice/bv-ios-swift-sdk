@@ -12,6 +12,7 @@ import FontAwesomeKit
 class ProductDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var leftIconImageView: UIImageView!
+    @IBOutlet weak var rightIconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
     override func awakeFromNib() {
@@ -26,10 +27,12 @@ class ProductDetailTableViewCell: UITableViewCell {
     }
     
     func setProductDetails(name: String,
-                           icon: ((_ size: CGFloat) -> FAKFontAwesome?)) {
+                           icon: ((_ size: CGFloat) -> FAKFontAwesome?),
+                           hideRightIcon: Bool) {
         
         self.titleLabel.text = name
         self.leftIconImageView.image = self.getIconImage(icon)
+        self.rightIconImageView.isHidden = hideRightIcon
     }
     
     func getIconImage(_ icon : ((_ size: CGFloat) -> FAKFontAwesome?)) -> UIImage {

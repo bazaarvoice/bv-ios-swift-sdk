@@ -48,6 +48,8 @@ class ProductDisplayPageViewModel: ViewModelType {
     
     private var product: BVProduct?
     
+    private var reviewSummary: BVReviewSummary?
+    
     private var curationsFeedItems: [BVCurationsFeedItem]?
     
     private var recommendations: [BVRecommendationsProduct]?
@@ -57,6 +59,8 @@ class ProductDisplayPageViewModel: ViewModelType {
     private var error: Error?
     
     enum ProductDisplayPageRow: Int, CaseIterable {
+        
+        case summary
         
         case reviews
         
@@ -158,6 +162,33 @@ class ProductDisplayPageViewModel: ViewModelType {
         
         recommendationsQuery.async()
     }
+    
+    private func fetchReviewSummary() {
+        
+        self.dispatchGroup.enter()
+        
+        let reviewSummaryQueryRequest = BVProductReviewSummaryQuery(productId: self.productId)
+            .formatType(.paragraph) //.bullet
+            .configure(ConfigurationManager.sharedInstance.conversationsConfig)
+            .handler { [weak self] (response: BVReviewSummaryQueryResponse<BVReviewSummary>) in
+                
+                guard let strongSelf = self else { return }
+                
+                switch response {
+                    
+                case let .failure(errors):
+                    print(errors)
+                    
+                case let .success(reviewSummary):
+                    strongSelf.reviewSummary = reviewSummary
+                }
+                
+                strongSelf.dispatchGroup.leave()
+            }
+        
+        reviewSummaryQueryRequest.async()
+        
+    }
 }
 
 // MARK:- ProductDisplayPageViewModelDelegate
@@ -172,6 +203,8 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         self.fetchCurations()
         
         self.fetchRecommendations()
+        
+        self.fetchReviewSummary()
         
         dispatchGroup.notify(queue: .main) { [weak self] in
             
@@ -217,7 +250,8 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         }
         
         switch productDisplayPageRow {
-            
+        case .summary: return self.reviewSummary?.summary ?? "No Summary"
+
         case .reviews: return "\(self.product?.reviewStatistics?.totalReviewCount ?? 0) Reviews"
             
         case .questions: return "\(self.product?.qaStatistics?.totalQuestionCount ?? 0) Questions, \(self.product?.qaStatistics?.totalAnswerCount ?? 0) Answers"
@@ -240,6 +274,7 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         }
         
         switch productDisplayPageRow {
+        case .summary: return FAKFontAwesome.infoCircleIcon(withSize:)
             
         case .reviews: return FAKFontAwesome.commentsIcon(withSize:)
             
@@ -279,6 +314,7 @@ extension ProductDisplayPageViewModel: ProductDisplayPageViewModelDelegate {
         }
         
         switch productDisplayPageRow {
+        case .summary: break
             
         case .reviews: self.coordinator?.navigateTo(AppCoordinator.AppNavigation.review(productId: self.productId, product: self.product!))
             

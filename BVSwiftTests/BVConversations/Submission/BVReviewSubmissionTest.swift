@@ -153,10 +153,10 @@ class BVReviewSubmissionTest: XCTestCase {
     }
   }
   
-  func testPreviewReviewWithVideo() {
+  func testPreviewReviewWithYoutubeVideo() {
     
     let expectation =
-      self.expectation(description: "testPreviewReviewWithVideo")
+      self.expectation(description: "testPreviewReviewWithYoutubeVideo")
     
     guard let reviewSubmission = fillOutReview(.preview) else {
       XCTFail()
