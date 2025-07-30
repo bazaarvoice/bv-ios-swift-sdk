@@ -26,6 +26,9 @@ class URLConstants {
     static let submitQuestionMatch = "bazaarvoice.com/data/submitquestion"
     static let submitAnswerMatch = "bazaarvoice.com/data/submitanswer"
     static let pinRequestMatch = "bazaarvoice.com/pin/toreview"
+    static let productSentimentsSummarisedFeatures = "bazaarvoice.com/sentiment/v1/summarised-features"
+    static let productSentimentsProductFeatures = "bazaarvoice.com/sentiment/v1/features"
+    static let productSentimentsProductQuotes = "bazaarvoice.com/sentiment/v1/quotes"
 
 }
 

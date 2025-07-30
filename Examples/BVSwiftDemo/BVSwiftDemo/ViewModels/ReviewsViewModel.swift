@@ -9,71 +9,86 @@
 import UIKit
 import BVSwift
 
-private enum ReviewHighlightsSection: Equatable {
+enum ReviewTableSections {
     
-    case pros(isExpand: Bool)
-    case cons(isExpand: Bool)
+    case features
+    case summary
+    case pros
+    case cons
+    case positiveQuotes
+    case negativeQuotes
+    case featureQuotes
+    case quotes
+    case actionButtons
+    case reviews
     
     var title: String {
         switch self {
-        case .pros(_):
-            return "Pros Mentioned"
-        case .cons(_):
-            return "Cons mentioned"
-        }
-    }
-    
-    static func == (lhs: ReviewHighlightsSection, rhs: ReviewHighlightsSection) -> Bool {
-        switch (lhs, rhs) {
             
-        case (.pros(_), .pros(_)): return true
-            
-        case (.cons(_), .cons(_)): return true
-            
-        default: return false
+        case .features:
+            return "Product Features"
+        case .summary:
+            return "✨ AI Generated Review Summary"
+        case .pros:
+            return "Pros"
+        case .cons:
+            return "Cons"
+        case .positiveQuotes:
+            return "Most Helpful Review Quotes"
+        case .negativeQuotes:
+            return "Most Critical Review Quotes"
+        case .featureQuotes:
+            return "Quotes for Feature"
+        case .quotes:
+            return "Most Useful Quotes"
+        case .actionButtons:
+            return "Actions"
+        case .reviews:
+            return "Reviews"
         }
     }
 }
 
-protocol ReviewsViewModelDelegate: class {
+protocol ReviewsViewModelDelegate: AnyObject {
     
     func fetchReviews()
     
     func didChangeFilterOption(_ option : ReviewsViewModel.FilterOptions)
+        
+    var reviewTableSections: [ReviewTableSections] { get }
     
-    var isReviewHighlightsExpanded: Bool { get }
-    
-    var numberOfSectionsForReviews: Int { get }
-    
-    var numberOfRowsForReview: Int { get }
+    var numberOfSections: Int { get }
 
-    func numberOfRowsForReviewHighlights(_ section: Int) -> Int
-    
+    func numberOfRowsInSection(_ section: Int) -> Int
+        
     func writeReviewTapped()
     
     func sortButtonTapped(_ viewController: UIViewController)
     
-    var numberOfSectionsForReviewHighlights: Int { get }
-    
-    func reviewHighlightsHeaderTitleForIndexPath(_ indexPath: IndexPath) -> String
-    
-    func reviewHighlightsCountForIndexPath(_ indexPath: IndexPath) -> Int
-    
+    var sortButtonTitle: String { get }
+        
+    func headerTitleForSection(_ section: Int) -> String
+        
     func gotoAuthorProfile(authorId: String)
-    
-    func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String
-    
+        
     func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview?
     
     func didSelectRowAt(_ indexPath: IndexPath)
-    
-    func getBvReviewHighlightsData() -> BVReviewHighlights?
-    
+        
     var productName: String? { get }
     
     var productRating: Double? { get }
     
     var productImageURL: URL? { get }
+    
+//}
+//
+    
+    func toggleReviewHighlights(isOn: Bool)
+    
+    var displayReviewHighlights: Bool { get }
+    
+    func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String
     
 }
 
@@ -96,10 +111,11 @@ class ReviewsViewModel: ViewModelType {
     private let dispatchGroup = DispatchGroup()
     
     private var error: Error?
-    
-    private var reviewHighlightsSections: [ReviewHighlightsSection] = [.pros(isExpand: false),
-                                                                       .cons(isExpand: false)]
-    
+
+    var displayReviewHighlights: Bool = false
+    var productSentimentsViewModel: ProductSentimentsViewModelDelegate?
+
+        
     enum FilterOptions : String, CaseIterable {
         
         case mostRecent = "Most Recent"
@@ -111,10 +127,59 @@ class ReviewsViewModel: ViewModelType {
     init(productId: String, product: BVProduct) {
         self.productId = productId
         self.product = product
+        self.productSentimentsViewModel = ProductSentimentsViewModel(productId: productId)
+        self.productSentimentsViewModel?.productSentimentsUIDelegate = self
     }
 }
 
 extension ReviewsViewModel: ReviewsViewModelDelegate {
+    var sortButtonTitle: String {
+        "Sort: " + self.selectedFilterOption.rawValue
+    }
+    
+    var reviewTableSections: [ReviewTableSections] {
+        if displayReviewHighlights {
+            return [
+                .summary,
+                .features,
+                .quotes,
+                .pros,
+                .cons,
+//                .positiveQuotes,
+//                .negativeQuotes,
+                .featureQuotes,
+                .actionButtons,
+                .reviews
+            ]
+        } else {
+            return [
+                .summary,
+                .actionButtons,
+                .reviews
+            ]
+        }
+    }
+    
+    var numberOfSections: Int {
+        return self.reviewTableSections.count
+    }
+    
+    func numberOfRowsInSection(_ section: Int) -> Int {
+        let type = self.reviewTableSections[section]
+        switch type {
+        case .actionButtons:
+            return 1
+        case .reviews:
+            return self.bvReviews?.count ?? 0
+        default:
+            return self.productSentimentsViewModel?.getRowCount(type) ?? 0
+        }
+    }
+    
+    func headerTitleForSection(_ section: Int) -> String {
+        return self.reviewTableSections[section].title
+    }
+    
     
     func writeReviewTapped() {
         self.coordinator?.navigateTo(AppCoordinator.AppNavigation.writeReview(product: self.product))
@@ -185,8 +250,6 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
                 if isSortRequest {
                     DispatchQueue.main.async {
                         strongSelf.viewController?.hideLoadingIndicator()
-                        strongSelf.viewController?.updateSortButtonTitle(title: "Sort: \(strongSelf.selectedFilterOption.rawValue)")
-                            
                         strongSelf.viewController?.reloadData()
                     }
                 }
@@ -263,105 +326,40 @@ extension ReviewsViewModel: ReviewsViewModelDelegate {
     }
     
     func didSelectRowAt(_ indexPath: IndexPath) {
-        
-        for (index, _) in self.reviewHighlightsSections.enumerated() {
-            
-            let reviewHighlightsSection = self.reviewHighlightsSections[index]
-            
-            switch reviewHighlightsSection {
-                
-            case let .pros(isExpand):
-                self.reviewHighlightsSections[index] = isHeaderRow(rowIndex: index, indexPath: indexPath) ? .pros(isExpand: !isExpand) : .pros(isExpand: false)
-                
-            case let .cons(isExpand):
-                self.reviewHighlightsSections[index] = isHeaderRow(rowIndex: index, indexPath: indexPath) ? .cons(isExpand: !isExpand) : .cons(isExpand: false)
-                
-            }
+        let type = self.reviewTableSections[indexPath.section]
+        if type == .features || type == .pros || type == .cons {
+            self.productSentimentsViewModel?.didSelectFeatureAtIndex(type, indexPath.row)
         }
-    }
-    
-    
-    func reviewHighlightsHeaderTitleForIndexPath(_ indexPath: IndexPath) -> String {
-        return self.reviewHighlightsSections[indexPath.section].title
-    }
-    
-    var numberOfSectionsForReviews: Int {
-        return 1
     }
     
     var numberOfRowsForReview: Int {
         return self.bvReviews?.count ?? 0
     }
     
-    var numberOfSectionsForReviewHighlights: Int {
-        return self.reviewHighlightsSections.count
-    }
-    
-    func numberOfRowsForReviewHighlights(_ section: Int) -> Int {
-        
-        let reviewHighlightSection = self.reviewHighlightsSections[section]
-        
-        switch reviewHighlightSection {
-            
-        case let .pros(isExpand):
-            return isExpand ? (self.bvReviewHighlights?.positives?.count ?? 0) + 1 : 1
-            
-        case let .cons(isExpand):
-            return isExpand ? (self.bvReviewHighlights?.negatives?.count ?? 0) + 1 : 1
-            
-        }
-    }
-    
     func reviewForIndexPath(_ indexPath: IndexPath) -> BVReview? {
         return self.bvReviews?[indexPath.row]
-    }
-    
-    var isReviewHighlightsExpanded: Bool {
-        
-        return self.reviewHighlightsSections.contains { (reviewHighlightsSection) -> Bool in
-            
-            switch reviewHighlightsSection {
-                
-            case let .pros(isExpand) :
-                return isExpand == true
-                
-            case let .cons(isExpand) :
-                return isExpand == true
-            }
-        }
-    }
-    
-    func reviewHighlightsCountForIndexPath(_ indexPath: IndexPath) -> Int {
-        
-        let reviewHighlightSection = self.reviewHighlightsSections[indexPath.section]
-        
-        switch reviewHighlightSection {
-            
-        case .pros:
-            return self.bvReviewHighlights?.positives?.count ?? 0
-            
-        case .cons:
-            return self.bvReviewHighlights?.negatives?.count ?? 0
-            
-        }
     }
     
     func gotoAuthorProfile(authorId: String) {
         self.coordinator?.navigateTo(AppCoordinator.AppNavigation.author(authorId: authorId))
     }
     
+}
+
+extension ReviewsViewModel{//}: ReviewHighlightsViewModelDelegate {
+    func toggleReviewHighlights(isOn: Bool) {
+        displayReviewHighlights = isOn
+    }
+    
     func reviewHighlightsTitleForIndexPath(_ indexPath: IndexPath) -> String {
-        
-        let reviewHighlightSection = self.reviewHighlightsSections[indexPath.section]
-        
-        switch reviewHighlightSection {
-            
-        case .pros:
-            return self.bvReviewHighlights?.positives?[indexPath.row - 1].title ?? ""
-            
-        case .cons:
-            return self.bvReviewHighlights?.negatives?[indexPath.row - 1].title ?? ""
-            
-        }
+        return self.productSentimentsViewModel?.getText(self.reviewTableSections[indexPath.section], indexPath.row) ?? ""
     }
 }
+
+extension ReviewsViewModel: ProductSentimentsUIDelegate {
+    func reloadData() {
+        self.viewController?.reloadData()
+    }
+    
+}
+

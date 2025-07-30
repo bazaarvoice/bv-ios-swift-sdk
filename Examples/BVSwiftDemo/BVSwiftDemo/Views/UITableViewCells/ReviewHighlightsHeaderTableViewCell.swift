@@ -9,29 +9,26 @@
 import UIKit
 import BVSwift
 
+// This cell is used to display the header for review highlights section in the table view.
+
 class ReviewHighlightsHeaderTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var view_CellBackground: UIView!
-    @IBOutlet weak var view_Separator: UIView!
-    @IBOutlet weak var lbl_Title: UILabel!
-    @IBOutlet weak var lbl_Count: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        self.lbl_Count.text = "0"
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func setReviewHighlightsData(title: String, count: Int) {
-        self.lbl_Title.text = title
-        self.lbl_Count.text = "\(count)"
+    func setReviewHighlightsData(title: String, image: String) {
+        self.titleLabel.text = title
+        if image.isEmpty {
+            self.iconImageView.isHidden = image.isEmpty
+        } else {
+            self.iconImageView.isHidden = false
+            self.iconImageView.image = UIImage(systemName: image)
+        }
     }
 
 }

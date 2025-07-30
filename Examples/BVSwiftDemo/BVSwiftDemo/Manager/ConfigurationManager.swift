@@ -28,11 +28,15 @@ class ConfigurationManager: NSObject {
     private let conversationsPassKey: String = "REPLACE_ME" // <--- Add your conversations API key here.
     private let curationsPassKey: String = "REPLACE_ME" // <--- Add your curations API key here.
     private let recommendationPassKey: String = "REPLACE_ME" // <--- Add your recommendation API key here.
-    
+    private let productSentimentsPassKey: String = "REPLACE_ME" // <--- Add your product sentiments API key here.
+
     //For ReviewHighligts
     let reviewHighlightsProductId: String = "REPLACE_ME" // <--- Add your reviewHighlights ProductId here.
     let reviewHighlightsClientId: String = "REPLACE_ME" // <--- Add your reviewHighlights ClientId here.
     
+    //For ProductSentiments
+    let productSentimentsClientId: String = "REPLACE_ME" // <--- Add your reviewHighlights ClientId here.
+
     //ForAuthor
     let authorId: String = "REPLACE_ME" // <--- Add your authorId here.
     
@@ -44,7 +48,8 @@ class ConfigurationManager: NSObject {
     var curationsConfig: BVCurationsConfiguration!
     var recommendationConfig: BVRecommendationsConfiguration!
     var reviewHighlightsConfig: BVReviewHighlightsConfiguration!
-    
+    var productSentimentsConfig: BVProductSentimentsConfiguration!
+
     private override init() {
         
         if let currentConfigStr = Bundle.main.object(forInfoDictionaryKey: "ENV") as? String, let env = Environment.init(rawValue: currentConfigStr)  {
@@ -86,6 +91,12 @@ class ConfigurationManager: NSObject {
                 configType: .staging(clientId: self.reviewHighlightsClientId),
                 analyticsConfig: analyticsConfig)
             
+            //ProductSentiments Configuration
+            self.productSentimentsConfig = BVProductSentimentsConfiguration.display(
+                clientKey: self.productSentimentsPassKey,
+                configType: .production(clientId: self.productSentimentsClientId),
+                analyticsConfig: analyticsConfig)
+
         case .production :
             
             //Conversation Configuration
@@ -107,6 +118,12 @@ class ConfigurationManager: NSObject {
             //ReviewHighlights Configuration
             self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
                 configType: .production(clientId: self.reviewHighlightsClientId),
+                analyticsConfig: analyticsConfig)
+            
+            //ProductSentiments Configuration
+            self.productSentimentsConfig = BVProductSentimentsConfiguration.display(
+                clientKey: self.productSentimentsPassKey,
+                configType: .production(clientId: self.productSentimentsClientId),
                 analyticsConfig: analyticsConfig)
             
         case .mock:
@@ -132,6 +149,12 @@ class ConfigurationManager: NSObject {
             //ReviewHighlights Configuration
             self.reviewHighlightsConfig = BVReviewHighlightsConfiguration.display(
                 configType: .staging(clientId: self.reviewHighlightsClientId),
+                analyticsConfig: analyticsConfig)
+            
+            //ProductSentiments Configuration
+            self.productSentimentsConfig = BVProductSentimentsConfiguration.display(
+                clientKey: self.productSentimentsPassKey,
+                configType: .production(clientId: self.productSentimentsClientId),
                 analyticsConfig: analyticsConfig)
             
         } //end of case

@@ -18,7 +18,7 @@ internal struct BVConstants {
     static let appVersionField: String = "_appVersion"
     static let buildNumberField: String = "_buildNumber"
     static let sdkVersionField: String = "_bvIosSwiftSdkVersion"
-    static let bvSwiftSDKVersion: String = "1.16.0"
+    static let bvSwiftSDKVersion: String = "2.0.0"
 }
 
 internal extension Bundle {

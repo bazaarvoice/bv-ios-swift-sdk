@@ -39,7 +39,7 @@ public struct BVQuote: BVQueryable {
         return ""
     }
     
-    public let quoteID, text, emotion: String?
+    public let quoteID, text, highlightedText, emotion: String?
     public let reviewRating: Int?
     public let reviewID, reviewedAt, translatedText, nativeLanguage: String?
     public let incentivised: Bool?
@@ -47,7 +47,7 @@ public struct BVQuote: BVQueryable {
 
     enum CodingKeys: String, CodingKey {
         case quoteID = "quoteId"
-        case text, emotion, reviewRating
+        case text, emotion, reviewRating, highlightedText
         case reviewID = "reviewId"
         case reviewedAt, translatedText, nativeLanguage, incentivised, reviewType
     }

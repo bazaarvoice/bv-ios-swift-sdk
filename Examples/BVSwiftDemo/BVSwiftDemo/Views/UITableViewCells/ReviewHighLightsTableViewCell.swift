@@ -11,22 +11,22 @@ import BVSwift
 
 class ReviewHighLightsTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var view_CellBackground: UIView!
-    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        bgView.layer.cornerRadius = 5
     }
     
     func setReviewHighlightsTitle(title: String) {
-        self.lbl_Title.text = title.capitalized
+        self.titleLabel.text = title
+    }
+    
+    func setBgViewBorder(color: UIColor) {
+        self.bgView.layer.borderColor = color.cgColor
+        self.bgView.layer.borderWidth = 1
     }
 
 }

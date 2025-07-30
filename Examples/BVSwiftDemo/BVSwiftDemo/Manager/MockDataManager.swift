@@ -51,7 +51,13 @@ class MockDataManager {
         let containsSubmitAnswers = url.contains(URLConstants.submitAnswerMatch)
         let containsPINRequest = url.contains(URLConstants.pinRequestMatch)
         
-        return containsCurations || containsCurationsPhotoPost || containsRecommendations || containsProfile || containsConversationsReviews || containsConversationsQuestions || containsConversationsProducts || containsConversationsReviewSummary || containsConversationsAuthors || containsSubmitReviews || containsSubmitPhotoReviews || containsSubmitQuestion || containsSubmitAnswers || containsPINRequest || containsConversationsReviewHighlights
+        let containsPSSummarisedFeatures = url.contains(URLConstants.productSentimentsSummarisedFeatures)
+        let containsPSProductFeatures = url.contains(URLConstants.productSentimentsProductFeatures)
+        let containsPSProductQuotes = url.contains(URLConstants.productSentimentsProductQuotes)
+
+        
+        
+        return containsCurations || containsCurationsPhotoPost || containsRecommendations || containsProfile || containsConversationsReviews || containsConversationsQuestions || containsConversationsProducts || containsConversationsReviewSummary || containsConversationsAuthors || containsSubmitReviews || containsSubmitPhotoReviews || containsSubmitQuestion || containsSubmitAnswers || containsPINRequest || containsConversationsReviewHighlights || containsPSSummarisedFeatures || containsPSProductFeatures || containsPSProductQuotes
         
     }
     
@@ -216,6 +222,33 @@ class MockDataManager {
             return HTTPStubsResponse(data: pinReponse ?? "[]".data(using: .utf8)!,
                                      statusCode: 200,
                                      headers: Headers.header_utf8)
+        }
+        
+        if url.contains(URLConstants.productSentimentsSummarisedFeatures) {
+            
+            return HTTPStubsResponse(
+                fileAtPath: OHPathForFile("summarisedFeatures.json", type(of: self))!,
+                statusCode: 200,
+                headers: Headers.header_utf8
+            )
+        }
+        
+        if url.contains(URLConstants.productSentimentsProductFeatures) {
+            
+            return HTTPStubsResponse(
+                fileAtPath: OHPathForFile("productFeatures.json", type(of: self))!,
+                statusCode: 200,
+                headers: Headers.header_utf8
+            )
+        }
+        
+        if url.contains(URLConstants.productSentimentsProductQuotes) {
+            
+            return HTTPStubsResponse(
+                fileAtPath: OHPathForFile("productQuotes.json", type(of: self))!,
+                statusCode: 200,
+                headers: Headers.header_utf8
+            )
         }
         
         return HTTPStubsResponse()

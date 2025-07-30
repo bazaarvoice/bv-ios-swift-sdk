@@ -11,15 +11,13 @@ import XLActionController
 import HCSStarRatingView
 import FontAwesomeKit
 
-protocol ReviewsViewControllerDelegate: class {
+protocol ReviewsViewControllerDelegate: AnyObject {
     
     func reloadData()
     
     func showLoadingIndicator()
     
     func hideLoadingIndicator()
-    
-    func updateSortButtonTitle(title: String)
 }
 
 class ReviewsViewController: UIViewController, ViewControllerType {
@@ -33,15 +31,13 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productRatingView: HCSStarRatingView!
     @IBOutlet weak var reviewTableView: UITableView!
-    @IBOutlet weak var reviewHighlightsTableView: UITableView!
-    @IBOutlet weak var reviewHighlightsTableHeightConstraints: NSLayoutConstraint!
-    @IBOutlet weak var sortButton: UIButton!
-    
+
     // MARK:- Constants
-    private static let REVIEW_CELL_IDENTIFIER: String = "ReviewTableViewCell"
     private static let REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER: String = "ReviewHighlightsHeaderTableViewCell"
     private static let REVIEW_HIGHLIGHTS_CELL_IDENTIFIER: String = "ReviewHighLightsTableViewCell"
-    
+    private static let REVIEW_HIGHLIGHTS_SECTIONS_TOGGLE_IDENTIFIER: String = "ReviewsSectionsToogleTableViewCell"
+    private static let REVIEW_CELL_IDENTIFIER: String = "ReviewTableViewCell"
+		
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,24 +49,6 @@ class ReviewsViewController: UIViewController, ViewControllerType {
         self.viewModel.fetchReviews()
         
         self.updateProductDetails()
-    }
-    
-    @IBAction func sortButtonAction(_ sender: UIButton) {
-        
-        let actionController = BVSwiftDemoActionController()
-        
-        ReviewsViewModel.FilterOptions.allCases.forEach { (filterOption) in
-            
-            actionController.addAction(Action(filterOption.rawValue, style: .default, handler: { action in
-                self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.init(rawValue: action.data!)!)
-                
-            }))
-        }
-        
-        actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
-        
-        self.viewModel.sortButtonTapped(actionController)
-        
     }
     
     func updateProductDetails() {
@@ -101,68 +79,71 @@ class ReviewsViewController: UIViewController, ViewControllerType {
     @objc func writeReviewTapped() {
         self.viewModel.writeReviewTapped()
     }
-    
-    private func updateReviewHightlightsTableViewHeightConstraints(indexPath: IndexPath) {
-        
-        if self.viewModel.isReviewHighlightsExpanded {
-            self.reviewHighlightsTableHeightConstraints.constant = CGFloat((100 + (self.viewModel.reviewHighlightsCountForIndexPath(indexPath) * 40)))
-        }
-        else {
-            self.reviewHighlightsTableHeightConstraints.constant = 100
-        }
-    }
 }
 
 // MARK:- UITableViewDataSource methods
 extension ReviewsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        
-        if tableView == self.reviewTableView {
-            return self.viewModel.numberOfSectionsForReviews
-        }
-        else {
-            return self.viewModel.numberOfSectionsForReviewHighlights
-        }
+        return self.viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if tableView == self.reviewTableView {
-            return self.viewModel.numberOfRowsForReview
-        }
-        else {
-            return self.viewModel.numberOfRowsForReviewHighlights(section)
+        return self.viewModel.numberOfRowsInSection(section)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch self.viewModel.reviewTableSections[section] {
+        case .features, .summary, .pros, .cons, .positiveQuotes, .negativeQuotes, .featureQuotes, .quotes, .reviews:
+            return 40
+        case .actionButtons:
+            return 0
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView == self.reviewHighlightsTableView {
-            
-            if indexPath.row == 0 {
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER) as! ReviewHighlightsHeaderTableViewCell
-                
-                cell.selectionStyle = .none
-                cell.setReviewHighlightsData(title: self.viewModel.reviewHighlightsHeaderTitleForIndexPath(indexPath),
-                                             count: self.viewModel.reviewHighlightsCountForIndexPath(indexPath))
-                
-                return cell
-                
-            }
-            else {
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_CELL_IDENTIFIER) as! ReviewHighLightsTableViewCell
-                
-                cell.selectionStyle = .none
-                cell.setReviewHighlightsTitle(title: self.viewModel.reviewHighlightsTitleForIndexPath(indexPath))
-                return cell
-                
-            }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_HEADER_CELL_IDENTIFIER) as! ReviewHighlightsHeaderTableViewCell
+        var image: String = ""
+        if self.viewModel.reviewTableSections[section] == .pros {
+            image = "plus.circle"
+        } else if self.viewModel.reviewTableSections[section] == .cons {
+            image = "minus.circle"
         }
-        else {
+        cell.setReviewHighlightsData(title: self.viewModel.headerTitleForSection(section), image: image)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let sectionType = self.viewModel.reviewTableSections[indexPath.section]
+        switch sectionType {
             
+        case .features, .summary, .pros, .cons, .positiveQuotes, .negativeQuotes, .featureQuotes, .quotes:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_CELL_IDENTIFIER) as! ReviewHighLightsTableViewCell
+            let displayText = self.viewModel.reviewHighlightsTitleForIndexPath(indexPath)
+            cell.setReviewHighlightsTitle(title: displayText)
+            if sectionType == .pros {
+                cell.titleLabel.textColor = UIColor.systemGreen
+                cell.setBgViewBorder(color: UIColor.systemGreen.withAlphaComponent(0.5))
+            } else if sectionType == .cons {
+                cell.titleLabel.textColor = UIColor.systemRed
+                cell.setBgViewBorder(color: UIColor.systemRed.withAlphaComponent(0.5))
+            } else {
+                cell.titleLabel.textColor = UIColor.systemGray
+                cell.setBgViewBorder(color: UIColor.systemGray.withAlphaComponent(0.5))
+            }
+            return cell
+
+        case .actionButtons:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_HIGHLIGHTS_SECTIONS_TOGGLE_IDENTIFIER) as! ReviewsSectionsToogleTableViewCell
+            cell.setButtonsTitle(sortButtonTitle: self.viewModel.sortButtonTitle)
+            cell.delegate = self
+            return cell
+
+        case .reviews:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReviewsViewController.REVIEW_CELL_IDENTIFIER) as! ReviewTableViewCell
             
             cell.selectionStyle = .none
@@ -177,6 +158,7 @@ extension ReviewsViewController: UITableViewDataSource {
             }
             
             return cell
+
         }
     }
     
@@ -185,22 +167,16 @@ extension ReviewsViewController: UITableViewDataSource {
 extension ReviewsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if tableView == self.reviewHighlightsTableView && indexPath.row == 0 {
-            
-            self.viewModel.didSelectRowAt(indexPath)
-            
-            self.updateReviewHightlightsTableViewHeightConstraints(indexPath: indexPath)
-            self.reviewHighlightsTableView.reloadData()
-        }
+        self.viewModel.didSelectRowAt(indexPath)
     }
 }
 
 extension ReviewsViewController: ReviewsViewControllerDelegate {
 
     func reloadData() {
-        self.reviewTableView.reloadData()
-        self.reviewHighlightsTableView.reloadData()
+        DispatchQueue.main.async {
+            self.reviewTableView.reloadData()
+        }
     }
     
     func showLoadingIndicator() {
@@ -210,8 +186,29 @@ extension ReviewsViewController: ReviewsViewControllerDelegate {
     func hideLoadingIndicator() {
         self.removeSpinner()
     }
+}
+
+extension ReviewsViewController: ReviewsSectionsToogleTableViewCellDelegate {
+    func didToggleReviewHighlights(isOn: Bool) {
+        self.viewModel.toggleReviewHighlights(isOn: isOn)
+        self.reviewTableView.reloadData()
+    }
     
-    func updateSortButtonTitle(title: String) {
-        self.sortButton.setTitle(title, for: UIControl.State())
+    func didSortReviews() {
+        let actionController = BVSwiftDemoActionController()
+        
+        ReviewsViewModel.FilterOptions.allCases.forEach { (filterOption) in
+            
+            actionController.addAction(Action(filterOption.rawValue, style: .default, handler: { action in
+                self.viewModel.didChangeFilterOption(ReviewsViewModel.FilterOptions.init(rawValue: action.data!)!)
+                
+            }))
+        }
+        
+        actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
+        
+        self.viewModel.sortButtonTapped(actionController)
+        
     }
 }
+

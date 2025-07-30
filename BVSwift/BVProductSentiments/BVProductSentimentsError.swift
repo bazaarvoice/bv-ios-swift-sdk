@@ -120,7 +120,7 @@ extension BVProductSentimentsError: BVError {
 }
 
 extension BVProductSentimentsError {
-    internal init?(_ code: String, message: String? = nil) {
+    public init?(_ code: String, message: String? = nil) {
         switch code {
         case "204":
             self = .noContent(message)
