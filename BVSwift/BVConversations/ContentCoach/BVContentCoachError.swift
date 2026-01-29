@@ -1,27 +1,27 @@
 //
 //
-//  BVProductSentimentsError.swift
+//  BVContentCoachError.swift
 //  BVSwift
 //
-//  Copyright © 2024 Bazaarvoice. All rights reserved.
+//  Copyright © 2026 Bazaarvoice. All rights reserved.
 //
 
 import Foundation
 
-public enum BVProductSentimentsError {
+public enum BVContentCoachError {
     /// No content in response
     /// - Note:
     /// \
     /// ERROR_NO_CONTENT
     case noContent(String?)
-
+    
     /// Authentication token is invalid, missing or the user has already been
     /// authenticated
     /// - Note:
     /// \
     /// ERROR_BAD_REQUEST
     case badRequest(String?)
-
+    
     /// Insufficient privileges to perform the operation
     /// - Note:
     /// \
@@ -39,7 +39,7 @@ public enum BVProductSentimentsError {
     /// \
     /// ERROR_UNKNOWN
     case unknown(String?)
-
+    
     private enum CodingKeys: CodingKey {
         case code
         case type
@@ -48,7 +48,7 @@ public enum BVProductSentimentsError {
     }
 }
 
-extension BVProductSentimentsError: Codable {
+extension BVContentCoachError: Codable {
     /// Conformance with Encodable. Currently it isn't implemented and therefore
     /// shouldn't be used. It will fatalError to remind you :)
     /// - Note:
@@ -86,7 +86,7 @@ extension BVProductSentimentsError: Codable {
 }
 
 /// Conformance with the BVError Protocol
-extension BVProductSentimentsError: BVError {
+extension BVContentCoachError: BVError {
     public var message: String {
         switch self {
         case .accessDenied(.some(let title)): return title
@@ -119,7 +119,7 @@ extension BVProductSentimentsError: BVError {
     }
 }
 
-extension BVProductSentimentsError {
+extension BVContentCoachError {
     public init?(_ code: String, message: String? = nil) {
         if code == "200" {
             return nil
@@ -133,7 +133,7 @@ extension BVProductSentimentsError {
             self = .accessDenied(message)
         case "429":
             self = .requestLimitReached(message)
-        /// Non-standard default "catch all" unknown errors
+            /// Non-standard default "catch all" unknown errors
         default:
             self = .unknown(message)
         }

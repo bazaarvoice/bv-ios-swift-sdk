@@ -429,6 +429,15 @@ internal struct BVConversationsConstants {
       static let passKey: String = "passkey"
     }
   }
+    
+    internal struct BVContentCoach {
+        static let reviewTokensResource: String = "reviewtokens"
+        static let matchedTokensResource: String = "matchedtokens"
+        
+        internal struct Keys {
+          static let reviewText: String = "reviewText"
+        }
+    }
 }
 
 internal extension Bundle {

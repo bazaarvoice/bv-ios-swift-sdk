@@ -131,7 +131,7 @@ class BVReviewQueryTest: XCTestCase {
     super.tearDown()
     
     // Commented the below line as this method gets called while the analytics event tracking execution is in progress and it sets skipAllPixelEvents to false.
-    //BVPixel.skipAllPixelEvents = false
+    BVPixel.skipAllPixelEvents = false
   }
   
   func testReviewQueryConstruction() {
