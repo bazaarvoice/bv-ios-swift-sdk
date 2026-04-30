@@ -45,24 +45,37 @@ class BVReviewTokensQueryTest: XCTestCase {
         let query = BVReviewTokensQuery(productId: "P000036")
             .configure(BVReviewTokensQueryTest.config)
             .handler { (response: BVContentCoachQueryResponse<BVReviewTokens>) in
-                
-                if case .failure(let error) = response {
-                  print(error)
-                  XCTFail()
-                  expectation.fulfill()
-                  return
+                switch response {
+                case .success(let tokensResponse):
+                    guard let status = tokensResponse.status,
+                            let error = BVContentCoachError("\(status)", message: tokensResponse.detail)
+                    else {
+                        guard let tokens = tokensResponse.tokens else {
+                            print("No tokens returned")
+                            XCTFail()
+                            expectation.fulfill()
+                            return
+                        }
+                        print(tokens)
+                        XCTAssertNotNil(tokensResponse)
+                        expectation.fulfill()
+                        return
+                    }
+                    print(error.code + " : " + error.message)
+                    XCTFail()
+                    expectation.fulfill()
+                case .failure(let errors):
+                    errors.forEach { (error: Error) in
+                        guard let bverror: BVError = error as? BVError
+                        else {
+                            return
+                        }
+                        print(bverror.message)
+                    }
+                    XCTFail()
+                    expectation.fulfill()
                 }
-              
-              guard case let .success(tokensResponse) = response else {
-                  XCTFail()
-                  expectation.fulfill()
-                  return
-                }
-                print(tokensResponse.data ?? "")
-                XCTAssertNotNil(tokensResponse)
-                expectation.fulfill()
-              }
-        
+            }
         query.async()
         self.waitForExpectations(timeout: 30) { (error) in
             XCTAssertNil(

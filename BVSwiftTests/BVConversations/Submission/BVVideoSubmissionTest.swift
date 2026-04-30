@@ -18,8 +18,8 @@ final class BVVideoSubmissionTest: XCTestCase {
             .dryRun(
                 configType: .staging(clientId: "apitestcustomer"))
         
-        return BVConversationsConfiguration.all(
-            clientKey: "kuy3zj9pr3n7i0wxajrzj04xo",
+        return BVConversationsConfiguration.videoSubmission(
+            clientKey: BVTestKeys.conversationsKey,
             configType: .staging(clientId: "apitestcustomer"),
             analyticsConfig: analyticsConfig)
     }()
@@ -104,5 +104,146 @@ final class BVVideoSubmissionTest: XCTestCase {
             XCTAssertNil(
                 error, "Something went horribly wrong, request took too long.")
         }
+    }
+    
+    // MARK: - Request Construction Tests
+    
+    private static let kAuthKeyParam = BVConversationsConstants.BVVideo.Keys.passKey
+    private static let kApiVersionParam = BVConversationsConstants.BVVideo.Keys.apiVersion
+    
+    @available(iOS 16.0, *)
+    func testVideoUploadRequestHasAuthKeyInQueryParams() throws {
+        guard let path = BVVideoSubmissionTest.getVideoPath() else {
+            XCTFail("Could not get video path")
+            return
+        }
+        
+        let video = BVVideo(URL(filePath: path), caption: "Test Video", uploadVideo: true)
+        
+        guard let videoSubmission = BVVideoSubmission(video: video) else {
+            XCTFail("Could not create BVVideoSubmission")
+            return
+        }
+        
+        videoSubmission.configure(BVVideoSubmissionTest.config)
+        
+        guard let request = videoSubmission.request,
+              let url = request.url,
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems else {
+            XCTFail("Could not get URL or query items from request")
+            return
+        }
+        
+        let authKey = queryItems.first(where: { $0.name == BVVideoSubmissionTest.kAuthKeyParam })?.value
+        XCTAssertNotNil(authKey, "auth key should be present as a URL query parameter")
+        XCTAssertEqual(authKey, BVTestKeys.conversationsKey,
+                       "auth key should match the configured client key")
+    }
+    
+    @available(iOS 16.0, *)
+    func testVideoUploadRequestHasApiVersionInQueryParams() throws {
+        guard let path = BVVideoSubmissionTest.getVideoPath() else {
+            XCTFail("Could not get video path")
+            return
+        }
+        
+        let video = BVVideo(URL(filePath: path), caption: "Test Video", uploadVideo: true)
+        
+        guard let videoSubmission = BVVideoSubmission(video: video) else {
+            XCTFail("Could not create BVVideoSubmission")
+            return
+        }
+        
+        videoSubmission.configure(BVVideoSubmissionTest.config)
+        
+        guard let request = videoSubmission.request,
+              let url = request.url,
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems else {
+            XCTFail("Could not get URL or query items from request")
+            return
+        }
+        
+        let apiversion = queryItems.first(where: { $0.name == BVVideoSubmissionTest.kApiVersionParam })?.value
+        XCTAssertEqual(apiversion, "5.4",
+                       "apiversion query param should be 5.4")
+    }
+    
+    @available(iOS 16.0, *)
+    func testVideoUploadRequestHasCorrectEndpoint() throws {
+        guard let path = BVVideoSubmissionTest.getVideoPath() else {
+            XCTFail("Could not get video path")
+            return
+        }
+        
+        let video = BVVideo(URL(filePath: path), caption: "Test Video", uploadVideo: true)
+        
+        guard let videoSubmission = BVVideoSubmission(video: video) else {
+            XCTFail("Could not create BVVideoSubmission")
+            return
+        }
+        
+        videoSubmission.configure(BVVideoSubmissionTest.config)
+        
+        guard let request = videoSubmission.request,
+              let url = request.url else {
+            XCTFail("Could not get URL from request")
+            return
+        }
+        
+        XCTAssertTrue(url.absoluteString.contains("uploadvideo.json"),
+                      "URL should contain uploadvideo.json endpoint")
+    }
+    
+    @available(iOS 16.0, *)
+    func testVideoUploadRequestIsPostMethod() throws {
+        guard let path = BVVideoSubmissionTest.getVideoPath() else {
+            XCTFail("Could not get video path")
+            return
+        }
+        
+        let video = BVVideo(URL(filePath: path), caption: "Test Video", uploadVideo: true)
+        
+        guard let videoSubmission = BVVideoSubmission(video: video) else {
+            XCTFail("Could not create BVVideoSubmission")
+            return
+        }
+        
+        videoSubmission.configure(BVVideoSubmissionTest.config)
+        
+        guard let request = videoSubmission.request else {
+            XCTFail("Could not get request")
+            return
+        }
+        
+        XCTAssertEqual(request.httpMethod, "POST",
+                       "Video upload should use POST method")
+    }
+    
+    @available(iOS 16.0, *)
+    func testVideoUploadRequestHasMultipartContentType() throws {
+        guard let path = BVVideoSubmissionTest.getVideoPath() else {
+            XCTFail("Could not get video path")
+            return
+        }
+        
+        let video = BVVideo(URL(filePath: path), caption: "Test Video", uploadVideo: true)
+        
+        guard let videoSubmission = BVVideoSubmission(video: video) else {
+            XCTFail("Could not create BVVideoSubmission")
+            return
+        }
+        
+        videoSubmission.configure(BVVideoSubmissionTest.config)
+        
+        guard let request = videoSubmission.request,
+              let contentType = request.value(forHTTPHeaderField: "Content-Type") else {
+            XCTFail("Could not get Content-Type header from request")
+            return
+        }
+        
+        XCTAssertTrue(contentType.contains("multipart/form-data"),
+                      "Content-Type should be multipart/form-data")
     }
 }

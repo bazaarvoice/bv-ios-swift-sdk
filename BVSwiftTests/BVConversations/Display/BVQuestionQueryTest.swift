@@ -4,7 +4,7 @@
 //  BVSwiftTests
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -36,6 +36,19 @@ class BVQuestionQueryTest: XCTestCase {
         return BVConversationsConfiguration.display(
             clientKey: "carz85SqKJp9FrZgeb2irdiEBT4b0DSe7m1KUm18elijE",
             configType: .staging(clientId: "testcust-contentoriginsynd"),
+            analyticsConfig: analyticsConfig)
+    }()
+    
+    private static var automatedAnswersConfig: BVConversationsConfiguration =
+    { () -> BVConversationsConfiguration in
+        
+        let analyticsConfig: BVAnalyticsConfiguration =
+            .dryRun(
+                configType: .staging(clientId: "test-editreviews"))
+        
+        return BVConversationsConfiguration.display(
+            clientKey: "ca8Dcp1IgAMa9DF5SYWcjbRGonmORqex6w87jwansqKOE",
+            configType: .staging(clientId: "test-editreviews"),
             analyticsConfig: analyticsConfig)
     }()
     
@@ -234,6 +247,60 @@ class BVQuestionQueryTest: XCTestCase {
         }
         
         print(req)
+        
+        questionQuery.async()
+        
+        self.waitForExpectations(timeout: 20) { (error) in
+            XCTAssertNil(
+                error, "Something went horribly wrong, request took too long.")
+        }
+    }
+    
+    func testAutomatedAnswerDisplay() {
+        
+        let expectation =
+            self.expectation(description: "testAutomatedAnswerDisplay")
+        
+        let questionQuery =
+            BVQuestionQuery(productId: "testproduct_locale_en_iq", limit: 10, offset: 0)
+                .include(.answers)
+                .configure(BVQuestionQueryTest.automatedAnswersConfig)
+                .handler { (response: BVConversationsQueryResponse<BVQuestion>) in
+                    
+                    if case .failure(let error) = response {
+                        print(error)
+                        XCTFail()
+                        expectation.fulfill()
+                        return
+                    }
+                    
+                    guard case let .success(_, questions) = response else {
+                        XCTFail()
+                        expectation.fulfill()
+                        return
+                    }
+                    
+                    guard let question: BVQuestion = questions.first,
+                        let answers: [BVAnswer] = question.answers else {
+                            XCTFail()
+                            expectation.fulfill()
+                            return
+                    }
+                    var aiGeneratedFlag = false
+                    var aiAssistedFlag = false
+                    for answer in answers {
+                        if answer.answerId == "2550582" {
+                            XCTAssertEqual(answer.automatedAnswerSource, "AI-Generated")
+                            aiGeneratedFlag = true
+                        } else if answer.answerId == "2550583" {
+                            XCTAssertEqual(answer.automatedAnswerSource, "AI-Assisted")
+                            aiAssistedFlag = true
+                        }
+                    }
+                    XCTAssertTrue(aiGeneratedFlag, "Expected answerId 2550582 present in the response.")
+                    XCTAssertTrue(aiAssistedFlag, "Expected answerId 2550583 present in the response.")
+                    expectation.fulfill()
+        }
         
         questionQuery.async()
         

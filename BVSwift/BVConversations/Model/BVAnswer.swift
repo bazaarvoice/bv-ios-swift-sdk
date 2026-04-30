@@ -68,6 +68,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
   public let userLocation: String?
   public let userNickname: String?
   public let videos: [BVVideo]?
+  public let automatedAnswerSource: String?
   
   private enum CodingKeys: String, CodingKey {
     case additionalFieldsDecoder = "AdditionalFields"
@@ -98,6 +99,7 @@ public struct BVAnswer: BVQueryable, BVSubmissionable {
     case userLocation = "UserLocation"
     case userNickname = "UserNickname"
     case videos = "Videos"
+    case automatedAnswerSource = "AutomatedAnswerSource"
   }
 }
 
@@ -131,6 +133,7 @@ extension BVAnswer {
     self.userLocation = nil
     self.userNickname = nil
     self.videos = nil
+    self.automatedAnswerSource = nil
   }
 }
 

@@ -42,35 +42,47 @@ class BVMatchedTokensQueryTest: XCTestCase {
         let expectation =
         self.expectation(description: "testMatchedTokensQuery")
         let tokens = BVMatchedTokens(productId: "P000036", reviewText: "This product has great absorption and fragrance.")
-        let tokensSubmission = BVMatchedTokensSubmission(tokens)!
+        guard let tokensSubmission = BVMatchedTokensSubmission(tokens) else {
+            XCTFail()
+            expectation.fulfill()
+            return
+        }
+        tokensSubmission
             .configure(BVMatchedTokensQueryTest.config)
             .handler { (response: BVContentCoachSubmissionResponse<BVMatchedTokens>) in
-                if case .failure(let error) = response {
-                    print(error)
+                switch response {
+                case .success(let tokensResponse):
+                    guard let status = tokensResponse.status,
+                            let error = BVContentCoachError("\(status)", message: tokensResponse.detail)
+                    else {
+                        guard let tokens = tokensResponse.tokens else {
+                            print("No tokens returned")
+                            XCTFail()
+                            expectation.fulfill()
+                            return
+                        }
+                        print(tokens)
+                        XCTAssertEqual(tokensResponse.tokens?.count, 2)
+                        XCTAssertNotNil(tokensResponse)
+                        expectation.fulfill()
+                        return
+                    }
+                    print(error.code + " : " + error.message)
                     XCTFail()
                     expectation.fulfill()
-                    return
-                }
-                
-                guard case let .success(tokensResponse) = response else {
-                    XCTFail()
-                    expectation.fulfill()
-                    return
-                }
-                
-                guard let status = tokensResponse.status,
-                        let sentimentsError =
-                        BVContentCoachError("\(status)", message: tokensResponse.detail)
-                else {
-                    XCTAssertEqual(tokensResponse.tokens?.count, 2)
-                    XCTAssertNotNil(tokensResponse)
-                    expectation.fulfill()
-                    return
-                }
 
-                print(sentimentsError.code + " : " + sentimentsError.message)
-                XCTFail()
-                expectation.fulfill()
+                case .failure(let errors):
+                    errors.forEach { (error: Error) in
+                        guard let bverror: BVError = error as? BVError
+                        else {
+                            print("Unknown error")
+                            return
+                        }
+                        print(bverror.message)
+                    }
+                    XCTFail()
+                    expectation.fulfill()
+                }
             }
         
         tokensSubmission.async()

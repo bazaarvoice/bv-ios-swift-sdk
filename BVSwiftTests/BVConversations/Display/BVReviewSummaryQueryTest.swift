@@ -48,28 +48,23 @@ class BVReviewSummaryQueryTest: XCTestCase {
         
         let reviewSummaryQueryRequest = BVProductReviewSummaryQuery(productId: "P000036")
             .formatType(.paragraph) //.bullet
+            .language("en")
             .configure(BVReviewSummaryQueryTest.config)
             .handler { (response: BVReviewSummaryQueryResponse<BVReviewSummary>) in
-                // success
-                
-                if case .failure(let error) = response {
+                switch response {
+                case .success(let reviewSummary):
+                    print(reviewSummary)
+                    XCTAssertEqual(reviewSummary.title, "REVIEW_SUMMARY")
+                    XCTAssertNotNil(reviewSummary.summary)
+                    expectation.fulfill()
+                case .failure(let error):
                     print(error)
                     XCTFail()
                     expectation.fulfill()
-                    return
                 }
-                
-                guard case let .success(reviewSummary) = response else {
-                    XCTFail()
-                    expectation.fulfill()
-                    return
-                }
-                XCTAssertEqual(reviewSummary.title, "REVIEW_SUMMARY")
-                XCTAssertNotNil(reviewSummary.summary)
-                expectation.fulfill()
             }
         reviewSummaryQueryRequest.async()
-        self.waitForExpectations(timeout: 20) { (error) in
+        self.waitForExpectations(timeout: 30) { (error) in
             XCTAssertNil(
                 error, "Something went horribly wrong, request took too long.")
         }

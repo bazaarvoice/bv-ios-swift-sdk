@@ -16,7 +16,7 @@ import UIKit
 /// BVSubmission.
 public struct BVPhoto: BVSubmissionable {
   
-  private static var MaxImageBytes: UInt =  (5 * 1024 * 1024)
+  private static var MaxImageBytes: UInt =  (30 * 1024 * 1024)
   
   public static var singularKey: String {
     return "Photo"

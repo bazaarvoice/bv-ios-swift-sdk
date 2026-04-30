@@ -22,13 +22,12 @@ public struct BVReviewTokens: BVQueryable {
     public static var pluralKey: String {
         return ""
     }
-    
-    public let data: [String]?
+    public let tokens: [String]?
     public let status: Int?
     public let type, title, detail: String?
     
     private enum CodingKeys: String, CodingKey {
-        case data = "data"
+        case tokens = "data"
         case status = "status"
         case type = "type"
         case title = "title"

@@ -153,10 +153,18 @@ extension BVURLRequestableWithHandlerInternal {
     }
     
     if 400 < httpResponse.statusCode {
-      let err = BVCommonError.network(
-        httpResponse.statusCode, "HTTP Response <= 300")
-      responseHandler?(.failure([err]))
-      return
+        guard let data = data,
+              let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+              let detail = jsonObject["detail"] as? String else {
+            let err = BVCommonError.network(
+              httpResponse.statusCode, "HTTP Response <= 300")
+            responseHandler?(.failure([err]))
+            return
+        }
+        let err = BVCommonError.network(
+            httpResponse.statusCode, detail)
+        responseHandler?(.failure([err]))
+        return
     }
     
     guard let jsonData: Data = data else {

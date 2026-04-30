@@ -11,10 +11,10 @@ import Foundation
 /// Protocol defining the meta-data header for ContentCoach
 public protocol BVContentCoachQueryResponseMetaData { }
 
-/// Public return type for all BVConversation Submissions
+/// Public return type for all BVContentCoach query responses
 /// - Note:
 /// \
-/// The result type must always be a BVSubmissionable type.
+/// The result type must always be a BVQueryable type.
 public enum BVContentCoachQueryResponse
 <BVType: BVQueryable>: BVURLRequestableResponse {
     public typealias ResponseType = BVType

@@ -42,14 +42,12 @@ public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
       }
     }
     
-    guard let passKey = checkConfigurationForSubmission(),
+    guard let _ = checkConfigurationForSubmission(),
       let contentType = photo.contentType?.description else {
         return nil
     }
     
     return [
-      BVConstants.apiVersionField: Bundle.conversationsApiVersion,
-      BVConversationsConstants.BVPhoto.Keys.passKey: passKey,
       BVConversationsConstants.BVPhoto.Keys.contentTypeKey: contentType,
       BVConversationsConstants.BVPhoto.Keys.dataKey: photoData
     ]
@@ -104,6 +102,12 @@ public class BVPhotoSubmission: BVConversationsSubmission<BVPhoto> {
     return submissionBoundary
   }
   
+  override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
+    return { [weak self] in
+      return self?.submissionParameters
+    }
+  }
+
   override internal var contentBodyTypeClosure: (
     (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
     return { [weak self] in

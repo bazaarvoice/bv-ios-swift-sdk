@@ -33,7 +33,7 @@ extension BVProductFeatures: BVQueryableInternal {
 public struct BVProductFeature: Codable {
     public var feature: String?
     public let featureID: String?
-    public let percentPositive: Int?
+    public let percentPositive: Float?
     public let nativeFeature: String?
     public let reviewsMentioned, averageRatingReviews: AverageRatingReviews?
     public let embedded: BVQuotes?
@@ -48,7 +48,5 @@ public struct BVProductFeature: Codable {
 
 // MARK: - AverageRatingReviews
 public struct AverageRatingReviews: Codable {
-    let positive: Double?
-    let negative, incentivized: Int?
-    let total: Int?
+    let positive, negative, incentivized, total: Float?
 }

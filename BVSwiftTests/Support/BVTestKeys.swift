@@ -8,6 +8,9 @@
 
 import Foundation
 class BVTestKeys {
+    /// Staging conversations API key used across all test files
+    static let conversationsKey = "kuy3zj9pr3n7i0wxajrzj04xo"
+    
     enum testTokenKeys: String {
         case validUser = "validUser"
         case invalidUser = "invalidUser"

@@ -27,30 +27,16 @@ public class BVVideoSubmission: BVConversationsSubmission<BVVideo> {
   private func generateBodyContent(
     _ type: BVSubmissionableInternal) -> [String: Any]? {
     guard let video: BVVideo = type as? BVVideo,
-      let videoData: Data = video.encodeVideoToData(),
-      let config: BVConversationsConfiguration = self.configuration else {
+      let videoData: Data = video.encodeVideoToData() else {
         return nil
     }
     self.fileName = video.videoUrl?.value?.lastPathComponent
-    let checkConfigurationForSubmission = { () -> String? in
-      switch config {
-      case .all:
-        fallthrough
-      case .submission:
-        return config.configurationKey
-      default:
-        return nil
-      }
-    }
     
-    guard let passKey = checkConfigurationForSubmission(),
-      let contentType = video.contentType?.description else {
+    guard let contentType = video.contentType?.description else {
         return nil
     }
     
     return [
-      BVConstants.apiVersionField: Bundle.conversationsApiVersion,
-      BVConversationsConstants.BVVideo.Keys.passKey: passKey,
       BVConversationsConstants.BVVideo.Keys.contentTypeKey: contentType,
       BVConversationsConstants.BVVideo.Keys.dataKey: videoData
     ]
@@ -105,6 +91,17 @@ public class BVVideoSubmission: BVConversationsSubmission<BVVideo> {
     return submissionBoundary
   }
   
+  override var urlQueryItemsClosure: (() -> [URLQueryItem]?)? {
+      return {
+           var submissionParameters: [URLQueryItem] =
+              [URLQueryItem(name: BVConversationsConstants.BVVideo.Keys.passKey,
+                            value: self.configuration?.configurationKey),
+               URLQueryItem(name: BVConversationsConstants.BVVideo.Keys.apiVersion,
+                            value: Bundle.conversationsApiVersion)]
+          return submissionParameters
+      }
+  }
+
   override internal var contentBodyTypeClosure: (
     (BVSubmissionableInternal) -> BVURLRequestBodyType?)? {
     return { [weak self] in

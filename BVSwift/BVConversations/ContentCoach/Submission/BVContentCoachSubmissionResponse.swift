@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Public return type for all BVConversation Submissions
+/// Public return type for all BVContentCoach Submissions
 /// - Note:
 /// \
 /// The result type must always be a BVSubmissionable type.

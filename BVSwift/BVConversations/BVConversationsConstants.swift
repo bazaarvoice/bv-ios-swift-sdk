@@ -421,12 +421,16 @@ internal struct BVConversationsConstants {
   }
   
   internal struct BVVideo {
+      static let stagingEndpoint: String = "https://stgmedia.api.bazaarvoice.com/data/"
+      static let productionEndpoint: String = "https://media.api.bazaarvoice.com/data/"
+
     static let singularKey: String = "Video"
     static let pluralKey: String = "Videos"
     internal struct Keys {
-      static let contentTypeKey: String = "contenttype"
-      static let dataKey: String = "video"
-      static let passKey: String = "passkey"
+      static let apiVersion: String = "ApiVersion"
+      static let contentTypeKey: String = "contentType"
+      static let dataKey: String = "Video"
+      static let passKey: String = "PassKey"
     }
   }
     

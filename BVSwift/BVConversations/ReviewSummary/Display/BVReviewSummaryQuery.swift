@@ -94,48 +94,69 @@ extension BVReviewSummaryQuery: BVQueryActionable {
   }
   
   @discardableResult
-  public func handler(completion: @escaping ((Response) -> Void)) -> Self {
-    
-    responseHandler = { [weak self] in
+    public func handler(completion: @escaping ((Response) -> Void)) -> Self {
         
-        if self?.ignoreCompletion ?? true {
-          return
+        responseHandler = { [weak self] in
+            
+            if self?.ignoreCompletion ?? true {
+                return
+            }
+            
+            switch $0 {
+            case let .success(_, jsonData):
+                
+#if DEBUG
+                do {
+                    let jsonObject =
+                    try JSONSerialization.jsonObject(with: jsonData, options: [])
+                    BVLogger.sharedLogger.debug(
+                        BVLogMessage(
+                            BVConversationsConstants.bvProduct,
+                            msg: "RAW JSON:\n\(jsonObject)"))
+                } catch {
+                    BVLogger.sharedLogger.error(
+                        BVLogMessage(
+                            BVConversationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
+                }
+#endif
+                
+                guard let response: BVType = try? JSONDecoder().decode(BVType.self, from: jsonData) else {
+                    completion(.failure(
+                        [BVConversationsError.unknown("An Unknown parse error occurred")]))
+                    return
+                }
+                guard let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
+                      let detail = jsonObject["detail"] as? String else {
+                    completion(.failure([BVConversationsError.unknown("An Unknown parse error occurred")]))
+                    return
+                }
+                let status = jsonObject["status"] as? Int
+                
+                switch status {
+                case 200:
+                    completion(.success(response))
+                case 400:
+                    completion(.failure(
+                        [BVConversationsError.badRequest(detail)]))
+                case 401:
+                    completion(.failure(
+                        [BVConversationsError.accessDenied(detail)]))
+                case 403:
+                    completion(.failure(
+                        [BVConversationsError.invalidApiKey(detail)]))
+                default:
+                    completion(.failure(
+                        [BVConversationsError.unknown(detail)]))
+                }
+                self?.reviewSummaryPostflight(response)
+                
+            case let .failure(errors):
+                completion(.failure(errors))
+            }
         }
         
-        switch $0 {
-        case let .success(_, jsonData):
-          
-          #if DEBUG
-          do {
-            let jsonObject =
-              try JSONSerialization.jsonObject(with: jsonData, options: [])
-            BVLogger.sharedLogger.debug(
-              BVLogMessage(
-                BVConversationsConstants.bvProduct,
-                msg: "RAW JSON:\n\(jsonObject)"))
-          } catch {
-            BVLogger.sharedLogger.error(
-              BVLogMessage(
-                BVConversationsConstants.bvProduct, msg: "JSON ERROR: \(error)"))
-          }
-          #endif
-          
-          guard let response: BVType = try? JSONDecoder().decode(BVType.self, from: jsonData) else {
-                  completion(.failure(
-                      [BVCommonError.unknown("An Unknown parse error occurred")]))
-                  return
-          }
-
-            completion(.success(response))
-            self?.reviewSummaryPostflight(response)
-          
-        case let .failure(errors):
-          completion(.failure(errors))
-        }
-      }
-    
-    return self
-  }
+        return self
+    }
 }
 
 // MARK: - BVReviewSummaryQuery: BVConfigurableInternal
@@ -216,6 +237,16 @@ extension BVReviewSummaryQuery {
     public func formatType(_ value: BVFormatStatsType) -> Self {
         let formatType: BVURLParameter = .field(BVFormatStats(value), nil)
         add(formatType)
+        return self
+    }
+}
+
+// MARK: - BVSummarisedFeaturesQuery: BVQueryLanguageStatable
+extension BVReviewSummaryQuery: BVQueryLanguageStatable {
+    @discardableResult
+    public func language(_ value: String) -> Self {
+        let language: BVURLParameter = .field(BVLanguageStat(value), nil)
+        add(language)
         return self
     }
 }

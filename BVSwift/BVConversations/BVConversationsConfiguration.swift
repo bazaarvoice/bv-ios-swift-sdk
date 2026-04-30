@@ -53,6 +53,18 @@ public enum BVConversationsConfiguration: BVConfiguration {
     clientKey: String,
     configType: BVConfigurationType,
     analyticsConfig: BVAnalyticsConfiguration)
+    
+    /// This configuration allows for ONLY video submission request configurations.
+    /// - Parameters:
+    ///   - clientKey: The client conversations API key
+    ///   - configType: The base BVConfigurationType for this conversations
+    ///     configuration.
+    ///   - analyticsConfig: The BVAnalyticsConfiguration used mosty for
+    ///     debugging as well as setting proper locales for user data policies.
+    case videoSubmission(
+      clientKey: String,
+      configType: BVConfigurationType,
+      analyticsConfig: BVAnalyticsConfiguration)
   
   /// See Protocol Definition for more info
   public var configurationKey: String {
@@ -62,6 +74,8 @@ public enum BVConversationsConfiguration: BVConfiguration {
     case let .display(clientKey, _, _):
       return clientKey
     case let .submission(clientKey, _, _):
+      return clientKey
+    case let .videoSubmission(clientKey, _, _):
       return clientKey
     }
   }
@@ -75,17 +89,28 @@ public enum BVConversationsConfiguration: BVConfiguration {
       return configType
     case let .submission(_, configType, _):
       return configType
+    case let .videoSubmission(_, configType, _):
+      return configType
     }
   }
   
   /// See Protocol Definition for more info
   public var endpoint: String {
-    guard case .staging(_) = self.type else {
-      return
-        BVConversationsConstants.productionEndpoint
-    }
-    
-    return BVConversationsConstants.stagingEndpoint
+      switch self {
+      case .videoSubmission(_, _, _):
+          guard case .staging(_) = self.type else {
+            return
+              BVConversationsConstants.BVVideo.productionEndpoint
+          }
+          return BVConversationsConstants.BVVideo.stagingEndpoint
+      default:
+          guard case .staging(_) = self.type else {
+            return
+              BVConversationsConstants.productionEndpoint
+          }
+          return BVConversationsConstants.stagingEndpoint
+      }
+
   }
   
   internal var analyticsConfiguration: BVAnalyticsConfiguration {
@@ -95,6 +120,8 @@ public enum BVConversationsConfiguration: BVConfiguration {
     case let .display(_, _, analyticsConfig):
       return analyticsConfig
     case let .submission(_, _, analyticsConfig):
+      return analyticsConfig
+    case let .videoSubmission(_, _, analyticsConfig):
       return analyticsConfig
     }
   }
@@ -128,6 +155,12 @@ extension BVConversationsConfiguration: Equatable {
         lhsType == rhsType &&
         lhsAnalytics == rhsAnalytics:
       return true
+    case let (.videoSubmission(lhsClientKey, lhsType, lhsAnalytics),
+              .videoSubmission(rhsClientKey, rhsType, rhsAnalytics)) where
+      lhsClientKey == rhsClientKey &&
+        lhsType == rhsType &&
+        lhsAnalytics == rhsAnalytics:
+      return true
     default:
       return false
     }
@@ -150,6 +183,11 @@ extension BVConversationsConfiguration: Hashable {
       hasher.combine(analyticsConfig)
     case let .submission(clientKey, configType, analyticsConfig):
       hasher.combine("submission")
+      hasher.combine(clientKey)
+      hasher.combine(configType)
+      hasher.combine(analyticsConfig)
+    case let .videoSubmission(clientKey, configType, analyticsConfig):
+      hasher.combine("videoSubmission")
       hasher.combine(clientKey)
       hasher.combine(configType)
       hasher.combine(analyticsConfig)

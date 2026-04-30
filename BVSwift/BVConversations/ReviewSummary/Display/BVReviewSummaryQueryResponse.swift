@@ -8,13 +8,13 @@
 
 import Foundation
 
-/// Protocol defining the meta-data header for MultiProductQuery
+/// Protocol defining the meta-data header for ReviewSummaryQuery
 public protocol BVReviewSummaryQueryResponseMetaData { }
 
-/// Public return type for all BVConversation Submissions
+/// Public return type for all BVConversation Queries
 /// - Note:
 /// \
-/// The result type must always be a BVSubmissionable type.
+/// The result type must always be a BVQueryable type.
 public enum BVReviewSummaryQueryResponse
 <BVType: BVQueryable>: BVURLRequestableResponse {
     public typealias ResponseType = BVType
