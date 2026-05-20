@@ -97,7 +97,7 @@ public struct BVPhoto: BVSubmissionable {
     while BVPhoto.MaxImageBytes <= data.count {
       
       if let lossy: Data =
-        workingImage.jpegData(compressionQuality: 9.0) {
+        workingImage.jpegData(compressionQuality: 0.9) {
         data = lossy
       }
       
@@ -135,9 +135,9 @@ public struct BVPhotoSize: Codable {
 }
 
 extension BVPhoto {
-  public init(_ image: UIImage, _ caption: String? = nil) {
+  public init(_ image: UIImage, _ caption: String? = nil, _ contentType: ContentType? = nil) {
     self.caption = caption
-    self.contentType = nil
+    self.contentType = contentType
     self.image = image
     self.photoId = nil
     self.photoSizesArray = nil
