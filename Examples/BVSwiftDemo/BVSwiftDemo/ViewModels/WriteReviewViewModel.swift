@@ -206,7 +206,7 @@ class WriteReviewViewModel: ViewModelType {
     //Make it true if you want do Progressive Submission and pass your session token from ConfigurationManager -> submissionSessionToken
     private var isProgressiveSubmission: Bool = false
     
-    private var reviewSubmissionDictionary: NSMutableDictionary = [:]
+     var reviewSubmissionDictionary: NSMutableDictionary = [:]
     
     private var videoPath: URL?
     
@@ -326,7 +326,7 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
         
         let usLocale: Locale = Locale(identifier: User.local)
         
-        (reviewSubmission
+        reviewSubmission
             <+> .preview // don't actually just submit for real, this is just for demo
             <+> .locale(usLocale)
             <+> .sendEmailWhenCommented(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.sendEmailAlertWhenPublishedFieldKey) as? Bool ?? true)
@@ -335,8 +335,8 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
             <+> .nickname(self.reviewSubmissionDictionary.value(forKey: UserFormConstants.userNicknameFieldKey) as? String ?? "")
             <+> .email(email)
             <+> .identifier(User.id)
-            )
             
+        reviewSubmission
             .configure(ConfigurationManager.sharedInstance.conversationsConfig)
         
         reviewSubmission
@@ -428,5 +428,54 @@ extension WriteReviewViewModel: WriteReviewViewModelDelegate {
 extension WriteReviewViewModel {
     func addVideo(url: URL) {
         self.videoPath = url
+    }
+}
+
+extension WriteReviewViewModel {
+    
+    /// Queries the BazaarVoice Content Coach API for suggested review tokens/keywords for the product
+    func fetchReviewTokens(completion: @escaping ([String]?, Error?) -> Void) {
+        guard let productId = self.product.productId else {
+            completion(nil, NSError(domain: "WriteReviewViewModel", code: 400, userInfo: [NSLocalizedDescriptionKey: "Product ID missing"]))
+            return
+        }
+        let query = BVReviewTokensQuery(productId: productId)
+        query.configure(ConfigurationManager.sharedInstance.conversationsConfig)
+        
+        query.handler { result in
+            switch result {
+            case .success(let response):
+                completion(response.tokens, nil)
+            case .failure(let errors):
+                completion(nil, errors.first)
+            }
+        }
+        query.async()
+    }
+    
+    /// Submits the user's current review draft and parses matching tokens/keywords in response
+    func submitMatchedTokens(reviewText: String, completion: @escaping ([String]?, Error?) -> Void) {
+        guard let productId = self.product.productId else {
+            completion(nil, NSError(domain: "WriteReviewViewModel", code: 400, userInfo: [NSLocalizedDescriptionKey: "Product ID missing"]))
+            return
+        }
+        
+        // Initialize submission parameters
+        let matchedTokens = BVMatchedTokens(productId: productId, reviewText: reviewText)
+        guard let submission = BVMatchedTokensSubmission(matchedTokens) else {
+            completion(nil, NSError(domain: "WriteReviewViewModel", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid submission data"]))
+            return
+        }
+        
+        submission.configure(ConfigurationManager.sharedInstance.conversationsConfig)
+        submission.handler { result in
+            switch result {
+            case .success(let response):
+                completion(response.tokens, nil)
+            case .failure(let errors):
+                completion(nil, errors.first)
+            }
+        }
+        submission.async()
     }
 }

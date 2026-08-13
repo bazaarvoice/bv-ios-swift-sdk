@@ -11,7 +11,7 @@ import HCSStarRatingView
 import BVSwift
 import FontAwesomeKit
 import SDForms
-import MobileCoreServices
+import UniformTypeIdentifiers
 
 protocol WriteReviewViewControllerDelegate: class {
     
@@ -140,7 +140,7 @@ extension WriteReviewViewController: UIImagePickerControllerDelegate, UINavigati
             let pickerController = UIImagePickerController()
             pickerController.delegate = self
             pickerController.sourceType = .photoLibrary
-            pickerController.mediaTypes = [kUTTypeMovie as String, kUTTypeVideo as String]
+            pickerController.mediaTypes = [UTType.movie.identifier as String, UTType.video.identifier as String]
             self.present(pickerController, animated: true, completion: nil)
         }
     }

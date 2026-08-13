@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import BVSwift
+import SwiftUI
 
 class AppCoordinator: Coordinator {
     
@@ -100,19 +101,36 @@ class AppCoordinator: Coordinator {
     }
     
     private func showWriteReviewScreen(product: BVProduct) {
+            // 1. Create ViewModel and link the AppCoordinator
+            let writeViewModel = WriteReviewViewModel(product: product)
+            writeViewModel.coordinator = self
+            
+            // 2. Create SwiftUI View and embed inside standard UIHostingController
+            let writeReviewView = WriteReviewView(viewModel: writeViewModel)
+            let hostedViewController = UIHostingController(rootView: writeReviewView)
+            
+            // 3. Connect ViewModel callbacks with our SwiftUI Observable Delegate
+            writeViewModel.viewController = writeReviewView.delegate
+            
+            // 4. Configure Navigation and push
+            hostedViewController.navigationItem.title = ViewControllerTittles.write_a_Review
+            self.navigationController.pushViewController(hostedViewController, animated: true)
         
-        //1. Create View Controller
-        let writeReviewViewController = WriteReviewViewController.instantiate()
-        writeReviewViewController.navigationController?.title = ViewControllerTittles.write_a_Review
-        
-        //2. Create View Model
-        let writeViewModel = WriteReviewViewModel(product: product)
-        writeViewModel.coordinator = self
-        writeViewModel.viewController = writeReviewViewController
-        
-        //3. Assign and Navigate
-        writeReviewViewController.viewModel = writeViewModel
-        self.navigationController.pushViewController(writeReviewViewController, animated: true)
+//        let hostedViewController = UIHostingController(rootView: WriteReviewView())
+//        self.navigationController.pushViewController(hostedViewController, animated: true)
+//            return
+//        //1. Create View Controller
+//        let writeReviewViewController = WriteReviewViewController.instantiate()
+//        writeReviewViewController.navigationController?.title = ViewControllerTittles.write_a_Review
+//        
+//        //2. Create View Model
+//        let writeViewModel = WriteReviewViewModel(product: product)
+//        writeViewModel.coordinator = self
+//        writeViewModel.viewController = writeReviewViewController
+//        
+//        //3. Assign and Navigate
+//        writeReviewViewController.viewModel = writeViewModel
+//        self.navigationController.pushViewController(writeReviewViewController, animated: true)
         
     }
     

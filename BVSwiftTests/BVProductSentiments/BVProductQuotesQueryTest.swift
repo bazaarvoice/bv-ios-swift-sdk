@@ -18,11 +18,11 @@ class BVProductQuotesQueryTest: XCTestCase {
         
         let analyticsConfig: BVAnalyticsConfiguration =
             .dryRun(
-                configType: .production(clientId: "bv-beauty"))
+                configType: .staging(clientId: "bv-beauty"))
         
         return BVProductSentimentsConfiguration.display(
-            clientKey: "caKfOxPN9v5xDgUjw2DJMG0xndA1QuGJXP0VzYzsUMtvc",
-            configType: .production(clientId: "bv-beauty"),
+            clientKey: "OViAhjSr82ZKxinT800bVC8jfyXVRY4w4a17ksQzVbs",
+            configType: .staging(clientId: "bv-beauty"),
             analyticsConfig: analyticsConfig)
     }()
     
@@ -41,7 +41,7 @@ class BVProductQuotesQueryTest: XCTestCase {
     func testProductQuotesQuery() {
         let expectation =
         self.expectation(description: "testProductQuotesQuery")
-        let query = BVProductQuotesQuery(productId: "P000010", limit: 10)
+        let query = BVProductQuotesQuery(productId: "P000036", limit: 10)
             .language("en")
             .configure(BVProductQuotesQueryTest.config)
             .handler { (response: BVProductSentimentsQueryResponse<BVQuotes>) in

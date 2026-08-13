@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2025 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 import XCTest
@@ -48,7 +48,36 @@ class BVReviewSummaryQueryTest: XCTestCase {
         
         let reviewSummaryQueryRequest = BVProductReviewSummaryQuery(productId: "P000036")
             .formatType(.paragraph) //.bullet
-            .language("en")
+            .language("es")
+            .configure(BVReviewSummaryQueryTest.config)
+            .handler { (response: BVReviewSummaryQueryResponse<BVReviewSummary>) in
+                switch response {
+                case .success(let reviewSummary):
+                    print(reviewSummary)
+                    XCTAssertEqual(reviewSummary.title, "REVIEW_SUMMARY")
+                    XCTAssertNotNil(reviewSummary.summary)
+                    expectation.fulfill()
+                case .failure(let error):
+                    print(error)
+                    XCTFail()
+                    expectation.fulfill()
+                }
+            }
+        reviewSummaryQueryRequest.async()
+        self.waitForExpectations(timeout: 30) { (error) in
+            XCTAssertNil(
+                error, "Something went horribly wrong, request took too long.")
+        }
+    }
+    
+    func testProductReviewSummaryQueryWithLocale() {
+        
+        let expectation = self.expectation(
+            description: "testProductReviewSummaryQueryWithLocale")
+        
+        let reviewSummaryQueryRequest = BVProductReviewSummaryQuery(productId: "P000036")
+            .formatType(.paragraph) //.bullet
+            .locale("es_US")
             .configure(BVReviewSummaryQueryTest.config)
             .handler { (response: BVReviewSummaryQueryResponse<BVReviewSummary>) in
                 switch response {

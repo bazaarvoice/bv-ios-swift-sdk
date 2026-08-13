@@ -18,11 +18,11 @@ class BVSummarisedFeaturesQuotesQueryTest: XCTestCase {
         
         let analyticsConfig: BVAnalyticsConfiguration =
             .dryRun(
-                configType: .production(clientId: "bv-beauty"))
+                configType: .staging(clientId: "bv-beauty"))
         
         return BVProductSentimentsConfiguration.display(
-            clientKey: "caKfOxPN9v5xDgUjw2DJMG0xndA1QuGJXP0VzYzsUMtvc",
-            configType: .production(clientId: "bv-beauty"),
+            clientKey: "OViAhjSr82ZKxinT800bVC8jfyXVRY4w4a17ksQzVbs",
+            configType: .staging(clientId: "bv-beauty"),
             analyticsConfig: analyticsConfig)
     }()
     

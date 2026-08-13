@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2018 Bazaarvoice. All rights reserved.
-// 
+//
 
 import Foundation
 
@@ -129,6 +129,11 @@ public protocol BVQuerySecondaryRatingstatable {
 /// Protocol definition for the behavior of adding  features
 public protocol BVQueryLanguageStatable {
   func language(_ value: String) -> Self
+}
+
+/// Protocol definition for the behavior of adding locale filters
+public protocol BVQueryLocaleStatable {
+  func locale(_ value: String) -> Self
 }
 
 /// Protocol definition for the behavior of adding custom query fields

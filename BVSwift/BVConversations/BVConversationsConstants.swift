@@ -62,7 +62,7 @@ internal struct BVConversationsConstants {
       static let errors: String = "HasErrors"
       static let includes: String = "Includes"
       static let limit: String = "Limit"
-      static let locale: String = "Locale"
+      static let locale: String = "locale"
       static let offset: String = "Offset"
       static let results: String = "Results"
       static let search: String = "Search"

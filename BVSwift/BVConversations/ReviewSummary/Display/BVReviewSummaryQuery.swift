@@ -4,7 +4,7 @@
 //  BVSwift
 //
 //  Copyright © 2025 Bazaarvoice. All rights reserved.
-// 
+//
 
 
 import Foundation
@@ -247,6 +247,16 @@ extension BVReviewSummaryQuery: BVQueryLanguageStatable {
     public func language(_ value: String) -> Self {
         let language: BVURLParameter = .field(BVLanguageStat(value), nil)
         add(language)
+        return self
+    }
+}
+
+// MARK: - BVReviewSummaryQuery: BVQueryLocaleStatable
+extension BVReviewSummaryQuery: BVQueryLocaleStatable {
+    @discardableResult
+    public func locale(_ value: String) -> Self {
+        let locale: BVURLParameter = .field(BVLocaleStat(value), nil)
+        add(locale)
         return self
     }
 }
