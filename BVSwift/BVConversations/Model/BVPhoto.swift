@@ -97,7 +97,7 @@ public struct BVPhoto: BVSubmissionable {
     while BVPhoto.MaxImageBytes <= data.count {
       
       if let lossy: Data =
-        workingImage.jpegData(compressionQuality: 9.0) {
+        workingImage.jpegData(compressionQuality: 0.9) {
         data = lossy
       }
       
